@@ -14,6 +14,7 @@ export interface Product {
   name: string;
   category: string;
   price: number;
+  minQty: number;
   cost: number;
   description: string;
   team: string;
@@ -73,7 +74,8 @@ export async function getActiveProducts(): Promise<Product[]> {
       id: page.id,
       name: text(props["상품명"]),
       category: props["상품 카테고리"]?.select?.name || "기타",
-      price: props["판매 가격"]?.number || 0,
+      price: props["판매 단가"]?.number || 0,
+      minQty: props["최소수량"]?.number || 1,
       cost: props["예상 원가"]?.number || 0,
       description: text(props["상품 설명"]),
       team: props["담당 팀"]?.select?.name || "",

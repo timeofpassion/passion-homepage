@@ -8,6 +8,7 @@ interface Product {
   name: string;
   category: string;
   price: number;
+  minQty: number;
   description: string;
 }
 
@@ -55,7 +56,7 @@ export default function QuotePage() {
 
   const selectedProducts: SelectedProduct[] = products
     .filter((p) => selected.has(p.id))
-    .map((p) => ({ id: p.id, name: p.name, price: p.price }));
+    .map((p) => ({ id: p.id, name: p.name, price: p.price * (p.minQty || 1) }));
 
   const subtotal = selectedProducts.reduce((sum, p) => sum + p.price, 0);
   const vat = Math.round(subtotal * 0.1);
@@ -208,8 +209,17 @@ export default function QuotePage() {
                           </div>
                         )}
                       </div>
-                      <div style={{ fontWeight: 700, fontSize: "0.95rem", color: selected.has(p.id) ? "#fff" : "rgba(255,255,255,0.6)", whiteSpace: "nowrap" }}>
-                        {p.price > 0 ? `${format(p.price)}원` : "별도 문의"}
+                      <div style={{ fontWeight: 700, fontSize: "0.95rem", color: selected.has(p.id) ? "#fff" : "rgba(255,255,255,0.6)", whiteSpace: "nowrap", textAlign: "right" }}>
+                        {p.price > 0 ? (
+                          <>
+                            <div>{format(p.price * (p.minQty || 1))}원</div>
+                            {(p.minQty || 1) > 1 && (
+                              <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", fontWeight: 400 }}>
+                                @{format(p.price)}원 × {p.minQty}건
+                              </div>
+                            )}
+                          </>
+                        ) : "별도 문의"}
                       </div>
                     </label>
                   ))}
