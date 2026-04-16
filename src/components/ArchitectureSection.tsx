@@ -4,9 +4,8 @@ const teams = [
   { id: "SYS.01", title: "국내마케팅팀", desc: "블로그 SEO · 플레이스 · 광고 · 플랫폼 운영" },
   { id: "SYS.02", title: "디자인팀", desc: "카드뉴스 · SNS 이미지 · 배너 · 브랜딩" },
   { id: "SYS.03", title: "영상팀", desc: "풀영상 · 숏츠 · 유튜브 · 틱톡 콘텐츠" },
-  { id: "SYS.04 / JP", title: "일본팀", desc: "라인 · 인스타 · 틱톡 현지 운영" },
-  { id: "SYS.05 / CN", title: "중국팀", desc: "샤오홍슈 · 웨이보 · 더우인 · 왕홍 KOL" },
-  { id: "SYS.06 / TW", title: "대만팀", desc: "현지 파트너 네트워크 기반 마케팅" },
+  { id: "SYS.04", title: "일본 마케팅팀", desc: "라인 · 인스타 · 틱톡 현지 운영" },
+  { id: "SYS.05", title: "중화권 마케팅팀", desc: "샤오홍슈 · 웨이보 · 더우인 · 왕홍 KOL" },
 ];
 
 export default function ArchitectureSection() {
