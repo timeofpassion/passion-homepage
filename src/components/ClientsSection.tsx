@@ -46,40 +46,28 @@ export default function ClientsSection() {
         </div>
 
         {/* Logo grid */}
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", padding: "1.5rem" }}>
-          {clients.map((row, i) => (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "2rem 1.5rem", maxWidth: 900, margin: "0 auto" }}>
+          {clients.flat().map((client) => (
             <div
-              key={i}
+              key={client.name}
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                borderBottom: i < clients.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "0.5rem",
               }}
             >
-              {row.map((client) => (
-                <div
-                  key={client.name}
-                  style={{
-                    padding: "1.2rem 0.8rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRight: "1px solid rgba(255,255,255,0.04)",
-                  }}
-                >
-                  <img
-                    src={client.logo}
-                    alt={client.name}
-                    style={{
-                      maxHeight: 40,
-                      maxWidth: "80%",
-                      objectFit: "contain",
-                      opacity: 0.7,
-                      filter: "brightness(1.5)",
-                    }}
-                  />
-                </div>
-              ))}
+              <img
+                src={client.logo}
+                alt={client.name}
+                style={{
+                  maxHeight: 36,
+                  maxWidth: "90%",
+                  objectFit: "contain",
+                  filter: "brightness(0) invert(1)",
+                  opacity: 0.6,
+                }}
+              />
             </div>
           ))}
         </div>
