@@ -4,9 +4,9 @@ import { Client } from "@notionhq/client";
 const notion = new Client({ auth: process.env.NOTION_API_KEY }) as any;
 
 // 노션 DB IDs
-const PRODUCT_DB_ID = "33bc37bf15b680e1ac9ed8321e4d4e08"; // 열정의시간 상품기획 (database)
-const PRODUCT_DS_ID = "33bc37bf-15b6-80ac-b030-000b7b5870ab"; // 열정의시간 상품기획 (data source)
-let QUOTE_DB_ID = ""; // 견적 내역 DB (최초 생성 시 설정)
+const PRODUCT_DS_ID = "33bc37bf-15b6-80ac-b030-000b7b5870ab"; // 상품기획 data source
+const QUOTE_DB_ID = "6f6e5c3230574ac887cd332cd925a4f4"; // 견적 내역 database
+const QUOTE_DS_ID = "50c437a1-8720-4201-9db2-bcd845291ad3"; // 견적 내역 data source
 
 // ── 타입 ──
 export interface Product {
@@ -83,64 +83,10 @@ export async function getActiveProducts(): Promise<Product[]> {
   });
 }
 
-// ── 견적 내역 DB 확인/생성 ──
-async function ensureQuoteDB(): Promise<string> {
-  if (QUOTE_DB_ID) return QUOTE_DB_ID as string;
-
-  // 기존 DB 검색
-  const search = await notion.search({
-    query: "견적 내역",
-    filter: { value: "database", property: "object" },
-  });
-
-  const existing = search.results.find(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (r: any) => r.object === "database" && r.title?.[0]?.plain_text === "견적 내역"
-  );
-
-  if (existing) {
-    QUOTE_DB_ID = existing.id;
-    return QUOTE_DB_ID;
-  }
-
-  // 새로 생성 - workspace 최상위에 생성
-  const db = await notion.databases.create({
-    parent: { type: "page_id", page_id: "" }, // will be set below
-    title: [{ type: "text", text: { content: "견적 내역" } }],
-    properties: {
-      "견적 제목": { title: {} },
-      "견적ID": { rich_text: {} },
-      "고객명": { rich_text: {} },
-      "이메일": { email: {} },
-      "전화번호": { phone_number: {} },
-      "병원명": { rich_text: {} },
-      "메모": { rich_text: {} },
-      "선택 상품": { rich_text: {} },
-      "공급가": { number: { format: "won" } },
-      "부가세": { number: { format: "won" } },
-      "총 금액": { number: { format: "won" } },
-      "상태": {
-        select: {
-          options: [
-            { name: "대기", color: "yellow" },
-            { name: "승인", color: "green" },
-            { name: "수정 요청", color: "orange" },
-          ],
-        },
-      },
-    },
-  });
-
-  QUOTE_DB_ID = db.id;
-  return QUOTE_DB_ID;
-}
-
 // ── 견적 저장 ──
 export async function saveQuote(quoteId: string, req: QuoteRequest): Promise<string> {
-  const dbId = await ensureQuoteDB();
-
   const page = await notion.pages.create({
-    parent: { database_id: dbId },
+    parent: { database_id: QUOTE_DB_ID },
     properties: {
       "견적 제목": {
         title: [{ text: { content: `${req.hospitalName} - ${req.customerName}` } }],
@@ -174,10 +120,8 @@ export async function saveQuote(quoteId: string, req: QuoteRequest): Promise<str
 
 // ── 견적 조회 ──
 export async function getQuoteByQuoteId(quoteId: string): Promise<QuoteRecord | null> {
-  const dbId = await ensureQuoteDB();
-
   const res = await notion.dataSources.query({
-    database_id: dbId,
+    data_source_id: QUOTE_DS_ID,
     filter: {
       property: "견적ID",
       rich_text: { equals: quoteId },
