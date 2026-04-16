@@ -46,26 +46,27 @@ export default function ClientsSection() {
         </div>
 
         {/* Logo grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "2rem 1.5rem", maxWidth: 900, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", maxWidth: 1000, margin: "0 auto" }}>
           {clients.flat().map((client) => (
             <div
               key={client.name}
               style={{
+                background: "#ffffff",
+                borderRadius: 8,
+                padding: "1.2rem 1rem",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "0.5rem",
+                minHeight: 70,
               }}
             >
               <img
                 src={client.logo}
                 alt={client.name}
                 style={{
-                  maxHeight: 36,
-                  maxWidth: "90%",
+                  maxHeight: 40,
+                  maxWidth: "85%",
                   objectFit: "contain",
-                  filter: "brightness(0) invert(1)",
-                  opacity: 0.6,
                 }}
               />
             </div>
