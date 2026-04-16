@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function FixedCTA() {
   const [visible, setVisible] = useState(false);
@@ -25,9 +26,9 @@ export default function FixedCTA() {
         pointerEvents: visible ? "auto" : "none",
       }}
     >
-      <button className="cta-float font-mono-sys">
-        무료 전략 상담 신청하기
-      </button>
+      <Link href="/quote" className="cta-float font-mono-sys" style={{ textDecoration: "none" }}>
+        견적 의뢰하기
+      </Link>
     </div>
   );
 }
