@@ -7,6 +7,7 @@ import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
 import ServicesSection from "@/components/ServicesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import BlogSection from "@/components/BlogSection";
 import CTASection from "@/components/CTASection";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
@@ -26,6 +27,7 @@ export default function Home() {
         <ArchitectureSection />
         <ServicesSection />
         <TestimonialsSection />
+        <BlogSection />
         <CTASection />
       </main>
 
