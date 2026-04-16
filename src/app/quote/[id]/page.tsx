@@ -101,7 +101,7 @@ export default function QuoteReviewPage() {
               : "조건을 조정하고 싶으시면 새 견적을 자동으로 생성해 드립니다."}
           </p>
           <p style={{ color: "#aaa", fontSize: "0.8rem", marginTop: 20 }}>
-            문의: contact@passiontime.kr
+            문의: ceo@timeofpassion.com
           </p>
         </div>
       </div>
@@ -210,7 +210,7 @@ export default function QuoteReviewPage() {
             본 페이지는 열정의시간에서 발송한 견적에 응답하기 위한 페이지입니다.
           </p>
           <p style={{ fontSize: "0.7rem", color: "#ccc", marginTop: 4 }}>
-            문의: contact@passiontime.kr
+            문의: ceo@timeofpassion.com
           </p>
         </div>
       </div>
