@@ -291,13 +291,13 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1.4rem 2.5rem;
+  padding: 1rem 2rem;
   background: #1a0000;
   border: 1px solid rgba(204,0,0,0.4);
   cursor: pointer;
   transition: all 0.3s ease;
   overflow: hidden;
-  min-width: 260px;
+  min-width: 200px;
 }
 
 .cta-main:hover {
@@ -307,7 +307,7 @@ body {
 
 @media (min-width: 768px) {
   .cta-main {
-    padding: 1.8rem 3.5rem;
-    min-width: 320px;
+    padding: 1.2rem 2.5rem;
+    min-width: 240px;
   }
 }

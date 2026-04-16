@@ -46,7 +46,7 @@ export default function CTASection() {
         {/* Consult items header */}
         <div
           className="font-mono-sys"
-          style={{ textAlign: "center", marginBottom: 32, fontSize: 12, letterSpacing: "0.15em", color: "#cc0000", textTransform: "uppercase" }}
+          style={{ textAlign: "center", marginBottom: 32, fontSize: 12, letterSpacing: "0.15em", color: "#FFD700", textTransform: "uppercase" }}
         >
           무료 전략 상담에서 확인할 수 있는 것
         </div>
@@ -97,7 +97,7 @@ export default function CTASection() {
             <div className="tech-border" style={{ position: "absolute", inset: 0 }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(90,0,0,0.2), rgba(204,0,0,0.2))", opacity: 0, transition: "opacity 0.5s" }} />
             <div style={{ position: "relative", zIndex: 10, display: "flex", alignItems: "center", gap: 14 }}>
-              <span className="text-glow" style={{ fontSize: "clamp(1.2rem, 2.5vw, 1.7rem)", fontWeight: 900 }}>
+              <span className="text-glow" style={{ fontSize: "clamp(1rem, 2vw, 1.3rem)", fontWeight: 800 }}>
                 견적 의뢰하기
               </span>
               <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
