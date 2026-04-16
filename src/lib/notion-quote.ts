@@ -4,7 +4,8 @@ import { Client } from "@notionhq/client";
 const notion = new Client({ auth: process.env.NOTION_API_KEY }) as any;
 
 // 노션 DB IDs
-const PRODUCT_DB_ID = "33bc37bf15b680e1ac9ed8321e4d4e08"; // 열정의시간 상품기획
+const PRODUCT_DB_ID = "33bc37bf15b680e1ac9ed8321e4d4e08"; // 열정의시간 상품기획 (database)
+const PRODUCT_DS_ID = "33bc37bf-15b6-80ac-b030-000b7b5870ab"; // 열정의시간 상품기획 (data source)
 let QUOTE_DB_ID = ""; // 견적 내역 DB (최초 생성 시 설정)
 
 // ── 타입 ──
@@ -57,8 +58,8 @@ function text(prop: any): string {
 
 // ── "판매 중" 상품 조회 ──
 export async function getActiveProducts(): Promise<Product[]> {
-  const res = await notion.databases.query({
-    database_id: PRODUCT_DB_ID,
+  const res = await notion.dataSources.query({
+    data_source_id: PRODUCT_DS_ID,
     filter: {
       property: "기획 상태",
       status: { equals: "판매 중" },
@@ -173,7 +174,7 @@ export async function saveQuote(quoteId: string, req: QuoteRequest): Promise<str
 export async function getQuoteByQuoteId(quoteId: string): Promise<QuoteRecord | null> {
   const dbId = await ensureQuoteDB();
 
-  const res = await notion.databases.query({
+  const res = await notion.dataSources.query({
     database_id: dbId,
     filter: {
       property: "견적ID",

@@ -7,6 +7,7 @@ export async function GET() {
     return NextResponse.json({ products });
   } catch (err) {
     console.error("Failed to fetch products:", err);
-    return NextResponse.json({ error: "상품 조회 실패" }, { status: 500 });
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: "상품 조회 실패", detail: message }, { status: 500 });
   }
 }
