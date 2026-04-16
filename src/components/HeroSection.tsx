@@ -13,6 +13,11 @@ export default function HeroSection() {
         position: "relative",
       }}
     >
+      <img
+        src="/logo_passion.png"
+        alt="열정의시간 로고"
+        style={{ width: 80, height: 80, marginBottom: "2rem", objectFit: "contain" }}
+      />
       <h1
         style={{
           fontSize: "clamp(2.4rem, 7vw, 6rem)",
