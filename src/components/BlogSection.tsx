@@ -5,17 +5,7 @@ import { useEffect, useState } from "react";
 interface BlogPost {
   title: string;
   link: string;
-  pubDate: string;
   thumbnail: string;
-}
-
-function formatDate(dateStr: string) {
-  try {
-    const d = new Date(dateStr);
-    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
-  } catch {
-    return "";
-  }
 }
 
 export default function BlogSection() {
@@ -66,6 +56,7 @@ export default function BlogSection() {
                 transition: "all 0.3s ease",
                 display: "flex",
                 flexDirection: "column",
+                borderRadius: 6,
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "rgba(204,0,0,0.3)";
@@ -77,43 +68,31 @@ export default function BlogSection() {
               }}
             >
               {/* Thumbnail */}
-              {post.thumbnail && (
-                <div
-                  style={{
-                    width: "100%",
-                    height: 160,
-                    backgroundImage: `url(${post.thumbnail})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                />
-              )}
-              {!post.thumbnail && (
-                <div
-                  style={{
-                    width: "100%",
-                    height: 160,
-                    background: "rgba(204,0,0,0.1)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "rgba(255,255,255,0.2)",
-                    fontSize: "0.8rem",
-                  }}
-                >
-                  열정의시간
-                </div>
-              )}
+              <div
+                style={{
+                  width: "100%",
+                  height: 180,
+                  backgroundImage: post.thumbnail ? `url(${post.thumbnail})` : undefined,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  background: post.thumbnail ? undefined : "rgba(204,0,0,0.1)",
+                  display: post.thumbnail ? undefined : "flex",
+                  alignItems: post.thumbnail ? undefined : "center",
+                  justifyContent: post.thumbnail ? undefined : "center",
+                  color: "rgba(255,255,255,0.2)",
+                  fontSize: "0.8rem",
+                }}
+              >
+                {!post.thumbnail && "열정의시간"}
+              </div>
 
-              {/* Content */}
-              <div style={{ padding: "1rem 1.2rem 1.2rem", flex: 1, display: "flex", flexDirection: "column" }}>
+              {/* Title */}
+              <div style={{ padding: "1rem 1.2rem 1.2rem" }}>
                 <h3
                   style={{
                     fontSize: "0.9rem",
                     fontWeight: 600,
                     lineHeight: 1.5,
-                    marginBottom: 8,
-                    flex: 1,
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
@@ -122,9 +101,6 @@ export default function BlogSection() {
                 >
                   {post.title}
                 </h3>
-                <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.3)" }}>
-                  {formatDate(post.pubDate)}
-                </span>
               </div>
             </a>
           ))}
