@@ -1,3 +1,5 @@
+import OrgChart from "./OrgChart";
+
 const teams = [
   { id: "SYS.01", title: "국내마케팅팀", desc: "블로그 SEO · 플레이스 · 광고 · 플랫폼 운영" },
   { id: "SYS.02", title: "디자인팀", desc: "카드뉴스 · SNS 이미지 · 배너 · 브랜딩" },
@@ -72,6 +74,9 @@ export default function ArchitectureSection() {
           </div>
           <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, transparent, rgba(204,0,0,0.4), transparent)" }} />
         </div>
+
+        {/* Org Chart */}
+        <OrgChart />
 
         {/* Team grid */}
         <div
