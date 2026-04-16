@@ -122,22 +122,7 @@ function ServiceCard({ svc, idx }: { svc: Service; idx: number }) {
         </div>
 
         <div style={{ position: "relative", zIndex: 10 }}>
-          {/* Module badge */}
-          <div style={{ marginBottom: 24, paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-            <span
-              className="font-mono-sys"
-              style={{
-                fontSize: 11,
-                color: "#cc0000",
-                letterSpacing: "0.1em",
-                background: "rgba(204,0,0,0.08)",
-                padding: "4px 10px",
-                border: "1px solid rgba(204,0,0,0.15)",
-              }}
-            >
-              {svc.moduleId}
-            </span>
-          </div>
+          <div style={{ marginBottom: 16, paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.08)" }} />
 
           <h3 style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 700, marginBottom: 8 }}>
             {svc.title}{" "}
@@ -209,24 +194,6 @@ export default function ServicesSection() {
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>
-          <div
-            className="font-mono-sys"
-            style={{
-              fontSize: 12,
-              letterSpacing: "0.2em",
-              color: "#cc0000",
-              marginBottom: 20,
-              textTransform: "uppercase",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 16,
-            }}
-          >
-            <span style={{ width: 40, height: 1, background: "linear-gradient(to right, transparent, rgba(204,0,0,0.7))" }} />
-            CORE MODULES
-            <span style={{ width: 40, height: 1, background: "linear-gradient(to left, transparent, rgba(204,0,0,0.7))" }} />
-          </div>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900 }}>
             열정의시간이 하는 일 <span style={{ color: "#cc0000" }}>3가지</span>
           </h2>

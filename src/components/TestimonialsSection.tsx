@@ -84,29 +84,7 @@ function TestimonialCard({ t }: { t: Testimonial }) {
       )}
 
       <div style={{ position: "relative", zIndex: 10, display: "flex", flexDirection: "column", height: "100%" }}>
-        {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, paddingBottom: 14, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-          <span
-            className="font-mono-sys"
-            style={{
-              fontSize: 10,
-              color: "#cc0000",
-              letterSpacing: "0.1em",
-              background: "rgba(204,0,0,0.08)",
-              padding: "3px 10px",
-              border: "1px solid rgba(204,0,0,0.15)",
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-            }}
-          >
-            <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#cc0000" }} />
-            {t.id}
-          </span>
-          <span className="font-mono-sys" style={{ fontSize: 9, color: "rgba(255,255,255,0.2)" }}>
-            {t.recId}
-          </span>
-        </div>
+        <div style={{ marginBottom: 16, paddingBottom: 14, borderBottom: "1px solid rgba(255,255,255,0.08)" }} />
 
         {/* Content */}
         <div style={{ flex: 1, marginBottom: 28 }}>
@@ -173,14 +151,6 @@ export default function TestimonialsSection() {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>
-          <div
-            className="font-mono-sys"
-            style={{ fontSize: 12, letterSpacing: "0.2em", color: "#cc0000", marginBottom: 20, textTransform: "uppercase", display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}
-          >
-            <span style={{ width: 40, height: 1, background: "linear-gradient(to right, transparent, rgba(204,0,0,0.7))" }} />
-            DATA_ARCHIVE // REVIEWS
-            <span style={{ width: 40, height: 1, background: "linear-gradient(to left, transparent, rgba(204,0,0,0.7))" }} />
-          </div>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900 }}>
             함께한 원장님들의 이야기
           </h2>

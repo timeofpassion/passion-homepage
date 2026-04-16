@@ -4,7 +4,7 @@ import { Client } from "@notionhq/client";
 const notion = new Client({ auth: process.env.NOTION_API_KEY }) as any;
 
 // 노션 DB IDs
-const PRODUCT_DB_ID = "33bc37bf15b680acb030000b7b5870ab"; // 열정의시간 상품기획
+const PRODUCT_DB_ID = "33bc37bf15b680e1ac9ed8321e4d4e08"; // 열정의시간 상품기획
 let QUOTE_DB_ID = ""; // 견적 내역 DB (최초 생성 시 설정)
 
 // ── 타입 ──

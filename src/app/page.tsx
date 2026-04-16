@@ -8,6 +8,7 @@ import ServicesSection from "@/components/ServicesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CTASection from "@/components/CTASection";
 import FixedCTA from "@/components/FixedCTA";
+import KakaoFloat from "@/components/KakaoFloat";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
       </main>
 
       <FixedCTA />
+      <KakaoFloat />
 
       {/* SEO: 검색엔진 크롤러용 숨김 텍스트 (시맨틱 콘텐츠) */}
       <div className="sr-only" aria-hidden="false">

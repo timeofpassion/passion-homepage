@@ -11,14 +11,6 @@ export default function CTASection() {
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%", width: "100%" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-          <div
-            className="font-mono-sys"
-            style={{ fontSize: 12, letterSpacing: "0.2em", color: "#cc0000", marginBottom: 20, textTransform: "uppercase", display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}
-          >
-            <span style={{ width: 40, height: 1, background: "linear-gradient(to right, transparent, rgba(204,0,0,0.7))" }} />
-            SYSTEM_ANALYSIS // START
-            <span style={{ width: 40, height: 1, background: "linear-gradient(to left, transparent, rgba(204,0,0,0.7))" }} />
-          </div>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 4rem)", fontWeight: 900 }}>
             지금 어떤 단계에 계신가요?
           </h2>
@@ -88,9 +80,6 @@ export default function CTASection() {
 
         {/* System message */}
         <div style={{ maxWidth: 650, margin: "0 auto 4rem", textAlign: "center" }}>
-          <div className="font-mono-sys" style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", marginBottom: 16, letterSpacing: "0.15em" }}>
-            {"// SYSTEM.MESSAGE"}
-          </div>
           <div style={{ textAlign: "left", display: "inline-block", borderLeft: "2px solid rgba(204,0,0,0.5)", paddingLeft: 24 }}>
             <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", fontWeight: 300, marginBottom: 6 }}>
               &ldquo;상담은 부담 없습니다.

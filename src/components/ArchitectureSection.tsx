@@ -129,23 +129,6 @@ export default function ArchitectureSection() {
                 국내에서 흔하지 않습니다.
               </span>
             </p>
-            <div
-              className="font-mono-sys"
-              style={{
-                marginTop: 28,
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "4px 14px",
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                fontSize: 10,
-                color: "rgba(255,255,255,0.3)",
-              }}
-            >
-              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#cc0000" }} />
-              ARCHITECTURE_VERIFIED // 100%_INTEGRATED
-            </div>
           </div>
         </div>
       </div>
