@@ -60,6 +60,30 @@ export default function HeroSection() {
         <br />
         마케팅 통합 전문기업입니다.
       </p>
+      <a
+        href="https://docs.google.com/presentation/d/17fAOTFOwVV91fOpLUcWycyWzV6GFCpvfjwQGYgNYiZY/edit?slide=id.g36df296e312_1_29#slide=id.g36df296e312_1_29"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          marginTop: "2rem",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 8,
+          padding: "12px 28px",
+          background: "rgba(255,255,255,0.06)",
+          border: "1px solid rgba(255,255,255,0.2)",
+          color: "#fff",
+          fontSize: "0.95rem",
+          fontWeight: 600,
+          textDecoration: "none",
+          transition: "all 0.3s ease",
+        }}
+      >
+        회사소개서 보러가기
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
     </section>
   );
 }
