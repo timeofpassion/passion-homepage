@@ -32,12 +32,12 @@ export default function ArchitectureSection() {
             <span style={{ width: 32, height: 1, background: "rgba(204,0,0,0.5)" }} />
           </div>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, lineHeight: 1.2, marginBottom: 40 }}>
-            한 곳에서{" "}
-            <span style={{ borderBottom: "2px solid #cc0000", paddingBottom: 4 }}>
-              국내부터 일본·중국·대만까지
-            </span>
+            한 곳에서 국내부터
             <br />
-            됩니다
+            <span style={{ borderBottom: "2px solid #cc0000", paddingBottom: 4 }}>
+              일본·중국·대만까지
+            </span>{" "}
+            됩니다.
           </h2>
           <div style={{ maxWidth: 600, margin: "0 auto" }}>
             <p style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", color: "rgba(255,255,255,0.75)", fontWeight: 300, lineHeight: 1.7, marginBottom: 16 }}>

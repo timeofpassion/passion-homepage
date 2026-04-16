@@ -31,17 +31,7 @@ export default function DiagnosticsSection() {
         position: "relative",
       }}
     >
-      <div style={{ marginBottom: "6rem", textAlign: "center" }}>
-        <h2 style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 800, marginBottom: "0.8rem" }}>
-          Diagnostic Report
-        </h2>
-        <p
-          className="font-mono-sys"
-          style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.75rem", letterSpacing: "0.1em" }}
-        >
-          ANALYZING MARKET PERFORMANCE DEFICITS
-        </p>
-      </div>
+      <div style={{ marginBottom: "4rem" }} />
 
       <div className="diag-grid">
         {diagnostics.map((item) => (
