@@ -40,7 +40,7 @@ export default function ClientsSection() {
           <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 800, marginBottom: 16, lineHeight: 1.4 }}>
             열정의 시간을 오랫동안 믿고 맡겨주신 우리 소중한 클라이언트
           </h2>
-          <p style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)", color: "#cc0000", fontWeight: 500 }}>
+          <p style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)", color: "#FFD700", fontWeight: 600 }}>
             &lt;열정의시간은 클라이언트의 &lsquo;진짜&rsquo; 직원처럼 결과와 매출을 먼저 걱정합니다&gt;
           </p>
         </div>
