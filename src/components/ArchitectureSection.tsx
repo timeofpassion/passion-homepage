@@ -19,18 +19,17 @@ export default function ArchitectureSection() {
             style={{
               fontSize: 12,
               letterSpacing: "0.2em",
-              color: "#cc0000",
+              color: "#FFD700",
               marginBottom: 20,
-              textTransform: "uppercase",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: 16,
             }}
           >
-            <span style={{ width: 32, height: 1, background: "rgba(204,0,0,0.5)" }} />
+            <span style={{ width: 32, height: 1, background: "rgba(255,215,0,0.5)" }} />
             왜 열정의시간인가요?
-            <span style={{ width: 32, height: 1, background: "rgba(204,0,0,0.5)" }} />
+            <span style={{ width: 32, height: 1, background: "rgba(255,215,0,0.5)" }} />
           </div>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, lineHeight: 1.2, marginBottom: 40 }}>
             한 곳에서 국내부터

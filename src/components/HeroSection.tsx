@@ -60,6 +60,17 @@ export default function HeroSection() {
         <br />
         마케팅 통합 전문기업입니다.
       </p>
+      <img
+        src="/company_production.png"
+        alt="열정의시간 회사소개서"
+        style={{
+          marginTop: "2rem",
+          maxWidth: 320,
+          width: "80%",
+          objectFit: "contain",
+          borderRadius: 8,
+        }}
+      />
       <a
         href="https://docs.google.com/presentation/d/17fAOTFOwVV91fOpLUcWycyWzV6GFCpvfjwQGYgNYiZY/edit?slide=id.p#slide=id.p"
         target="_blank"
