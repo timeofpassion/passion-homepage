@@ -2,7 +2,7 @@ export default function HeroSection() {
   return (
     <section
       style={{
-        height: "100vh",
+        minHeight: "70vh",
         width: "100%",
         display: "flex",
         flexDirection: "column",
