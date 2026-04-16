@@ -3,6 +3,7 @@ import SystemLabels from "@/components/SystemLabels";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import DiagnosticsSection from "@/components/DiagnosticsSection";
+import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
 import ServicesSection from "@/components/ServicesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -20,6 +21,7 @@ export default function Home() {
         <Header />
         <HeroSection />
         <DiagnosticsSection />
+        <ClientsSection />
         <ArchitectureSection />
         <ServicesSection />
         <TestimonialsSection />
