@@ -45,18 +45,16 @@ export default function KakaoFloat() {
         style={{
           ...btnStyle,
           background: "#ffffff",
-          width: "auto",
-          borderRadius: 28,
-          padding: "0 18px",
-          fontSize: "0.8rem",
-          fontWeight: 700,
-          color: "#333",
-          gap: 6,
+          padding: 4,
         }}
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
       >
-        회사소개서
+        <img
+          src="/logo_passion.png"
+          alt="열정의시간"
+          style={{ width: 40, height: 40, objectFit: "contain", borderRadius: "50%" }}
+        />
       </a>
 
       {/* 카카오톡 */}
