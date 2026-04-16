@@ -61,7 +61,7 @@ export default function HeroSection() {
         마케팅 통합 전문기업입니다.
       </p>
       <a
-        href="https://docs.google.com/presentation/d/17fAOTFOwVV91fOpLUcWycyWzV6GFCpvfjwQGYgNYiZY/edit?slide=id.g36df296e312_1_29#slide=id.g36df296e312_1_29"
+        href="https://docs.google.com/presentation/d/17fAOTFOwVV91fOpLUcWycyWzV6GFCpvfjwQGYgNYiZY/edit?slide=id.p#slide=id.p"
         target="_blank"
         rel="noopener noreferrer"
         style={{

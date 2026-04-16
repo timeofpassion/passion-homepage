@@ -38,17 +38,25 @@ export default function KakaoFloat() {
     >
       {/* 회사소개서 */}
       <a
-        href="https://docs.google.com/presentation/d/17fAOTFOwVV91fOpLUcWycyWzV6GFCpvfjwQGYgNYiZY/edit?slide=id.g36df296e312_1_29#slide=id.g36df296e312_1_29"
+        href="https://docs.google.com/presentation/d/17fAOTFOwVV91fOpLUcWycyWzV6GFCpvfjwQGYgNYiZY/edit?slide=id.p#slide=id.p"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="회사소개서"
-        style={{ ...btnStyle, background: "#ffffff" }}
+        style={{
+          ...btnStyle,
+          background: "#ffffff",
+          width: "auto",
+          borderRadius: 28,
+          padding: "0 18px",
+          fontSize: "0.8rem",
+          fontWeight: 700,
+          color: "#333",
+          gap: 6,
+        }}
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
       >
-        <svg width="24" height="24" fill="none" stroke="#333" viewBox="0 0 24 24" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
+        회사소개서
       </a>
 
       {/* 카카오톡 */}

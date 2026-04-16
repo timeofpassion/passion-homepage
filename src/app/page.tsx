@@ -10,6 +10,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import CTASection from "@/components/CTASection";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
+// import Popup from "@/components/Popup"; // 팝업 내용 준비되면 주석 해제
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
         <CTASection />
       </main>
 
+      {/* <Popup /> */}{/* 팝업 내용 준비되면 주석 해제 */}
       <FixedCTA />
       <KakaoFloat />
 
