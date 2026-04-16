@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import { saveQuote, type QuoteRequest } from "@/lib/notion-quote";
-import { generateQuotePDF } from "@/lib/quote-pdf";
 import { sendQuoteEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
@@ -50,15 +49,7 @@ export async function POST(request: Request) {
     // 1) 노션에 저장
     await saveQuote(quoteId, quoteRequest);
 
-    // 2) PDF 생성
-    const now = new Date().toLocaleDateString("ko-KR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-    const pdfBuffer = await generateQuotePDF(quoteId, quoteRequest, now);
-
-    // 3) 이메일 발송 (Resend API 키가 있을 때만)
+    // 2) 이메일 발송 (Resend API 키가 있을 때만, PDF 없이)
     let emailSent = false;
     if (process.env.RESEND_API_KEY) {
       try {
@@ -68,7 +59,6 @@ export async function POST(request: Request) {
           hospitalName: hospitalName || customerName,
           total,
           quoteId,
-          pdfBuffer,
         });
         emailSent = true;
       } catch (emailErr) {
@@ -87,8 +77,9 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error("Quote request failed:", err);
+    const msg = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
-      { error: "견적 요청 처리 중 오류가 발생했습니다." },
+      { error: "견적 요청 처리 중 오류가 발생했습니다.", detail: msg },
       { status: 500 }
     );
   }

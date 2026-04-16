@@ -10,7 +10,6 @@ interface QuoteEmailParams {
   hospitalName: string;
   total: number;
   quoteId: string;
-  pdfBuffer: Buffer;
 }
 
 export async function sendQuoteEmail(params: QuoteEmailParams) {
@@ -73,11 +72,5 @@ export async function sendQuoteEmail(params: QuoteEmailParams) {
         </div>
       </div>
     `,
-    attachments: [
-      {
-        filename: `열정의시간_견적서_${params.hospitalName}.pdf`,
-        content: params.pdfBuffer,
-      },
-    ],
   });
 }
