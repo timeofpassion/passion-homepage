@@ -11,6 +11,8 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.89.0",
     "@notionhq/client": "^5.18.0",
+    "html2canvas-pro": "^2.0.2",
+    "jspdf": "^4.2.1",
     "nanoid": "^5.1.9",
     "next": "16.2.3",
     "pdfkit": "^0.18.0",
