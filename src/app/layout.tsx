@@ -9,6 +9,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  verification: {
+    google: "06n0KQdVtbte3e34Vp7VSlit0C3e8qqZmTDWaabne4Y",
+    other: {
+      "naver-site-verification": "4e9d8fd7b3f7336ec492afdb8fd61f5af93e5e07",
+    },
+  },
   title: "열정의시간 | 병원 마케팅 매출 구조 설계",
   description:
     "13년의 노하우로 병원의 실질적 매출을 만드는 수익 구조를 설계합니다. 국내 마케팅부터 일본·중국·대만 해외환자 유치까지 원스톱 솔루션.",
