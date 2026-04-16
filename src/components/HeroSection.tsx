@@ -41,6 +41,20 @@ export default function HeroSection() {
         <br />
         병원의 실질적 매출을 만드는 &lsquo;수익 구조&rsquo; 자체를 설계합니다.
       </p>
+      <p
+        style={{
+          fontSize: "clamp(0.9rem, 1.6vw, 1.05rem)",
+          color: "rgba(255,255,255,0.45)",
+          maxWidth: 620,
+          lineHeight: 1.7,
+          fontWeight: 300,
+          marginTop: "1.2rem",
+        }}
+      >
+        열정의시간은 국내, 중국, 대만, 일본 마케팅이 가능한
+        <br />
+        마케팅 통합 전문기업입니다.
+      </p>
     </section>
   );
 }
