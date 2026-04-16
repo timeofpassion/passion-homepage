@@ -24,7 +24,7 @@ export default function HeroSection() {
       >
         병원 마케팅,
         <br />
-        <span className="hero-highlight">광고비</span>만 쓰고
+        <span style={{ background: "#cc0000", color: "#ffffff", padding: "0.05em 0.25em" }}>광고비</span>만 쓰고
         <br />
         끝난 적 있으신가요?
       </h1>
