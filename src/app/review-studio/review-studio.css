@@ -1,0 +1,727 @@
+/* ============================================
+   Review Studio 전용 스타일 (globals.css 영향 격리)
+   ============================================ */
+
+.rs-root {
+  --rs-bg: #0f1115;
+  --rs-surface: #171a21;
+  --rs-surface-2: #1f232c;
+  --rs-border: rgba(255, 255, 255, 0.08);
+  --rs-border-strong: rgba(255, 255, 255, 0.16);
+  --rs-text: #ffffff;
+  --rs-text-muted: rgba(255, 255, 255, 0.6);
+  --rs-text-dim: rgba(255, 255, 255, 0.4);
+  --rs-accent: #ff3b3b;
+  --rs-accent-hover: #ff5252;
+  --rs-accent-soft: rgba(255, 59, 59, 0.12);
+  --rs-accent-soft-2: rgba(255, 59, 59, 0.2);
+  --rs-success: #4ade80;
+  --rs-success-soft: rgba(74, 222, 128, 0.12);
+  --rs-danger: #f87171;
+  --rs-danger-soft: rgba(248, 113, 113, 0.1);
+  --rs-warning: #fbbf24;
+  --rs-warning-soft: rgba(251, 191, 36, 0.1);
+  --rs-info: #60a5fa;
+  --rs-info-soft: rgba(96, 165, 250, 0.1);
+
+  min-height: 100vh;
+  background: var(--rs-bg);
+  color: var(--rs-text);
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, sans-serif;
+  line-height: 1.5;
+  padding-bottom: 0 !important;
+}
+
+/* 전역 영향 격리: 루트 내부의 모든 요소에 기본값 복원 */
+.rs-root *,
+.rs-root *::before,
+.rs-root *::after {
+  box-sizing: border-box;
+}
+
+.rs-root button {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.rs-root input,
+.rs-root select,
+.rs-root textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.rs-root h1,
+.rs-root h2,
+.rs-root h3,
+.rs-root h4,
+.rs-root p {
+  margin: 0;
+  font-weight: inherit;
+}
+
+/* ============ 헤더 ============ */
+.rs-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(15, 17, 21, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rs-border);
+}
+
+.rs-header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rs-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rs-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff3b3b 0%, #b91c1c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  color: white;
+  box-shadow: 0 4px 20px rgba(255, 59, 59, 0.3);
+}
+
+.rs-header-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.rs-header-sub {
+  font-size: 11px;
+  color: var(--rs-text-dim);
+  margin-top: 1px;
+}
+
+.rs-badge {
+  font-size: 10px;
+  color: var(--rs-text-dim);
+  padding: 4px 8px;
+  border: 1px solid var(--rs-border);
+  border-radius: 6px;
+}
+
+/* ============ 메인 컨테이너 ============ */
+.rs-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.rs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 1024px) {
+  .rs-grid {
+    grid-template-columns: 400px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+}
+
+/* ============ 카드 ============ */
+.rs-card {
+  background: var(--rs-surface);
+  border: 1px solid var(--rs-border);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+@media (min-width: 1024px) {
+  .rs-card {
+    padding: 22px;
+  }
+  .rs-input-card {
+    position: sticky;
+    top: 80px;
+  }
+}
+
+.rs-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--rs-text-muted);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--rs-border);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============ 필드 ============ */
+.rs-field {
+  margin-bottom: 18px;
+}
+
+.rs-field:last-child {
+  margin-bottom: 0;
+}
+
+.rs-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--rs-text-muted);
+  margin-bottom: 8px;
+}
+
+.rs-label-sub {
+  font-size: 11px;
+  color: var(--rs-text-dim);
+  margin-top: 4px;
+}
+
+.rs-required::after {
+  content: " *";
+  color: var(--rs-accent);
+}
+
+/* ============ 입력 요소 ============ */
+.rs-select,
+.rs-input,
+.rs-textarea {
+  width: 100%;
+  background: var(--rs-surface-2);
+  border: 1px solid var(--rs-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--rs-text);
+  transition: border-color 0.15s;
+}
+
+.rs-select:focus,
+.rs-input:focus,
+.rs-textarea:focus {
+  border-color: var(--rs-accent);
+}
+
+.rs-select {
+  height: 42px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white' opacity='0.5'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 38px;
+}
+
+.rs-select option {
+  background: var(--rs-surface-2);
+  color: var(--rs-text);
+}
+
+.rs-input {
+  height: 42px;
+}
+
+.rs-input::placeholder,
+.rs-textarea::placeholder {
+  color: var(--rs-text-dim);
+}
+
+.rs-textarea {
+  resize: none;
+  min-height: 72px;
+  padding: 10px 12px;
+}
+
+.rs-number {
+  width: 100px;
+  text-align: center;
+}
+
+/* ============ 버튼 그룹 ============ */
+.rs-btn-group {
+  display: grid;
+  gap: 8px;
+}
+
+.rs-btn-group--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.rs-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rs-toggle {
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--rs-surface-2);
+  border: 1px solid var(--rs-border);
+  border-radius: 10px;
+  color: var(--rs-text-dim);
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.rs-toggle:hover {
+  border-color: var(--rs-border-strong);
+  color: var(--rs-text-muted);
+}
+
+.rs-toggle.is-active {
+  background: var(--rs-accent-soft);
+  border-color: var(--rs-accent);
+  color: var(--rs-accent);
+}
+
+.rs-chip {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--rs-surface-2);
+  border: 1px solid var(--rs-border);
+  border-radius: 999px;
+  color: var(--rs-text-dim);
+  transition: all 0.15s;
+}
+
+.rs-chip:hover {
+  border-color: var(--rs-border-strong);
+  color: var(--rs-text-muted);
+}
+
+.rs-chip.is-active {
+  background: var(--rs-accent-soft);
+  border-color: var(--rs-accent);
+  color: var(--rs-accent);
+}
+
+/* ============ 태그 (시술/원장 입력) ============ */
+.rs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.rs-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: var(--rs-accent-soft);
+  color: var(--rs-accent);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.rs-tag-close {
+  opacity: 0.6;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.rs-tag-close:hover {
+  opacity: 1;
+}
+
+.rs-suggestions {
+  margin-top: 8px;
+}
+
+.rs-suggestions-label {
+  font-size: 11px;
+  color: var(--rs-text-dim);
+  margin-bottom: 6px;
+}
+
+.rs-suggestion {
+  padding: 4px 10px;
+  font-size: 12px;
+  background: transparent;
+  border: 1px dashed var(--rs-border-strong);
+  border-radius: 6px;
+  color: var(--rs-text-muted);
+  margin: 0 4px 4px 0;
+}
+
+.rs-suggestion:hover {
+  border-color: var(--rs-accent);
+  color: var(--rs-accent);
+  border-style: solid;
+}
+
+/* ============ 카운터 ============ */
+.rs-count-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rs-count-total {
+  font-size: 12px;
+  color: var(--rs-accent);
+  font-weight: 600;
+}
+
+/* ============ 알림 ============ */
+.rs-alert {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.rs-alert--danger {
+  background: var(--rs-danger-soft);
+  color: var(--rs-danger);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.rs-alert--warning {
+  background: var(--rs-warning-soft);
+  color: var(--rs-warning);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.rs-alert--info {
+  background: var(--rs-info-soft);
+  color: var(--rs-info);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+}
+
+/* ============ 생성 버튼 ============ */
+.rs-generate {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #ff3b3b 0%, #b91c1c 100%);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(255, 59, 59, 0.25);
+  transition: all 0.15s;
+}
+
+.rs-generate:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(255, 59, 59, 0.4);
+}
+
+.rs-generate:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============ 결과 ============ */
+.rs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  color: var(--rs-text-dim);
+  gap: 10px;
+}
+
+.rs-empty-icon {
+  font-size: 40px;
+  opacity: 0.3;
+}
+
+.rs-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 14px;
+}
+
+.rs-spinner {
+  width: 38px;
+  height: 38px;
+  border: 3px solid rgba(255, 59, 59, 0.2);
+  border-top-color: var(--rs-accent);
+  border-radius: 50%;
+  animation: rs-spin 0.7s linear infinite;
+}
+
+@keyframes rs-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============ 결과 섹션 ============ */
+.rs-result-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--rs-surface);
+  border: 1px solid var(--rs-border);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rs-platform-section {
+  margin-bottom: 22px;
+}
+
+.rs-platform-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rs-platform-header--naver {
+  background: rgba(3, 199, 90, 0.1);
+  color: #03c75a;
+  border: 1px solid rgba(3, 199, 90, 0.3);
+}
+
+.rs-platform-header--google_kr {
+  background: rgba(66, 133, 244, 0.1);
+  color: #4285f4;
+  border: 1px solid rgba(66, 133, 244, 0.3);
+}
+
+.rs-platform-header--kakao {
+  background: rgba(255, 204, 0, 0.1);
+  color: #ffcc00;
+  border: 1px solid rgba(255, 204, 0, 0.3);
+}
+
+.rs-platform-meta {
+  font-size: 12px;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+/* ============ 원고 카드 ============ */
+.rs-review {
+  background: var(--rs-surface);
+  border: 1px solid var(--rs-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 10px;
+  transition: border-color 0.15s;
+}
+
+.rs-review:hover {
+  border-color: var(--rs-border-strong);
+}
+
+.rs-review-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rs-review-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--rs-text-muted);
+  flex: 1;
+  min-width: 0;
+}
+
+.rs-review-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--rs-accent-soft);
+  color: var(--rs-accent);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.rs-review-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rs-review-count {
+  font-size: 11px;
+  color: var(--rs-text-dim);
+  padding: 3px 8px;
+  background: var(--rs-surface-2);
+  border-radius: 6px;
+}
+
+.rs-copy-btn {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--rs-accent-soft);
+  color: var(--rs-accent);
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.rs-copy-btn:hover {
+  background: var(--rs-accent-soft-2);
+}
+
+.rs-copy-btn.is-copied {
+  background: var(--rs-success-soft);
+  color: var(--rs-success);
+}
+
+.rs-review-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ============ 피드백 박스 ============ */
+.rs-feedback-box {
+  background: rgba(255, 59, 59, 0.06);
+  border: 1px solid rgba(255, 59, 59, 0.35);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+
+.rs-feedback-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--rs-accent);
+  margin-bottom: 4px;
+}
+
+.rs-feedback-desc {
+  font-size: 11px;
+  color: var(--rs-text-muted);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.rs-feedback-textarea {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--rs-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--rs-text);
+  resize: none;
+  min-height: 72px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.rs-feedback-textarea::placeholder {
+  color: var(--rs-text-dim);
+}
+
+.rs-feedback-submit {
+  width: 100%;
+  padding: 10px;
+  background: var(--rs-accent-soft-2);
+  color: var(--rs-accent);
+  border: 1px solid var(--rs-accent);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.rs-feedback-submit:hover:not(:disabled) {
+  background: var(--rs-accent);
+  color: white;
+}
+
+.rs-feedback-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rs-feedback-success {
+  background: var(--rs-success-soft);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  color: var(--rs-success);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+/* ============ 스켈레톤 ============ */
+.rs-skeleton {
+  height: 42px;
+  background: var(--rs-surface-2);
+  border-radius: 10px;
+  animation: rs-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes rs-pulse {
+  50% { opacity: 0.5; }
+}
+
+/* ============ 유틸리티 ============ */
+.rs-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+@media (min-width: 480px) {
+  .rs-grid-2 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

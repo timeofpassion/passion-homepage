@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getPlatformSpec } from "@/lib/review-prompts";
 
 interface ClientInfo {
   id: string;
@@ -10,62 +9,205 @@ interface ClientInfo {
   importance: string;
 }
 
+interface DoctorSettings {
+  hospitalName: string;
+  doctorName: string;
+  doctorList: string[];
+  mainTreatments: string;
+  treatmentList: string[];
+  specialty: string;
+}
+
 interface Review {
   title: string;
   content: string;
 }
 
+interface PlatformResult {
+  platform: string;
+  platformLabel: string;
+  charRange: string;
+  reviews: Review[];
+  savedCount: number;
+  error?: string;
+}
+
 interface InputPanelProps {
-  onGenerate: (result: { reviews: Review[]; savedCount: number; platform: string }) => void;
+  onGenerate: (result: { results: PlatformResult[] }) => void;
   onLoadingChange: (loading: boolean) => void;
 }
 
 const PLATFORMS = [
   { key: "naver", label: "네이버플레이스" },
-  { key: "google_kr", label: "구글맵(한국어)" },
-  { key: "google_en", label: "구글맵(영문)" },
+  { key: "google_kr", label: "구글맵" },
   { key: "kakao", label: "카카오맵" },
 ];
 
 const EMPHASIS_POINTS = ["결과", "상담", "시설", "가성비", "회복", "접근성"];
-const COUNT_OPTIONS = [3, 5, 10];
 
 export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelProps) {
   const [clients, setClients] = useState<ClientInfo[]>([]);
   const [loadingClients, setLoadingClients] = useState(true);
+  const [clientsError, setClientsError] = useState("");
 
   const [selectedClient, setSelectedClient] = useState("");
-  const [platform, setPlatform] = useState("naver");
+  const [doctorSettings, setDoctorSettings] = useState<DoctorSettings | null>(null);
+
+  const [platforms, setPlatforms] = useState<string[]>(["naver"]);
   const [emphasisPoints, setEmphasisPoints] = useState<string[]>(["결과"]);
   const [count, setCount] = useState(3);
-  const [treatmentName, setTreatmentName] = useState("");
-  const [doctorName, setDoctorName] = useState("");
+
+  const [treatmentNames, setTreatmentNames] = useState<string[]>([]);
+  const [treatmentInput, setTreatmentInput] = useState("");
+  const [doctorNames, setDoctorNames] = useState<string[]>([]);
+  const [doctorInput, setDoctorInput] = useState("");
+
   const [specialNotes, setSpecialNotes] = useState("");
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState("");
 
-  // 클라이언트 목록 로드
+  const [feedbackText, setFeedbackText] = useState("");
+  const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
+  const [feedbackSuccess, setFeedbackSuccess] = useState("");
+  const [feedbackError, setFeedbackError] = useState("");
+
   useEffect(() => {
     fetch("/api/review/clients")
-      .then((r) => r.json())
+      .then(async (r) => {
+        const data = await r.json();
+        if (!r.ok) throw new Error(data.detail || data.error || `${r.status}`);
+        return data;
+      })
       .then((data) => {
         setClients(data.clients || []);
         setLoadingClients(false);
       })
-      .catch(() => setLoadingClients(false));
+      .catch((e) => {
+        setClientsError(String(e.message || e));
+        setLoadingClients(false);
+      });
   }, []);
 
+  useEffect(() => {
+    if (!selectedClient) {
+      setDoctorSettings(null);
+      return;
+    }
+    fetch(`/api/review/doctor-settings?hospital=${encodeURIComponent(selectedClient)}`)
+      .then((r) => r.json())
+      .then((data) => setDoctorSettings(data.settings || null))
+      .catch(() => setDoctorSettings(null));
+    setTreatmentNames([]);
+    setDoctorNames([]);
+    setTreatmentInput("");
+    setDoctorInput("");
+  }, [selectedClient]);
+
+  const togglePlatform = (key: string) => {
+    setPlatforms((prev) => (prev.includes(key) ? prev.filter((p) => p !== key) : [...prev, key]));
+  };
+
   const toggleEmphasis = (point: string) => {
-    setEmphasisPoints((prev) =>
-      prev.includes(point) ? prev.filter((p) => p !== point) : [...prev, point]
-    );
+    setEmphasisPoints((prev) => (prev.includes(point) ? prev.filter((p) => p !== point) : [...prev, point]));
+  };
+
+  const handleTreatmentInput = (val: string) => {
+    if (val.includes(",")) {
+      const parts = val.split(",").map((s) => s.trim()).filter(Boolean);
+      setTreatmentNames((prev) => Array.from(new Set([...prev, ...parts])));
+      setTreatmentInput("");
+    } else {
+      setTreatmentInput(val);
+    }
+  };
+
+  const handleTreatmentCommit = () => {
+    const v = treatmentInput.trim();
+    if (v) {
+      setTreatmentNames((prev) => Array.from(new Set([...prev, v])));
+      setTreatmentInput("");
+    }
+  };
+
+  const handleDoctorInput = (val: string) => {
+    if (val.includes(",")) {
+      const parts = val.split(",").map((s) => s.trim()).filter(Boolean);
+      setDoctorNames((prev) => Array.from(new Set([...prev, ...parts])));
+      setDoctorInput("");
+    } else {
+      setDoctorInput(val);
+    }
+  };
+
+  const handleDoctorCommit = () => {
+    const v = doctorInput.trim();
+    if (v) {
+      setDoctorNames((prev) => Array.from(new Set([...prev, v])));
+      setDoctorInput("");
+    }
+  };
+
+  const addTreatment = (name: string) => {
+    if (!treatmentNames.includes(name)) setTreatmentNames([...treatmentNames, name]);
+  };
+  const addDoctor = (name: string) => {
+    if (!doctorNames.includes(name)) setDoctorNames([...doctorNames, name]);
+  };
+
+  const removeTreatment = (name: string) => setTreatmentNames(treatmentNames.filter((n) => n !== name));
+  const removeDoctor = (name: string) => setDoctorNames(doctorNames.filter((n) => n !== name));
+
+  const handleFeedbackSubmit = async () => {
+    setFeedbackError("");
+    setFeedbackSuccess("");
+    if (!selectedClient) {
+      setFeedbackError("먼저 병원을 선택해주세요");
+      return;
+    }
+    const trimmed = feedbackText.trim();
+    if (trimmed.length < 3) {
+      setFeedbackError("피드백 내용을 3자 이상 입력해주세요");
+      return;
+    }
+    setFeedbackSubmitting(true);
+    try {
+      const res = await fetch("/api/review/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          hospitalName: selectedClient,
+          feedback: trimmed,
+          platforms: platforms.length > 0 ? platforms.map((p) => {
+            if (p === "naver") return "네이버플레이스";
+            if (p === "google_kr") return "구글맵";
+            if (p === "kakao") return "카카오맵";
+            return "전체";
+          }) : ["전체"],
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setFeedbackError(data.detail || data.error || "저장 실패");
+        return;
+      }
+      setFeedbackSuccess(data.message || "피드백 저장 완료");
+      setFeedbackText("");
+      setTimeout(() => setFeedbackSuccess(""), 5000);
+    } catch {
+      setFeedbackError("네트워크 오류");
+    } finally {
+      setFeedbackSubmitting(false);
+    }
   };
 
   const handleGenerate = async () => {
-    if (!selectedClient) {
-      setError("병원을 선택해주세요");
-      return;
-    }
+    if (!selectedClient) return setError("병원을 선택해주세요");
+    if (platforms.length === 0) return setError("플랫폼을 1개 이상 선택해주세요");
+    if (!count || count < 1) return setError("생성 개수는 1개 이상이어야 합니다");
+
+    const finalTreatments = treatmentInput.trim() ? [...treatmentNames, treatmentInput.trim()] : treatmentNames;
+    const finalDoctors = doctorInput.trim() ? [...doctorNames, doctorInput.trim()] : doctorNames;
+
     setError("");
     setGenerating(true);
     onLoadingChange(true);
@@ -75,22 +217,20 @@ export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelPr
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          platform,
+          platforms,
           hospitalName: selectedClient,
           emphasisPoints,
           count,
-          treatmentName: treatmentName || undefined,
-          doctorName: doctorName || undefined,
+          treatmentNames: finalTreatments.length > 0 ? finalTreatments : undefined,
+          doctorNames: finalDoctors.length > 0 ? finalDoctors : undefined,
           specialNotes: specialNotes || undefined,
         }),
       });
-
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "생성 실패");
         return;
       }
-
       onGenerate(data);
     } catch {
       setError("네트워크 오류");
@@ -100,65 +240,101 @@ export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelPr
     }
   };
 
-  const spec = getPlatformSpec(platform);
+  const treatmentSuggestions = doctorSettings?.treatmentList?.filter((t) => !treatmentNames.includes(t)) ?? [];
+  const doctorSuggestions = doctorSettings?.doctorList?.filter((d) => !doctorNames.includes(d)) ?? [];
+  const totalCount = platforms.length * count;
 
   return (
-    <div className="space-y-5">
+    <div>
       {/* 병원 선택 */}
-      <div>
-        <label className="block text-sm text-white/60 mb-2">병원 선택 *</label>
+      <div className="rs-field">
+        <label className="rs-label rs-required">병원 선택</label>
         {loadingClients ? (
-          <div className="h-11 bg-white/[0.03] rounded-lg animate-pulse" />
+          <div className="rs-skeleton" />
+        ) : clientsError ? (
+          <div className="rs-alert rs-alert--danger">
+            <strong>병원 목록 조회 실패</strong>
+            <div style={{ fontSize: 11, marginTop: 4, opacity: 0.8, wordBreak: "break-word" }}>{clientsError}</div>
+            <div style={{ fontSize: 11, marginTop: 6, opacity: 0.6 }}>
+              해결: 노션에서 해당 DB → ··· → Connections에 인테그레이션 추가
+            </div>
+          </div>
+        ) : clients.length === 0 ? (
+          <div className="rs-alert rs-alert--warning">
+            &quot;계약 중&quot; 상태 병원이 없습니다. 노션 클라이언트 DB를 확인해주세요.
+          </div>
         ) : (
           <select
+            className="rs-select"
             value={selectedClient}
             onChange={(e) => setSelectedClient(e.target.value)}
-            className="w-full h-11 bg-white/[0.05] border border-white/10 rounded-lg px-3 text-white text-sm focus:outline-none focus:border-brand-500/50 appearance-none cursor-pointer"
           >
-            <option value="" className="bg-[#0a0000]">병원을 선택하세요</option>
+            <option value="">병원을 선택하세요 ({clients.length}개)</option>
             {clients.map((c) => (
-              <option key={c.id} value={c.name} className="bg-[#0a0000]">
-                {c.name} ({c.importance})
-              </option>
+              <option key={c.id} value={c.name}>{c.name}</option>
             ))}
           </select>
         )}
       </div>
 
-      {/* 플랫폼 선택 */}
-      <div>
-        <label className="block text-sm text-white/60 mb-2">플랫폼 *</label>
-        <div className="grid grid-cols-2 gap-2">
+      {/* 피드백 제출 박스 (병원 선택 후 노출) */}
+      {selectedClient && (
+        <div className="rs-feedback-box">
+          <div className="rs-feedback-title">개선사항 제출</div>
+          <div className="rs-feedback-desc">
+            수정/개선 요청을 입력하면 다음 원고 생성에 자동 반영됩니다.
+          </div>
+          <textarea
+            className="rs-feedback-textarea"
+            value={feedbackText}
+            onChange={(e) => setFeedbackText(e.target.value)}
+            placeholder={`예: "${selectedClient} 원고에서 주차 얘기 빼고 대기 시간 쪽으로 바꿔주세요"`}
+            rows={3}
+          />
+          <button
+            type="button"
+            className="rs-feedback-submit"
+            onClick={handleFeedbackSubmit}
+            disabled={feedbackSubmitting}
+          >
+            {feedbackSubmitting ? "저장 중..." : "피드백 제출"}
+          </button>
+          {feedbackError && (
+            <div className="rs-alert rs-alert--danger" style={{ marginTop: 8 }}>
+              {feedbackError}
+            </div>
+          )}
+          {feedbackSuccess && <div className="rs-feedback-success">{feedbackSuccess}</div>}
+        </div>
+      )}
+
+      {/* 플랫폼 */}
+      <div className="rs-field">
+        <label className="rs-label rs-required">플랫폼 (다중 선택)</label>
+        <div className="rs-btn-group rs-btn-group--3">
           {PLATFORMS.map((p) => (
             <button
               key={p.key}
-              onClick={() => setPlatform(p.key)}
-              className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                platform === p.key
-                  ? "bg-brand-500/20 text-brand-400 border border-brand-500/40"
-                  : "bg-white/[0.03] text-white/50 border border-white/10 hover:border-white/20"
-              }`}
+              type="button"
+              className={`rs-toggle ${platforms.includes(p.key) ? "is-active" : ""}`}
+              onClick={() => togglePlatform(p.key)}
             >
               {p.label}
             </button>
           ))}
         </div>
-        <p className="text-xs text-white/30 mt-1.5">권장 글자수: {spec.charRange}</p>
       </div>
 
       {/* 강조 포인트 */}
-      <div>
-        <label className="block text-sm text-white/60 mb-2">강조 포인트 (복수 선택)</label>
-        <div className="flex flex-wrap gap-2">
+      <div className="rs-field">
+        <label className="rs-label">강조 포인트 (복수 선택)</label>
+        <div className="rs-chip-group">
           {EMPHASIS_POINTS.map((point) => (
             <button
               key={point}
+              type="button"
+              className={`rs-chip ${emphasisPoints.includes(point) ? "is-active" : ""}`}
               onClick={() => toggleEmphasis(point)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                emphasisPoints.includes(point)
-                  ? "bg-brand-500/20 text-brand-400 border border-brand-500/40"
-                  : "bg-white/[0.03] text-white/40 border border-white/10 hover:border-white/20"
-              }`}
             >
               {point}
             </button>
@@ -167,71 +343,135 @@ export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelPr
       </div>
 
       {/* 생성 개수 */}
-      <div>
-        <label className="block text-sm text-white/60 mb-2">생성 개수 *</label>
-        <div className="flex gap-2">
-          {COUNT_OPTIONS.map((n) => (
-            <button
-              key={n}
-              onClick={() => setCount(n)}
-              className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                count === n
-                  ? "bg-brand-500/20 text-brand-400 border border-brand-500/40"
-                  : "bg-white/[0.03] text-white/50 border border-white/10 hover:border-white/20"
-              }`}
-            >
-              {n}개
-            </button>
-          ))}
+      <div className="rs-field">
+        <label className="rs-label rs-required">생성 개수 (플랫폼별)</label>
+        <div className="rs-count-row">
+          <input
+            type="number"
+            min={1}
+            max={30}
+            value={count}
+            onChange={(e) => setCount(Math.max(1, Math.min(30, parseInt(e.target.value) || 1)))}
+            className="rs-input rs-number"
+          />
+          <span style={{ fontSize: 12, color: "var(--rs-text-dim)" }}>개</span>
+          {platforms.length > 0 && (
+            <span className="rs-count-total">
+              총 {totalCount}개 ({platforms.length} × {count})
+            </span>
+          )}
         </div>
       </div>
 
-      {/* 선택 입력 필드들 */}
-      <div className="space-y-3">
-        <div>
-          <label className="block text-xs text-white/40 mb-1">시술명 (선택)</label>
-          <input
-            type="text"
-            value={treatmentName}
-            onChange={(e) => setTreatmentName(e.target.value)}
-            placeholder="예: 보톡스, 울쎄라, 레이저토닝"
-            className="w-full h-10 bg-white/[0.03] border border-white/10 rounded-lg px-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-brand-500/50"
-          />
-        </div>
-        <div>
-          <label className="block text-xs text-white/40 mb-1">원장명 (선택)</label>
-          <input
-            type="text"
-            value={doctorName}
-            onChange={(e) => setDoctorName(e.target.value)}
-            placeholder="예: 김OO 원장님"
-            className="w-full h-10 bg-white/[0.03] border border-white/10 rounded-lg px-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-brand-500/50"
-          />
-        </div>
-        <div>
-          <label className="block text-xs text-white/40 mb-1">특이사항 (선택)</label>
-          <textarea
-            value={specialNotes}
-            onChange={(e) => setSpecialNotes(e.target.value)}
-            placeholder="예: 이벤트 진행 중, 신시술 출시, 20대 타깃"
-            rows={2}
-            className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-brand-500/50 resize-none"
-          />
-        </div>
+      {/* 시술명 */}
+      <div className="rs-field">
+        <label className="rs-label">
+          시술명
+          <span style={{ fontWeight: 400, fontSize: 11, color: "var(--rs-text-dim)", marginLeft: 6 }}>
+            쉼표 또는 Enter로 여러 개
+          </span>
+        </label>
+        {treatmentNames.length > 0 && (
+          <div className="rs-tags">
+            {treatmentNames.map((name) => (
+              <span key={name} className="rs-tag">
+                {name}
+                <button type="button" className="rs-tag-close" onClick={() => removeTreatment(name)}>×</button>
+              </span>
+            ))}
+          </div>
+        )}
+        <input
+          type="text"
+          className="rs-input"
+          value={treatmentInput}
+          onChange={(e) => handleTreatmentInput(e.target.value)}
+          onBlur={handleTreatmentCommit}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleTreatmentCommit();
+            }
+          }}
+          placeholder="예: 보톡스, 울쎄라, 레이저토닝"
+        />
+        {treatmentSuggestions.length > 0 && (
+          <div className="rs-suggestions">
+            <div className="rs-suggestions-label">노션 등록 주력시술 (클릭 추가)</div>
+            <div>
+              {treatmentSuggestions.map((t) => (
+                <button key={t} type="button" className="rs-suggestion" onClick={() => addTreatment(t)}>+ {t}</button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* 에러 메시지 */}
-      {error && (
-        <p className="text-red-400 text-sm bg-red-500/10 rounded-lg px-3 py-2">{error}</p>
-      )}
+      {/* 원장명 */}
+      <div className="rs-field">
+        <label className="rs-label">
+          원장명
+          <span style={{ fontWeight: 400, fontSize: 11, color: "var(--rs-text-dim)", marginLeft: 6 }}>
+            쉼표 또는 Enter로 여러 명
+          </span>
+        </label>
+        {doctorNames.length > 0 && (
+          <div className="rs-tags">
+            {doctorNames.map((name) => (
+              <span key={name} className="rs-tag">
+                {name}
+                <button type="button" className="rs-tag-close" onClick={() => removeDoctor(name)}>×</button>
+              </span>
+            ))}
+          </div>
+        )}
+        <input
+          type="text"
+          className="rs-input"
+          value={doctorInput}
+          onChange={(e) => handleDoctorInput(e.target.value)}
+          onBlur={handleDoctorCommit}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleDoctorCommit();
+            }
+          }}
+          placeholder="예: 김OO 원장님, 이OO 원장님"
+        />
+        {doctorSuggestions.length > 0 && (
+          <div className="rs-suggestions">
+            <div className="rs-suggestions-label">노션 등록 원장 (클릭 추가)</div>
+            <div>
+              {doctorSuggestions.map((d) => (
+                <button key={d} type="button" className="rs-suggestion" onClick={() => addDoctor(d)}>+ {d}</button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
-      {/* 생성 버튼 */}
+      {/* 특이사항 */}
+      <div className="rs-field">
+        <label className="rs-label">특이사항 (선택)</label>
+        <textarea
+          className="rs-textarea"
+          value={specialNotes}
+          onChange={(e) => setSpecialNotes(e.target.value)}
+          placeholder="예: 이벤트 진행 중, 신시술 출시, 20대 타깃"
+          rows={2}
+        />
+      </div>
+
+      {error && <div className="rs-alert rs-alert--danger">{error}</div>}
+
       <button
+        type="button"
+        className="rs-generate"
         onClick={handleGenerate}
         disabled={generating}
-        className="w-full py-3.5 rounded-xl font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-gradient-to-r from-brand-500 to-brand-600 text-white hover:from-brand-400 hover:to-brand-500 shadow-lg shadow-brand-500/20"
       >
-        {generating ? "생성 중..." : `리뷰 원고 ${count}개 생성`}
+        {generating ? "생성 중..." : `리뷰 원고 ${totalCount}개 생성`}
       </button>
     </div>
   );
