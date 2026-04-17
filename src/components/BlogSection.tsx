@@ -37,11 +37,11 @@ export default function BlogSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))",
-            gap: "1.2rem",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "1rem",
           }}
         >
-          {posts.map((post) => (
+          {posts.slice(0, 8).map((post) => (
             <a
               key={post.link}
               href={post.link}
@@ -103,26 +103,6 @@ export default function BlogSection() {
           ))}
         </div>
 
-        {/* More button */}
-        <div style={{ textAlign: "center", marginTop: "2rem" }}>
-          <a
-            href="https://blog.naver.com/mimichelin"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "10px 24px",
-              border: "1px solid rgba(255,255,255,0.15)",
-              color: "rgba(255,255,255,0.6)",
-              textDecoration: "none",
-              fontSize: "0.85rem",
-            }}
-          >
-            블로그 더보기 →
-          </a>
-        </div>
       </div>
     </section>
   );
