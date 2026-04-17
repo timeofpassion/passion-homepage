@@ -6,16 +6,6 @@ interface BlogPost {
   title: string;
   link: string;
   thumbnail: string;
-  pubDate: string;
-}
-
-function formatDate(dateStr: string) {
-  try {
-    const d = new Date(dateStr);
-    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
-  } catch {
-    return "";
-  }
 }
 
 export default function BlogSection() {
@@ -78,42 +68,28 @@ export default function BlogSection() {
               }}
             >
               {/* Thumbnail */}
-              {post.thumbnail ? (
-                <div
-                  style={{
-                    width: "100%",
-                    height: 180,
-                    backgroundImage: `url(${post.thumbnail})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                />
-              ) : (
-                <div
-                  style={{
-                    width: "100%",
-                    height: 180,
-                    background: "rgba(204,0,0,0.1)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "rgba(255,255,255,0.2)",
-                    fontSize: "0.8rem",
-                  }}
-                >
-                  열정의시간
-                </div>
-              )}
+              <div style={{ width: "100%", height: 180, overflow: "hidden", background: "rgba(204,0,0,0.08)" }}>
+                {post.thumbnail ? (
+                  <img
+                    src={post.thumbnail}
+                    alt={post.title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.2)", fontSize: "0.8rem" }}>
+                    열정의시간
+                  </div>
+                )}
+              </div>
 
-              {/* Content */}
-              <div style={{ padding: "1rem 1.2rem 1.2rem", flex: 1, display: "flex", flexDirection: "column" }}>
+              {/* Title */}
+              <div style={{ padding: "1rem 1.2rem 1.2rem" }}>
                 <h3
                   style={{
                     fontSize: "0.9rem",
                     fontWeight: 600,
                     lineHeight: 1.5,
-                    marginBottom: 8,
-                    flex: 1,
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
@@ -122,9 +98,6 @@ export default function BlogSection() {
                 >
                   {post.title}
                 </h3>
-                <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.3)" }}>
-                  {formatDate(post.pubDate)}
-                </span>
               </div>
             </a>
           ))}

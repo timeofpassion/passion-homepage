@@ -209,24 +209,33 @@
   color: var(--rs-accent);
 }
 
-/* ============ 입력 요소 ============ */
+/* ============ 입력 요소 (어두운 배경 + 흰색 글씨) ============ */
 .rs-select,
 .rs-input,
 .rs-textarea {
   width: 100%;
-  background: var(--rs-surface-2);
-  border: 1px solid var(--rs-border);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   padding: 10px 12px;
   font-size: 14px;
-  color: var(--rs-text);
-  transition: border-color 0.15s;
+  color: #ffffff;
+  transition: all 0.15s;
+}
+
+.rs-select:hover,
+.rs-input:hover,
+.rs-textarea:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.09);
 }
 
 .rs-select:focus,
 .rs-input:focus,
 .rs-textarea:focus {
   border-color: var(--rs-accent);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(255, 59, 59, 0.2);
 }
 
 .rs-select {
@@ -234,7 +243,7 @@
   appearance: none;
   -webkit-appearance: none;
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white' opacity='0.5'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23ffffff'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 16px;
@@ -242,8 +251,8 @@
 }
 
 .rs-select option {
-  background: var(--rs-surface-2);
-  color: var(--rs-text);
+  background: #1f232c;
+  color: #ffffff;
 }
 
 .rs-input {
@@ -252,7 +261,7 @@
 
 .rs-input::placeholder,
 .rs-textarea::placeholder {
-  color: var(--rs-text-dim);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .rs-textarea {
@@ -653,20 +662,33 @@
 }
 
 .rs-feedback-textarea {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--rs-border);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 13px;
-  color: var(--rs-text);
+  color: #ffffff;
   resize: none;
   min-height: 72px;
   margin-bottom: 8px;
   width: 100%;
+  transition: all 0.15s;
+}
+
+.rs-feedback-textarea:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.rs-feedback-textarea:focus {
+  border-color: var(--rs-accent);
+  box-shadow: 0 0 0 3px rgba(255, 59, 59, 0.2);
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .rs-feedback-textarea::placeholder {
-  color: var(--rs-text-dim);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .rs-feedback-submit {

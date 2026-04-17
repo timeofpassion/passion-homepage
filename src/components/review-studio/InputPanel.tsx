@@ -55,7 +55,7 @@ export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelPr
 
   const [platforms, setPlatforms] = useState<string[]>(["naver"]);
   const [emphasisPoints, setEmphasisPoints] = useState<string[]>(["결과"]);
-  const [count, setCount] = useState(3);
+  const [count, setCount] = useState<number | "">("");
 
   const [treatmentNames, setTreatmentNames] = useState<string[]>([]);
   const [treatmentInput, setTreatmentInput] = useState("");
@@ -203,7 +203,8 @@ export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelPr
   const handleGenerate = async () => {
     if (!selectedClient) return setError("병원을 선택해주세요");
     if (platforms.length === 0) return setError("플랫폼을 1개 이상 선택해주세요");
-    if (!count || count < 1) return setError("생성 개수는 1개 이상이어야 합니다");
+    const numCount = typeof count === "number" ? count : 0;
+    if (!numCount || numCount < 1) return setError("생성 개수를 입력해주세요");
 
     const finalTreatments = treatmentInput.trim() ? [...treatmentNames, treatmentInput.trim()] : treatmentNames;
     const finalDoctors = doctorInput.trim() ? [...doctorNames, doctorInput.trim()] : doctorNames;
@@ -220,7 +221,7 @@ export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelPr
           platforms,
           hospitalName: selectedClient,
           emphasisPoints,
-          count,
+          count: numCount,
           treatmentNames: finalTreatments.length > 0 ? finalTreatments : undefined,
           doctorNames: finalDoctors.length > 0 ? finalDoctors : undefined,
           specialNotes: specialNotes || undefined,
@@ -242,7 +243,8 @@ export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelPr
 
   const treatmentSuggestions = doctorSettings?.treatmentList?.filter((t) => !treatmentNames.includes(t)) ?? [];
   const doctorSuggestions = doctorSettings?.doctorList?.filter((d) => !doctorNames.includes(d)) ?? [];
-  const totalCount = platforms.length * count;
+  const countNum = typeof count === "number" ? count : 0;
+  const totalCount = platforms.length * countNum;
 
   return (
     <div>
@@ -351,13 +353,22 @@ export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelPr
             min={1}
             max={30}
             value={count}
-            onChange={(e) => setCount(Math.max(1, Math.min(30, parseInt(e.target.value) || 1)))}
+            onChange={(e) => {
+              const v = e.target.value;
+              if (v === "") {
+                setCount("");
+              } else {
+                const n = parseInt(v);
+                if (!isNaN(n)) setCount(Math.max(1, Math.min(30, n)));
+              }
+            }}
+            placeholder="개수"
             className="rs-input rs-number"
           />
           <span style={{ fontSize: 12, color: "var(--rs-text-dim)" }}>개</span>
-          {platforms.length > 0 && (
+          {platforms.length > 0 && countNum > 0 && (
             <span className="rs-count-total">
-              총 {totalCount}개 ({platforms.length} × {count})
+              총 {totalCount}개 ({platforms.length} × {countNum})
             </span>
           )}
         </div>
@@ -471,7 +482,7 @@ export default function InputPanel({ onGenerate, onLoadingChange }: InputPanelPr
         onClick={handleGenerate}
         disabled={generating}
       >
-        {generating ? "생성 중..." : `리뷰 원고 ${totalCount}개 생성`}
+        {generating ? "생성 중..." : totalCount > 0 ? `리뷰 원고 ${totalCount}개 생성` : "리뷰 원고 생성"}
       </button>
     </div>
   );
