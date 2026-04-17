@@ -68,7 +68,7 @@ export default function BlogSection() {
               }}
             >
               {/* Thumbnail */}
-              <div style={{ width: "100%", height: 180, overflow: "hidden", background: "rgba(204,0,0,0.08)" }}>
+              <div style={{ width: "100%", aspectRatio: "1/1", overflow: "hidden", background: "rgba(204,0,0,0.08)" }}>
                 {post.thumbnail ? (
                   <img
                     src={post.thumbnail}
