@@ -1,22 +1,13 @@
 import { NextResponse } from "next/server";
-import { nanoid } from "nanoid";
-import { saveQuote, type QuoteRequest } from "@/lib/notion-quote";
-import { sendQuoteEmail } from "@/lib/email";
+
+const INTRANET_URL = process.env.INTRANET_API_URL ?? "https://intranet.timeofpassion.com";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const {
-      customerName,
-      email,
-      phone,
-      hospitalName,
-      memo,
-      selectedProducts,
-    } = body;
+    const { customerName, email, phone, hospitalName, memo, selectedProducts } = body;
 
-    // 유효성 검사
     if (!customerName || !email || !selectedProducts?.length) {
       return NextResponse.json(
         { error: "필수 정보가 누락되었습니다." },
@@ -24,62 +15,35 @@ export async function POST(request: Request) {
       );
     }
 
-    // 금액 계산
-    const subtotal = selectedProducts.reduce(
-      (sum: number, p: { price: number }) => sum + p.price,
-      0
-    );
-    const vat = Math.round(subtotal * 0.1);
-    const total = subtotal + vat;
+    // 인트라넷에 저장
+    const res = await fetch(`${INTRANET_URL}/api/public/quote/request`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ customerName, email, phone, hospitalName, memo, selectedProducts }),
+    });
 
-    const quoteId = nanoid(10);
+    const data = await res.json();
 
-    const quoteRequest: QuoteRequest = {
-      customerName,
-      email,
-      phone: phone || "",
-      hospitalName: hospitalName || "",
-      memo: memo || "",
-      selectedProducts,
-      subtotal,
-      vat,
-      total,
-    };
-
-    // 1) 노션에 저장
-    await saveQuote(quoteId, quoteRequest);
-
-    // 2) 이메일 발송 (Resend API 키가 있을 때만, PDF 없이)
-    let emailSent = false;
-    if (process.env.RESEND_API_KEY) {
-      try {
-        await sendQuoteEmail({
-          to: email,
-          customerName,
-          hospitalName: hospitalName || customerName,
-          total,
-          quoteId,
-        });
-        emailSent = true;
-      } catch (emailErr) {
-        console.error("Email send failed:", emailErr);
-      }
+    if (!res.ok) {
+      return NextResponse.json(
+        { error: data.error ?? "처리 오류" },
+        { status: res.status }
+      );
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.timeofpassion.com";
 
     return NextResponse.json({
       success: true,
-      quoteId,
-      reviewUrl: `${baseUrl}/quote/${quoteId}`,
-      total,
-      emailSent,
+      quoteId: data.requestId,
+      reviewUrl: `${baseUrl}/quote/${data.requestId}`,
+      total: data.total,
+      emailSent: false,
     });
   } catch (err) {
     console.error("Quote request failed:", err);
-    const msg = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
-      { error: "견적 요청 처리 중 오류가 발생했습니다.", detail: msg },
+      { error: "견적 요청 처리 중 오류가 발생했습니다." },
       { status: 500 }
     );
   }
