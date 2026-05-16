@@ -18,6 +18,7 @@ export interface Product {
   cost: number;
   description: string;
   team: string;
+  notionUrl: string;
 }
 
 export interface QuoteRequest {
@@ -79,6 +80,7 @@ export async function getActiveProducts(): Promise<Product[]> {
       cost: props["예상 원가"]?.number || 0,
       description: text(props["상품 설명"]),
       team: props["담당 팀"]?.select?.name || "",
+      notionUrl: page.url || "",
     };
   });
 }
