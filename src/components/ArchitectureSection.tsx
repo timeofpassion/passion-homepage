@@ -1,12 +1,10 @@
-import OrgChart from "./OrgChart";
+'use client';
 
-const teams = [
-  { id: "SYS.01", title: "국내마케팅팀", desc: "블로그 SEO · 플레이스 · 광고 · 플랫폼 운영" },
-  { id: "SYS.02", title: "디자인팀", desc: "카드뉴스 · SNS 이미지 · 배너 · 브랜딩" },
-  { id: "SYS.03", title: "영상팀", desc: "풀영상 · 숏츠 · 유튜브 · 틱톡 콘텐츠" },
-  { id: "SYS.04", title: "일본 마케팅팀", desc: "라인 · 인스타 · 틱톡 현지 운영" },
-  { id: "SYS.05", title: "중화권 마케팅팀", desc: "샤오홍슈 · 웨이보 · 더우인 · 왕홍 KOL" },
-];
+import OrgChart from "./OrgChart";
+import Link from "next/link";
+import { servicesData } from "@/data/services";
+
+const teams = servicesData;
 
 export default function ArchitectureSection() {
   return (
@@ -86,20 +84,39 @@ export default function ArchitectureSection() {
           }}
         >
           {teams.map((team) => (
-            <div key={team.id} className="glass-card" style={{ padding: "2rem", position: "relative" }}>
-              <div className="tech-border" style={{ position: "absolute", inset: 0 }} />
-              <span
-                className="font-mono-sys"
-                style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", display: "block", marginBottom: 20 }}
-              >
-                {team.id}
-              </span>
-              <h3 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: 12 }}>{team.title}</h3>
-              <div style={{ width: 40, height: 1, background: "rgba(255,255,255,0.2)", marginBottom: 12 }} />
-              <p style={{ color: "rgba(255,255,255,0.6)", fontWeight: 300, lineHeight: 1.6, fontSize: "0.9rem" }}>
-                {team.desc}
-              </p>
-            </div>
+            <Link key={team.id} href={`/services/${team.id}`} style={{ textDecoration: "none" }}>
+              <div className="glass-card" style={{
+                padding: "2rem",
+                position: "relative",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                height: "100%"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-4px)";
+                e.currentTarget.style.borderColor = "rgba(255,215,0,0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+              }}>
+                <div className="tech-border" style={{ position: "absolute", inset: 0 }} />
+                <span
+                  className="font-mono-sys"
+                  style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", display: "block", marginBottom: 20 }}
+                >
+                  {team.sysId}
+                </span>
+                <h3 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: 12 }}>{team.title}</h3>
+                <div style={{ width: 40, height: 1, background: "rgba(255,255,255,0.2)", marginBottom: 12 }} />
+                <p style={{ color: "rgba(255,255,255,0.6)", fontWeight: 300, lineHeight: 1.6, fontSize: "0.9rem" }}>
+                  {team.shortDesc}
+                </p>
+                <div style={{ marginTop: "1.5rem", color: "#FFD700", fontSize: "0.85rem", fontWeight: 600, opacity: 0.8 }}>
+                  자세히 보기 →
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
 
