@@ -1,4 +1,20 @@
-export const servicesData = [
+interface PortfolioItem {
+  title: string;
+  desc: string;
+  image?: string;
+}
+
+interface ServiceData {
+  id: string;
+  sysId: string;
+  title: string;
+  shortDesc: string;
+  fullDesc: string;
+  services: { name: string; desc: string }[];
+  portfolio: PortfolioItem[];
+}
+
+export const servicesData: ServiceData[] = [
   {
     id: "domestic-marketing",
     sysId: "SYS.01",
