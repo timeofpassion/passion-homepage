@@ -1,10 +1,4 @@
-'use client';
-
 import OrgChart from "./OrgChart";
-import Link from "next/link";
-import { servicesData } from "@/data/services";
-
-const teams = servicesData;
 
 export default function ArchitectureSection() {
   return (
@@ -47,7 +41,7 @@ export default function ArchitectureSection() {
             <p style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", color: "rgba(255,255,255,0.75)", fontWeight: 300, lineHeight: 1.7 }}>
               그래서 원장님들은 업체를 3~4개 쓰고,
               <br />
-              커뮤니케이션 비용과 조율 비용이 마케팅 비용만큼 나갑니다.
+              커뮤니케이션 비용과 조율 비용이<br className="sm:hidden" /> 마케팅 비용만큼 나갑니다.
             </p>
           </div>
         </div>
@@ -73,52 +67,6 @@ export default function ArchitectureSection() {
 
         {/* Org Chart */}
         <OrgChart />
-
-        {/* Team grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: 20,
-            marginTop: "3rem",
-          }}
-        >
-          {teams.map((team) => (
-            <Link key={team.id} href={`/services/${team.id}`} style={{ textDecoration: "none" }}>
-              <div className="glass-card" style={{
-                padding: "2rem",
-                position: "relative",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-                height: "100%"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.borderColor = "rgba(255,215,0,0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-              }}>
-                <div className="tech-border" style={{ position: "absolute", inset: 0 }} />
-                <span
-                  className="font-mono-sys"
-                  style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", display: "block", marginBottom: 20 }}
-                >
-                  {team.sysId}
-                </span>
-                <h3 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: 12 }}>{team.title}</h3>
-                <div style={{ width: 40, height: 1, background: "rgba(255,255,255,0.2)", marginBottom: 12 }} />
-                <p style={{ color: "rgba(255,255,255,0.6)", fontWeight: 300, lineHeight: 1.6, fontSize: "0.9rem" }}>
-                  {team.shortDesc}
-                </p>
-                <div style={{ marginTop: "1.5rem", color: "#FFD700", fontSize: "0.85rem", fontWeight: 600, opacity: 0.8 }}>
-                  자세히 보기 →
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
 
         {/* Bottom section */}
         <div style={{ textAlign: "center", marginTop: "6rem" }}>

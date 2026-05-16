@@ -22,10 +22,10 @@ export default function CTASection() {
             마케팅을 처음 시작하려는 원장님도,
           </p>
           <p style={{ fontSize: "clamp(1rem, 2vw, 1.3rem)", color: "rgba(255,255,255,0.7)", fontWeight: 300 }}>
-            기존 업체에 실망하고 교체를 고민 중인 원장님도,
+            기존 업체에 실망하고<br className="sm:hidden" /> 교체를 고민 중인 원장님도,
           </p>
           <p style={{ fontSize: "clamp(1rem, 2vw, 1.3rem)", color: "#fff", fontWeight: 300 }}>
-            해외환자 유치를 처음 시도해보려는 원장님도.
+            해외환자 유치를 처음<br className="sm:hidden" /> 시도해보려는 원장님도.
           </p>
         </div>
 
@@ -38,7 +38,7 @@ export default function CTASection() {
             <div style={{ position: "absolute", bottom: -1, left: -1, width: 14, height: 14, borderBottom: "2px solid #cc0000", borderLeft: "2px solid #cc0000" }} />
             <div style={{ position: "absolute", bottom: -1, right: -1, width: 14, height: 14, borderBottom: "2px solid #cc0000", borderRight: "2px solid #cc0000" }} />
             <h3 style={{ fontSize: "clamp(1.2rem, 3vw, 2rem)", fontWeight: 700, position: "relative", zIndex: 10 }}>
-              <span className="text-glow" style={{ color: "#cc0000" }}>열정의시간</span>은 현재 상황 진단부터 시작합니다.
+              <span className="text-glow" style={{ color: "#cc0000" }}>열정의시간</span>은<br className="sm:hidden" /> 현재 상황 진단부터 시작합니다.
             </h3>
           </div>
         </div>
@@ -85,7 +85,7 @@ export default function CTASection() {
               &ldquo;상담은 부담 없습니다.
             </p>
             <p style={{ fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)", fontWeight: 700, lineHeight: 1.4 }}>
-              30분 안에 지금 가장 필요한 것 하나를 짚어드립니다.&rdquo;
+              30분 안에 지금 가장 필요한 것<br className="sm:hidden" /> 하나를 짚어드립니다.&rdquo;
             </p>
           </div>
         </div>

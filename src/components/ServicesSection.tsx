@@ -70,7 +70,6 @@ function ServiceCard({ svc, idx }: { svc: Service; idx: number }) {
       {/* Timeline number */}
       <div
         style={{
-          display: "flex",
           flexDirection: "column",
           alignItems: "center",
           width: 70,
@@ -100,7 +99,7 @@ function ServiceCard({ svc, idx }: { svc: Service; idx: number }) {
       </div>
 
       {/* Card content */}
-      <div className="glass-card--service" style={{ flex: 1, padding: "2rem 2.5rem", position: "relative", overflow: "hidden", marginLeft: 20 }}>
+      <div className="glass-card--service ml-0 sm:ml-5" style={{ flex: 1, padding: "2rem 2.5rem", position: "relative", overflow: "hidden" }}>
         <div className="tech-border" style={{ position: "absolute", inset: 0 }} />
 
         {/* Background number */}
