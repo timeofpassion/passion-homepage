@@ -29,6 +29,12 @@ const clients = [
     { name: "Babitalk", logo: "/clients/logo_babitalk.png" },
     { name: "SMPS", logo: "/clients/logo_smps.png" },
   ],
+  [
+    { name: "글로리의원", logo: "/clients/logo_glory.png" },
+    { name: "더리즈의원", logo: "/clients/logo_theliz.png" },
+    { name: "랩인큐브", logo: "/clients/logo_labincube.png" },
+    { name: "이안한방병원", logo: "/clients/logo_eahn.png" },
+  ],
 ];
 
 export default function ClientsSection() {
@@ -46,26 +52,26 @@ export default function ClientsSection() {
         </div>
 
         {/* Logo grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", maxWidth: 1000, margin: "0 auto" }}>
+        <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-4" style={{ maxWidth: 1000, margin: "0 auto" }}>
           {clients.flat().map((client) => (
             <div
               key={client.name}
+              className="p-2 md:p-4"
               style={{
                 background: "#ffffff",
                 borderRadius: 8,
-                padding: "1.2rem 1rem",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                minHeight: 70,
+                minHeight: 80,
               }}
             >
               <img
                 src={client.logo}
                 alt={client.name}
                 style={{
-                  maxHeight: 40,
-                  maxWidth: "85%",
+                  maxHeight: 55,
+                  maxWidth: "90%",
                   objectFit: "contain",
                 }}
               />
