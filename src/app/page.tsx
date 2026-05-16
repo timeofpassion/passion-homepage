@@ -2,7 +2,6 @@ import BackgroundEffects from "@/components/BackgroundEffects";
 import SystemLabels from "@/components/SystemLabels";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import DiagnosticsSection from "@/components/DiagnosticsSection";
 import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -22,7 +21,6 @@ export default function Home() {
       <main className="relative z-10">
         <Header />
         <HeroSection />
-        <DiagnosticsSection />
         <ClientsSection />
         <ArchitectureSection />
         <ServicesSection />
