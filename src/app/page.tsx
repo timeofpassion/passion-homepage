@@ -9,6 +9,7 @@ import ServiceTeamsSection from "@/components/ServiceTeamsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
 import CTASection from "@/components/CTASection";
+import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
 // import Popup from "@/components/Popup"; // 팝업 내용 준비되면 주석 해제
@@ -29,6 +30,7 @@ export default function Home() {
         <TestimonialsSection />
         <BlogSection />
         <CTASection />
+        <Footer />
       </main>
 
       {/* <Popup /> */}{/* 팝업 내용 준비되면 주석 해제 */}

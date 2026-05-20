@@ -1,21 +1,97 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+const NAV_ITEMS: { label: string; href: string; quote?: boolean }[] = [
+  { label: "서비스", href: "/#services" },
+  { label: "팀", href: "/#service-teams" },
+  { label: "후기", href: "/#testimonials" },
+  { label: "블로그", href: "/#blog" },
+  { label: "견적 의뢰", href: "/quote", quote: true },
+];
+
 export default function Header() {
+  const [scrolled, setScrolled] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 80);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!drawerOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDrawerOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [drawerOpen]);
+
   return (
-    <header
-      style={{
-        position: "fixed",
-        top: 0,
-        width: "100%",
-        padding: "1.5rem 2rem",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        zIndex: 20,
-        background: "linear-gradient(to bottom, rgba(10,0,0,0.6), transparent)",
-      }}
-    >
-      <div style={{ fontWeight: 800, fontSize: "1.1rem", letterSpacing: "0.02em" }}>
-        열정의시간
+    <>
+      <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+        <Link href="/" className="site-header__brand" aria-label="열정의시간 홈">
+          열정의시간
+        </Link>
+
+        <nav className="site-header__nav" aria-label="주 메뉴">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={item.quote ? "site-header__nav-quote" : undefined}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <button
+          type="button"
+          className="site-header__burger"
+          aria-label="메뉴 열기"
+          aria-expanded={drawerOpen}
+          onClick={() => setDrawerOpen(true)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </header>
+
+      <div
+        className={`site-drawer ${drawerOpen ? "is-open" : ""}`}
+        aria-hidden={!drawerOpen}
+      >
+        <button
+          type="button"
+          className="site-drawer__close"
+          aria-label="메뉴 닫기"
+          onClick={() => setDrawerOpen(false)}
+        >
+          ✕
+        </button>
+        <nav className="site-drawer__nav" aria-label="모바일 메뉴">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={item.quote ? "site-drawer__nav-quote" : undefined}
+              onClick={() => setDrawerOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
       </div>
-    </header>
+    </>
   );
 }

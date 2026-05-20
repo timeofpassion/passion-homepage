@@ -21,7 +21,7 @@ export default function BlogSection() {
   if (posts.length === 0) return null;
 
   return (
-    <section style={{ position: "relative", zIndex: 20, padding: "6rem 0" }}>
+    <section id="blog" style={{ position: "relative", zIndex: 20, padding: "6rem 0" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>

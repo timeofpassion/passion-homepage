@@ -147,7 +147,7 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 
 export default function TestimonialsSection() {
   return (
-    <section style={{ position: "relative", zIndex: 20, padding: "8rem 0" }}>
+    <section id="testimonials" style={{ position: "relative", zIndex: 20, padding: "8rem 0" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>

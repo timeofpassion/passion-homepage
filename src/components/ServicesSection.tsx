@@ -189,7 +189,7 @@ function ServiceCard({ svc, idx }: { svc: Service; idx: number }) {
 
 export default function ServicesSection() {
   return (
-    <section style={{ position: "relative", zIndex: 20, padding: "8rem 0" }}>
+    <section id="services" style={{ position: "relative", zIndex: 20, padding: "8rem 0" }}>
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>
