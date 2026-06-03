@@ -545,7 +545,6 @@ body {
   color: #ffffff;
   background-size: cover;
   background-position: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   transition: flex-grow 0.55s cubic-bezier(0.16, 1, 0.3, 1),
     background 0.55s ease;
 }
@@ -553,17 +552,10 @@ body {
 @media (min-width: 900px) {
   .group-portal__panel {
     padding: 3rem 1.5rem;
-    border-bottom: none;
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
   }
   .group-portal__panel:hover {
     flex-grow: 1.9;
   }
-}
-
-.group-portal__panel:last-child {
-  border-bottom: none;
-  border-right: none;
 }
 
 /* 배경 사진 */
