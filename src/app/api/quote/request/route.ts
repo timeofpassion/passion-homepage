@@ -188,7 +188,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const reviewUrl = `${BASE_URL}/quote/${data.requestId}`;
+    const reviewUrl = `${BASE_URL}/time/quote/${data.requestId}`;
 
     // 견적 금액 계산
     const subtotal = selectedProducts.reduce(

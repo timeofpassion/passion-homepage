@@ -1,73 +1,114 @@
-import BackgroundEffects from "@/components/BackgroundEffects";
-import SystemLabels from "@/components/SystemLabels";
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import ClientsSection from "@/components/ClientsSection";
-import ArchitectureSection from "@/components/ArchitectureSection";
-import ServicesSection from "@/components/ServicesSection";
-import ServiceTeamsSection from "@/components/ServiceTeamsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import BlogSection from "@/components/BlogSection";
-import CTASection from "@/components/CTASection";
-import Footer from "@/components/Footer";
-import FixedCTA from "@/components/FixedCTA";
-import KakaoFloat from "@/components/KakaoFloat";
-// import Popup from "@/components/Popup"; // 팝업 내용 준비되면 주석 해제
+import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+type Company = {
+  num: string;
+  name: string;
+  en: string;
+  desc: string;
+  href: string;
+  modifier: "time" | "people" | "space";
+  soon?: boolean;
+};
+
+const COMPANIES: Company[] = [
+  {
+    num: "01 / 時間",
+    name: "열정의시간",
+    en: "TIME",
+    desc: "국내·해외 병의원 전문마케팅",
+    href: "/time",
+    modifier: "time",
+  },
+  {
+    num: "02 / 人間",
+    name: "열정의사람들",
+    en: "PEOPLE",
+    desc: "글로벌마케팅·인플루언서 전문마케팅",
+    href: "/people",
+    modifier: "people",
+    soon: true,
+  },
+  {
+    num: "03 / 空間",
+    name: "열정의공간",
+    en: "SPACE",
+    desc: "새로운 공간비즈니스",
+    href: "/space",
+    modifier: "space",
+    soon: true,
+  },
+];
+
+export default function GroupPortal() {
   return (
     <>
-      <BackgroundEffects />
-      <SystemLabels />
+      <div className="group-portal">
+        {/* 그룹 아이덴티티 패널 */}
+        <div className="group-portal__panel group-portal__panel--brand">
+          <div className="group-portal__inner">
+            <Image
+              src="/logo_passion.png"
+              alt="PASSION GROUP"
+              width={132}
+              height={132}
+              className="group-portal__logo"
+              priority
+            />
+            <div className="group-portal__grouptitle">
+              PASSION
+              <br />
+              GROUP
+            </div>
+            <p className="group-portal__grouptag">
+              열정으로 시간 · 사람 · 공간을 잇다
+            </p>
+          </div>
+        </div>
 
-      <main className="relative z-10">
-        <Header />
-        <HeroSection />
-        <ClientsSection />
-        <ArchitectureSection />
-        <ServicesSection />
-        <ServiceTeamsSection />
-        <TestimonialsSection />
-        <BlogSection />
-        <CTASection />
-        <Footer />
-      </main>
+        {/* 3개 회사 패널 */}
+        {COMPANIES.map((c) => (
+          <Link
+            key={c.href}
+            href={c.href}
+            className={`group-portal__panel group-portal__panel--${c.modifier}`}
+            aria-label={`${c.name} ${c.soon ? "준비중" : "바로가기"}`}
+          >
+            {c.soon && <span className="group-portal__badge">COMING SOON</span>}
+            <div className="group-portal__inner">
+              <span className="group-portal__num">{c.num}</span>
+              <span className="group-portal__name">{c.name}</span>
+              <span className="group-portal__en">{c.en}</span>
+              <p className="group-portal__desc">{c.desc}</p>
+              <span
+                className={`group-portal__cta${
+                  c.soon ? " group-portal__cta--soon" : ""
+                }`}
+              >
+                {c.soon ? "준비중" : "홈페이지 바로가기"} →
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
 
-      {/* <Popup /> */}{/* 팝업 내용 준비되면 주석 해제 */}
-      <FixedCTA />
-      <KakaoFloat />
-
-      {/* SEO: 검색엔진 크롤러용 숨김 텍스트 (시맨틱 콘텐츠) */}
+      {/* SEO: 그룹·회사 키워드 노출 (검색엔진 크롤러용) */}
       <div className="sr-only" aria-hidden="false">
-        <h1>열정의시간 - 병원 마케팅 전문 에이전시</h1>
+        <h1>PASSION GROUP — 열정으로 시간·사람·공간을 잇다</h1>
         <p>
-          열정의시간은 13년의 노하우를 가진 병원 마케팅 전문 에이전시입니다.
-          국내 통합 마케팅(블로그 SEO, 영상 제작, SNS 운영, 네이버 플레이스, 바이럴 마케팅)부터
-          해외환자 유치 마케팅(일본 마케팅, 중국 마케팅, 대만 마케팅)까지 원스톱으로 제공합니다.
+          PASSION GROUP(열정 그룹)은 열정의시간, 열정의사람들, 열정의공간 세 회사로 구성된 마케팅 전문 그룹입니다.
         </p>
-        <h2>국내 마케팅 서비스</h2>
+        <h2>열정의시간</h2>
         <p>
-          병원 블로그 SEO, 숏츠 영상 제작, 유튜브 채널 운영, 인스타그램 관리,
-          강남언니·바비톡·여신티켓 플랫폼 대행, 네이버 플레이스 최적화, 병원 광고 대행.
-          마케팅 PM이 병원 인하우스 역할을 수행하며 의료광고 심의까지 대행합니다.
+          국내·해외 병의원 전문마케팅 기업. 13년 노하우로 국내 통합 마케팅부터 일본·중국·대만 해외환자 유치까지. 자세히 보기는 열정의시간 홈페이지(/time)에서 확인하세요.
         </p>
-        <h2>해외 마케팅 서비스</h2>
+        <h2>열정의사람들</h2>
         <p>
-          일본팀: 라인, 인스타그램, 틱톡 기반 현지화 콘텐츠 운영.
-          중국팀: 샤오홍슈, 웨이보, 더우인, 왕홍 KOL 직접 섭외 및 운영.
-          대만팀: 현지 파트너 네트워크 활용 마케팅.
-          모든 채널과 계정은 클리닉 소유로 개설되어 에이전시 종속이 없습니다.
+          글로벌마케팅과 인플루언서 국내해외 전문마케팅 기업. (준비중)
         </p>
-        <h2>해외환자 유치 프로세스</h2>
+        <h2>열정의공간</h2>
         <p>
-          해외환자 유치업 등록 기반 합법적 프로세스 운영, 통역, 픽업, 상담 스크립트,
-          CS 매뉴얼 제공, 국가별 플랫폼 리뷰 관리. 초기 세팅 완료 후 3개월 내 첫 해외 환자 내원을 목표로 합니다.
-        </p>
-        <h2>병원 마케팅 에이전시 열정의시간에 문의하기</h2>
-        <p>
-          무료 전략 상담을 통해 현재 마케팅 비용 누수 진단, 채널 우선순위 분석,
-          해외 진출 최적 루트 설계, 월 예산별 현실적 성과 예측을 받아보세요.
-          카카오톡 채널: @timfofpassion
+          새로운 공간비즈니스를 준비하고 있는 기업. (준비중)
         </p>
       </div>
     </>

@@ -26,7 +26,7 @@ export default function FixedCTA() {
         pointerEvents: visible ? "auto" : "none",
       }}
     >
-      <Link href="/quote" className="cta-float font-mono-sys" style={{ textDecoration: "none" }}>
+      <Link href="/time/quote" className="cta-float font-mono-sys" style={{ textDecoration: "none" }}>
         견적 의뢰하기
       </Link>
     </div>

@@ -19,16 +19,19 @@ export default function Footer() {
           <h4>SERVICES</h4>
           <p>
             <span style={{ display: "block" }}>
-              <Link href="/#services">국내 통합 마케팅</Link>
+              <Link href="/time#services">국내 통합 마케팅</Link>
             </span>
             <span style={{ display: "block" }}>
-              <Link href="/#services">해외 마케팅</Link>
+              <Link href="/time#services">해외 마케팅</Link>
             </span>
             <span style={{ display: "block" }}>
-              <Link href="/#services">해외환자 유치 풀 프로세스</Link>
+              <Link href="/time#services">해외환자 유치 풀 프로세스</Link>
             </span>
             <span style={{ display: "block" }}>
-              <Link href="/quote">견적 의뢰</Link>
+              <Link href="/time/quote">견적 의뢰</Link>
+            </span>
+            <span style={{ display: "block" }}>
+              <Link href="/">PASSION GROUP 포털</Link>
             </span>
           </p>
         </div>

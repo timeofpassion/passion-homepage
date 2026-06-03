@@ -15,7 +15,7 @@ interface QuoteEmailParams {
 export async function sendQuoteEmail(params: QuoteEmailParams) {
   const resend = getResend();
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const reviewUrl = `${baseUrl}/quote/${params.quoteId}`;
+  const reviewUrl = `${baseUrl}/time/quote/${params.quoteId}`;
 
   const formattedTotal = new Intl.NumberFormat("ko-KR").format(params.total);
 
