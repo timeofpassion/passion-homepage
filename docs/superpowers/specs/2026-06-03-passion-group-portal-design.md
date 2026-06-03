@@ -24,8 +24,9 @@
 - ✅ 그룹 포털 (루트 `/`)
 - ✅ 기존 열정의시간 홈 → `/time` 이전
 - ✅ `/people`, `/space` 브랜딩된 준비중(Coming Soon) 페이지
+- ✅ 열정의시간 하위 페이지(`/quote`, `/services/:id`, `/review-studio`)도 `/time/` 하위로 이동 (대표 지시, 2026-06-03 범위 확장). 기존 주소는 next.config 301 redirect로 보존.
 - ❌ 열정의사람들·열정의공간 풀 콘텐츠 (콘텐츠 준비되면 다음 사이클)
-- ❌ `/services`, `/quote`, `/review-studio`, `/api/*` 재배치 (URL·기능 보존, 손대지 않음)
+- ❌ `/api/*` 재배치 (내부 엔드포인트, 사용자 비노출 → 루트 `/api` 유지, fetch 경로 보존)
 
 ## 3. 라우팅 구조
 

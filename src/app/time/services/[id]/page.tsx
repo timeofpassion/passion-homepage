@@ -25,7 +25,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
     <main className="min-h-screen bg-[#0a0000]" style={{ paddingTop: "2rem" }}>
       {/* Navigation */}
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%", marginBottom: "3rem" }}>
-        <Link href="/#architecture" style={{ color: "#FFD700", textDecoration: "none", fontSize: "0.9rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+        <Link href="/time#architecture" style={{ color: "#FFD700", textDecoration: "none", fontSize: "0.9rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
           ← 팀 소개로 돌아가기
         </Link>
       </div>

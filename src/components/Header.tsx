@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const NAV_ITEMS: { label: string; href: string; quote?: boolean }[] = [
-  { label: "서비스", href: "/#services" },
-  { label: "팀", href: "/#service-teams" },
-  { label: "후기", href: "/#testimonials" },
-  { label: "블로그", href: "/#blog" },
-  { label: "견적 의뢰", href: "/quote", quote: true },
+  { label: "서비스", href: "/time#services" },
+  { label: "팀", href: "/time#service-teams" },
+  { label: "후기", href: "/time#testimonials" },
+  { label: "블로그", href: "/time#blog" },
+  { label: "견적 의뢰", href: "/time/quote", quote: true },
 ];
 
 export default function Header() {
@@ -38,7 +38,7 @@ export default function Header() {
   return (
     <>
       <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
-        <Link href="/" className="site-header__brand" aria-label="열정의시간 홈">
+        <Link href="/time" className="site-header__brand" aria-label="열정의시간 홈">
           열정의시간
         </Link>
 

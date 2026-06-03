@@ -40,7 +40,7 @@ export default function ServiceTeamsSection() {
           }}
         >
           {servicesData.map((team) => (
-            <Link key={team.id} href={`/services/${team.id}`} style={{ textDecoration: "none" }}>
+            <Link key={team.id} href={`/time/services/${team.id}`} style={{ textDecoration: "none" }}>
               <div
                 className="glass-card"
                 style={{

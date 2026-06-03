@@ -16,58 +16,25 @@ export const metadata: Metadata = {
     },
   },
   title: {
-    default: "열정의시간 | 병원 마케팅 & 해외환자 유치 전문 에이전시",
-    template: "%s | 열정의시간",
+    default: "PASSION GROUP | 열정의시간 · 열정의사람들 · 열정의공간",
+    template: "%s | PASSION GROUP",
   },
   description:
-    "병원 마케팅 전문 에이전시 열정의시간. 13년 노하우로 국내 마케팅(블로그 SEO, 영상, SNS, 플레이스)부터 일본·중국·대만 해외환자 유치까지. 광고비 낭비 없이 실질적 매출 구조를 설계합니다. 무료 전략 상담.",
-  keywords: [
-    "열정의시간",
-    "병원마케팅",
-    "병원마케팅대행",
-    "병원마케팅업체",
-    "병원마케팅에이전시",
-    "의료마케팅",
-    "의료마케팅대행사",
-    "병원광고",
-    "병원광고대행",
-    "국내마케팅",
-    "해외마케팅",
-    "해외환자유치",
-    "일본마케팅",
-    "일본환자유치",
-    "중국마케팅",
-    "중국환자유치",
-    "대만마케팅",
-    "대만환자유치",
-    "의료관광마케팅",
-    "병원블로그마케팅",
-    "병원SEO",
-    "병원영상마케팅",
-    "성형외과마케팅",
-    "피부과마케팅",
-    "치과마케팅",
-    "한의원마케팅",
-    "강남병원마케팅",
-    "병원플레이스",
-    "병원바이럴마케팅",
-    "샤오홍슈마케팅",
-    "라인마케팅",
-  ],
+    "PASSION GROUP — 열정으로 시간·사람·공간을 잇습니다. 열정의시간(국내·해외 병의원 전문마케팅), 열정의사람들(글로벌·인플루언서 마케팅), 열정의공간(공간 비즈니스).",
   openGraph: {
-    title: "열정의시간 | 병원 마케팅 & 해외환자 유치 전문 에이전시",
+    title: "PASSION GROUP | 열정의시간 · 열정의사람들 · 열정의공간",
     description:
-      "13년 노하우의 병원 마케팅 전문 에이전시. 국내 통합 마케팅부터 일본·중국·대만 해외환자 유치까지 원스톱으로. 하나의 계약으로 6개 팀이 동시에 움직입니다.",
+      "열정으로 시간·사람·공간을 잇습니다. 병의원 전문마케팅 열정의시간, 글로벌·인플루언서 마케팅 열정의사람들, 공간 비즈니스 열정의공간.",
     url: "https://www.timeofpassion.com",
-    siteName: "열정의시간",
+    siteName: "PASSION GROUP",
     locale: "ko_KR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "열정의시간 | 병원 마케팅 & 해외환자 유치 전문",
+    title: "PASSION GROUP",
     description:
-      "국내 마케팅부터 일본·중국·대만 해외환자 유치까지. 13년 노하우의 병원 전문 에이전시.",
+      "열정으로 시간·사람·공간을 잇습니다. 열정의시간 · 열정의사람들 · 열정의공간.",
   },
   robots: {
     index: true,
@@ -86,107 +53,45 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.timeofpassion.com"),
 };
 
-// JSON-LD 구조화된 데이터
+// JSON-LD 구조화된 데이터 (PASSION GROUP — 그룹 레벨)
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
       "@id": "https://www.timeofpassion.com/#organization",
-      name: "열정의시간",
+      name: "PASSION GROUP",
+      alternateName: "열정 그룹",
       url: "https://www.timeofpassion.com",
       description:
-        "병원 마케팅 전문 에이전시. 국내 통합 마케팅부터 일본·중국·대만 해외환자 유치까지.",
-      foundingDate: "2013",
-      areaServed: [
-        { "@type": "Country", name: "South Korea" },
-        { "@type": "Country", name: "Japan" },
-        { "@type": "Country", name: "China" },
-        { "@type": "Country", name: "Taiwan" },
-      ],
-      knowsAbout: [
-        "병원 마케팅",
-        "의료 마케팅",
-        "해외환자 유치",
-        "일본 마케팅",
-        "중국 마케팅",
-        "대만 마케팅",
-        "블로그 SEO",
-        "영상 마케팅",
-        "SNS 마케팅",
-        "샤오홍슈 마케팅",
-      ],
+        "열정으로 시간·사람·공간을 잇는 그룹. 열정의시간·열정의사람들·열정의공간으로 구성됩니다.",
       sameAs: ["https://pf.kakao.com/_timfofpassion"],
-    },
-    {
-      "@type": "ProfessionalService",
-      "@id": "https://www.timeofpassion.com/#business",
-      name: "열정의시간",
-      url: "https://www.timeofpassion.com",
-      description:
-        "병원 마케팅 전문 에이전시 - 국내 마케팅, 해외환자 유치, 영상 제작, 디자인",
-      priceRange: "$$",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "서울",
-        addressRegion: "강남구",
-        addressCountry: "KR",
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: 37.5665,
-        longitude: 126.978,
-      },
-      serviceType: [
-        "병원 마케팅",
-        "의료 마케팅 대행",
-        "해외환자 유치 마케팅",
-        "블로그 SEO",
-        "영상 제작",
-        "SNS 운영",
-        "일본 마케팅",
-        "중국 마케팅",
-        "대만 마케팅",
+      subOrganization: [
+        {
+          "@type": "Organization",
+          name: "열정의시간",
+          url: "https://www.timeofpassion.com/time",
+          description: "국내·해외 병의원 전문마케팅 기업",
+        },
+        {
+          "@type": "Organization",
+          name: "열정의사람들",
+          url: "https://www.timeofpassion.com/people",
+          description: "글로벌마케팅·인플루언서 국내해외 전문마케팅 기업",
+        },
+        {
+          "@type": "Organization",
+          name: "열정의공간",
+          url: "https://www.timeofpassion.com/space",
+          description: "새로운 공간비즈니스를 준비하는 기업",
+        },
       ],
-      hasOfferCatalog: {
-        "@type": "OfferCatalog",
-        name: "병원 마케팅 서비스",
-        itemListElement: [
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "국내 통합 마케팅",
-              description:
-                "블로그 SEO, 영상, SNS, 플레이스, 플랫폼, 바이럴 원스톱 마케팅",
-            },
-          },
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "해외 마케팅 (일본·중국·대만)",
-              description:
-                "현지 전담팀이 직접 운영하는 해외환자 유치 마케팅",
-            },
-          },
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "해외환자 유치 풀 프로세스",
-              description:
-                "문의부터 내원, 사후관리까지 전 과정 설계",
-            },
-          },
-        ],
-      },
     },
     {
       "@type": "WebSite",
       "@id": "https://www.timeofpassion.com/#website",
       url: "https://www.timeofpassion.com",
-      name: "열정의시간",
+      name: "PASSION GROUP",
       publisher: {
         "@id": "https://www.timeofpassion.com/#organization",
       },
