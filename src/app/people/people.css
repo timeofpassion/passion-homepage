@@ -641,10 +641,16 @@ body:has(.ppl-root) {
   animation: ppl-marquee 28s linear infinite;
 }
 .ppl-clients__item {
-  font-size: 18px;
-  font-weight: 800;
-  color: #aeb6c2;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+.ppl-clients__logo {
+  height: 42px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  opacity: 0.72;
 }
 @keyframes ppl-marquee {
   from {

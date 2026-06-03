@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import InfluencerCard from "./_components/InfluencerCard";
+import { clientLogos } from "@/data/clients";
 import {
   INFLUENCERS,
   PORTFOLIO,
-  CLIENTS,
   COUNTRY_STATS,
   COUNTRY_LABEL,
   COUNTRY_FLAG,
@@ -233,12 +233,12 @@ export default function PeopleHome() {
         </div>
       </section>
 
-      {/* 4-6 CLIENTS MARQUEE */}
+      {/* 4-6 CLIENTS MARQUEE — 열정의시간과 동일 소스(clientLogos) 연동 */}
       <div className="ppl-clients">
         <div className="ppl-clients__track">
-          {[...CLIENTS, ...CLIENTS].map((c, i) => (
+          {[...clientLogos, ...clientLogos].map((c, i) => (
             <span key={i} className="ppl-clients__item">
-              {c.name}
+              <img src={c.logo} alt={c.name} className="ppl-clients__logo" />
             </span>
           ))}
         </div>
