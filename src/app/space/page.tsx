@@ -25,6 +25,14 @@ const WHO = [
   { nm: "전문직 · 연구자", d: "지역 재생의 깊은 사유", gv: "Insight" },
 ];
 
+const MARQUEE = [
+  "지역재생 리트릿 운동",
+  "쉼이 곧 전략이 된다",
+  "사라져가는 지역마다, 다시 사람을",
+  "Issue 01 — Shinan",
+  "초대받는 곳",
+];
+
 const MAIL = (subject: string) =>
   `mailto:hello@passionspace.kr?subject=${encodeURIComponent(subject)}`;
 
@@ -55,13 +63,27 @@ const jsonLd = {
   },
 };
 
+function Marquee({ spot }: { spot?: boolean }) {
+  const items = [...MARQUEE, ...MARQUEE];
+  return (
+    <div className={`psm-marquee ${spot ? "spot" : ""}`} aria-hidden="true">
+      <div className="psm-marquee__track">
+        {items.map((t, i) => (
+          <span key={i}>{t}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function SpaceBrandHome() {
   return (
     <div className="psm-root" id="top">
-      {/* 매거진 디스플레이/라벨 폰트 (CDN) — 본문 Pretendard 는 루트 레이아웃에서 로드 */}
+      <div className="psm-grain" aria-hidden="true" />
+      {/* 에디토리얼 디스플레이/라벨 폰트 (CDN) — 본문 Pretendard 는 루트 레이아웃에서 로드 */}
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@600;700;800;900&family=Noto+Serif+KR:wght@300;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,500;1,6..96,700;1,6..96,900&family=Noto+Serif+KR:wght@300;500;700&display=swap"
       />
       <script
         type="application/ld+json"
@@ -70,37 +92,9 @@ export default function SpaceBrandHome() {
 
       <MagNav />
 
-      {/* HERO — 비대칭 split */}
+      {/* HERO — 풀블리드 매거진 커버 */}
       <header className="psm-hero">
-        <div className="psm-hero__left">
-          <div className="psm-hero__topmeta">
-            <div className="psm-hero__m1">운동, 장소가 아니라</div>
-            <div className="psm-hero__m2">
-              전라남도 신안 · 1호
-              <br />
-              EST. 2026 · 열정의 그룹
-            </div>
-          </div>
-          <h1 className="psm-hero__h1">
-            공간은 장소가
-            <br />
-            아니라, 그곳에
-            <br />
-            모인 <span className="hl">사람의</span>
-            <br />
-            <span className="out">에너지다</span>
-          </h1>
-          <div className="psm-hero__botrow">
-            <p className="psm-hero__lead">
-              사라져가는 지역에 영향력 있는 사람들을 모읍니다. 쉬러 왔다가, 그
-              지역의 내일을 만들고 갑니다.
-            </p>
-            <a href="#how" className="psm-hero__enter">
-              운동 읽기 ↓
-            </a>
-          </div>
-        </div>
-        <div className="psm-hero__right">
+        <div className="psm-hero__media psm-treat">
           <video
             autoPlay
             muted
@@ -110,17 +104,59 @@ export default function SpaceBrandHome() {
             src={MEDIA.hero.video}
             aria-hidden="true"
           />
-          <div className="psm-hero__no">01</div>
-          <div className="psm-hero__vlabel">SHINAN · 천 개의 섬과 노을</div>
+        </div>
+
+        <span className="psm-crop tl">✛</span>
+        <span className="psm-crop tr">✛</span>
+        <span className="psm-crop bl">✛</span>
+        <span className="psm-crop br">✛</span>
+
+        <div className="psm-hero__folio">01</div>
+        <div className="psm-hero__vlabel">SHINAN · 천 개의 섬과 노을</div>
+
+        <div className="psm-hero__frame">
+          <div className="psm-hero__top">
+            <div className="psm-hero__kick">운동, 장소가 아니라</div>
+            <div className="psm-hero__date">
+              전라남도 신안 · 1호
+              <br />
+              EST. 2026 · 열정의 그룹
+            </div>
+          </div>
+
+          <div className="psm-hero__center">
+            <div className="psm-hero__issue">Issue 01 — Shinan</div>
+            <h1 className="psm-hero__h1">
+              공간은 장소가
+              <br />
+              아니라, 그곳에 모인
+              <br />
+              <span className="hl">사람의</span>{" "}
+              <span className="out">에너지다</span>
+            </h1>
+          </div>
+
+          <div className="psm-hero__bottom">
+            <p className="psm-hero__lead">
+              사라져가는 지역에 영향력 있는 사람들을 모읍니다. 쉬러 왔다가, 그
+              지역의 내일을 만들고 갑니다.
+            </p>
+            <a href="#how" className="psm-hero__enter">
+              <span className="dot" />
+              운동 읽기 ↓
+            </a>
+          </div>
         </div>
       </header>
+
+      <Marquee />
 
       {/* 01 MANIFESTO */}
       <section className="psm-sec psm-manifesto" id="manifesto">
         <Reveal className="psm-shead">
           <div className="psm-shead__idx">01</div>
           <div>
-            <div className="psm-shead__cat">Manifesto / 우리는</div>
+            <div className="psm-shead__cat">Manifesto · 우리는</div>
             <h2>
               우리는 게스트하우스가 아니라,{" "}
               <span className="hl">쉼 속의 싱크탱크다</span>
@@ -133,6 +169,7 @@ export default function SpaceBrandHome() {
             <b>쉬면서, 이 지역을 어떻게 살릴지 함께 사유한다.</b>”
           </Reveal>
           <Reveal className="psm-manifesto__txt">
+            <span className="psm-label">The Exchange</span>
             마케터·PD·크리에이터·전문가가 깊이 쉬고, 그 안에서 태어난 아이디어와
             콘텐츠가 잊혀가던 지역을 다시 뛰게 합니다. 힐링은 우리가 드리고, 당신은
             영감을 남깁니다. 그 교환이 곧 지역의 재생입니다.
@@ -145,7 +182,7 @@ export default function SpaceBrandHome() {
         <Reveal className="psm-shead">
           <div className="psm-shead__idx">02</div>
           <div>
-            <div className="psm-shead__cat">The Model / 작동 방식</div>
+            <div className="psm-shead__cat">The Model · 작동 방식</div>
             <h2>
               사람이 모이면, <span className="hl">지역이 살아난다</span>
             </h2>
@@ -176,7 +213,7 @@ export default function SpaceBrandHome() {
         <Reveal className="psm-shead">
           <div className="psm-shead__idx">03</div>
           <div>
-            <div className="psm-shead__cat">The Network / 거점</div>
+            <div className="psm-shead__cat">The Network · 거점</div>
             <h2>
               한 곳이 아니다. 사라져가는 <span className="hl">지역마다</span>, 다시
               사람을 모은다
@@ -192,19 +229,24 @@ export default function SpaceBrandHome() {
               <>
                 {!p.light &&
                   (p.video ? (
-                    <video
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      poster={p.poster}
-                      src={p.video}
-                      aria-hidden="true"
-                    />
+                    <>
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        poster={p.poster}
+                        src={p.video}
+                        aria-hidden="true"
+                      />
+                      <div className="duo" />
+                    </>
                   ) : (
-                    <div className="ph">{p.placeholder}</div>
+                    <>
+                      <div className="ph">{p.placeholder}</div>
+                      <div className="duo" />
+                    </>
                   ))}
-                {!p.light && <div className="sc" />}
                 <span className="st">{p.statusLabel}</span>
                 <div className="nm">{p.name}</div>
                 <div className="ds">{p.desc}</div>
@@ -239,7 +281,7 @@ export default function SpaceBrandHome() {
         <Reveal className="psm-shead">
           <div className="psm-shead__idx">04</div>
           <div>
-            <div className="psm-shead__cat">The People / 함께할 사람</div>
+            <div className="psm-shead__cat">The People · 함께할 사람</div>
             <h2>
               당신의 재능으로 지역을 살려주세요.{" "}
               <span className="hl">쉼은 우리가 드립니다</span>
@@ -257,8 +299,13 @@ export default function SpaceBrandHome() {
         </div>
       </section>
 
+      <Marquee spot />
+
       {/* JOIN */}
       <section className="psm-join" id="join">
+        <div className="psm-join__mark" aria-hidden="true">
+          Join
+        </div>
         <Reveal className="psm-join__big">
           돈 내고 오는 곳이 아니라, <span className="w">초대받는</span> 곳이다
         </Reveal>
