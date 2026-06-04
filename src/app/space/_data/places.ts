@@ -1,4 +1,4 @@
-import { MEDIA } from "./media";
+import { MEDIA, CONTACT } from "./media";
 
 /**
  * 열정의공간 거점(Network) 데이터.
@@ -45,7 +45,7 @@ export const PLACES: Place[] = [
     statusLabel: "Where is next?",
     name: "당신의 지역",
     desc: "살려야 할 다음 지역을 제안해주세요",
-    href: "mailto:hello@passionspace.kr?subject=[열정의공간] 거점 제안",
+    href: CONTACT.kakao,
     arrow: "거점 제안 →",
     light: true,
   },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CONTACT } from "../_data/media";
 
 const MENU = [
   { label: "Manifesto", href: "#manifesto" },
@@ -9,7 +10,7 @@ const MENU = [
   { label: "People", href: "#who" },
 ];
 
-const INVITE = "mailto:hello@passionspace.kr?subject=[열정의공간] 초대 신청";
+const INVITE = CONTACT.kakao;
 
 export default function MagNav() {
   const [open, setOpen] = useState(false);
@@ -32,7 +33,12 @@ export default function MagNav() {
 
       <div className="psm-nav__right">
         <span className="psm-nav__iss">ISSUE 01 — 신안</span>
-        <a href={INVITE} className="psm-nav__invite">
+        <a
+          href={INVITE}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="psm-nav__invite"
+        >
           초대 신청
         </a>
         <button
@@ -54,7 +60,13 @@ export default function MagNav() {
             {m.label}
           </a>
         ))}
-        <a href={INVITE} onClick={() => setOpen(false)} style={{ color: "var(--spot)" }}>
+        <a
+          href={INVITE}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setOpen(false)}
+          style={{ color: "var(--spot)" }}
+        >
           초대 신청
         </a>
       </div>

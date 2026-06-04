@@ -2,7 +2,7 @@ import Link from "next/link";
 import "./space-magazine.css";
 import MagNav from "./_components/MagNav";
 import Reveal from "./_components/Reveal";
-import { MEDIA } from "./_data/media";
+import { MEDIA, CONTACT } from "./_data/media";
 import { PLACES } from "./_data/places";
 
 const HOW = [
@@ -27,9 +27,6 @@ const MARQUEE = [
   "초대받는 곳",
 ];
 
-const MAIL = (subject: string) =>
-  `mailto:hello@passionspace.kr?subject=${encodeURIComponent(subject)}`;
-
 // SEO: 지역재생 리트릿 운동(브랜드) 구조화 데이터
 const jsonLd = {
   "@context": "https://schema.org",
@@ -39,7 +36,6 @@ const jsonLd = {
   url: "https://www.timeofpassion.com/space",
   description:
     "사라져가는 지역에 영향력 있는 사람들을 모아 깊이 쉬게 하고, 그들이 남긴 영감으로 지역을 되살리는 리트릿 운동. 신안 1호 운영 중.",
-  email: "hello@passionspace.kr",
   parentOrganization: {
     "@type": "Organization",
     name: "PASSION GROUP",
@@ -258,7 +254,13 @@ export default function SpaceBrandHome() {
             }
             if (p.href) {
               return (
-                <a key={p.slug} href={p.href} className={cls}>
+                <a
+                  key={p.slug}
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cls}
+                >
                   {inner}
                 </a>
               );
@@ -311,13 +313,13 @@ export default function SpaceBrandHome() {
             두드려주세요. 함께하는 사람을 선발해 모십니다.
           </p>
           <div className="psm-join__opts">
-            <a href={MAIL("[열정의공간] 멤버 초대 신청")}>
+            <a href={CONTACT.kakao} target="_blank" rel="noopener noreferrer">
               멤버 초대 신청 <span>→</span>
             </a>
-            <a href={MAIL("[열정의공간] 지역·거점 제안")}>
+            <a href={CONTACT.kakao} target="_blank" rel="noopener noreferrer">
               지역 · 거점 제안 <span>→</span>
             </a>
-            <a href={MAIL("[열정의공간] 파트너·후원")}>
+            <a href={CONTACT.kakao} target="_blank" rel="noopener noreferrer">
               파트너 · 후원 <span>→</span>
             </a>
           </div>
@@ -350,13 +352,18 @@ export default function SpaceBrandHome() {
           <div className="psm-footer__col">
             <h5>Network</h5>
             <Link href="/space/shinan">No.01 신안</Link>
-            <a href={MAIL("[열정의공간] 지역·거점 제안")}>거점 제안</a>
+            <a href={CONTACT.kakao} target="_blank" rel="noopener noreferrer">
+              거점 제안
+            </a>
           </div>
           <div className="psm-footer__col">
             <h5>Join</h5>
-            <a href={MAIL("[열정의공간] 초대 신청")}>초대 신청</a>
-            <a href={MAIL("[열정의공간] 파트너·후원")}>파트너·후원</a>
-            <p>hello@passionspace.kr</p>
+            <a href={CONTACT.kakao} target="_blank" rel="noopener noreferrer">
+              초대 신청
+            </a>
+            <a href={CONTACT.kakao} target="_blank" rel="noopener noreferrer">
+              파트너·후원
+            </a>
             <Link href="/">← PASSION GROUP</Link>
           </div>
         </div>
@@ -365,6 +372,20 @@ export default function SpaceBrandHome() {
           <span>時 · 人 · 空 · Issue 01 — 신안</span>
         </div>
       </footer>
+
+      {/* 카카오톡 채널 플로팅 — 문의는 열정의시간 카카오 채널로 */}
+      <a
+        href={CONTACT.kakao}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="psm-kakao"
+        aria-label="카카오톡 채널로 문의"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#3C1E1E" aria-hidden="true">
+          <path d="M12 3c-5.523 0-10 3.538-10 7.9 0 2.85 1.848 5.347 4.636 6.74l-1.185 4.316c-.056.205.18.366.353.243l5.06-3.327c.373.048.755.074 1.146.074 5.523 0 10-3.538 10-7.9S17.523 3 12 3z" />
+        </svg>
+        <span>카카오톡 문의</span>
+      </a>
     </div>
   );
 }

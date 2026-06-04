@@ -965,6 +965,44 @@ body:has(.psm-root) {
   opacity: 0.55;
 }
 
+/* ---------- 카카오톡 채널 플로팅 ---------- */
+.psm-kakao {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 20px;
+  background: #fee500;
+  color: #3c1e1e;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  font-family: var(--arch);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  box-shadow: 5px 5px 0 var(--ink);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.psm-kakao:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+.psm-kakao svg {
+  flex: none;
+}
+@media (max-width: 560px) {
+  .psm-kakao {
+    right: 16px;
+    bottom: 16px;
+    padding: 11px 16px;
+    font-size: 12px;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+}
+
 /* ============================================================ */
 /* 반응형                                                       */
 /* ============================================================ */

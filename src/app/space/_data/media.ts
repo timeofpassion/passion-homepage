@@ -24,6 +24,6 @@ export const CONTACT = {
   email: "hello@passionspace.kr",
   instagram: "https://www.instagram.com/passion.space",
   instagramHandle: "@passion.space",
-  kakao: "https://pf.kakao.com/_timfofpassion",
+  kakao: "https://pf.kakao.com/_RgYcxj/chat",
   region: "전남 신안군",
 } as const;
