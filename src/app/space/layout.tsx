@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "열정의공간 | 공간은 장소가 아니라, 그곳에 모인 사람의 에너지다",
     description:
-      "사라져가는 지역에 사람을 모아 되살리는 리트릿 운동. 신안 1호 운영, 정선·영양 확장 중. 열정의 그룹.",
+      "사라져가는 지역에 사람을 모아 되살리는 리트릿 운동. 신안 1호 운영 중, 거점 확장 예정. 열정의 그룹.",
     url: "https://www.timeofpassion.com/space",
     siteName: "열정의공간",
     locale: "ko_KR",

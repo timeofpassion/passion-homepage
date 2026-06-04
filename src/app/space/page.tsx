@@ -152,21 +152,32 @@ export default function SpaceBrandHome() {
           <div>
             <div className="psm-shead__cat">Manifesto · 우리는</div>
             <h2>
-              우리는 게스트하우스가 아니라,{" "}
+              우리는 게스트하우스가 아니라,
+              <br />
               <span className="hl">쉼 속의 싱크탱크다</span>
             </h2>
           </div>
         </Reveal>
         <div className="psm-manifesto__body">
           <Reveal className="psm-manifesto__pull">
-            “놀러 와서 소비하고 떠나는 곳이 아니다.{" "}
+            “놀러 와서 소비하고 떠나는 곳이 아니다.
+            <br />
             <b>쉬면서, 이 지역을 어떻게 살릴지 함께 사유한다.</b>”
           </Reveal>
           <Reveal className="psm-manifesto__txt">
             <span className="psm-label">The Exchange</span>
-            마케터·PD·크리에이터·전문가가 깊이 쉬고, 그 안에서 태어난 아이디어와
-            콘텐츠가 잊혀가던 지역을 다시 뛰게 합니다. 힐링은 우리가 드리고, 당신은
-            영감을 남깁니다. 그 교환이 곧 지역의 재생입니다.
+            <p>
+              마케터·PD·크리에이터·전문가가 깊이 쉬고, 그 안에서 태어난 아이디어와
+              콘텐츠가 잊혀가던 지역을 다시 뛰게 합니다.
+            </p>
+            <p>
+              사라져가는 지역에 사람을 모아 다시 살리는 리트릿 운동. 공간은 장소가
+              아니라, 그곳에 모인 사람의 에너지다. 열정의공간.
+            </p>
+            <p>
+              힐링은 우리가 드리고, 당신은 영감을 남깁니다. 그 교환이 곧 지역의
+              재생입니다.
+            </p>
           </Reveal>
         </div>
       </section>
@@ -339,7 +350,6 @@ export default function SpaceBrandHome() {
           <div className="psm-footer__col">
             <h5>Network</h5>
             <Link href="/space/shinan">No.01 신안</Link>
-            <a href="#network">No.02 정선(예정)</a>
             <a href={MAIL("[열정의공간] 지역·거점 제안")}>거점 제안</a>
           </div>
           <div className="psm-footer__col">

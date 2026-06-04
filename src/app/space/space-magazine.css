@@ -570,8 +570,14 @@ body:has(.psm-root) {
 }
 .psm-manifesto__txt .psm-label {
   display: block;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   color: var(--spot);
+}
+.psm-manifesto__txt p {
+  margin-bottom: 1.05em;
+}
+.psm-manifesto__txt p:last-child {
+  margin-bottom: 0;
 }
 
 /* ---------- HOW (editorial rows) ---------- */

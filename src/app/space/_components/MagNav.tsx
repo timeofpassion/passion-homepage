@@ -32,14 +32,6 @@ export default function MagNav() {
 
       <div className="psm-nav__right">
         <span className="psm-nav__iss">ISSUE 01 — 신안</span>
-        <button
-          type="button"
-          className="psm-nav__lang"
-          aria-label="언어 전환 (준비중)"
-          title="English (준비중)"
-        >
-          KR / EN
-        </button>
         <a href={INVITE} className="psm-nav__invite">
           초대 신청
         </a>
