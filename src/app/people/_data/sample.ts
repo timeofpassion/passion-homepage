@@ -121,6 +121,7 @@ export const COUNTRY_STATS: {
 export const INFLUENCERS: Influencer[] = [
   {
     id: "jp-001",
+    profileImage: "/people/influencers/jp-001.webp",
     name: "사쿠라 미오 (가상)",
     country: "JP",
     category: ["beauty"],
@@ -133,6 +134,7 @@ export const INFLUENCERS: Influencer[] = [
   },
   {
     id: "jp-002",
+    profileImage: "/people/influencers/jp-002.webp",
     name: "타카하시 렌 (가상)",
     country: "JP",
     category: ["lifestyle", "travel"],
@@ -145,6 +147,7 @@ export const INFLUENCERS: Influencer[] = [
   },
   {
     id: "jp-003",
+    profileImage: "/people/influencers/jp-003.webp",
     name: "유이 (가상)",
     country: "JP",
     category: ["fashion"],
@@ -154,6 +157,7 @@ export const INFLUENCERS: Influencer[] = [
   },
   {
     id: "cn-001",
+    profileImage: "/people/influencers/cn-001.webp",
     name: "린샤오 (林小, 가상)",
     country: "CN",
     category: ["beauty"],
@@ -166,6 +170,7 @@ export const INFLUENCERS: Influencer[] = [
   },
   {
     id: "cn-002",
+    profileImage: "/people/influencers/cn-002.webp",
     name: "왕레이 (王磊, 가상)",
     country: "CN",
     category: ["food", "travel"],
@@ -175,6 +180,7 @@ export const INFLUENCERS: Influencer[] = [
   },
   {
     id: "cn-003",
+    profileImage: "/people/influencers/cn-003.webp",
     name: "천위 (陈雨, 가상)",
     country: "CN",
     category: ["lifestyle"],
@@ -184,6 +190,7 @@ export const INFLUENCERS: Influencer[] = [
   },
   {
     id: "tw-001",
+    profileImage: "/people/influencers/tw-001.webp",
     name: "샤오메이 (小美, 가상)",
     country: "TW",
     category: ["beauty", "lifestyle"],
@@ -196,6 +203,7 @@ export const INFLUENCERS: Influencer[] = [
   },
   {
     id: "tw-002",
+    profileImage: "/people/influencers/tw-002.webp",
     name: "아룬 (阿倫, 가상)",
     country: "TW",
     category: ["food"],
@@ -205,6 +213,7 @@ export const INFLUENCERS: Influencer[] = [
   },
   {
     id: "tw-003",
+    profileImage: "/people/influencers/tw-003.webp",
     name: "지아지아 (佳佳, 가상)",
     country: "TW",
     category: ["travel", "lifestyle"],
@@ -214,6 +223,7 @@ export const INFLUENCERS: Influencer[] = [
   },
   {
     id: "jp-004",
+    profileImage: "/people/influencers/jp-004.webp",
     name: "모모카 (가상)",
     country: "JP",
     category: ["food"],
@@ -229,6 +239,7 @@ export const INFLUENCERS: Influencer[] = [
 export const PORTFOLIO: Portfolio[] = [
   {
     id: "case-001",
+    thumbnail: "/people/portfolio/case-001.webp",
     title: "성형외과 일본 환자 유치 인플루언서 캠페인",
     clientName: "OO성형외과 (샘플)",
     clientType: "medical",
@@ -238,6 +249,7 @@ export const PORTFOLIO: Portfolio[] = [
   },
   {
     id: "case-002",
+    thumbnail: "/people/portfolio/case-002.webp",
     title: "지자체 관광 콘텐츠 대만 확산 프로젝트",
     clientName: "OO시청 (샘플)",
     clientType: "public",
@@ -247,6 +259,7 @@ export const PORTFOLIO: Portfolio[] = [
   },
   {
     id: "case-003",
+    thumbnail: "/people/portfolio/case-003.webp",
     title: "뷰티 브랜드 중국 샤오홍슈 런칭",
     clientName: "OO코스메틱 (샘플)",
     clientType: "corporate",
@@ -256,6 +269,7 @@ export const PORTFOLIO: Portfolio[] = [
   },
   {
     id: "case-004",
+    thumbnail: "/people/portfolio/case-004.webp",
     title: "의료기관 3개국 동시 진출 캠페인",
     clientName: "OO의료재단 (샘플)",
     clientType: "medical",

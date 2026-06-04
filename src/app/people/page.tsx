@@ -43,17 +43,14 @@ const SERVICES = [
 // 후킹용 차별점
 const WHY = [
   {
-    icon: "🌏",
     title: "현지 직접 운영 풀",
     desc: "에이전시 재하청이 아닌, 3개국 현지 크리에이터를 직접 관리합니다.",
   },
   {
-    icon: "🏥",
     title: "의료·뷰티 전환 특화",
     desc: "단순 노출이 아니라 ‘상담·내원·구매’로 이어지는 전환 설계 경험.",
   },
   {
-    icon: "⚡",
     title: "원스톱 실행",
     desc: "섭외→기획→발행→리포트까지 한 팀이. 여러 업체와 따로 소통할 필요 없음.",
   },
@@ -192,11 +189,18 @@ export default function PeopleHome() {
           <div className="ppl-port-grid">
             {PORTFOLIO.map((p) => (
               <article key={p.id} className="ppl-port-card">
-                <div className="ppl-port-card__thumb">
+                <div
+                  className="ppl-port-card__thumb"
+                  style={
+                    p.thumbnail
+                      ? { backgroundImage: `url(${p.thumbnail})` }
+                      : undefined
+                  }
+                >
                   <span className="ppl-port-card__prep">예시</span>
                   <span className="ppl-port-card__flags">
                     {p.country.map((c) => (
-                      <Flag key={c} country={c} size={26} />
+                      <Flag key={c} country={c} size={24} />
                     ))}
                   </span>
                 </div>
@@ -254,7 +258,6 @@ export default function PeopleHome() {
           <div className="ppl-why-grid">
             {WHY.map((w) => (
               <div key={w.title} className="ppl-why-card">
-                <div className="ppl-why-card__icon">{w.icon}</div>
                 <div className="ppl-why-card__title">{w.title}</div>
                 <p className="ppl-why-card__desc">{w.desc}</p>
               </div>
