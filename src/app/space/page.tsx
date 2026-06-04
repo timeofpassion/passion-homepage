@@ -12,12 +12,6 @@ const HOW = [
   { n: "04", t: "지역이 산다", d: "방문 수요·지역 경제·인지도가 오르고, 그 성과가 다시 운영을 지탱한다." },
 ];
 
-const MODEL = [
-  { k: "이용료", h: "거의 무료", p: "수익이 목적이면 숙박업이 된다. 진입장벽을 없애 가장 좋은 사람을 모은다." },
-  { k: "운영비", h: "공공예산", p: "지자체·정부엔 “돈을 대면 지역에 사람·수요·홍보가 생기는” 사업이다." },
-  { k: "지불 방식", h: "기여로", p: "콘텐츠·전략·확산·아이디어 — 게스트가 남기는 것이 곧 지역의 자산이다." },
-];
-
 const WHO = [
   { nm: "마케터 · CMO", d: "지역을 알릴 전략과 브랜딩", gv: "Strategy" },
   { nm: "영상 PD · 크리에이터", d: "지역을 담는 콘텐츠", gv: "Content" },
@@ -116,7 +110,7 @@ export default function SpaceBrandHome() {
 
         <div className="psm-hero__frame">
           <div className="psm-hero__top">
-            <div className="psm-hero__kick">운동, 장소가 아니라</div>
+            <div className="psm-hero__kick">사람을 모아, 지역을 살린다</div>
             <div className="psm-hero__date">
               전라남도 신안 · 1호
               <br />
@@ -143,7 +137,7 @@ export default function SpaceBrandHome() {
             </p>
             <a href="#how" className="psm-hero__enter">
               <span className="dot" />
-              운동 읽기 ↓
+              더 알아보기 ↓
             </a>
           </div>
         </div>
@@ -197,15 +191,6 @@ export default function SpaceBrandHome() {
             </Reveal>
           ))}
         </div>
-        <Reveal className="psm-how__model">
-          {MODEL.map((m) => (
-            <div key={m.k} className="psm-how__m">
-              <div className="k">{m.k}</div>
-              <h4>{m.h}</h4>
-              <p>{m.p}</p>
-            </div>
-          ))}
-        </Reveal>
       </section>
 
       {/* 03 NETWORK */}
