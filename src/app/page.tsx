@@ -36,7 +36,6 @@ const COMPANIES: Company[] = [
     desc: "새로운 공간비즈니스",
     href: "/space",
     modifier: "space",
-    soon: true,
   },
 ];
 
@@ -108,7 +107,7 @@ export default function GroupPortal() {
         </p>
         <h2>열정의공간</h2>
         <p>
-          새로운 공간비즈니스를 준비하고 있는 기업. (준비중)
+          사라져가는 지역에 사람을 모아 되살리는 리트릿 운동을 펼치는 새로운 공간비즈니스 기업. 자세히 보기는 열정의공간 홈페이지(/space)에서 확인하세요.
         </p>
       </div>
     </>
