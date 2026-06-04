@@ -6,8 +6,10 @@ import {
   type Influencer,
   type Country,
   type Category,
+  type Platform,
   CATEGORY_LABEL,
   COUNTRY_LABEL,
+  PLATFORM_LABEL,
 } from "../_data/sample";
 
 const COUNTRIES: (Country | "ALL")[] = ["ALL", "JP", "CN", "TW"];
@@ -22,7 +24,15 @@ const CATEGORIES: Category[] = [
 
 export default function InfluencerFilter({ data }: { data: Influencer[] }) {
   const [country, setCountry] = useState<Country | "ALL">("ALL");
+  const [platform, setPlatform] = useState<Platform | "ALL">("ALL");
   const [cats, setCats] = useState<Set<Category>>(new Set());
+
+  // 데이터에 실제로 존재하는 플랫폼만 노출
+  const platforms = useMemo<Platform[]>(() => {
+    const set = new Set<Platform>();
+    data.forEach((inf) => inf.channels.forEach((ch) => set.add(ch.platform)));
+    return Array.from(set);
+  }, [data]);
 
   const toggleCat = (c: Category) =>
     setCats((prev) => {
@@ -35,12 +45,24 @@ export default function InfluencerFilter({ data }: { data: Influencer[] }) {
     () =>
       data.filter((inf) => {
         if (country !== "ALL" && inf.country !== country) return false;
+        if (
+          platform !== "ALL" &&
+          !inf.channels.some((ch) => ch.platform === platform)
+        )
+          return false;
         if (cats.size > 0 && !inf.category.some((c) => cats.has(c)))
           return false;
         return true;
       }),
-    [data, country, cats]
+    [data, country, platform, cats]
   );
+
+  const reset = () => {
+    setCountry("ALL");
+    setPlatform("ALL");
+    setCats(new Set());
+  };
+  const dirty = country !== "ALL" || platform !== "ALL" || cats.size > 0;
 
   return (
     <div>
@@ -58,6 +80,28 @@ export default function InfluencerFilter({ data }: { data: Influencer[] }) {
             </button>
           ))}
         </div>
+
+        <div className="ppl-filter__row">
+          <span className="ppl-filter__label">플랫폼</span>
+          <button
+            type="button"
+            className={`ppl-chip ${platform === "ALL" ? "is-active" : ""}`}
+            onClick={() => setPlatform("ALL")}
+          >
+            전체
+          </button>
+          {platforms.map((p) => (
+            <button
+              key={p}
+              type="button"
+              className={`ppl-chip ${platform === p ? "is-active" : ""}`}
+              onClick={() => setPlatform(p)}
+            >
+              {PLATFORM_LABEL[p]}
+            </button>
+          ))}
+        </div>
+
         <div className="ppl-filter__row">
           <span className="ppl-filter__label">분야</span>
           {CATEGORIES.map((c) => (
@@ -75,9 +119,16 @@ export default function InfluencerFilter({ data }: { data: Influencer[] }) {
         </div>
       </div>
 
-      <p className="ppl-result-count">
-        총 <b>{filtered.length}</b>명
-      </p>
+      <div className="ppl-result-bar">
+        <p className="ppl-result-count">
+          총 <b>{filtered.length}</b>명
+        </p>
+        {dirty && (
+          <button type="button" className="ppl-reset" onClick={reset}>
+            필터 초기화 ✕
+          </button>
+        )}
+      </div>
 
       {filtered.length === 0 ? (
         <div className="ppl-empty">조건에 맞는 인플루언서가 없습니다.</div>

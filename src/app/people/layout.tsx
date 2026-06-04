@@ -3,8 +3,8 @@ import Link from "next/link";
 import "./people.css";
 import PplHeader from "./_components/PplHeader";
 
-const KAKAO_URL = "https://pf.kakao.com/_timfofpassion"; // TODO: 열정의사람들 전용 채널 확정 시 교체
-const CONTACT_EMAIL = "ceo@timeofpassion.com"; // TODO: 열정의사람들 문의 이메일 확정 시 교체
+// 열정의시간 카카오톡 채널 상담(채팅) — 전사 공용 채널
+const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
 export const metadata: Metadata = {
   description:
@@ -45,19 +45,22 @@ export default function PeopleLayout({
 
           <div className="ppl-footer__col">
             <h4>Company</h4>
-            <p className="ppl-footer__todo">상호: (확정 필요)</p>
-            <p className="ppl-footer__todo">대표: (확정 필요)</p>
-            <p className="ppl-footer__todo">사업자번호: (확정 필요)</p>
-            <p className="ppl-footer__todo">주소: 강원 원주 (확정 필요)</p>
+            <p>상호: 열정의사람들</p>
+            <p>대표: 한동남</p>
+            <p>사업자번호: 미정</p>
+            <p>주소: 미정</p>
           </div>
 
           <div className="ppl-footer__col">
             <h4>Contact</h4>
             <p>
-              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-              <br />
-              <a href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
-                카카오톡 채널 상담
+              <a
+                href={KAKAO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ppl-footer__kakao"
+              >
+                💬 카카오톡 채널 상담
               </a>
               <br />
               <Link href="/">← PASSION GROUP</Link>

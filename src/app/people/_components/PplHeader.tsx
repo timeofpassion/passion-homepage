@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const KAKAO_URL = "https://pf.kakao.com/_timfofpassion"; // TODO: 열정의사람들 전용 채널 확정 시 교체
+// 열정의시간 카카오톡 채널 상담(채팅) — 전사 공용 채널
+const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
 const NAV = [
   { label: "메인", href: "/people" },

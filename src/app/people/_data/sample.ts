@@ -56,6 +56,13 @@ export const COUNTRY_LABEL: Record<Country, string> = {
   CN: "중국",
   TW: "대만",
 };
+// 이모지 국기(🇯🇵)는 Windows 등 일부 환경에서 "JP/CN/TW" 글자로 깨져 보임 → SVG 이미지 사용
+export const COUNTRY_FLAG_SRC: Record<Country, string> = {
+  JP: "/people/flags/jp.svg",
+  CN: "/people/flags/cn.svg",
+  TW: "/people/flags/tw.svg",
+};
+// (호환용) 텍스트가 필요한 곳을 위한 폴백
 export const COUNTRY_FLAG: Record<Country, string> = {
   JP: "🇯🇵",
   CN: "🇨🇳",

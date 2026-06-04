@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import InfluencerCard from "./_components/InfluencerCard";
+import InfluencerFilter from "./_components/InfluencerFilter";
+import Flag from "./_components/Flag";
 import { clientLogos } from "@/data/clients";
 import {
   INFLUENCERS,
   PORTFOLIO,
   COUNTRY_STATS,
   COUNTRY_LABEL,
-  COUNTRY_FLAG,
   CLIENT_TYPE_LABEL,
   formatFollowers,
   totalInfluencers,
 } from "./_data/sample";
 
-const KAKAO_URL = "https://pf.kakao.com/_timfofpassion"; // TODO: 전용 채널 확정 시 교체
+// 열정의시간 카카오톡 채널 상담(채팅) — 전사 공용 채널
+const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
 export const metadata: Metadata = {
   title: {
@@ -25,23 +26,40 @@ const SERVICES = [
   {
     no: "01",
     title: "인플루언서 섭외",
-    desc: "일본·중국·대만 현지 검증된 인플루언서 풀에서 캠페인 목표에 맞는 적임자를 매칭합니다.",
+    desc: "일본·중국·대만 현지에서 직접 운영하는 검증된 풀에서, 캠페인 목표에 맞는 적임자를 매칭합니다.",
   },
   {
     no: "02",
     title: "콘텐츠 기획",
-    desc: "시장·플랫폼별 현지 정서에 맞는 콘텐츠를 기획하고 핵심 메시지를 설계합니다.",
+    desc: "‘번역’이 아니라 ‘현지화’. 시장·플랫폼별 정서에 맞는 콘텐츠를 기획하고 핵심 메시지를 설계합니다.",
   },
   {
     no: "03",
-    title: "캠페인 실행",
-    desc: "발행·운영·현지 커뮤니케이션까지 전 과정을 원스톱으로 실행합니다.",
+    title: "캠페인 실행·리포트",
+    desc: "발행·운영·현지 커뮤니케이션부터 성과 리포트까지 전 과정을 원스톱으로 책임집니다.",
+  },
+];
+
+// 후킹용 차별점
+const WHY = [
+  {
+    icon: "🌏",
+    title: "현지 직접 운영 풀",
+    desc: "에이전시 재하청이 아닌, 3개국 현지 크리에이터를 직접 관리합니다.",
+  },
+  {
+    icon: "🏥",
+    title: "의료·뷰티 전환 특화",
+    desc: "단순 노출이 아니라 ‘상담·내원·구매’로 이어지는 전환 설계 경험.",
+  },
+  {
+    icon: "⚡",
+    title: "원스톱 실행",
+    desc: "섭외→기획→발행→리포트까지 한 팀이. 여러 업체와 따로 소통할 필요 없음.",
   },
 ];
 
 export default function PeopleHome() {
-  const previewInfluencers = INFLUENCERS.slice(0, 8);
-
   return (
     <>
       {/* 4-1 HERO */}
@@ -68,7 +86,7 @@ export default function PeopleHome() {
             rel="noopener noreferrer"
             className="ppl-btn ppl-btn--red"
           >
-            무료 상담 신청 →
+            카카오톡 무료 상담 →
           </a>
 
           <div className="ppl-hero__stats">
@@ -103,7 +121,7 @@ export default function PeopleHome() {
             {COUNTRY_STATS.map((c) => (
               <div key={c.country} className="ppl-country-card">
                 <div className="ppl-country-card__flag">
-                  {COUNTRY_FLAG[c.country]}
+                  <Flag country={c.country} size={40} />
                 </div>
                 <div className="ppl-country-card__name">
                   {COUNTRY_LABEL[c.country]}
@@ -126,30 +144,35 @@ export default function PeopleHome() {
         </div>
       </section>
 
-      {/* 4-3 INFLUENCER PREVIEW */}
-      <section className="ppl-section" style={{ background: "#fff" }}>
+      {/* 4-3 INFLUENCER PREVIEW — 국가·플랫폼·분야 필터 */}
+      <section className="ppl-section" id="influencers" style={{ background: "#fff" }}>
         <div className="ppl-container">
           <span className="ppl-eyebrow">INFLUENCERS</span>
           <h2 className="ppl-section-title">지금 활동 중인 인플루언서</h2>
           <p className="ppl-section-sub">
-            일본·중국·대만 현지에서 활동하는 크리에이터를 만나보세요.
+            국가·플랫폼·분야로 직접 필터링해 보세요. 캠페인에 맞는 크리에이터를
+            바로 찾을 수 있습니다.
           </p>
 
-          <div className="ppl-inf-grid">
-            {previewInfluencers.map((inf) => (
-              <InfluencerCard key={inf.id} inf={inf} />
-            ))}
+          <div className="ppl-prepnote">
+            <span className="ppl-prepnote__badge">업데이트 중</span>
+            <p>
+              실시간 인플루언서 데이터는 자사 운영관리 시스템과 연동 작업 중입니다.
+              아래는 구성·필터 예시이며, 실제 프로필·채널 수치는 순차 공개됩니다.
+            </p>
           </div>
+
+          <InfluencerFilter data={INFLUENCERS} />
 
           <div className="ppl-center">
             <Link href="/people/influencers" className="ppl-btn ppl-btn--ghost">
-              전체 인플루언서 보기 →
+              인플루언서 전체 페이지 →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 4-4 PORTFOLIO PREVIEW */}
+      {/* 4-4 PORTFOLIO PREVIEW — 준비중(가안) */}
       <section className="ppl-section" id="portfolio">
         <div className="ppl-container">
           <span className="ppl-eyebrow">PORTFOLIO</span>
@@ -158,11 +181,24 @@ export default function PeopleHome() {
             의료·기업·공공 분야의 동아시아 진출 캠페인 사례입니다.
           </p>
 
+          <div className="ppl-prepnote">
+            <span className="ppl-prepnote__badge">준비중</span>
+            <p>
+              아래 사례는 구성 가안(예시)입니다. 실제 진행 캠페인의 성과 리포트는
+              클라이언트 동의 절차를 거쳐 순차 공개될 예정입니다.
+            </p>
+          </div>
+
           <div className="ppl-port-grid">
             {PORTFOLIO.map((p) => (
               <article key={p.id} className="ppl-port-card">
                 <div className="ppl-port-card__thumb">
-                  {p.country.map((c) => COUNTRY_FLAG[c]).join(" ")}
+                  <span className="ppl-port-card__prep">예시</span>
+                  <span className="ppl-port-card__flags">
+                    {p.country.map((c) => (
+                      <Flag key={c} country={c} size={26} />
+                    ))}
+                  </span>
                 </div>
                 <div className="ppl-port-card__body">
                   <span className="ppl-port-card__type">
@@ -194,26 +230,42 @@ export default function PeopleHome() {
               className="ppl-btn ppl-btn--ghost"
               style={{ opacity: 0.6, cursor: "default" }}
             >
-              사례 더보기 (준비중)
+              실제 사례 공개 준비중
             </span>
           </div>
         </div>
       </section>
 
-      {/* 4-5 SERVICES */}
+      {/* 4-5 SERVICES — 후킹 강화 */}
       <section className="ppl-section" id="service" style={{ background: "#fff" }}>
         <div className="ppl-container">
           <span className="ppl-eyebrow">SERVICE</span>
-          <h2 className="ppl-section-title">섭외부터 기획·실행까지</h2>
+          <h2 className="ppl-section-title">
+            해외 인플루언서 마케팅,
+            <br />
+            막막함은 우리가, 성과는 당신이.
+          </h2>
           <p className="ppl-section-sub">
-            인플루언서 마케팅의 전 과정을 한 번에 진행합니다. 가격은 캠페인
-            규모에 따라 견적 안내드립니다.
+            현지 섭외부터 콘텐츠 기획·발행·성과 리포트까지 한 팀이 끝까지
+            책임집니다. 가격은 캠페인 규모에 따라 맞춤 견적으로 안내드립니다.
           </p>
 
+          {/* 차별점 3종 */}
+          <div className="ppl-why-grid">
+            {WHY.map((w) => (
+              <div key={w.title} className="ppl-why-card">
+                <div className="ppl-why-card__icon">{w.icon}</div>
+                <div className="ppl-why-card__title">{w.title}</div>
+                <p className="ppl-why-card__desc">{w.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* 3단계 프로세스 */}
           <div className="ppl-svc-grid">
             {SERVICES.map((s) => (
               <div key={s.no} className="ppl-svc-card">
-                <div className="ppl-svc-card__num">{s.no}</div>
+                <div className="ppl-svc-card__num">STEP {s.no}</div>
                 <div className="ppl-svc-card__title">{s.title}</div>
                 <p className="ppl-svc-card__desc">{s.desc}</p>
               </div>
@@ -227,8 +279,11 @@ export default function PeopleHome() {
               rel="noopener noreferrer"
               className="ppl-btn ppl-btn--red"
             >
-              문의하고 견적 받기 →
+              30초 만에 카카오톡으로 견적 문의 →
             </a>
+            <p className="ppl-svc-note">
+              문의 후 평균 1영업일 내 담당자가 회신드립니다.
+            </p>
           </div>
         </div>
       </section>
@@ -250,7 +305,7 @@ export default function PeopleHome() {
           <h2>지금 동아시아 진출을 시작하세요</h2>
           <p>일본·중국·대만 현지 인플루언서가 기다리고 있습니다.</p>
           <a href={KAKAO_URL} target="_blank" rel="noopener noreferrer" className="ppl-btn">
-            무료 상담 신청 →
+            카카오톡 무료 상담 →
           </a>
         </div>
       </section>

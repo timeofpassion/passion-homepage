@@ -337,7 +337,11 @@ body:has(.ppl-root) {
   box-shadow: var(--ppl-shadow-hover);
 }
 .ppl-country-card__flag {
-  font-size: 34px;
+  line-height: 0;
+}
+.ppl-country-card__flag img {
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(22, 35, 58, 0.18);
 }
 .ppl-country-card__name {
   font-size: 20px;
@@ -429,10 +433,28 @@ body:has(.ppl-root) {
   position: absolute;
   top: 10px;
   left: 10px;
-  font-size: 18px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  padding: 2px 7px;
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 6px;
+  padding: 4px 5px;
+  line-height: 0;
+  box-shadow: 0 1px 4px rgba(22, 35, 58, 0.16);
+}
+/* 프로필 준비중 플레이스홀더 */
+.ppl-card__ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #aeb6c2;
+}
+.ppl-card__ph span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 .ppl-card__excl {
   position: absolute;
@@ -534,6 +556,7 @@ body:has(.ppl-root) {
   box-shadow: var(--ppl-shadow-hover);
 }
 .ppl-port-card__thumb {
+  position: relative;
   aspect-ratio: 16 / 10;
   background: linear-gradient(135deg, #1f3050, #16233a);
   display: flex;
@@ -543,6 +566,28 @@ body:has(.ppl-root) {
   font-size: 12px;
   background-size: cover;
   background-position: center;
+}
+.ppl-port-card__flags {
+  display: inline-flex;
+  gap: 6px;
+  line-height: 0;
+}
+.ppl-port-card__flags img {
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.ppl-port-card__prep {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 3px 9px;
+  border-radius: 6px;
 }
 .ppl-port-card__body {
   padding: 18px;
@@ -838,4 +883,102 @@ body:has(.ppl-root) {
 }
 .ppl-fadeup {
   animation: ppl-fadeup 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ===================== 준비중/업데이트 안내 배너 ===================== */
+.ppl-prepnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 14px 18px;
+  background: var(--ppl-red-soft);
+  border: 1px solid #f3c8c1;
+  border-radius: 12px;
+}
+.ppl-prepnote__badge {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--ppl-red);
+  padding: 4px 11px;
+  border-radius: var(--ppl-pill);
+  margin-top: 1px;
+}
+.ppl-prepnote p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #8a3b30;
+}
+
+/* ===================== WHY (서비스 차별점) ===================== */
+.ppl-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 40px 0 8px;
+}
+@media (max-width: 900px) {
+  .ppl-why-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.ppl-why-card {
+  background: var(--ppl-bg);
+  border: 1px solid var(--ppl-line);
+  border-radius: var(--ppl-radius);
+  padding: 24px 22px;
+}
+.ppl-why-card__icon {
+  font-size: 26px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.ppl-why-card__title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ppl-navy);
+  margin-bottom: 8px;
+}
+.ppl-why-card__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ppl-slate);
+}
+.ppl-svc-note {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--ppl-slate);
+}
+
+/* ===================== 필터 결과 바 ===================== */
+.ppl-result-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ppl-reset {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ppl-red);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+.ppl-reset:hover {
+  text-decoration: underline;
+}
+
+/* ===================== 푸터 카카오 링크 ===================== */
+.ppl-footer__kakao {
+  color: #ffe14d !important;
+  font-weight: 700;
+}
+.ppl-footer__kakao:hover {
+  color: #fff !important;
 }
