@@ -36,7 +36,7 @@ export default function SpaceNav() {
     <>
       <nav className={`spc-nav ${scrolled ? "scrolled" : ""}`}>
         <div className="spc-container spc-nav__inner">
-          <Link href="#" className="spc-nav__brand">
+          <Link href="/space" className="spc-nav__brand">
             열정의<b>공간</b>
           </Link>
 
@@ -76,7 +76,7 @@ export default function SpaceNav() {
       <div className={`spc-drawer ${open ? "is-open" : ""}`} aria-hidden={!open}>
         <div className="spc-drawer__top">
           <Link
-            href="#"
+            href="/space"
             className="spc-drawer__brand"
             onClick={() => setOpen(false)}
           >

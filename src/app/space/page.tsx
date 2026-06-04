@@ -1,345 +1,328 @@
-import HeroVideo from "./_components/HeroVideo";
+import Link from "next/link";
+import "./space-magazine.css";
+import MagNav from "./_components/MagNav";
 import Reveal from "./_components/Reveal";
-import ConnectForm from "./_components/ConnectForm";
-import { MEDIA, CONTACT } from "./_data/media";
+import { MEDIA } from "./_data/media";
+import { PLACES } from "./_data/places";
 
-const PROGRAMS = [
-  {
-    no: "01",
-    title: "시그니처 리트릿",
-    desc: "큐레이션된 일정 속 쉼·대화·웰니스를 경험하는 몰입형 체류.",
-    for: "For Everyone",
-    forKo: "누구나",
-  },
-  {
-    no: "02",
-    title: "워크숍 · 살롱",
-    desc: "업계 리더가 이끄는 토론과 강연, 모임이 곧 콘텐츠가 됩니다.",
-    for: "Marketers",
-    forKo: "마케터",
-  },
-  {
-    no: "03",
-    title: "자기주도 리트릿",
-    desc: "정해진 일정 없이, 나만의 속도로 머무는 자유로운 체류.",
-    for: "Solo Stay",
-    forKo: "단독 체류",
-  },
-  {
-    no: "04",
-    title: "기업 오프사이트",
-    desc: "팀의 비전을 다듬는 단체 연수, 평일의 공간을 가장 가치 있게.",
-    for: "Teams",
-    forKo: "팀 단위",
-  },
+const HOW = [
+  { n: "01", t: "모인다", d: "영향력 있는 사람들을 초대한다. 돈이 아니라 재능으로 함께한다." },
+  { n: "02", t: "쉬고, 사유한다", d: "깊은 힐링 속에서 집단지성이 작동한다. 쉼이 곧 아이디어가 된다." },
+  { n: "03", t: "남긴다", d: "이 지역을 살릴 아이디어·콘텐츠·홍보를 남기고 떠난다." },
+  { n: "04", t: "지역이 산다", d: "방문 수요·지역 경제·인지도가 오르고, 그 성과가 다시 운영을 지탱한다." },
 ];
 
-const COMMUNITY = [
-  { name: "마케터 · CMO", desc: "비우고 채우는 전략가" },
-  { name: "크리에이터", desc: "촬영과 휴식, 확산을 한번에" },
-  { name: "기업 리더십", desc: "방향을 다시 세우는 사람들" },
-  { name: "전문직 · 작가", desc: "고요 속 사유와 창작" },
+const MODEL = [
+  { k: "이용료", h: "거의 무료", p: "수익이 목적이면 숙박업이 된다. 진입장벽을 없애 가장 좋은 사람을 모은다." },
+  { k: "운영비", h: "공공예산", p: "지자체·정부엔 “돈을 대면 지역에 사람·수요·홍보가 생기는” 사업이다." },
+  { k: "지불 방식", h: "기여로", p: "콘텐츠·전략·확산·아이디어 — 게스트가 남기는 것이 곧 지역의 자산이다." },
 ];
 
-const JOURNAL = [
-  {
-    cat: "Essay",
-    title: "섬에서 보낸 3일, 마케터의 노트",
-    excerpt:
-      "일정을 비우자 비로소 보이기 시작한 것들. 신안에서의 사흘이 남긴 기록.",
-    video: MEDIA.journal.video,
-    poster: MEDIA.journal.poster,
-  },
-  {
-    cat: "Space",
-    title: "폐교가 리트릿이 되기까지",
-    excerpt:
-      "오래된 분교의 칠판과 운동장이 강의·창작의 공간으로 다시 태어난 이야기.",
-  },
-  {
-    cat: "People",
-    title: "이곳에서 만난 사람들",
-    excerpt:
-      "같은 노을을 바라보며 시작된 대화. 머무는 동안 이어진 인연의 기록.",
-  },
+const WHO = [
+  { nm: "마케터 · CMO", d: "지역을 알릴 전략과 브랜딩", gv: "Strategy" },
+  { nm: "영상 PD · 크리에이터", d: "지역을 담는 콘텐츠", gv: "Content" },
+  { nm: "인플루언서", d: "세상으로의 확산", gv: "Reach" },
+  { nm: "전문직 · 연구자", d: "지역 재생의 깊은 사유", gv: "Insight" },
 ];
 
-// SEO: 리트릿(숙박/관광) 비즈니스 구조화 데이터
+const MAIL = (subject: string) =>
+  `mailto:hello@passionspace.kr?subject=${encodeURIComponent(subject)}`;
+
+// SEO: 지역재생 리트릿 운동(브랜드) 구조화 데이터
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Resort",
+  "@type": "Organization",
   name: "열정의공간 (PASSION SPACE)",
-  description:
-    "전남 신안의 섬에 위치한 리트릿 성지. 마케터·크리에이터·지성인이 모여 쉬고 사유하고 콘텐츠를 만드는 순환형 리트릿.",
+  alternateName: "PASSIONSPACE",
   url: "https://www.timeofpassion.com/space",
-  address: {
-    "@type": "PostalAddress",
-    addressRegion: "전라남도",
-    addressLocality: "신안군",
-    addressCountry: "KR",
-  },
-  email: CONTACT.email,
+  description:
+    "사라져가는 지역에 영향력 있는 사람들을 모아 깊이 쉬게 하고, 그들이 남긴 영감으로 지역을 되살리는 리트릿 운동. 신안 1호 운영 중.",
+  email: "hello@passionspace.kr",
   parentOrganization: {
     "@type": "Organization",
     name: "PASSION GROUP",
     url: "https://www.timeofpassion.com",
   },
+  location: {
+    "@type": "Place",
+    name: "신안 1호",
+    address: {
+      "@type": "PostalAddress",
+      addressRegion: "전라남도",
+      addressLocality: "신안군",
+      addressCountry: "KR",
+    },
+  },
 };
 
-export default function SpaceHome() {
+export default function SpaceBrandHome() {
   return (
-    <main>
+    <div className="psm-root" id="top">
+      {/* 매거진 디스플레이/라벨 폰트 (CDN) — 본문 Pretendard 는 루트 레이아웃에서 로드 */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@600;700;800;900&family=Noto+Serif+KR:wght@300;600&display=swap"
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 2. HERO */}
-      <HeroVideo />
+      <MagNav />
 
-      {/* 3. PHILOSOPHY */}
-      <section className="spc-philo" id="story">
-        <div className="spc-container">
-          <Reveal className="spc-philo__inner">
-            <span className="spc-kicker">Our Philosophy</span>
-            <h2 className="spc-h2">
-              쉽게 닿지 않는 곳일수록,
+      {/* HERO — 비대칭 split */}
+      <header className="psm-hero">
+        <div className="psm-hero__left">
+          <div className="psm-hero__topmeta">
+            <div className="psm-hero__m1">운동, 장소가 아니라</div>
+            <div className="psm-hero__m2">
+              전라남도 신안 · 1호
               <br />
-              머무름은 더 깊어집니다.
-            </h2>
-            <p className="spc-lead">
-              열정의공간은 단순한 휴양지가 아닙니다. 마케터와 크리에이터, 사유하는
-              사람들이 모여 영감을 나누고, 그 안에서 태어난 이야기가 다시 신안과
-              전남을 세상에 알리는 — 순환하는 리트릿입니다.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 4. FEATURE 1 — 자기주도 리트릿 (텍스트 좌) */}
-      <section className="spc-feature">
-        <video
-          className="spc-feature__video"
-          src={MEDIA.feature1.video}
-          poster={MEDIA.feature1.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-        <div className="spc-feature__scrim" />
-        <div className="spc-container spc-feature__inner">
-          <Reveal className="spc-feature__block">
-            <span className="spc-feature__kicker">Self-Guided Retreat</span>
-            <h3 className="spc-feature__h">나만의 속도로 떠나는 여정</h3>
-            <p className="spc-feature__desc">
-              정해진 일정에 얽매이지 않고, 비우고 채우는 시간을 스스로
-              설계합니다. 노을이 지는 섬에서, 온전히 나에게 집중하는 며칠.
-            </p>
-            <a href="#programs" className="spc-textlink">
-              프로그램 보기 →
-            </a>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 5. FEATURE 2 — 커뮤니티 (텍스트 우) */}
-      <section className="spc-feature spc-feature--right">
-        <video
-          className="spc-feature__video"
-          src={MEDIA.feature2.video}
-          poster={MEDIA.feature2.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-        <div className="spc-feature__scrim" />
-        <div className="spc-container spc-feature__inner">
-          <Reveal className="spc-feature__block">
-            <span className="spc-feature__kicker">Who Gathers Here</span>
-            <h3 className="spc-feature__h">누가 모이느냐가 곧 브랜드가 된다</h3>
-            <p className="spc-feature__desc">
-              이곳의 손님은 머무는 동안 콘텐츠를 만들고, 그 이야기가 다시 신안을
-              세상에 알립니다. 영향력 있는 사람들이 모이는 것 자체가 이 공간의
-              자산입니다.
-            </p>
-            <a href="#connect" className="spc-textlink">
-              멤버십 사전 등록 →
-            </a>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 6. PROGRAMS */}
-      <section className="spc-programs" id="programs">
-        <div className="spc-container">
-          <Reveal className="spc-programs__head">
-            <div>
-              <span className="spc-kicker">Programs</span>
-              <h2 className="spc-h2">머무는 방식</h2>
+              EST. 2026 · 열정의 그룹
             </div>
-            <a href="#connect" className="spc-textlink">
-              전체 프로그램 →
-            </a>
-          </Reveal>
-
-          <div className="spc-programs__list">
-            {PROGRAMS.map((p, i) => (
-              <Reveal key={p.no} className="spc-program" delay={i * 0.06}>
-                <span className="spc-program__no">{p.no}</span>
-                <h3 className="spc-program__title">{p.title}</h3>
-                <p className="spc-program__desc">{p.desc}</p>
-                <div className="spc-program__for">
-                  <span>{p.forKo}</span>
-                  {p.for}
-                </div>
-              </Reveal>
-            ))}
           </div>
-        </div>
-      </section>
-
-      {/* 7. WHO / COMMUNITY */}
-      <section className="spc-who">
-        <div className="spc-container">
-          <Reveal className="spc-who__head">
-            <span className="spc-kicker">The Community</span>
-            <h2 className="spc-h2">이곳에 모이는 사람들</h2>
-          </Reveal>
-
-          <div className="spc-who__grid">
-            {COMMUNITY.map((c, i) => (
-              <Reveal key={c.name} className="spc-who__item" delay={i * 0.08}>
-                <div className="spc-who__name">{c.name}</div>
-                <p className="spc-who__desc">{c.desc}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 8. FEATURE 3 — 공간(머무름) (텍스트 좌) */}
-      <section className="spc-feature" id="stay">
-        <video
-          className="spc-feature__video"
-          src={MEDIA.feature3.video}
-          poster={MEDIA.feature3.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-        <div className="spc-feature__scrim" />
-        <div className="spc-container spc-feature__inner">
-          <Reveal className="spc-feature__block">
-            <span className="spc-feature__kicker">The Space</span>
-            <h3 className="spc-feature__h">경치는 경험으로, 폐교는 영감으로</h3>
-            <p className="spc-feature__desc">
-              바다를 마주한 객실과 사색의 공간, 그리고 오래된 분교를 되살린
-              강의·창작 공간. 풍경이 필요한 곳엔 풍경을, 몰입이 필요한 곳엔
-              고요를 두었습니다.
+          <h1 className="psm-hero__h1">
+            공간은 장소가
+            <br />
+            아니라, 그곳에
+            <br />
+            모인 <span className="hl">사람의</span>
+            <br />
+            <span className="out">에너지다</span>
+          </h1>
+          <div className="psm-hero__botrow">
+            <p className="psm-hero__lead">
+              사라져가는 지역에 영향력 있는 사람들을 모읍니다. 쉬러 왔다가, 그
+              지역의 내일을 만들고 갑니다.
             </p>
-            <a href="#journal" className="spc-textlink">
-              공간 둘러보기 →
+            <a href="#how" className="psm-hero__enter">
+              운동 읽기 ↓
             </a>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 9. JOURNAL */}
-      <section className="spc-journal" id="journal">
-        <div className="spc-container">
-          <Reveal className="spc-journal__head">
-            <div>
-              <span className="spc-kicker">Journal</span>
-              <h2 className="spc-h2">공간에 머문 이야기</h2>
-            </div>
-            <a href="#connect" className="spc-textlink">
-              저널 전체 →
-            </a>
-          </Reveal>
-
-          <div className="spc-journal__grid">
-            {JOURNAL.map((j, i) => (
-              <Reveal key={j.title} as="article" delay={i * 0.08}>
-                <div className="spc-jcard">
-                  <div className="spc-jcard__thumb">
-                    {j.video ? (
-                      <video
-                        src={j.video}
-                        poster={j.poster}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <div className="spc-jcard__placeholder">
-                        PHOTO · 신안 촬영물 예정
-                      </div>
-                    )}
-                  </div>
-                  <span className="spc-jcard__cat">{j.cat}</span>
-                  <h3 className="spc-jcard__title">{j.title}</h3>
-                  <p className="spc-jcard__excerpt">{j.excerpt}</p>
-                </div>
-              </Reveal>
-            ))}
           </div>
         </div>
-      </section>
+        <div className="psm-hero__right">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={MEDIA.hero.poster}
+            src={MEDIA.hero.video}
+            aria-hidden="true"
+          />
+          <div className="psm-hero__no">01</div>
+          <div className="psm-hero__vlabel">SHINAN · 천 개의 섬과 노을</div>
+        </div>
+      </header>
 
-      {/* 10. CONNECT */}
-      <section className="spc-connect" id="connect">
-        <video
-          className="spc-connect__video"
-          src={MEDIA.connect.video}
-          poster={MEDIA.connect.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-        <div className="spc-connect__scrim" />
-        <div className="spc-container spc-connect__inner">
-          <Reveal>
-            <span className="spc-kicker">Stay Connected</span>
-            <h2 className="spc-connect__h">
-              당신의 영감이 머물 자리를
-              <br />
-              비워두었습니다
+      {/* 01 MANIFESTO */}
+      <section className="psm-sec psm-manifesto" id="manifesto">
+        <Reveal className="psm-shead">
+          <div className="psm-shead__idx">01</div>
+          <div>
+            <div className="psm-shead__cat">Manifesto / 우리는</div>
+            <h2>
+              우리는 게스트하우스가 아니라,{" "}
+              <span className="hl">쉼 속의 싱크탱크다</span>
             </h2>
-            <p className="spc-connect__desc">
-              리트릿 예약 · 기업 연수 · 공간 대관 · 멤버십. 새로운 소식을 가장
-              먼저 받아보세요.
-            </p>
-            <ConnectForm />
-            <p className="spc-connect__alt">
-              바로 문의:{" "}
-              <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-              {" · "}
-              <a
-                href={CONTACT.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {CONTACT.instagramHandle}
-              </a>
-            </p>
+          </div>
+        </Reveal>
+        <div className="psm-manifesto__body">
+          <Reveal className="psm-manifesto__pull">
+            “놀러 와서 소비하고 떠나는 곳이 아니다.{" "}
+            <b>쉬면서, 이 지역을 어떻게 살릴지 함께 사유한다.</b>”
+          </Reveal>
+          <Reveal className="psm-manifesto__txt">
+            마케터·PD·크리에이터·전문가가 깊이 쉬고, 그 안에서 태어난 아이디어와
+            콘텐츠가 잊혀가던 지역을 다시 뛰게 합니다. 힐링은 우리가 드리고, 당신은
+            영감을 남깁니다. 그 교환이 곧 지역의 재생입니다.
           </Reveal>
         </div>
       </section>
-    </main>
+
+      {/* 02 HOW / MODEL */}
+      <section className="psm-sec psm-how" id="how">
+        <Reveal className="psm-shead">
+          <div className="psm-shead__idx">02</div>
+          <div>
+            <div className="psm-shead__cat">The Model / 작동 방식</div>
+            <h2>
+              사람이 모이면, <span className="hl">지역이 살아난다</span>
+            </h2>
+          </div>
+        </Reveal>
+        <div>
+          {HOW.map((r) => (
+            <Reveal key={r.n} className="psm-how__row">
+              <div className="psm-how__n">{r.n}</div>
+              <div className="psm-how__t">{r.t}</div>
+              <div className="psm-how__d">{r.d}</div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="psm-how__model">
+          {MODEL.map((m) => (
+            <div key={m.k} className="psm-how__m">
+              <div className="k">{m.k}</div>
+              <h4>{m.h}</h4>
+              <p>{m.p}</p>
+            </div>
+          ))}
+        </Reveal>
+      </section>
+
+      {/* 03 NETWORK */}
+      <section className="psm-sec psm-net" id="network">
+        <Reveal className="psm-shead">
+          <div className="psm-shead__idx">03</div>
+          <div>
+            <div className="psm-shead__cat">The Network / 거점</div>
+            <h2>
+              한 곳이 아니다. 사라져가는 <span className="hl">지역마다</span>, 다시
+              사람을 모은다
+            </h2>
+          </div>
+        </Reveal>
+        <Reveal className="psm-net__grid">
+          {PLACES.map((p) => {
+            const cls = `psm-net__cell${p.feat ? " feat" : ""}${
+              p.status === "open" ? " open" : ""
+            }${p.light ? " light" : ""}`;
+            const inner = (
+              <>
+                {!p.light &&
+                  (p.video ? (
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      poster={p.poster}
+                      src={p.video}
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <div className="ph">{p.placeholder}</div>
+                  ))}
+                {!p.light && <div className="sc" />}
+                <span className="st">{p.statusLabel}</span>
+                <div className="nm">{p.name}</div>
+                <div className="ds">{p.desc}</div>
+                {p.arrow && <div className="arrow">{p.arrow}</div>}
+              </>
+            );
+            if (p.href?.startsWith("/")) {
+              return (
+                <Link key={p.slug} href={p.href} className={cls}>
+                  {inner}
+                </Link>
+              );
+            }
+            if (p.href) {
+              return (
+                <a key={p.slug} href={p.href} className={cls}>
+                  {inner}
+                </a>
+              );
+            }
+            return (
+              <div key={p.slug} className={cls}>
+                {inner}
+              </div>
+            );
+          })}
+        </Reveal>
+      </section>
+
+      {/* 04 WHO / PEOPLE */}
+      <section className="psm-sec psm-who" id="who">
+        <Reveal className="psm-shead">
+          <div className="psm-shead__idx">04</div>
+          <div>
+            <div className="psm-shead__cat">The People / 함께할 사람</div>
+            <h2>
+              당신의 재능으로 지역을 살려주세요.{" "}
+              <span className="hl">쉼은 우리가 드립니다</span>
+            </h2>
+          </div>
+        </Reveal>
+        <div>
+          {WHO.map((w) => (
+            <Reveal key={w.nm} className="psm-who__r">
+              <div className="nm">{w.nm}</div>
+              <div className="d">{w.d}</div>
+              <div className="gv">{w.gv}</div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* JOIN */}
+      <section className="psm-join" id="join">
+        <Reveal className="psm-join__big">
+          돈 내고 오는 곳이 아니라, <span className="w">초대받는</span> 곳이다
+        </Reveal>
+        <Reveal className="psm-join__row">
+          <p>
+            당신의 재능으로 함께할 수 있다면, 또는 살려야 할 지역이 있다면 — 문을
+            두드려주세요. 함께하는 사람을 선발해 모십니다.
+          </p>
+          <div className="psm-join__opts">
+            <a href={MAIL("[열정의공간] 멤버 초대 신청")}>
+              멤버 초대 신청 <span>→</span>
+            </a>
+            <a href={MAIL("[열정의공간] 지역·거점 제안")}>
+              지역 · 거점 제안 <span>→</span>
+            </a>
+            <a href={MAIL("[열정의공간] 파트너·후원")}>
+              파트너 · 후원 <span>→</span>
+            </a>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="psm-footer">
+        <div className="psm-footer__grid">
+          <div className="psm-footer__brand">
+            <div className="psm-footer__logo">
+              PASSION<span className="o">SPACE</span>
+            </div>
+            <p>
+              사라져가는 지역에 사람을 모아 다시 살리는 리트릿 운동. 공간은 장소가
+              아니라, 그곳에 모인 사람의 에너지다. — 열정의 그룹.
+            </p>
+            <div className="psm-footer__grp">
+              <span>時</span>
+              <span>人</span>
+              <span>空</span>
+            </div>
+          </div>
+          <div className="psm-footer__col">
+            <h5>Movement</h5>
+            <a href="#manifesto">우리는</a>
+            <a href="#how">작동 방식</a>
+            <a href="#who">함께할 사람</a>
+          </div>
+          <div className="psm-footer__col">
+            <h5>Network</h5>
+            <Link href="/space/shinan">No.01 신안</Link>
+            <a href="#network">No.02 정선(예정)</a>
+            <a href={MAIL("[열정의공간] 지역·거점 제안")}>거점 제안</a>
+          </div>
+          <div className="psm-footer__col">
+            <h5>Join</h5>
+            <a href={MAIL("[열정의공간] 초대 신청")}>초대 신청</a>
+            <a href={MAIL("[열정의공간] 파트너·후원")}>파트너·후원</a>
+            <p>hello@passionspace.kr</p>
+            <Link href="/">← PASSION GROUP</Link>
+          </div>
+        </div>
+        <div className="psm-footer__bot">
+          <span>© 2026 Passion Space — 열정의 그룹</span>
+          <span>時 · 人 · 空 · Issue 01 — 신안</span>
+        </div>
+      </footer>
+    </div>
   );
 }
