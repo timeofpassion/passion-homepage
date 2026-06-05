@@ -27,7 +27,6 @@ const COMPANIES: Company[] = [
     desc: "글로벌마케팅·인플루언서 전문마케팅",
     href: "/people",
     modifier: "people",
-    soon: true,
   },
   {
     num: "03 / 空間",
@@ -103,7 +102,7 @@ export default function GroupPortal() {
         </p>
         <h2>열정의사람들</h2>
         <p>
-          글로벌마케팅과 인플루언서 국내해외 전문마케팅 기업. (준비중)
+          글로벌마케팅과 인플루언서 국내해외 전문마케팅 기업. 일본·중국·대만 현지 인플루언서 마케팅을 제공합니다. 자세히 보기는 열정의사람들 홈페이지(/people)에서 확인하세요.
         </p>
         <h2>열정의공간</h2>
         <p>
