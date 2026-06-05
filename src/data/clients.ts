@@ -30,4 +30,8 @@ export const clientLogos: ClientLogo[] = [
   { name: "랩인큐브", logo: "/clients/logo_labincube.png" },
   { name: "이안한방병원", logo: "/clients/logo_eahn.png" },
   { name: "커피스미스", logo: "/clients/logo_coffeesmith.png" },
+  { name: "제주본가", logo: "/clients/logo_jejubonga.png" },
+  { name: "세민성형외과", logo: "/clients/logo_semin.png" },
+  { name: "르무이헤어룸", logo: "/clients/logo_lemui.png" },
+  { name: "팔당불오징어", logo: "/clients/logo_paldang.png" },
 ];
