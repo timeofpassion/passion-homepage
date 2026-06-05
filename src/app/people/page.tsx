@@ -112,7 +112,7 @@ export default async function PeopleHome() {
       <div
         style={{
           background:
-            "radial-gradient(circle at center, #cc0000 -20%, #5a0000 30%, #0a0000 80%)",
+            "radial-gradient(circle at center, #1e63c8 -20%, #14264d 30%, #060b18 80%)",
           color: "#fff",
         }}
       >
