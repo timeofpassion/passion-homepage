@@ -39,7 +39,7 @@ export default function ClientsSection({
               <img
                 src={client.logo}
                 alt={client.name}
-                className="grayscale opacity-70 transition duration-300 group-hover:grayscale-0 group-hover:opacity-100"
+                className="grayscale opacity-100 transition duration-300 group-hover:grayscale-0"
                 style={{
                   maxHeight: 48,
                   maxWidth: "82%",
