@@ -29,4 +29,5 @@ export const clientLogos: ClientLogo[] = [
   { name: "더리즈의원", logo: "/clients/logo_theliz.png" },
   { name: "랩인큐브", logo: "/clients/logo_labincube.png" },
   { name: "이안한방병원", logo: "/clients/logo_eahn.png" },
+  { name: "커피스미스", logo: "/clients/logo_coffeesmith.png" },
 ];
