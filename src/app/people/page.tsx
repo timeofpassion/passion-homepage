@@ -4,14 +4,12 @@ import InfluencerFilter from "./_components/InfluencerFilter";
 import Flag from "./_components/Flag";
 import { clientLogos } from "@/data/clients";
 import {
-  INFLUENCERS,
   PORTFOLIO,
-  COUNTRY_STATS,
   COUNTRY_LABEL,
   CLIENT_TYPE_LABEL,
   formatFollowers,
-  totalInfluencers,
 } from "./_data/sample";
+import { getInfluencers, buildCountryStats } from "./_data/people-data";
 
 // 열정의시간 카카오톡 채널 상담(채팅) — 전사 공용 채널
 const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
@@ -56,7 +54,13 @@ const WHY = [
   },
 ];
 
-export default function PeopleHome() {
+export default async function PeopleHome() {
+  const { influencers, usingSample } = await getInfluencers();
+  const countryStats = buildCountryStats(influencers);
+  const total = influencers.length;
+  const marketLabels = countryStats
+    .map((s) => COUNTRY_LABEL[s.country])
+    .join(" · ");
   return (
     <>
       {/* 4-1 HERO */}
@@ -88,12 +92,12 @@ export default function PeopleHome() {
 
           <div className="ppl-hero__stats">
             <div className="ppl-hero__stat">
-              <b>3개국</b>
-              <span>일본 · 중국 · 대만 운영</span>
+              <b>{countryStats.length}개 시장</b>
+              <span>{marketLabels} 운영</span>
             </div>
             <div className="ppl-hero__stat">
-              <b>{totalInfluencers().toLocaleString()}+</b>
-              <span>누적 인플루언서 풀</span>
+              <b>{total.toLocaleString()}+</b>
+              <span>인플루언서 풀</span>
             </div>
             <div className="ppl-hero__stat">
               <b>7개+</b>
@@ -106,16 +110,16 @@ export default function PeopleHome() {
       {/* 4-2 COUNTRY STATS */}
       <section className="ppl-section">
         <div className="ppl-container">
-          <span className="ppl-eyebrow">EAST ASIA NETWORK</span>
+          <span className="ppl-eyebrow">NETWORK</span>
           <h2 className="ppl-section-title">
-            동아시아 3개국, 검증된 인플루언서 네트워크
+            검증된 현지 인플루언서 네트워크
           </h2>
           <p className="ppl-section-sub">
             각 시장의 주력 플랫폼과 현지 크리에이터를 직접 운영합니다.
           </p>
 
           <div className="ppl-country-grid">
-            {COUNTRY_STATS.map((c) => (
+            {countryStats.map((c) => (
               <div key={c.country} className="ppl-country-card">
                 <div className="ppl-country-card__flag">
                   <Flag country={c.country} size={40} />
@@ -151,15 +155,17 @@ export default function PeopleHome() {
             바로 찾을 수 있습니다.
           </p>
 
-          <div className="ppl-prepnote">
-            <span className="ppl-prepnote__badge">업데이트 중</span>
-            <p>
-              실시간 인플루언서 데이터는 자사 운영관리 시스템과 연동 작업 중입니다.
-              아래는 구성·필터 예시이며, 실제 프로필·채널 수치는 순차 공개됩니다.
-            </p>
-          </div>
+          {usingSample && (
+            <div className="ppl-prepnote">
+              <span className="ppl-prepnote__badge">업데이트 중</span>
+              <p>
+                실시간 인플루언서 데이터는 자사 운영관리 시스템과 연동 작업 중입니다.
+                아래는 구성·필터 예시이며, 실제 프로필·채널 수치는 순차 공개됩니다.
+              </p>
+            </div>
+          )}
 
-          <InfluencerFilter data={INFLUENCERS} />
+          <InfluencerFilter data={influencers} />
 
           <div className="ppl-center">
             <Link href="/people/influencers" className="ppl-btn ppl-btn--ghost">

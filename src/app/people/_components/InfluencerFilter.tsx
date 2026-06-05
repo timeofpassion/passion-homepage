@@ -5,36 +5,36 @@ import InfluencerCard from "./InfluencerCard";
 import {
   type Influencer,
   type Country,
-  type Category,
   type Platform,
-  CATEGORY_LABEL,
+  COUNTRY_ORDER,
   COUNTRY_LABEL,
   PLATFORM_LABEL,
 } from "../_data/sample";
 
-const COUNTRIES: (Country | "ALL")[] = ["ALL", "JP", "CN", "TW"];
-const CATEGORIES: Category[] = [
-  "beauty",
-  "food",
-  "travel",
-  "lifestyle",
-  "fashion",
-  "tech",
-];
-
 export default function InfluencerFilter({ data }: { data: Influencer[] }) {
   const [country, setCountry] = useState<Country | "ALL">("ALL");
   const [platform, setPlatform] = useState<Platform | "ALL">("ALL");
-  const [cats, setCats] = useState<Set<Category>>(new Set());
+  const [cats, setCats] = useState<Set<string>>(new Set());
 
-  // 데이터에 실제로 존재하는 플랫폼만 노출
+  // 데이터에 실제로 존재하는 국가만(노출 순서 유지)
+  const countries = useMemo<Country[]>(
+    () => COUNTRY_ORDER.filter((c) => data.some((inf) => inf.country === c)),
+    [data]
+  );
+  // 데이터에 실제로 존재하는 플랫폼만
   const platforms = useMemo<Platform[]>(() => {
     const set = new Set<Platform>();
     data.forEach((inf) => inf.channels.forEach((ch) => set.add(ch.platform)));
     return Array.from(set);
   }, [data]);
+  // 데이터에 실제로 존재하는 분야(자유 문자열)만
+  const categories = useMemo<string[]>(() => {
+    const set = new Set<string>();
+    data.forEach((inf) => inf.categories.forEach((c) => set.add(c)));
+    return Array.from(set);
+  }, [data]);
 
-  const toggleCat = (c: Category) =>
+  const toggleCat = (c: string) =>
     setCats((prev) => {
       const next = new Set(prev);
       next.has(c) ? next.delete(c) : next.add(c);
@@ -50,7 +50,7 @@ export default function InfluencerFilter({ data }: { data: Influencer[] }) {
           !inf.channels.some((ch) => ch.platform === platform)
         )
           return false;
-        if (cats.size > 0 && !inf.category.some((c) => cats.has(c)))
+        if (cats.size > 0 && !inf.categories.some((c) => cats.has(c)))
           return false;
         return true;
       }),
@@ -69,54 +69,65 @@ export default function InfluencerFilter({ data }: { data: Influencer[] }) {
       <div className="ppl-filter">
         <div className="ppl-filter__row">
           <span className="ppl-filter__label">국가</span>
-          {COUNTRIES.map((c) => (
+          <button
+            type="button"
+            className={`ppl-chip ${country === "ALL" ? "is-active" : ""}`}
+            onClick={() => setCountry("ALL")}
+          >
+            전체
+          </button>
+          {countries.map((c) => (
             <button
               key={c}
               type="button"
               className={`ppl-chip ${country === c ? "is-active" : ""}`}
               onClick={() => setCountry(c)}
             >
-              {c === "ALL" ? "전체" : COUNTRY_LABEL[c]}
+              {COUNTRY_LABEL[c]}
             </button>
           ))}
         </div>
 
-        <div className="ppl-filter__row">
-          <span className="ppl-filter__label">플랫폼</span>
-          <button
-            type="button"
-            className={`ppl-chip ${platform === "ALL" ? "is-active" : ""}`}
-            onClick={() => setPlatform("ALL")}
-          >
-            전체
-          </button>
-          {platforms.map((p) => (
+        {platforms.length > 0 && (
+          <div className="ppl-filter__row">
+            <span className="ppl-filter__label">플랫폼</span>
             <button
-              key={p}
               type="button"
-              className={`ppl-chip ${platform === p ? "is-active" : ""}`}
-              onClick={() => setPlatform(p)}
+              className={`ppl-chip ${platform === "ALL" ? "is-active" : ""}`}
+              onClick={() => setPlatform("ALL")}
             >
-              {PLATFORM_LABEL[p]}
+              전체
             </button>
-          ))}
-        </div>
+            {platforms.map((p) => (
+              <button
+                key={p}
+                type="button"
+                className={`ppl-chip ${platform === p ? "is-active" : ""}`}
+                onClick={() => setPlatform(p)}
+              >
+                {PLATFORM_LABEL[p]}
+              </button>
+            ))}
+          </div>
+        )}
 
-        <div className="ppl-filter__row">
-          <span className="ppl-filter__label">분야</span>
-          {CATEGORIES.map((c) => (
-            <button
-              key={c}
-              type="button"
-              className={`ppl-chip ppl-chip--cat ${
-                cats.has(c) ? "is-active" : ""
-              }`}
-              onClick={() => toggleCat(c)}
-            >
-              {CATEGORY_LABEL[c]}
-            </button>
-          ))}
-        </div>
+        {categories.length > 0 && (
+          <div className="ppl-filter__row">
+            <span className="ppl-filter__label">분야</span>
+            {categories.map((c) => (
+              <button
+                key={c}
+                type="button"
+                className={`ppl-chip ppl-chip--cat ${
+                  cats.has(c) ? "is-active" : ""
+                }`}
+                onClick={() => toggleCat(c)}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="ppl-result-bar">

@@ -1,6 +1,5 @@
 import {
   type Influencer,
-  CATEGORY_LABEL,
   PLATFORM_LABEL,
   formatFollowers,
 } from "../_data/sample";
@@ -36,9 +35,9 @@ export default function InfluencerCard({ inf }: { inf: Influencer }) {
         <p className="ppl-card__one">{inf.oneLiner}</p>
 
         <div className="ppl-card__cats">
-          {inf.category.map((c) => (
+          {inf.categories.map((c) => (
             <span key={c} className="ppl-tag">
-              {CATEGORY_LABEL[c]}
+              {c}
             </span>
           ))}
         </div>

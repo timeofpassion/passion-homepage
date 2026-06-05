@@ -1,15 +1,8 @@
-// 열정의사람들 — 샘플(placeholder) 데이터
-// ⚠️ 모두 가상 데이터입니다. 실제 인플루언서/포트폴리오/클라이언트 데이터로 교체 예정.
-// 교체 시 이 파일의 배열만 바꾸면 화면 전체가 반영됩니다.
+// 열정의사람들 — 타입·라벨 + 폴백(샘플) 데이터
+// 실데이터는 인트라넷 운영관리(/influencers)에서 "홈페이지 공개" 토글을 켠 인플루언서를
+// /api/public/influencers 로 받아온다(→ people-data.ts). 인트라넷 연동 실패 시 아래 샘플로 폴백한다.
 
-export type Country = "JP" | "CN" | "TW";
-export type Category =
-  | "beauty"
-  | "food"
-  | "travel"
-  | "lifestyle"
-  | "fashion"
-  | "tech";
+export type Country = "KR" | "JP" | "CN" | "TW";
 export type Platform =
   | "instagram"
   | "youtube"
@@ -17,7 +10,9 @@ export type Platform =
   | "xiaohongshu"
   | "douyin"
   | "facebook"
-  | "x";
+  | "x"
+  | "naver"
+  | "ameba";
 
 export type Channel = {
   platform: Platform;
@@ -29,7 +24,7 @@ export type Influencer = {
   id: string;
   name: string;
   country: Country;
-  category: Category[];
+  categories: string[]; // 자유 입력 분야(인트라넷과 동일): "뷰티", "여행" 등
   profileImage?: string; // 비우면 플레이스홀더 표시
   oneLiner: string;
   exclusive: boolean;
@@ -51,31 +46,38 @@ export type Portfolio = {
 
 export type Client = { name: string; logo?: string; url?: string };
 
+// 노출 국가 순서(국내 → 일본 → 중국 → 대만)
+export const COUNTRY_ORDER: Country[] = ["KR", "JP", "CN", "TW"];
+
 export const COUNTRY_LABEL: Record<Country, string> = {
+  KR: "한국",
   JP: "일본",
   CN: "중국",
   TW: "대만",
 };
 // 이모지 국기(🇯🇵)는 Windows 등 일부 환경에서 "JP/CN/TW" 글자로 깨져 보임 → SVG 이미지 사용
 export const COUNTRY_FLAG_SRC: Record<Country, string> = {
+  KR: "/people/flags/kr.svg",
   JP: "/people/flags/jp.svg",
   CN: "/people/flags/cn.svg",
   TW: "/people/flags/tw.svg",
 };
 // (호환용) 텍스트가 필요한 곳을 위한 폴백
 export const COUNTRY_FLAG: Record<Country, string> = {
+  KR: "🇰🇷",
   JP: "🇯🇵",
   CN: "🇨🇳",
   TW: "🇹🇼",
 };
-export const CATEGORY_LABEL: Record<Category, string> = {
-  beauty: "뷰티",
-  food: "푸드",
-  travel: "여행",
-  lifestyle: "라이프",
-  fashion: "패션",
-  tech: "테크",
+
+// 국가별 강점 카피(에디토리얼) — 수치·플랫폼은 실데이터에서 산출, 이 문구만 고정
+export const COUNTRY_STRENGTH: Record<Country, string> = {
+  KR: "국내 체험단·기자단부터 뷰티·라이프 크리에이터까지 직접 운영",
+  JP: "도쿄·오사카 핵심 도시 뷰티·라이프 크리에이터 다수 확보",
+  CN: "샤오홍슈·더우인 KOL 직접 운영, 의료·뷰티 전환에 강점",
+  TW: "현지 파트너 네트워크 기반 신뢰도 높은 추천형 콘텐츠",
 };
+
 export const PLATFORM_LABEL: Record<Platform, string> = {
   instagram: "Instagram",
   youtube: "YouTube",
@@ -84,6 +86,8 @@ export const PLATFORM_LABEL: Record<Platform, string> = {
   douyin: "더우인",
   facebook: "Facebook",
   x: "X",
+  naver: "네이버블로그",
+  ameba: "아메바",
 };
 export const CLIENT_TYPE_LABEL: Record<ClientType, string> = {
   medical: "의료",
@@ -91,40 +95,37 @@ export const CLIENT_TYPE_LABEL: Record<ClientType, string> = {
   public: "공공",
 };
 
-// 3개국 현황 (샘플 수치)
-export const COUNTRY_STATS: {
-  country: Country;
-  count: number;
-  platforms: string[];
-  strength: string;
-}[] = [
+// ── 폴백(샘플) 인플루언서 — 인트라넷 연동 전/실패 시에만 사용. 모두 가상. ──
+export const SAMPLE_INFLUENCERS: Influencer[] = [
   {
-    country: "JP",
-    count: 320,
-    platforms: ["Instagram", "X", "YouTube"],
-    strength: "도쿄·오사카 핵심 도시 뷰티·라이프 크리에이터 다수 확보",
+    id: "kr-001",
+    profileImage: "",
+    name: "예시 체험단 리더 (가상)",
+    country: "KR",
+    categories: ["체험단", "뷰티"],
+    oneLiner: "국내 뷰티·시술 체험단 운영 리더",
+    exclusive: true,
+    channels: [
+      { platform: "instagram", url: "#", followers: 52000 },
+      { platform: "naver", url: "#", followers: 30000 },
+    ],
   },
   {
-    country: "CN",
-    count: 280,
-    platforms: ["샤오홍슈", "더우인"],
-    strength: "샤오홍슈·더우인 KOL 직접 운영, 의료·뷰티 전환에 강점",
+    id: "kr-002",
+    profileImage: "",
+    name: "예시 맘카페 기자단 (가상)",
+    country: "KR",
+    categories: ["기자단", "라이프"],
+    oneLiner: "지역 맘카페·블로그 기자단 네트워크",
+    exclusive: false,
+    channels: [{ platform: "naver", url: "#", followers: 18000 }],
   },
-  {
-    country: "TW",
-    count: 150,
-    platforms: ["Instagram", "Facebook", "YouTube"],
-    strength: "현지 파트너 네트워크 기반 신뢰도 높은 추천형 콘텐츠",
-  },
-];
-
-export const INFLUENCERS: Influencer[] = [
   {
     id: "jp-001",
     profileImage: "/people/influencers/jp-001.webp",
     name: "사쿠라 미오 (가상)",
     country: "JP",
-    category: ["beauty"],
+    categories: ["뷰티"],
     oneLiner: "도쿄 기반 스킨케어·코스메틱 리뷰 크리에이터",
     exclusive: true,
     channels: [
@@ -137,7 +138,7 @@ export const INFLUENCERS: Influencer[] = [
     profileImage: "/people/influencers/jp-002.webp",
     name: "타카하시 렌 (가상)",
     country: "JP",
-    category: ["lifestyle", "travel"],
+    categories: ["라이프", "여행"],
     oneLiner: "일본 전국 여행·라이프스타일 브이로거",
     exclusive: false,
     channels: [
@@ -150,7 +151,7 @@ export const INFLUENCERS: Influencer[] = [
     profileImage: "/people/influencers/jp-003.webp",
     name: "유이 (가상)",
     country: "JP",
-    category: ["fashion"],
+    categories: ["패션"],
     oneLiner: "하라주쿠 스트릿 패션 인플루언서",
     exclusive: true,
     channels: [{ platform: "instagram", url: "#", followers: 130000 }],
@@ -160,7 +161,7 @@ export const INFLUENCERS: Influencer[] = [
     profileImage: "/people/influencers/cn-001.webp",
     name: "린샤오 (林小, 가상)",
     country: "CN",
-    category: ["beauty"],
+    categories: ["뷰티"],
     oneLiner: "샤오홍슈 의료·뷰티 전문 KOL",
     exclusive: true,
     channels: [
@@ -173,7 +174,7 @@ export const INFLUENCERS: Influencer[] = [
     profileImage: "/people/influencers/cn-002.webp",
     name: "왕레이 (王磊, 가상)",
     country: "CN",
-    category: ["food", "travel"],
+    categories: ["푸드", "여행"],
     oneLiner: "더우인 푸드·여행 쇼트폼 크리에이터",
     exclusive: false,
     channels: [{ platform: "douyin", url: "#", followers: 680000 }],
@@ -183,7 +184,7 @@ export const INFLUENCERS: Influencer[] = [
     profileImage: "/people/influencers/cn-003.webp",
     name: "천위 (陈雨, 가상)",
     country: "CN",
-    category: ["lifestyle"],
+    categories: ["라이프"],
     oneLiner: "상하이 라이프스타일·소비 트렌드 KOL",
     exclusive: false,
     channels: [{ platform: "xiaohongshu", url: "#", followers: 250000 }],
@@ -193,7 +194,7 @@ export const INFLUENCERS: Influencer[] = [
     profileImage: "/people/influencers/tw-001.webp",
     name: "샤오메이 (小美, 가상)",
     country: "TW",
-    category: ["beauty", "lifestyle"],
+    categories: ["뷰티", "라이프"],
     oneLiner: "타이베이 뷰티·데일리 추천 크리에이터",
     exclusive: true,
     channels: [
@@ -206,7 +207,7 @@ export const INFLUENCERS: Influencer[] = [
     profileImage: "/people/influencers/tw-002.webp",
     name: "아룬 (阿倫, 가상)",
     country: "TW",
-    category: ["food"],
+    categories: ["푸드"],
     oneLiner: "대만 맛집·미식 콘텐츠 유튜버",
     exclusive: false,
     channels: [{ platform: "youtube", url: "#", followers: 310000 }],
@@ -216,7 +217,7 @@ export const INFLUENCERS: Influencer[] = [
     profileImage: "/people/influencers/tw-003.webp",
     name: "지아지아 (佳佳, 가상)",
     country: "TW",
-    category: ["travel", "lifestyle"],
+    categories: ["여행", "라이프"],
     oneLiner: "여행·호캉스 추천 인스타 인플루언서",
     exclusive: false,
     channels: [{ platform: "instagram", url: "#", followers: 98000 }],
@@ -226,7 +227,7 @@ export const INFLUENCERS: Influencer[] = [
     profileImage: "/people/influencers/jp-004.webp",
     name: "모모카 (가상)",
     country: "JP",
-    category: ["food"],
+    categories: ["푸드"],
     oneLiner: "도쿄 카페·디저트 탐방 크리에이터",
     exclusive: false,
     channels: [
@@ -279,15 +280,6 @@ export const PORTFOLIO: Portfolio[] = [
   },
 ];
 
-export const CLIENTS: Client[] = [
-  { name: "클라이언트 A (샘플)" },
-  { name: "클라이언트 B (샘플)" },
-  { name: "OO시청 (샘플)" },
-  { name: "OO의료재단 (샘플)" },
-  { name: "OO코스메틱 (샘플)" },
-  { name: "OO관광공사 (샘플)" },
-];
-
 // 팔로워 수 한국어 축약 (12만, 1.2만 등)
 export function formatFollowers(n: number): string {
   if (n >= 10000) {
@@ -296,8 +288,4 @@ export function formatFollowers(n: number): string {
   }
   if (n >= 1000) return (n / 1000).toFixed(1) + "천";
   return String(n);
-}
-
-export function totalInfluencers(): number {
-  return COUNTRY_STATS.reduce((s, c) => s + c.count, 0);
 }
