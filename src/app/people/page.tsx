@@ -16,7 +16,7 @@ const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "열정의사람들 | 글로벌 인플루언서 마케팅 (일본·중국·대만)",
+    absolute: "열정의사람들 | 인플루언서 마케팅 (국내·일본·중국·대만)",
   },
 };
 
@@ -24,7 +24,7 @@ const SERVICES = [
   {
     no: "01",
     title: "인플루언서 섭외",
-    desc: "일본·중국·대만 현지에서 직접 운영하는 검증된 풀에서, 캠페인 목표에 맞는 적임자를 매칭합니다.",
+    desc: "국내·일본·중국·대만 현지에서 직접 운영하는 검증된 풀에서, 캠페인 목표에 맞는 적임자를 매칭합니다.",
   },
   {
     no: "02",
@@ -42,7 +42,7 @@ const SERVICES = [
 const WHY = [
   {
     title: "현지 직접 운영 풀",
-    desc: "에이전시 재하청이 아닌, 3개국 현지 크리에이터를 직접 관리합니다.",
+    desc: "에이전시 재하청이 아닌, 국내·일본·중국·대만 현지 크리에이터를 직접 관리합니다.",
   },
   {
     title: "분야 불문 전환 특화",
@@ -71,14 +71,14 @@ export default async function PeopleHome() {
         />
         <div className="ppl-hero__overlay" />
         <div className="ppl-container ppl-hero__inner ppl-fadeup">
-          <span className="ppl-hero__badge">GLOBAL INFLUENCER MARKETING</span>
+          <span className="ppl-hero__badge">INFLUENCER MARKETING</span>
           <h1 className="ppl-hero__h1">
-            일본·중국·대만,
+            국내·일본·중국·대만,
             <br />
-            <b>현지 인플루언서</b>로 진출하다
+            <b>현지 인플루언서</b>로 연결하다
           </h1>
           <p className="ppl-hero__sub">
-            병원·기업·기관의 동아시아 시장 진출을 현지 인플루언서 마케팅으로
+            병원·기업·관공서의 국내·해외 마케팅을 현지 인플루언서로
             실행합니다.
           </p>
           <a
@@ -196,7 +196,7 @@ export default async function PeopleHome() {
           <span className="ppl-eyebrow">PORTFOLIO</span>
           <h2 className="ppl-section-title">우리가 만든 결과</h2>
           <p className="ppl-section-sub">
-            의료·기업·공공 분야의 동아시아 진출 캠페인 사례입니다.
+            의료·기업·공공 분야의 국내·해외 인플루언서 캠페인 사례입니다.
           </p>
 
           <div className="ppl-prepnote">
@@ -266,7 +266,7 @@ export default async function PeopleHome() {
         <div className="ppl-container">
           <span className="ppl-eyebrow">SERVICE</span>
           <h2 className="ppl-section-title">
-            해외 인플루언서 마케팅,
+            인플루언서 마케팅,
             <br />
             막막함은 우리가, 성과는 당신이.
           </h2>
@@ -315,8 +315,8 @@ export default async function PeopleHome() {
       {/* 4-7 CTA BAND */}
       <section className="ppl-cta-band">
         <div className="ppl-container">
-          <h2>지금 동아시아 진출을 시작하세요</h2>
-          <p>일본·중국·대만 현지 인플루언서가 기다리고 있습니다.</p>
+          <h2>지금 인플루언서 마케팅을 시작하세요</h2>
+          <p>국내·일본·중국·대만 현지 인플루언서가 기다리고 있습니다.</p>
           <a href={KAKAO_URL} target="_blank" rel="noopener noreferrer" className="ppl-btn">
             카카오톡 무료 상담 →
           </a>
