@@ -116,7 +116,10 @@ export default async function PeopleHome() {
           color: "#fff",
         }}
       >
-        <ClientsSection />
+        <ClientsSection
+          title="열정의사람들을 오랫동안 믿고 맡겨주신 우리 소중한 클라이언트"
+          subtitle="열정의사람들은 클라이언트의 ‘진짜’ 직원처럼 결과와 매출을 걱정합니다"
+        />
       </div>
 
       {/* 4-2 COUNTRY STATS */}
