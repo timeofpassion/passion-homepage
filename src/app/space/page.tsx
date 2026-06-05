@@ -6,11 +6,29 @@ import GalleryBento from "./_components/GalleryBento";
 import { MEDIA, CONTACT } from "./_data/media";
 import { PLACES } from "./_data/places";
 
-const HOW = [
-  { n: "01", t: "모인다", d: "영향력 있는 사람들을 초대한다. 돈이 아니라 재능으로 함께한다." },
-  { n: "02", t: "쉬고, 사유한다", d: "깊은 힐링 속에서 집단지성이 작동한다. 쉼이 곧 아이디어가 된다." },
-  { n: "03", t: "남긴다", d: "이 지역을 살릴 아이디어·콘텐츠·홍보를 남기고 떠난다." },
-  { n: "04", t: "지역이 산다", d: "방문 수요·지역 경제·인지도가 오르고, 그 성과가 다시 운영을 지탱한다." },
+// 작동 방식 — 3단계 프로세스(사진 카드). 핵심 후킹: 돈이 아니라 재능으로 머문다.
+const PROCESS = [
+  {
+    n: "01",
+    lead: "힐링이 필요한 사람들이",
+    t: "모인다",
+    d: "전국에서, 해외에서. 쉼이 필요한 영향력 있는 사람들이 부담 없이 신안에 내려옵니다.",
+    img: "shinan-walk.jpg",
+  },
+  {
+    n: "02",
+    lead: "돈이 아니라 재능으로",
+    t: "푹 빠져, 남긴다",
+    d: "머무는 동안 이곳에 푹 빠져, 할인된 머무름 대신 자신의 재능 — 마케팅·콘텐츠·아이디어 — 을 이 지역에 남깁니다.",
+    img: "shinan-tea.jpg",
+  },
+  {
+    n: "03",
+    lead: "국내외가 함께",
+    t: "도시가 살아난다",
+    d: "다양한 사람들이 남긴 콘텐츠와 홍보로, 잊혀가던 도시에 다시 사람이 찾아오고 지역 경제가 깨어납니다.",
+    img: "shinan-aerial.jpg",
+  },
 ];
 
 // 히어로 아래 신안 풍경·활동 갤러리 (이미지: public/space/gallery/).
@@ -211,26 +229,65 @@ export default function SpaceBrandHome() {
         </div>
       </section>
 
-      {/* 02 HOW / MODEL */}
-      <section className="psm-sec psm-how" id="how">
+      {/* 02 PROCESS / MODEL */}
+      <section className="psm-sec psm-proc" id="how">
         <Reveal className="psm-shead">
           <div className="psm-shead__idx">02</div>
           <div>
             <div className="psm-shead__cat">The Model · 작동 방식</div>
             <h2>
-              사람이 모이면, <span className="hl">지역이 살아난다</span>
+              쉬러 왔다가, <span className="hl">도시를 살리고</span> 갑니다
             </h2>
           </div>
         </Reveal>
-        <div>
-          {HOW.map((r) => (
-            <Reveal key={r.n} className="psm-how__row">
-              <div className="psm-how__n">{r.n}</div>
-              <div className="psm-how__t">{r.t}</div>
-              <div className="psm-how__d">{r.d}</div>
+
+        {/* 교환 — 핵심 후킹: 돈이 아니라 재능 */}
+        <Reveal className="psm-exchange">
+          <div className="psm-exchange__side">
+            <span className="psm-exchange__label">당신이 받는 것</span>
+            <strong>깊은 힐링 · 부담 없는 머무름</strong>
+          </div>
+          <div className="psm-exchange__swap" aria-hidden="true">⇄</div>
+          <div className="psm-exchange__side give-back">
+            <span className="psm-exchange__label">당신이 남기는 것</span>
+            <strong>재능 · 콘텐츠 · 아이디어</strong>
+          </div>
+        </Reveal>
+        <Reveal className="psm-proc__note">돈이 아니라, 재능으로 머뭅니다.</Reveal>
+
+        {/* 3단계 여정 */}
+        <div className="psm-proc__steps">
+          {PROCESS.map((s, i) => (
+            <Reveal key={s.n} className="psm-proc__step">
+              <div className="psm-proc__media">
+                <img
+                  src={`/space/gallery/${s.img}`}
+                  alt={`신안에서 ${s.t}`}
+                  loading="lazy"
+                />
+                <span className="psm-proc__num">{s.n}</span>
+                {i < PROCESS.length - 1 && (
+                  <span className="psm-proc__arrow" aria-hidden="true">
+                    →
+                  </span>
+                )}
+              </div>
+              <div className="psm-proc__body">
+                <span className="psm-proc__lead">{s.lead}</span>
+                <h3 className="psm-proc__t">{s.t}</h3>
+                <p className="psm-proc__d">{s.d}</p>
+              </div>
             </Reveal>
           ))}
         </div>
+
+        {/* 참여 유도 */}
+        <Reveal className="psm-proc__cta">
+          <p>부담 없이 내려와 힐링하고 — 도시를 살리는 프로젝트에 함께해요.</p>
+          <a href={CONTACT.kakao} target="_blank" rel="noopener noreferrer">
+            함께하기 <span>→</span>
+          </a>
+        </Reveal>
       </section>
 
       {/* 03 NETWORK */}
