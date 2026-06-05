@@ -315,13 +315,16 @@ body:has(.ppl-root) {
 /* ===================== COUNTRY STATS ===================== */
 .ppl-country-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* 4개국(한국·일본·중국·대만)을 데스크톱에서 한 줄로 정렬 */
+  grid-template-columns: repeat(4, 1fr);
   gap: 22px;
   margin-top: 44px;
 }
+/* 좁은 화면: 2열(한국·일본 / 중국·대만) */
 @media (max-width: 900px) {
   .ppl-country-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 }
 .ppl-country-card {
