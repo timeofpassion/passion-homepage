@@ -2,6 +2,7 @@ import Link from "next/link";
 import "./space-magazine.css";
 import MagNav from "./_components/MagNav";
 import Reveal from "./_components/Reveal";
+import GalleryBento from "./_components/GalleryBento";
 import { MEDIA, CONTACT } from "./_data/media";
 import { PLACES } from "./_data/places";
 
@@ -10,6 +11,24 @@ const HOW = [
   { n: "02", t: "쉬고, 사유한다", d: "깊은 힐링 속에서 집단지성이 작동한다. 쉼이 곧 아이디어가 된다." },
   { n: "03", t: "남긴다", d: "이 지역을 살릴 아이디어·콘텐츠·홍보를 남기고 떠난다." },
   { n: "04", t: "지역이 산다", d: "방문 수요·지역 경제·인지도가 오르고, 그 성과가 다시 운영을 지탱한다." },
+];
+
+// 히어로 아래 신안 풍경·활동 갤러리 (이미지: public/space/gallery/).
+// 현재는 AI 생성 무드 이미지 — 실제 신안 촬영/스케치 사진이 나오면 같은 파일명으로 교체.
+// area = 벤토 모자이크 grid-template-areas 위치, size "big" = 대형 타일.
+const GALLERY = [
+  { src: "shinan-aerial.jpg", cap: "천 개의 섬", area: "B1", size: "big" },
+  { src: "shinan-kayak.jpg", cap: "바다 위에서", area: "B2", size: "big" },
+  { src: "shinan-salt.jpg", cap: "천일염전", area: "W1", size: "" },
+  { src: "shinan-purple.jpg", cap: "퍼플섬", area: "n1", size: "" },
+  { src: "shinan-lighthouse.jpg", cap: "등대", area: "n2", size: "" },
+  { src: "shinan-campfire.jpg", cap: "밤의 모닥불", area: "B3", size: "big" },
+  { src: "shinan-mudflat.jpg", cap: "갯벌 노을", area: "W2", size: "" },
+  { src: "shinan-walk.jpg", cap: "함께 걷는 해변", area: "W3", size: "" },
+  { src: "shinan-beach.jpg", cap: "백사장", area: "n3", size: "" },
+  { src: "shinan-cycle.jpg", cap: "해안 라이딩", area: "n4", size: "" },
+  { src: "shinan-camellia.jpg", cap: "동백길", area: "n5", size: "" },
+  { src: "shinan-tea.jpg", cap: "노을 티타임", area: "n6", size: "" },
 ];
 
 const WHO = [
@@ -138,6 +157,20 @@ export default function SpaceBrandHome() {
           </div>
         </div>
       </header>
+
+      {/* SHINAN GALLERY — 히어로 아래 신안 풍경·활동 비주얼 */}
+      <section className="psm-gallery" id="gallery" aria-label="신안 풍경과 활동">
+        <Reveal className="psm-gallery__head">
+          <div className="psm-gallery__kick">Shinan · Issue 01</div>
+          <h2 className="psm-gallery__h2">
+            풍경이 되고, <span className="hl">사람이 모이는</span> 곳
+          </h2>
+          <p className="psm-gallery__sub">
+            천 개의 섬과 노을, 그리고 그 안에서 쉬고 함께하는 사람들.
+          </p>
+        </Reveal>
+        <GalleryBento items={GALLERY} />
+      </section>
 
       <Marquee />
 

@@ -1004,6 +1004,303 @@ body:has(.psm-root) {
 }
 
 /* ============================================================ */
+/* FILM — 히어로 아래 시네마틱 인터스티셜 (Higgsfield 교체 지점)  */
+/* ============================================================ */
+.psm-film {
+  position: relative;
+  height: 78vh;
+  min-height: 460px;
+  max-height: 820px;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: 1px solid var(--ink);
+}
+.psm-film__media {
+  position: absolute;
+  inset: 0;
+}
+.psm-film__media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 시네마 레터박스 바 — '필름' 톤 부여 */
+.psm-film__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 7.5%;
+  background: var(--ink);
+  z-index: 3;
+}
+.psm-film__bar.top {
+  top: 0;
+}
+.psm-film__bar.bot {
+  bottom: 0;
+}
+/* 가독성 스크림 (듀오톤 위에) */
+.psm-film::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(22, 20, 15, 0.25) 0%,
+    rgba(22, 20, 15, 0.05) 45%,
+    rgba(22, 20, 15, 0.7) 100%
+  );
+}
+.psm-film__overlay {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  bottom: 11%;
+  padding: 0 5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.psm-film__kick {
+  font-family: var(--arch);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--spot);
+}
+.psm-film__cap {
+  font-family: var(--disp);
+  font-weight: 500;
+  font-size: clamp(24px, 4.4vw, 54px);
+  line-height: 1.12;
+  max-width: 18ch;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+}
+.psm-film__meta {
+  font-family: var(--arch);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(236, 229, 214, 0.78);
+}
+@media (max-width: 560px) {
+  .psm-film {
+    height: 64vh;
+    min-height: 380px;
+  }
+  .psm-film__overlay {
+    bottom: 13%;
+    gap: 10px;
+  }
+}
+
+/* ============================================================ */
+/* SHINAN GALLERY — 히어로 아래 신안 풍경·활동 그리드             */
+/* ============================================================ */
+.psm-gallery {
+  padding: clamp(46px, 7vw, 104px) 3vw;
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper);
+}
+.psm-gallery__head {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto clamp(28px, 4vw, 56px);
+}
+.psm-gallery__kick {
+  font-family: var(--arch);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--spot);
+}
+.psm-gallery__h2 {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: clamp(26px, 4.6vw, 54px);
+  line-height: 1.12;
+  margin-top: 12px;
+}
+.psm-gallery__h2 .hl {
+  color: var(--spot);
+}
+.psm-gallery__sub {
+  font-family: var(--serifk);
+  font-size: clamp(14px, 1.6vw, 18px);
+  color: var(--ink-soft);
+  margin-top: 14px;
+}
+/* 벤토 모자이크 */
+.psm-bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 15.5vw;
+  gap: 10px;
+  grid-template-areas:
+    "B1 B1 B2 B2"
+    "B1 B1 B2 B2"
+    "W1 W1 n1 n2"
+    "B3 B3 W2 W2"
+    "B3 B3 W3 W3"
+    "n3 n4 n5 n6";
+}
+.psm-bento__cell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.psm-bento__cell.is-in {
+  opacity: 1;
+  transform: none;
+}
+.psm-bento__cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.04) contrast(1.02);
+  transition: transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.psm-bento__cell:hover img {
+  transform: scale(1.06);
+}
+.psm-bento__cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 52%, rgba(22, 20, 15, 0.52));
+}
+.psm-bento__cap {
+  position: absolute;
+  left: 13px;
+  bottom: 11px;
+  z-index: 2;
+  font-family: var(--arch);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--paper);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.65);
+}
+.psm-bento__cell.big .psm-bento__cap {
+  font-size: 17px;
+  letter-spacing: 2px;
+}
+@media (max-width: 900px) {
+  .psm-bento {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: none;
+    grid-auto-rows: auto;
+  }
+  .psm-bento__cell {
+    grid-area: auto !important;
+    aspect-ratio: 3 / 2;
+  }
+}
+@media (max-width: 520px) {
+  .psm-bento {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 라이트박스 (클릭 전체화면) */
+.psm-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 9, 7, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vw;
+  animation: psmFadeIn 0.25s ease;
+}
+@keyframes psmFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.psm-lightbox__fig {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.psm-lightbox__fig img {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border: 1px solid rgba(236, 229, 214, 0.25);
+}
+.psm-lightbox__fig figcaption {
+  font-family: var(--arch);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--paper);
+  text-align: center;
+}
+.psm-lightbox__close {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: var(--paper);
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.85;
+}
+.psm-lightbox__close:hover {
+  opacity: 1;
+}
+.psm-lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--paper);
+  font-size: 56px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 16px;
+  opacity: 0.75;
+}
+.psm-lightbox__nav:hover {
+  opacity: 1;
+}
+.psm-lightbox__nav.prev {
+  left: 6px;
+}
+.psm-lightbox__nav.next {
+  right: 6px;
+}
+
+/* ============================================================ */
 /* 반응형                                                       */
 /* ============================================================ */
 @media (max-width: 900px) {
