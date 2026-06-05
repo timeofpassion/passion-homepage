@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import InfluencerFilter from "./_components/InfluencerFilter";
 import Flag from "./_components/Flag";
-import { clientLogos } from "@/data/clients";
+import ClientsSection from "@/components/ClientsSection";
 import {
   PORTFOLIO,
   COUNTRY_LABEL,
@@ -106,6 +106,18 @@ export default async function PeopleHome() {
           </div>
         </div>
       </section>
+
+      {/* 클라이언트 — 열정의시간과 동일 섹션 미러링(공용 ClientsSection).
+          clients.ts(로고 목록)·ClientsSection(문구·디자인) 한 곳만 고치면 /time·/people 동시 반영 */}
+      <div
+        style={{
+          background:
+            "radial-gradient(circle at center, #cc0000 -20%, #5a0000 30%, #0a0000 80%)",
+          color: "#fff",
+        }}
+      >
+        <ClientsSection />
+      </div>
 
       {/* 4-2 COUNTRY STATS */}
       <section className="ppl-section">
@@ -296,17 +308,6 @@ export default async function PeopleHome() {
           </div>
         </div>
       </section>
-
-      {/* 4-6 CLIENTS MARQUEE — 열정의시간과 동일 소스(clientLogos) 연동 */}
-      <div className="ppl-clients">
-        <div className="ppl-clients__track">
-          {[...clientLogos, ...clientLogos].map((c, i) => (
-            <span key={i} className="ppl-clients__item">
-              <img src={c.logo} alt={c.name} className="ppl-clients__logo" />
-            </span>
-          ))}
-        </div>
-      </div>
 
       {/* 4-7 CTA BAND */}
       <section className="ppl-cta-band">
