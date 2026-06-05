@@ -34,6 +34,11 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# 신안 영상 원본·후보 (대용량, 현재 페이지 미사용 — 로컬 보관용)
+/public/space/_candidates/
+/public/space/film-shinan.mp4
+/public/space/film-shinan.jpg
+
 # vercel
 .vercel
 
