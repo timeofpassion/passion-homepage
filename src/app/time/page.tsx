@@ -31,7 +31,7 @@ export default function Home() {
       <main className="relative z-10">
         <Header />
         <HeroSection />
-        <ClientsSection />
+        <ClientsSection medicalOnly />
         <ArchitectureSection />
         <ServicesSection />
         <ServiceTeamsSection />
