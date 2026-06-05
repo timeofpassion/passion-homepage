@@ -2,27 +2,23 @@ import {
   type Influencer,
   PLATFORM_LABEL,
   formatFollowers,
+  pickAiPortrait,
 } from "../_data/sample";
 import Flag from "./Flag";
 
 export default function InfluencerCard({ inf }: { inf: Influencer }) {
+  // 실제 사진이 없으면 AI 포트레이트로 대체하고 "AI 이미지" 표기
+  const isAiPhoto = !inf.profileImage;
+  const photo = inf.profileImage || pickAiPortrait(inf.id);
+
   return (
     <article className="ppl-card">
       <div
         className="ppl-card__photo"
-        style={
-          inf.profileImage
-            ? { backgroundImage: `url(${inf.profileImage})` }
-            : undefined
-        }
+        style={{ backgroundImage: `url(${photo})` }}
       >
-        {!inf.profileImage && (
-          <div className="ppl-card__ph" aria-hidden>
-            <svg viewBox="0 0 24 24" width="46" height="46" fill="currentColor">
-              <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z" />
-            </svg>
-            <span>프로필 준비중</span>
-          </div>
+        {isAiPhoto && (
+          <span className="ppl-card__ai">AI 이미지 · 교체예정</span>
         )}
         <span className="ppl-card__flag">
           <Flag country={inf.country} size={22} />

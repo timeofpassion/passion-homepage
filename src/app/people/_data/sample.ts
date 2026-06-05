@@ -280,6 +280,26 @@ export const PORTFOLIO: Portfolio[] = [
   },
 ];
 
+// 프로필 사진 미등록 인플루언서에게 임시로 보여줄 AI 생성 포트레이트(동아시아) 풀.
+// 실제 사진이 없으면 id 기반으로 하나 배정하고 "AI 이미지 · 교체예정" 배지를 함께 표시한다.
+export const AI_PORTRAITS = [
+  "/people/influencers/jp-001.webp",
+  "/people/influencers/jp-002.webp",
+  "/people/influencers/jp-003.webp",
+  "/people/influencers/jp-004.webp",
+  "/people/influencers/cn-001.webp",
+  "/people/influencers/cn-002.webp",
+  "/people/influencers/cn-003.webp",
+  "/people/influencers/tw-001.webp",
+  "/people/influencers/tw-002.webp",
+  "/people/influencers/tw-003.webp",
+];
+export function pickAiPortrait(seed: string): string {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  return AI_PORTRAITS[h % AI_PORTRAITS.length];
+}
+
 // 팔로워 수 한국어 축약 (12만, 1.2만 등)
 export function formatFollowers(n: number): string {
   if (n >= 10000) {

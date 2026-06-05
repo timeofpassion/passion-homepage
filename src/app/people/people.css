@@ -468,6 +468,20 @@ body:has(.ppl-root) {
   padding: 4px 8px;
   border-radius: 6px;
 }
+/* 사진 미등록 → AI 임시 이미지 표기 */
+.ppl-card__ai {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background: rgba(22, 35, 58, 0.66);
+  padding: 3px 7px;
+  border-radius: 6px;
+  backdrop-filter: blur(2px);
+}
 .ppl-card__body {
   padding: 16px;
   display: flex;
