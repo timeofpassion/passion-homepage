@@ -26,7 +26,7 @@ export default function ClientsSection({
           {clientLogos.map((client) => (
             <div
               key={client.name}
-              className="p-2 md:p-4"
+              className="p-2 md:p-4 group"
               style={{
                 background: "#ffffff",
                 borderRadius: 8,
@@ -39,9 +39,10 @@ export default function ClientsSection({
               <img
                 src={client.logo}
                 alt={client.name}
+                className="grayscale opacity-70 transition duration-300 group-hover:grayscale-0 group-hover:opacity-100"
                 style={{
-                  maxHeight: 55,
-                  maxWidth: "90%",
+                  maxHeight: 48,
+                  maxWidth: "82%",
                   objectFit: "contain",
                 }}
               />
