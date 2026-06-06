@@ -90,6 +90,44 @@ const jsonLd = {
   },
 };
 
+// SEO: 자주 묻는 질문 — 검색 키워드(신안 리트릿·재능기부·힐링·워케이션)를 자연스럽게 담는다.
+const FAQ = [
+  {
+    q: "열정의공간(PASSION SPACE)은 무엇인가요?",
+    a: "열정의공간은 사라져가는 지역에 영향력 있는 사람들을 모아 깊이 쉬게 하고, 그들이 남긴 재능과 영감으로 지역을 되살리는 지역재생 리트릿입니다. 현재 전남 신안에서 1호 거점을 운영하고 있습니다.",
+  },
+  {
+    q: "신안 리트릿은 어떻게 참여하나요?",
+    a: "마케터·영상 PD·크리에이터·인플루언서·전문가 등 재능을 나눌 수 있는 분을 선발해 초대합니다. 카카오톡 채널로 멤버 초대를 신청하시면 참여 방법을 안내해 드립니다.",
+  },
+  {
+    q: "비용이 드나요? 숙박비는 어떻게 되나요?",
+    a: "돈이 아니라 재능으로 머뭅니다. 깊은 힐링과 부담 없는 머무름을 제공받는 대신, 머무는 동안 마케팅·콘텐츠·아이디어 등 자신의 재능을 지역에 남깁니다.",
+  },
+  {
+    q: "신안은 어떤 곳인가요? 힐링 여행지로 좋나요?",
+    a: "신안은 1,004개의 섬으로 이루어진 다도해로, 퍼플섬·증도 천일염전과 슬로시티·유네스코 세계자연유산 갯벌 등 천혜의 풍경을 가진 힐링 여행지입니다.",
+  },
+  {
+    q: "어떤 사람들이 모이나요?",
+    a: "지역을 알릴 전략을 가진 마케터·CMO, 콘텐츠를 만드는 영상 PD·크리에이터, 확산을 만드는 인플루언서, 깊은 사유를 더하는 전문가·연구자가 국내외에서 모입니다.",
+  },
+  {
+    q: "워케이션이나 한달살기로도 참여할 수 있나요?",
+    a: "네. 깊이 쉬면서 자신의 일과 재능을 지역에 연결하는 워케이션형 리트릿으로, 머무는 동안 신안을 알리는 프로젝트에 함께합니다. 일정·기간은 거점 사정에 따라 안내됩니다.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
 function Marquee({ spot }: { spot?: boolean }) {
   const items = [...MARQUEE, ...MARQUEE];
   return (
@@ -115,6 +153,10 @@ export default function SpaceBrandHome() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <MagNav />
@@ -388,6 +430,34 @@ export default function SpaceBrandHome() {
       </section>
 
       <Marquee spot />
+
+      {/* FAQ — 검색 노출용 자주 묻는 질문 */}
+      <section className="psm-sec psm-faq" id="faq">
+        <Reveal className="psm-shead">
+          <div className="psm-shead__idx">05</div>
+          <div>
+            <div className="psm-shead__cat">FAQ · 자주 묻는 질문</div>
+            <h2>
+              신안 리트릿, <span className="hl">무엇이든 물어보세요</span>
+            </h2>
+          </div>
+        </Reveal>
+        <div className="psm-faq__list">
+          {FAQ.map((f) => (
+            <Reveal key={f.q} className="psm-faq__item">
+              <details>
+                <summary>
+                  {f.q}
+                  <span className="psm-faq__plus" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
+                <p>{f.a}</p>
+              </details>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
       {/* JOIN */}
       <section className="psm-join" id="join">

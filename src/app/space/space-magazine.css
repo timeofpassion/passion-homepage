@@ -1504,6 +1504,54 @@ body:has(.psm-root) {
 }
 
 /* ============================================================ */
+/* FAQ — 자주 묻는 질문 (검색 노출용 아코디언)                   */
+/* ============================================================ */
+.psm-faq__list {
+  border-top: 2px solid var(--ink);
+}
+.psm-faq__item details {
+  border-bottom: 1px solid var(--ink);
+}
+.psm-faq__item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(18px, 2.4vw, 26px) 4px;
+  font-family: var(--grotesk);
+  font-weight: 800;
+  font-size: clamp(16px, 2vw, 21px);
+  word-break: keep-all;
+}
+.psm-faq__item summary::-webkit-details-marker {
+  display: none;
+}
+.psm-faq__plus {
+  flex: none;
+  font-family: var(--arch);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--spot);
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.psm-faq__item details[open] .psm-faq__plus {
+  transform: rotate(45deg);
+}
+.psm-faq__item details > p {
+  margin: 0;
+  padding: 0 4px clamp(20px, 2.4vw, 28px);
+  max-width: 80ch;
+  font-family: var(--sans);
+  font-size: clamp(14px, 1.5vw, 16px);
+  line-height: 1.72;
+  color: var(--ink-soft);
+  word-break: keep-all;
+}
+
+/* ============================================================ */
 /* 반응형                                                       */
 /* ============================================================ */
 @media (max-width: 900px) {
