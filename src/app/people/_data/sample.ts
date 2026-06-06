@@ -121,7 +121,7 @@ export const CLIENT_TYPE_LABEL: Record<ClientType, string> = {
 export const SAMPLE_INFLUENCERS: Influencer[] = [
   {
     id: "kr-001",
-    profileImage: "",
+    profileImage: "/people/influencers/kr-001.webp",
     name: "예시 체험단 리더 (가상)",
     country: "KR",
     categories: ["체험단", "뷰티"],
@@ -134,7 +134,7 @@ export const SAMPLE_INFLUENCERS: Influencer[] = [
   },
   {
     id: "kr-002",
-    profileImage: "",
+    profileImage: "/people/influencers/kr-002.webp",
     name: "예시 맘카페 기자단 (가상)",
     country: "KR",
     categories: ["기자단", "라이프"],
