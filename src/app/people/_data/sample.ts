@@ -2,7 +2,7 @@
 // 실데이터는 인트라넷 운영관리(/influencers)에서 "홈페이지 공개" 토글을 켠 인플루언서를
 // /api/public/influencers 로 받아온다(→ people-data.ts). 인트라넷 연동 실패 시 아래 샘플로 폴백한다.
 
-export type Country = "KR" | "JP" | "CN" | "TW";
+export type Country = "KR" | "JP" | "CN" | "TW" | "VN";
 export type Platform =
   | "instagram"
   | "youtube"
@@ -46,14 +46,15 @@ export type Portfolio = {
 
 export type Client = { name: string; logo?: string; url?: string };
 
-// 노출 국가 순서(국내 → 일본 → 중국 → 대만)
-export const COUNTRY_ORDER: Country[] = ["KR", "JP", "CN", "TW"];
+// 노출 국가 순서(국내 → 일본 → 중국 → 대만 → 베트남)
+export const COUNTRY_ORDER: Country[] = ["KR", "JP", "CN", "TW", "VN"];
 
 export const COUNTRY_LABEL: Record<Country, string> = {
   KR: "한국",
   JP: "일본",
   CN: "중국",
   TW: "대만",
+  VN: "베트남",
 };
 // 이모지 국기(🇯🇵)는 Windows 등 일부 환경에서 "JP/CN/TW" 글자로 깨져 보임 → SVG 이미지 사용
 export const COUNTRY_FLAG_SRC: Record<Country, string> = {
@@ -61,6 +62,7 @@ export const COUNTRY_FLAG_SRC: Record<Country, string> = {
   JP: "/people/flags/jp.svg",
   CN: "/people/flags/cn.svg",
   TW: "/people/flags/tw.svg",
+  VN: "/people/flags/vn.svg",
 };
 // (호환용) 텍스트가 필요한 곳을 위한 폴백
 export const COUNTRY_FLAG: Record<Country, string> = {
@@ -68,14 +70,34 @@ export const COUNTRY_FLAG: Record<Country, string> = {
   JP: "🇯🇵",
   CN: "🇨🇳",
   TW: "🇹🇼",
+  VN: "🇻🇳",
 };
 
-// 국가별 강점 카피(에디토리얼) — 수치·플랫폼은 실데이터에서 산출, 이 문구만 고정
+// 국가별 강점 카피(에디토리얼) — 이 문구만 고정
 export const COUNTRY_STRENGTH: Record<Country, string> = {
   KR: "국내 체험단·기자단부터 뷰티·라이프 크리에이터까지 직접 운영",
   JP: "도쿄·오사카 핵심 도시 뷰티·라이프 크리에이터 다수 확보",
   CN: "샤오홍슈·더우인 KOL 직접 운영, 의료·뷰티 전환에 강점",
   TW: "현지 파트너 네트워크 기반 신뢰도 높은 추천형 콘텐츠",
+  VN: "페이스북·틱톡 중심 동남아 고성장 시장, 뷰티·라이프 추천 콘텐츠 강세",
+};
+
+// ── NETWORK 섹션(검증된 현지 인플루언서 네트워크) 고정 수치 ──
+// 회사가 직접 운영·제휴하는 현지 크리에이터 풀의 '규모'를 보여주는 마케팅 수치다.
+// 아래 '지금 활동 중인 인플루언서' 목록(실데이터 연동)과는 별개로 운영진이 직접 관리한다.
+export const NETWORK_SIZE: Record<Country, number> = {
+  KR: 500,
+  JP: 300,
+  CN: 1000,
+  TW: 150,
+  VN: 100,
+};
+export const NETWORK_PLATFORMS: Record<Country, string[]> = {
+  KR: ["Instagram", "네이버블로그", "YouTube"],
+  JP: ["Instagram", "YouTube", "X", "TikTok"],
+  CN: ["샤오홍슈", "더우인"],
+  TW: ["Instagram", "Facebook", "YouTube"],
+  VN: ["Facebook", "TikTok", "YouTube"],
 };
 
 export const PLATFORM_LABEL: Record<Platform, string> = {

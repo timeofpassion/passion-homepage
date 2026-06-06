@@ -9,7 +9,7 @@ import {
   CLIENT_TYPE_LABEL,
   formatFollowers,
 } from "./_data/sample";
-import { getInfluencers, buildCountryStats } from "./_data/people-data";
+import { getInfluencers, buildNetworkStats } from "./_data/people-data";
 
 // 열정의시간 카카오톡 채널 상담(채팅) — 전사 공용 채널
 const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
@@ -56,9 +56,10 @@ const WHY = [
 
 export default async function PeopleHome() {
   const { influencers, usingSample } = await getInfluencers();
-  const countryStats = buildCountryStats(influencers);
-  const total = influencers.length;
-  const marketLabels = countryStats
+  // NETWORK 섹션·히어로 수치는 운영 네트워크 규모(고정). 아래 인플루언서 목록은 실데이터 연동.
+  const networkStats = buildNetworkStats();
+  const total = networkStats.reduce((sum, s) => sum + s.count, 0);
+  const marketLabels = networkStats
     .map((s) => COUNTRY_LABEL[s.country])
     .join(" · ");
   return (
@@ -92,7 +93,7 @@ export default async function PeopleHome() {
 
           <div className="ppl-hero__stats">
             <div className="ppl-hero__stat">
-              <b>{countryStats.length}개 시장</b>
+              <b>{networkStats.length}개 시장</b>
               <span>{marketLabels} 운영</span>
             </div>
             <div className="ppl-hero__stat">
@@ -134,7 +135,7 @@ export default async function PeopleHome() {
           </p>
 
           <div className="ppl-country-grid">
-            {countryStats.map((c) => (
+            {networkStats.map((c) => (
               <div key={c.country} className="ppl-country-card">
                 <div className="ppl-country-card__flag">
                   <Flag country={c.country} size={40} />
@@ -143,7 +144,7 @@ export default async function PeopleHome() {
                   {COUNTRY_LABEL[c.country]}
                 </div>
                 <div className="ppl-country-card__count">
-                  {c.count}
+                  {c.count.toLocaleString()}
                   <span>명+</span>
                 </div>
                 <div className="ppl-country-card__platforms">

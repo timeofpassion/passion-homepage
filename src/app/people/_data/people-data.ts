@@ -9,6 +9,8 @@ import {
   COUNTRY_STRENGTH,
   PLATFORM_LABEL,
   SAMPLE_INFLUENCERS,
+  NETWORK_SIZE,
+  NETWORK_PLATFORMS,
 } from "./sample";
 
 const INTRANET_URL =
@@ -20,6 +22,7 @@ const MARKET_TO_COUNTRY: Record<string, Country> = {
   JAPAN: "JP",
   CHINA: "CN",
   TAIWAN: "TW",
+  VIETNAM: "VN", // 인트라넷에 베트남 시장이 추가되면 자동 노출
   // ENGLISH(영미권)은 현재 홈페이지 미노출 → 매핑 없음(스킵)
 };
 
@@ -97,6 +100,17 @@ export async function getInfluencers(): Promise<{
     // 인트라넷 미응답 → 폴백
     return { influencers: SAMPLE_INFLUENCERS, usingSample: true };
   }
+}
+
+// NETWORK 섹션용 — 운영 중인 현지 인플루언서 '네트워크 규모' 고정 수치.
+// 실데이터(노출 인플루언서) 수와 무관하게, 회사가 직접 운영·제휴하는 풀 규모를 보여준다.
+export function buildNetworkStats(): CountryStat[] {
+  return COUNTRY_ORDER.map((country) => ({
+    country,
+    count: NETWORK_SIZE[country],
+    platforms: NETWORK_PLATFORMS[country],
+    strength: COUNTRY_STRENGTH[country],
+  }));
 }
 
 // 국가별 현황(노출 순서대로, 인원 1명 이상인 국가만)
