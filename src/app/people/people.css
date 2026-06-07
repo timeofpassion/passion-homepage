@@ -571,7 +571,8 @@ body:has(.ppl-root) {
 }
 @media (max-width: 567px) {
   .ppl-port-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 }
 .ppl-port-card {
@@ -1031,4 +1032,66 @@ body:has(.ppl-root) {
 }
 .ppl-footer__kakao:hover {
   color: #fff !important;
+}
+
+/* ============================================================ */
+/* 모바일 최적화 (≤767px)                                        */
+/* ============================================================ */
+/* 앵커 이동 시 고정 헤더(약 69px)에 제목이 가리지 않도록 */
+.ppl-root section[id],
+.ppl-root [id].ppl-anchor {
+  scroll-margin-top: 84px;
+}
+
+@media (max-width: 767px) {
+  /* 1) 히어로 통계 3개를 한 줄에 균등 배치 */
+  .ppl-hero__stats {
+    gap: 12px;
+    margin-top: 36px;
+  }
+  .ppl-hero__stat {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .ppl-hero__stat b {
+    font-size: 22px;
+  }
+  .ppl-hero__stat span {
+    font-size: 12px;
+    line-height: 1.35;
+    display: block;
+  }
+
+  /* 2) 필터: 카테고리별 한 줄을 가로 스크롤(세로 공간 절약) */
+  .ppl-filter__row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .ppl-filter__row::-webkit-scrollbar {
+    display: none;
+  }
+  .ppl-filter__label {
+    position: sticky;
+    left: 0;
+    background: #fff;
+    z-index: 1;
+    padding-right: 4px;
+    min-width: 44px;
+  }
+  .ppl-chip {
+    flex: 0 0 auto;
+    /* 3) 탭 타깃 확대(≈44px) */
+    padding: 11px 16px;
+  }
+
+  /* 포트폴리오 카드 모바일 여백·폰트 정리 */
+  .ppl-port-card__body {
+    padding: 14px;
+  }
+  .ppl-port-card__title {
+    font-size: 15px;
+  }
 }
