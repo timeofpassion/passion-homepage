@@ -21,7 +21,7 @@ export async function generateMetadata({
         type: "website",
         images: [
           {
-            url: "/og-passion.jpg",
+            url: "/og-passion-v2.jpg",
             width: 1200,
             height: 630,
             alt: "PASSION GROUP — 열정의시간 · 열정의사람들 · 열정의공간",

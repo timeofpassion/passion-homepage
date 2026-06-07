@@ -138,7 +138,7 @@ os.makedirs(os.path.join(PUB, "people"), exist_ok=True)
 
 # 열정의시간 — 전문 회의실 사진
 photo_card(
-    os.path.join(PUB, "time", "og-time.jpg"),
+    os.path.join(PUB, "time", "og-time-v2.jpg"),
     os.path.join(PUB, "portal", "time.jpg"), 0.42,
     "열정의시간",
     "병원 마케팅 전문",
@@ -147,7 +147,7 @@ photo_card(
 
 # 열정의사람들 — 네온 크리에이터 스튜디오(사람 중심)
 photo_card(
-    os.path.join(PUB, "people", "og-people.jpg"),
+    os.path.join(PUB, "people", "og-people-v2.jpg"),
     os.path.join(PUB, "portal", "people.jpg"), 0.45,
     "열정의사람들",
     "인플루언서 마케팅",
@@ -156,7 +156,7 @@ photo_card(
 
 # PASSION GROUP — 3브랜드 트립틱
 triptych(
-    os.path.join(PUB, "og-passion.jpg"),
+    os.path.join(PUB, "og-passion-v2.jpg"),
     [
         (os.path.join(PUB, "portal", "time.jpg"), 0.42),
         (os.path.join(PUB, "portal", "people.jpg"), 0.45),

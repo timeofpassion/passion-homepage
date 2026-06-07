@@ -26,7 +26,7 @@ export async function generateMetadata({
         type: "website",
         images: [
           {
-            url: "/time/og-time.jpg",
+            url: "/time/og-time-v2.jpg",
             width: 1200,
             height: 630,
             alt: "열정의시간 — 병원 마케팅 & 해외환자 유치 전문 에이전시",
