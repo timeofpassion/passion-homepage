@@ -539,6 +539,18 @@ body:has(.ppl-root) {
   font-weight: 600;
   opacity: 0.7;
 }
+.ppl-chan__ic {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
 
 .ppl-center {
   text-align: center;
