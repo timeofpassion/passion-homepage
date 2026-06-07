@@ -94,6 +94,40 @@ const jsonLd = {
   },
 };
 
+// SEO: 신안 여행·리트릿 검색 키워드를 자연스럽게 담는 자주 묻는 질문
+const FAQ = [
+  {
+    q: "신안은 어떤 곳인가요? 가볼 만한 여행지인가요?",
+    a: "신안은 1,004개의 섬으로 이뤄진 다도해로, 보랏빛 퍼플섬(반월·박지도), 아시아 최초 슬로시티 증도와 태평염전, 유네스코 세계자연유산으로 등재된 갯벌, 다도해 노을까지 천혜의 풍경을 가진 전남의 대표 힐링 여행지입니다.",
+  },
+  {
+    q: "신안 퍼플섬은 어디인가요?",
+    a: "퍼플섬은 신안군 반월도·박지도를 보라색 테마로 꾸민 섬으로, 2021년 유엔세계관광기구(UNWTO) 제1회 ‘세계 최우수 관광마을’에 선정됐습니다. 보랏빛 다리와 마을이 어우러진 신안의 대표 명소입니다.",
+  },
+  {
+    q: "신안은 어떻게 가나요? 천사대교로 갈 수 있나요?",
+    a: "수도권에서는 고속열차로 목포까지 온 뒤, 2019년 개통한 천사대교를 건너 신안의 섬들로 들어갑니다. 섬이라 쉽게 닿지 않는 만큼 머무름이 더 깊어지는 곳입니다.",
+  },
+  {
+    q: "열정의공간 신안 거점은 무엇을 하나요?",
+    a: "신안은 열정의공간 지역재생 리트릿의 첫 번째 거점입니다. 마케터·영상 크리에이터·인플루언서·전문가가 신안에 머물며 깊이 쉬고, 마케팅·콘텐츠·아이디어 등 재능을 남겨 지역을 알리고 되살립니다.",
+  },
+  {
+    q: "신안에서 워케이션이나 한달살기를 할 수 있나요?",
+    a: "네. 신안의 느린 시간 속에서 깊이 쉬며 자신의 일과 재능을 지역에 연결하는 워케이션형 리트릿으로 참여할 수 있습니다. 방문·참여 문의는 카카오톡 채널로 받습니다.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
 export default function ShinanPlace() {
   return (
     <div className="psm-root" id="top">
@@ -105,6 +139,10 @@ export default function ShinanPlace() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <ShinanNav />
@@ -273,6 +311,31 @@ export default function ShinanPlace() {
             </div>
           ))}
         </Reveal>
+      </section>
+
+      {/* FAQ — 신안 여행·리트릿 검색 노출용 */}
+      <section className="shn-sec psm-faq" id="faq">
+        <div className="shn-head">
+          <div className="shn-kicker">FAQ · 자주 묻는 질문</div>
+          <h2 className="shn-title">
+            신안과 리트릿, <span className="it">무엇이든 물어보세요</span>
+          </h2>
+        </div>
+        <div className="shn-inner psm-faq__list">
+          {FAQ.map((f) => (
+            <Reveal key={f.q} className="psm-faq__item">
+              <details>
+                <summary>
+                  {f.q}
+                  <span className="psm-faq__plus" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
+                <p>{f.a}</p>
+              </details>
+            </Reveal>
+          ))}
+        </div>
       </section>
 
       {/* CONNECT */}
