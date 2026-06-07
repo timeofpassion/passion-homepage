@@ -1,76 +1,85 @@
-import HeroVideo from "../_components/HeroVideo";
+import Link from "next/link";
+import "../space-magazine.css";
+import "../space-shinan.css";
+import ShinanNav from "../_components/ShinanNav";
 import Reveal from "../_components/Reveal";
-import ConnectForm from "../_components/ConnectForm";
 import { MEDIA, CONTACT } from "../_data/media";
 
-const PROGRAMS = [
+const FACTS = [
   {
-    no: "01",
-    title: "시그니처 리트릿",
-    desc: "큐레이션된 일정 속 쉼·대화·웰니스를 경험하는 몰입형 체류.",
-    for: "For Everyone",
-    forKo: "누구나",
+    n: "1004",
+    t: "천사(1004)의 섬",
+    d: "1,025개의 섬으로 이뤄진, 국내에서 섬이 가장 많은 고장. 2019년 천사대교로 뭍과 이어졌습니다.",
   },
   {
-    no: "02",
-    title: "워크숍 · 살롱",
-    desc: "업계 리더가 이끄는 토론과 강연, 모임이 곧 콘텐츠가 됩니다.",
-    for: "Marketers",
-    forKo: "마케터",
+    n: "世界",
+    t: "유네스코 세계자연유산 갯벌",
+    d: "2021년 등재된 ‘한국의 갯벌’ 중 신안 갯벌이 가장 넓은 구역. 살아 있는 자연 그 자체입니다.",
   },
   {
-    no: "03",
-    title: "자기주도 리트릿",
-    desc: "정해진 일정 없이, 나만의 속도로 머무는 자유로운 체류.",
-    for: "Solo Stay",
-    forKo: "단독 체류",
+    n: "No.1",
+    t: "퍼플섬 — 세계 최우수 관광마을",
+    d: "반월·박지도가 유엔세계관광기구(UNWTO) 제1회 세계 최우수 관광마을(2021)에 선정됐습니다.",
   },
   {
-    no: "04",
-    title: "기업 오프사이트",
-    desc: "팀의 비전을 다듬는 단체 연수, 평일의 공간을 가장 가치 있게.",
-    for: "Teams",
-    forKo: "팀 단위",
+    n: "2007",
+    t: "아시아 최초 슬로시티, 증도",
+    d: "느림의 가치를 처음 인정받은 섬. 태평염전 위로 시간이 천천히 흐릅니다.",
   },
 ];
 
-const COMMUNITY = [
-  { name: "마케터 · CMO", desc: "비우고 채우는 전략가" },
-  { name: "크리에이터", desc: "촬영과 휴식, 확산을 한번에" },
-  { name: "기업 리더십", desc: "방향을 다시 세우는 사람들" },
-  { name: "전문직 · 작가", desc: "고요 속 사유와 창작" },
+const TILES = [
+  {
+    cls: "w7",
+    cat: "Sunset",
+    nm: "노을",
+    ds: "섬과 섬 사이로 지는 다도해의 낙조",
+    video: MEDIA.hero.video,
+    poster: MEDIA.hero.poster,
+  },
+  {
+    cls: "w5",
+    cat: "Tidal Flat",
+    nm: "갯벌",
+    ds: "세계자연유산, 살아 숨 쉬는 땅",
+    ph: "신안 갯벌 · 사진 준비 중",
+  },
+  {
+    cls: "w6",
+    cat: "Purple Islands",
+    nm: "퍼플섬",
+    ds: "보랏빛으로 되살아난 반월·박지도",
+    ph: "퍼플섬 · 사진 준비 중",
+  },
+  {
+    cls: "w6",
+    cat: "Salt Field",
+    nm: "염전",
+    ds: "증도 태평염전, 느림의 풍경",
+    video: MEDIA.feature3.video,
+    poster: MEDIA.feature3.poster,
+  },
 ];
 
-const JOURNAL = [
-  {
-    cat: "Essay",
-    title: "섬에서 보낸 3일, 마케터의 노트",
-    excerpt:
-      "일정을 비우자 비로소 보이기 시작한 것들. 신안에서의 사흘이 남긴 기록.",
-    video: MEDIA.journal.video,
-    poster: MEDIA.journal.poster,
-  },
-  {
-    cat: "Space",
-    title: "폐교가 리트릿이 되기까지",
-    excerpt:
-      "오래된 분교의 칠판과 운동장이 강의·창작의 공간으로 다시 태어난 이야기.",
-  },
-  {
-    cat: "People",
-    title: "이곳에서 만난 사람들",
-    excerpt:
-      "같은 노을을 바라보며 시작된 대화. 머무는 동안 이어진 인연의 기록.",
-  },
+const STAY = [
+  { n: "01", t: "쉰다", d: "신안의 느린 시간 속에서 깊이 쉽니다. 섬의 노을과 갯벌이 곧 회복입니다." },
+  { n: "02", t: "사유하고, 만든다", d: "쉼 속에서 떠오른 생각을 글·영상·콘텐츠로 남깁니다. 쉼이 곧 작업이 됩니다." },
+  { n: "03", t: "지역과 잇는다", d: "머문 이야기가 다시 신안을 세상에 알리고, 잊혀가던 섬을 다시 뛰게 합니다." },
 ];
 
-// SEO: 리트릿(숙박/관광) 비즈니스 구조화 데이터
+const STEPS = [
+  { n: "01", t: "서울에서", d: "고속열차로 목포까지. 창밖 풍경이 바뀌는 동안 마음의 속도도 바뀝니다." },
+  { n: "02", t: "목포에서", d: "천사대교를 건너 1004개의 섬으로 들어섭니다." },
+  { n: "03", t: "신안에서", d: "섬과 섬을 지나, 노을이 가장 잘 보이는 거점에 닿습니다." },
+  { n: "04", t: "도착", d: "여정의 끝이 곧 리트릿의 시작. 멀리 온 만큼 깊어집니다." },
+];
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Resort",
   name: "열정의공간 — 신안 1호",
   description:
-    "전남 신안의 섬에 위치한 리트릿 성지. 마케터·크리에이터·지성인이 모여 쉬고 사유하고 콘텐츠를 만드는 순환형 리트릿. 열정의공간 리트릿 운동의 첫 번째 거점.",
+    "전남 신안의 섬에 자리한 리트릿 거점. 1004개의 섬과 노을, 세계자연유산 갯벌 사이에서 마케터·크리에이터·지성인이 쉬고 사유하고 콘텐츠를 남기는 순환형 리트릿. 열정의공간 리트릿 운동의 첫 번째 거점.",
   url: "https://www.timeofpassion.com/space/shinan",
   address: {
     "@type": "PostalAddress",
@@ -78,268 +87,272 @@ const jsonLd = {
     addressLocality: "신안군",
     addressCountry: "KR",
   },
-  email: CONTACT.email,
   parentOrganization: {
     "@type": "Organization",
-    name: "PASSION GROUP",
-    url: "https://www.timeofpassion.com",
+    name: "열정의공간 (PASSION SPACE)",
+    url: "https://www.timeofpassion.com/space",
   },
 };
 
-export default function SpaceHome() {
+export default function ShinanPlace() {
   return (
-    <main>
+    <div className="psm-root" id="top">
+      <div className="psm-grain" aria-hidden="true" />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,500;1,6..96,700;1,6..96,900&family=Noto+Serif+KR:wght@300;500;700&display=swap"
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 2. HERO */}
-      <HeroVideo />
+      <ShinanNav />
 
-      {/* 3. PHILOSOPHY */}
-      <section className="spc-philo" id="story">
-        <div className="spc-container">
-          <Reveal className="spc-philo__inner">
-            <span className="spc-kicker">Our Philosophy</span>
-            <h2 className="spc-h2">
-              쉽게 닿지 않는 곳일수록,
-              <br />
-              머무름은 더 깊어집니다.
-            </h2>
-            <p className="spc-lead">
-              열정의공간은 단순한 휴양지가 아닙니다. 마케터와 크리에이터, 사유하는
-              사람들이 모여 영감을 나누고, 그 안에서 태어난 이야기가 다시 신안과
-              전남을 세상에 알리는 — 순환하는 리트릿입니다.
-            </p>
-          </Reveal>
+      {/* HERO */}
+      <header className="shn-hero">
+        <div className="shn-hero__media psm-treat">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={MEDIA.feature1.poster}
+            src={MEDIA.feature1.video}
+            aria-hidden="true"
+          />
         </div>
-      </section>
-
-      {/* 4. FEATURE 1 — 자기주도 리트릿 (텍스트 좌) */}
-      <section className="spc-feature">
-        <video
-          className="spc-feature__video"
-          src={MEDIA.feature1.video}
-          poster={MEDIA.feature1.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-        <div className="spc-feature__scrim" />
-        <div className="spc-container spc-feature__inner">
-          <Reveal className="spc-feature__block">
-            <span className="spc-feature__kicker">Self-Guided Retreat</span>
-            <h3 className="spc-feature__h">나만의 속도로 떠나는 여정</h3>
-            <p className="spc-feature__desc">
-              정해진 일정에 얽매이지 않고, 비우고 채우는 시간을 스스로
-              설계합니다. 노을이 지는 섬에서, 온전히 나에게 집중하는 며칠.
-            </p>
-            <a href="#programs" className="spc-textlink">
-              프로그램 보기 →
-            </a>
-          </Reveal>
+        <div className="shn-hero__meta">
+          <span className="l">Passion Space · No.01</span>
+          <span className="r">
+            전라남도 신안
+            <br />
+            천 개의 섬과 노을
+          </span>
         </div>
-      </section>
-
-      {/* 5. FEATURE 2 — 커뮤니티 (텍스트 우) */}
-      <section className="spc-feature spc-feature--right">
-        <video
-          className="spc-feature__video"
-          src={MEDIA.feature2.video}
-          poster={MEDIA.feature2.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-        <div className="spc-feature__scrim" />
-        <div className="spc-container spc-feature__inner">
-          <Reveal className="spc-feature__block">
-            <span className="spc-feature__kicker">Who Gathers Here</span>
-            <h3 className="spc-feature__h">누가 모이느냐가 곧 브랜드가 된다</h3>
-            <p className="spc-feature__desc">
-              이곳의 손님은 머무는 동안 콘텐츠를 만들고, 그 이야기가 다시 신안을
-              세상에 알립니다. 영향력 있는 사람들이 모이는 것 자체가 이 공간의
-              자산입니다.
-            </p>
-            <a href="#connect" className="spc-textlink">
-              멤버십 사전 등록 →
-            </a>
-          </Reveal>
+        <div className="shn-hero__frame">
+          <h1 className="shn-hero__h1">
+            천 개의 섬과 노을,
+            <br />그 사이에 <span className="it">머문다</span>
+          </h1>
+          <p className="shn-hero__sub">
+            가장 많은 섬이 모인 곳, 가장 느리게 시간이 흐르는 곳. 신안은 열정의공간이
+            처음 사람을 모으는 자리입니다.
+          </p>
         </div>
-      </section>
+        <div className="shn-hero__folio">Shinan · 1004 Islands</div>
+      </header>
 
-      {/* 6. PROGRAMS */}
-      <section className="spc-programs" id="programs">
-        <div className="spc-container">
-          <Reveal className="spc-programs__head">
-            <div>
-              <span className="spc-kicker">Programs</span>
-              <h2 className="spc-h2">머무는 방식</h2>
-            </div>
-            <a href="#connect" className="spc-textlink">
-              전체 프로그램 →
-            </a>
+      {/* WHY */}
+      <section className="shn-sec shn-why" id="why">
+        <div className="shn-head">
+          <div className="shn-kicker">Why Shinan · 왜 신안인가</div>
+          <h2 className="shn-title">
+            사라지는 섬과, 되살아나는 섬이 <span className="hl">함께 있는 곳</span>
+          </h2>
+        </div>
+        <div className="shn-inner shn-why__body">
+          <Reveal className="shn-why__lead">
+            신안은 국내에서 섬이 가장 많은 고장이자, 인구가 줄어드는 소멸위기
+            지역입니다. 그러나 동시에 보랏빛 섬과 세계유산 갯벌처럼,{" "}
+            <b>자연과 예술로 이미 다시 살아나고 있는 땅</b>이기도 합니다. 사라짐과
+            되살아남이 공존하는 이 모순이 — 우리가 첫 거점으로 신안을 택한
+            이유입니다.
           </Reveal>
-
-          <div className="spc-programs__list">
-            {PROGRAMS.map((p, i) => (
-              <Reveal key={p.no} className="spc-program" delay={i * 0.06}>
-                <span className="spc-program__no">{p.no}</span>
-                <h3 className="spc-program__title">{p.title}</h3>
-                <p className="spc-program__desc">{p.desc}</p>
-                <div className="spc-program__for">
-                  <span>{p.forKo}</span>
-                  {p.for}
+          <Reveal className="shn-why__facts">
+            {FACTS.map((f) => (
+              <div key={f.t} className="shn-fact">
+                <div className="shn-fact__n">{f.n}</div>
+                <div>
+                  <div className="shn-fact__t">{f.t}</div>
+                  <div className="shn-fact__d">{f.d}</div>
                 </div>
-              </Reveal>
+              </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. WHO / COMMUNITY */}
-      <section className="spc-who">
-        <div className="spc-container">
-          <Reveal className="spc-who__head">
-            <span className="spc-kicker">The Community</span>
-            <h2 className="spc-h2">이곳에 모이는 사람들</h2>
           </Reveal>
-
-          <div className="spc-who__grid">
-            {COMMUNITY.map((c, i) => (
-              <Reveal key={c.name} className="spc-who__item" delay={i * 0.08}>
-                <div className="spc-who__name">{c.name}</div>
-                <p className="spc-who__desc">{c.desc}</p>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* 8. FEATURE 3 — 공간(머무름) (텍스트 좌) */}
-      <section className="spc-feature" id="stay">
-        <video
-          className="spc-feature__video"
-          src={MEDIA.feature3.video}
-          poster={MEDIA.feature3.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-        <div className="spc-feature__scrim" />
-        <div className="spc-container spc-feature__inner">
-          <Reveal className="spc-feature__block">
-            <span className="spc-feature__kicker">The Space</span>
-            <h3 className="spc-feature__h">경치는 경험으로, 폐교는 영감으로</h3>
-            <p className="spc-feature__desc">
-              바다를 마주한 객실과 사색의 공간, 그리고 오래된 분교를 되살린
-              강의·창작 공간. 풍경이 필요한 곳엔 풍경을, 몰입이 필요한 곳엔
-              고요를 두었습니다.
+      {/* LANDSCAPE */}
+      <section className="shn-land" id="landscape">
+        <div className="shn-land__head">
+          <div className="shn-kicker">The Landscape · 풍경</div>
+          <h2 className="shn-title">
+            말보다 먼저, <span className="it">풍경이 설득한다</span>
+          </h2>
+        </div>
+        <div className="shn-land__grid">
+          {TILES.map((t) => (
+            <Reveal key={t.nm} className={`shn-tile ${t.cls}`}>
+              {t.video ? (
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={t.poster}
+                  src={t.video}
+                  aria-hidden="true"
+                />
+              ) : (
+                <div className="ph">{t.ph}</div>
+              )}
+              <div className="duo" />
+              <div className="shn-tile__label">
+                <span className="shn-tile__cat">{t.cat}</span>
+                <div className="shn-tile__nm">{t.nm}</div>
+                <div className="shn-tile__ds">{t.ds}</div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* SPACE */}
+      <section className="shn-sec shn-space paper2" id="space">
+        <div className="shn-head">
+          <div className="shn-kicker">The Space · 공간</div>
+          <h2 className="shn-title">
+            폐교가 다시, <span className="hl">사람으로 채워진다</span>
+          </h2>
+        </div>
+        <Reveal className="shn-space__row">
+          <div className="shn-space__media">
+            <div className="ph">거점 공간 · 사진 준비 중</div>
+            <div className="duo" />
+          </div>
+          <div className="shn-space__txt">
+            <div className="k">바다 객실 · 창작 공간</div>
+            <h3>비어 있던 자리를, 머무는 자리로</h3>
+            <p>
+              신안의 빈 분교와 마을 공간을 되살려 창작과 사유의 자리로 만듭니다.
+              바다를 마주한 방에서 쉬고, 오래된 교실에서 이야기를 나눕니다. 풍경이
+              필요한 곳엔 풍경을, 몰입이 필요한 곳엔 고요를 두었습니다.
             </p>
-            <a href="#journal" className="spc-textlink">
-              공간 둘러보기 →
-            </a>
-          </Reveal>
+            <div className="shn-space__note">실제 공간 사진과 상세는 준비 중입니다</div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* STAY */}
+      <section className="shn-sec shn-stay" id="stay">
+        <div className="shn-head">
+          <div className="shn-kicker">How You Stay · 머무는 방식</div>
+          <h2 className="shn-title">
+            쉬러 왔다가, <span className="hl">이야기를 남기고 간다</span>
+          </h2>
+        </div>
+        <div className="shn-stay__list">
+          {STAY.map((s) => (
+            <Reveal key={s.n} className="shn-stay__row">
+              <div className="shn-stay__n">{s.n}</div>
+              <div className="shn-stay__t">{s.t}</div>
+              <div className="shn-stay__d">{s.d}</div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      {/* 9. JOURNAL */}
-      <section className="spc-journal" id="journal">
-        <div className="spc-container">
-          <Reveal className="spc-journal__head">
-            <div>
-              <span className="spc-kicker">Journal</span>
-              <h2 className="spc-h2">공간에 머문 이야기</h2>
+      {/* ACCESS */}
+      <section className="shn-sec shn-access paper2" id="access">
+        <div className="shn-head">
+          <div className="shn-kicker">The Journey · 오는 길</div>
+          <h2 className="shn-title">
+            쉽게 닿지 않기에, <span className="it">머무름은 더 깊어진다</span>
+          </h2>
+        </div>
+        <Reveal className="shn-access__lead">
+          신안으로 오는 길은 그 자체가 리트릿의 시작입니다.
+        </Reveal>
+        <Reveal className="shn-steps">
+          {STEPS.map((s) => (
+            <div key={s.n} className="shn-step">
+              <div className="shn-step__n">{s.n}</div>
+              <div className="shn-step__t">{s.t}</div>
+              <div className="shn-step__d">{s.d}</div>
             </div>
-            <a href="#connect" className="spc-textlink">
-              저널 전체 →
-            </a>
-          </Reveal>
+          ))}
+        </Reveal>
+      </section>
 
-          <div className="spc-journal__grid">
-            {JOURNAL.map((j, i) => (
-              <Reveal key={j.title} as="article" delay={i * 0.08}>
-                <div className="spc-jcard">
-                  <div className="spc-jcard__thumb">
-                    {j.video ? (
-                      <video
-                        src={j.video}
-                        poster={j.poster}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <div className="spc-jcard__placeholder">
-                        PHOTO · 신안 촬영물 예정
-                      </div>
-                    )}
-                  </div>
-                  <span className="spc-jcard__cat">{j.cat}</span>
-                  <h3 className="spc-jcard__title">{j.title}</h3>
-                  <p className="spc-jcard__excerpt">{j.excerpt}</p>
-                </div>
-              </Reveal>
-            ))}
+      {/* CONNECT */}
+      <section className="shn-connect" id="connect">
+        <Reveal>
+          <h2>
+            신안에서 머물 자리를, <span className="it">비워두었습니다</span>
+          </h2>
+          <p>
+            리트릿 예약 · 기업 연수 · 공간 대관 · 멤버십. 방문 문의는 카카오톡
+            채널로 받습니다.
+          </p>
+          <a
+            href={CONTACT.kakao}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shn-connect__btn"
+          >
+            카카오톡으로 방문 문의 →
+          </a>
+        </Reveal>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="psm-footer">
+        <div className="psm-footer__grid">
+          <div className="psm-footer__brand">
+            <div className="psm-footer__logo">
+              PASSION<span className="o">SPACE</span>
+            </div>
+            <p>
+              전남 신안 · No.01. 사라져가는 지역에 사람을 모아 다시 살리는 리트릿
+              운동의 첫 번째 거점.
+            </p>
+            <div className="psm-footer__grp">
+              <span>時</span>
+              <span>人</span>
+              <span>空</span>
+            </div>
+          </div>
+          <div className="psm-footer__col">
+            <h5>신안</h5>
+            <a href="#why">왜 신안</a>
+            <a href="#landscape">풍경</a>
+            <a href="#space">공간</a>
+            <a href="#access">오는 길</a>
+          </div>
+          <div className="psm-footer__col">
+            <h5>Movement</h5>
+            <Link href="/space">← 열정의공간 (운동)</Link>
+            <Link href="/space#network">거점 네트워크</Link>
+            <Link href="/">PASSION GROUP</Link>
+          </div>
+          <div className="psm-footer__col">
+            <h5>Visit</h5>
+            <a href={CONTACT.kakao} target="_blank" rel="noopener noreferrer">
+              방문 문의 (카카오)
+            </a>
+            <span style={{ opacity: 0.7 }}>전남 신안군</span>
           </div>
         </div>
-      </section>
-
-      {/* 10. CONNECT */}
-      <section className="spc-connect" id="connect">
-        <video
-          className="spc-connect__video"
-          src={MEDIA.connect.video}
-          poster={MEDIA.connect.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-        <div className="spc-connect__scrim" />
-        <div className="spc-container spc-connect__inner">
-          <Reveal>
-            <span className="spc-kicker">Stay Connected</span>
-            <h2 className="spc-connect__h">
-              당신의 영감이 머물 자리를
-              <br />
-              비워두었습니다
-            </h2>
-            <p className="spc-connect__desc">
-              리트릿 예약 · 기업 연수 · 공간 대관 · 멤버십. 새로운 소식을 가장
-              먼저 받아보세요.
-            </p>
-            <ConnectForm />
-            <p className="spc-connect__alt">
-              바로 문의:{" "}
-              <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-              {" · "}
-              <a
-                href={CONTACT.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {CONTACT.instagramHandle}
-              </a>
-            </p>
-          </Reveal>
+        <div className="psm-footer__bot">
+          <span>© 2026 Passion Space — 열정의 그룹</span>
+          <span>No.01 — 신안 · 時 · 人 · 空</span>
         </div>
-      </section>
-    </main>
+      </footer>
+
+      {/* 카카오 플로팅 */}
+      <a
+        href={CONTACT.kakao}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="psm-kakao"
+        aria-label="카카오톡 채널로 방문 문의"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#3C1E1E" aria-hidden="true">
+          <path d="M12 3c-5.523 0-10 3.538-10 7.9 0 2.85 1.848 5.347 4.636 6.74l-1.185 4.316c-.056.205.18.366.353.243l5.06-3.327c.373.048.755.074 1.146.074 5.523 0 10-3.538 10-7.9S17.523 3 12 3z" />
+        </svg>
+        <span>카카오톡 문의</span>
+      </a>
+    </div>
   );
 }
