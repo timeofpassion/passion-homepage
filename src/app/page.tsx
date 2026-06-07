@@ -1,5 +1,38 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { buildOpenGraph } from "@/lib/og";
+
+// og:url 을 요청 주소(쿼리 포함)에 맞춰 동적 생성 → 카카오 캐시 ?v= 우회 갱신 지원.
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
+  const sp = await searchParams;
+  return {
+    openGraph: buildOpenGraph(
+      {
+        title: "PASSION GROUP | 열정의시간 · 열정의사람들 · 열정의공간",
+        description:
+          "열정으로 시간·사람·공간을 잇습니다. 병의원 전문마케팅 열정의시간, 글로벌·인플루언서 마케팅 열정의사람들, 공간 비즈니스 열정의공간.",
+        siteName: "PASSION GROUP",
+        locale: "ko_KR",
+        type: "website",
+        images: [
+          {
+            url: "/og-passion.jpg",
+            width: 1200,
+            height: 630,
+            alt: "PASSION GROUP — 열정의시간 · 열정의사람들 · 열정의공간",
+          },
+        ],
+      },
+      "/",
+      sp,
+    ),
+  };
+}
 
 type Company = {
   num: string;

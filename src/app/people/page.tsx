@@ -10,15 +10,44 @@ import {
   formatFollowers,
 } from "./_data/sample";
 import { getInfluencers, buildNetworkStats } from "./_data/people-data";
+import { buildOpenGraph } from "@/lib/og";
 
 // 열정의시간 카카오톡 채널 상담(채팅) — 전사 공용 채널
 const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "열정의사람들 | 인플루언서 마케팅 (국내·일본·중국·대만)",
-  },
-};
+// og:url 을 요청 주소(쿼리 포함)에 맞춰 동적 생성 → 카카오 캐시 ?v= 우회 갱신 지원.
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
+  const sp = await searchParams;
+  return {
+    title: {
+      absolute: "열정의사람들 | 인플루언서 마케팅 (국내·일본·중국·대만)",
+    },
+    openGraph: buildOpenGraph(
+      {
+        title: "열정의사람들 | 글로벌 인플루언서 마케팅",
+        description:
+          "일본·중국·대만, 현지 인플루언서로 진출하다. 동아시아 시장 진출 인플루언서 마케팅 전문 기업.",
+        siteName: "열정의사람들",
+        locale: "ko_KR",
+        type: "website",
+        images: [
+          {
+            url: "/people/og-people.jpg",
+            width: 1200,
+            height: 630,
+            alt: "열정의사람들 — 글로벌 인플루언서 마케팅",
+          },
+        ],
+      },
+      "/people",
+      sp,
+    ),
+  };
+}
 
 const SERVICES = [
   {

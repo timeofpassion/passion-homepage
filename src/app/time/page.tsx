@@ -1,14 +1,43 @@
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import SystemLabels from "@/components/SystemLabels";
 import Header from "@/components/Header";
 
-// 루트 그룹 템플릿("%s | PASSION GROUP")을 우회해 열정의시간 단일 브랜딩 유지
-export const metadata: Metadata = {
-  title: {
-    absolute: "열정의시간 | 병원 마케팅 & 해외환자 유치 전문 에이전시",
-  },
-};
+// 루트 그룹 템플릿("%s | PASSION GROUP")을 우회해 열정의시간 단일 브랜딩 유지.
+// og:url 을 요청 주소(쿼리 포함)에 맞춰 동적 생성 → 카카오 캐시 ?v= 우회 갱신 지원.
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
+  const sp = await searchParams;
+  return {
+    title: {
+      absolute: "열정의시간 | 병원 마케팅 & 해외환자 유치 전문 에이전시",
+    },
+    openGraph: buildOpenGraph(
+      {
+        title: "열정의시간 | 병원 마케팅 & 해외환자 유치 전문 에이전시",
+        description:
+          "13년 노하우의 병원 마케팅 전문 에이전시. 국내 통합 마케팅부터 일본·중국·대만 해외환자 유치까지 원스톱으로. 하나의 계약으로 6개 팀이 동시에 움직입니다.",
+        siteName: "열정의시간",
+        locale: "ko_KR",
+        type: "website",
+        images: [
+          {
+            url: "/time/og-time.jpg",
+            width: 1200,
+            height: 630,
+            alt: "열정의시간 — 병원 마케팅 & 해외환자 유치 전문 에이전시",
+          },
+        ],
+      },
+      "/time",
+      sp,
+    ),
+  };
+}
 import HeroSection from "@/components/HeroSection";
 import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
