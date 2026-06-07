@@ -1810,3 +1810,46 @@ body:has(.psm-root) {
     transform: none;
   }
 }
+
+/* ---------- 모바일 좌우 여백(가독성) ---------- */
+/* 3vw 는 작은 화면에서 ~12px로 너무 좁아 텍스트가 가장자리에 붙음 → 넉넉히 */
+@media (max-width: 680px) {
+  .psm-nav {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .psm-hero__frame {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .psm-hero__frame::before {
+    left: 16px;
+    right: 16px;
+  }
+  .psm-crop.tl,
+  .psm-crop.bl {
+    left: 8px;
+  }
+  .psm-crop.tr,
+  .psm-crop.br {
+    right: 8px;
+  }
+  .psm-hero__h1 {
+    font-size: clamp(30px, 8.2vw, 44px);
+    letter-spacing: -1.5px;
+  }
+  .psm-hero__folio {
+    right: -2vw;
+    opacity: 0.8;
+  }
+  .psm-sec,
+  .psm-gallery,
+  .psm-join,
+  .psm-footer {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .psm-join__mark {
+    right: -4vw;
+  }
+}

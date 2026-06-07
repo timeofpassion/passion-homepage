@@ -584,3 +584,35 @@
     border-bottom: none;
   }
 }
+
+/* ---------- 모바일 좌우 여백(가독성) ---------- */
+@media (max-width: 680px) {
+  .shn-sec,
+  .shn-connect {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .shn-hero__frame {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .shn-hero__meta {
+    left: 24px;
+    right: 24px;
+  }
+  .shn-hero__folio {
+    right: 16px;
+  }
+  .shn-hero__h1 {
+    font-size: clamp(30px, 8vw, 44px);
+    letter-spacing: -1.5px;
+  }
+  .shn-land__head {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  /* 풍경 타일 캡션도 가장자리에서 살짝 띄움 */
+  .shn-tile {
+    padding: 22px;
+  }
+}
