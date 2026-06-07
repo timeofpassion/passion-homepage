@@ -1661,6 +1661,137 @@ body:has(.psm-root) {
   }
 }
 
+/* ---------- 갤러리 상세 링크(신안 미리보기) ---------- */
+.psm-gallery__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  font-family: var(--arch);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 2px solid var(--spot);
+  padding-bottom: 5px;
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+.psm-gallery__link:hover {
+  gap: 16px;
+  color: var(--spot);
+}
+
+/* ============================================================ */
+/* GOV — 지자체·기관이라면                                       */
+/* ============================================================ */
+.psm-gov {
+  background: var(--ink);
+  color: var(--paper);
+}
+.psm-gov .psm-shead__cat {
+  color: var(--paper);
+  opacity: 0.6;
+}
+.psm-gov .psm-shead h2 {
+  color: var(--paper);
+}
+.psm-gov__intro {
+  max-width: 52ch;
+  font-size: clamp(15px, 1.7vw, 19px);
+  line-height: 1.85;
+  opacity: 0.88;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+.psm-gov__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(236, 229, 214, 0.25);
+  border-left: 1px solid rgba(236, 229, 214, 0.25);
+}
+.psm-gov__card {
+  padding: clamp(26px, 2.4vw, 38px) clamp(20px, 1.8vw, 30px);
+  border-right: 1px solid rgba(236, 229, 214, 0.25);
+  border-bottom: 1px solid rgba(236, 229, 214, 0.25);
+}
+.psm-gov__n {
+  font-family: var(--disp);
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(30px, 3vw, 46px);
+  color: var(--spot);
+  line-height: 0.8;
+  display: block;
+  margin-bottom: 22px;
+}
+.psm-gov__t {
+  font-family: var(--grotesk);
+  font-weight: 800;
+  font-size: clamp(18px, 1.9vw, 23px);
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+.psm-gov__d {
+  font-size: 14px;
+  line-height: 1.7;
+  opacity: 0.78;
+}
+.psm-gov__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: clamp(40px, 5vw, 64px);
+  padding-top: clamp(28px, 3vw, 40px);
+  border-top: 1px solid rgba(236, 229, 214, 0.25);
+}
+.psm-gov__cta p {
+  font-family: var(--grotesk);
+  font-weight: 800;
+  font-size: clamp(20px, 2.6vw, 34px);
+  letter-spacing: -0.8px;
+}
+.psm-gov__cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--arch);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: var(--spot);
+  color: #fff;
+  padding: 16px 28px;
+  white-space: nowrap;
+  transition: background 0.3s ease, gap 0.3s ease;
+}
+.psm-gov__cta a:hover {
+  background: var(--paper);
+  color: var(--ink);
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .psm-gov__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .psm-gov__grid {
+    grid-template-columns: 1fr;
+  }
+  .psm-gov__cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .psm-gov__cta a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ---------- 모션 민감 사용자 ---------- */
 @media (prefers-reduced-motion: reduce) {
   .psm-root *,
