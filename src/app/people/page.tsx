@@ -55,7 +55,7 @@ const WHY = [
 ];
 
 export default async function PeopleHome() {
-  const { influencers, usingSample } = await getInfluencers();
+  const { influencers } = await getInfluencers();
   // NETWORK 섹션·히어로 수치는 운영 네트워크 규모(고정). 아래 인플루언서 목록은 실데이터 연동.
   const networkStats = buildNetworkStats();
   const total = networkStats.reduce((sum, s) => sum + s.count, 0);
@@ -171,15 +171,13 @@ export default async function PeopleHome() {
             바로 찾을 수 있습니다.
           </p>
 
-          {usingSample && (
-            <div className="ppl-prepnote">
-              <span className="ppl-prepnote__badge">업데이트 중</span>
-              <p>
-                실시간 인플루언서 데이터는 자사 운영관리 시스템과 연동 작업 중입니다.
-                아래는 구성·필터 예시이며, 실제 프로필·채널 수치는 순차 공개됩니다.
-              </p>
-            </div>
-          )}
+          <div className="ppl-prepnote">
+            <span className="ppl-prepnote__badge">정리 중</span>
+            <p>
+              현재 인플루언서 목록을 정리·업데이트하고 있습니다. 일부만 우선
+              공개되어 있으며, 순차적으로 더 많은 크리에이터가 추가됩니다.
+            </p>
+          </div>
 
           <InfluencerFilter data={influencers} />
 
@@ -191,7 +189,7 @@ export default async function PeopleHome() {
         </div>
       </section>
 
-      {/* 4-4 PORTFOLIO PREVIEW — 준비중(가안) */}
+      {/* 4-4 PORTFOLIO */}
       <section className="ppl-section" id="portfolio">
         <div className="ppl-container">
           <span className="ppl-eyebrow">PORTFOLIO</span>
@@ -199,14 +197,6 @@ export default async function PeopleHome() {
           <p className="ppl-section-sub">
             의료·기업·공공 분야의 국내·해외 인플루언서 캠페인 사례입니다.
           </p>
-
-          <div className="ppl-prepnote">
-            <span className="ppl-prepnote__badge">준비중</span>
-            <p>
-              아래 사례는 구성 가안(예시)입니다. 실제 진행 캠페인의 성과 리포트는
-              클라이언트 동의 절차를 거쳐 순차 공개될 예정입니다.
-            </p>
-          </div>
 
           <div className="ppl-port-grid">
             {PORTFOLIO.map((p) => (
@@ -219,7 +209,6 @@ export default async function PeopleHome() {
                       : undefined
                   }
                 >
-                  <span className="ppl-port-card__prep">예시</span>
                   <span className="ppl-port-card__flags">
                     {p.country.map((c) => (
                       <Flag key={c} country={c} size={24} />
@@ -249,15 +238,6 @@ export default async function PeopleHome() {
                 </div>
               </article>
             ))}
-          </div>
-
-          <div className="ppl-center">
-            <span
-              className="ppl-btn ppl-btn--ghost"
-              style={{ opacity: 0.6, cursor: "default" }}
-            >
-              실제 사례 공개 준비중
-            </span>
           </div>
         </div>
       </section>

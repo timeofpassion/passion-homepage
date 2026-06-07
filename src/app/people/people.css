@@ -315,23 +315,29 @@ body:has(.ppl-root) {
 /* ===================== COUNTRY STATS ===================== */
 .ppl-country-grid {
   display: grid;
-  /* 4개국(한국·일본·중국·대만)을 데스크톱에서 한 줄로 정렬 */
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
+  /* 5개 시장(한국·일본·중국·대만·베트남)을 데스크톱에서 한 줄로 정렬 */
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
   margin-top: 44px;
 }
-/* 좁은 화면: 2열(한국·일본 / 중국·대만) */
-@media (max-width: 900px) {
+/* 중간 화면: 3열 */
+@media (max-width: 1100px) {
+  .ppl-country-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* 좁은 화면: 2열 */
+@media (max-width: 720px) {
   .ppl-country-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 14px;
   }
 }
 .ppl-country-card {
   background: var(--ppl-card);
   border: 1px solid var(--ppl-line);
   border-radius: var(--ppl-radius);
-  padding: 30px;
+  padding: 22px 20px;
   box-shadow: var(--ppl-shadow);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -527,11 +533,7 @@ body:has(.ppl-root) {
   padding: 5px 9px;
   border-radius: var(--ppl-pill);
   text-decoration: none;
-  transition: background 0.18s ease, color 0.18s ease;
-}
-.ppl-chan:hover {
-  background: var(--ppl-navy);
-  color: #fff;
+  cursor: default;
 }
 .ppl-chan b {
   font-weight: 600;

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function InfluencersPage() {
-  const { influencers, usingSample } = await getInfluencers();
+  const { influencers } = await getInfluencers();
   // 보유 네트워크 규모(고정) — 아래 필터 목록은 실데이터 연동
   const networkStats = buildNetworkStats();
   const networkTotal = networkStats.reduce((sum, s) => sum + s.count, 0);
@@ -30,15 +30,13 @@ export default async function InfluencersPage() {
           국가·플랫폼·분야로 필터링해 보세요.
         </p>
 
-        {usingSample && (
-          <div className="ppl-prepnote">
-            <span className="ppl-prepnote__badge">업데이트 중</span>
-            <p>
-              실시간 인플루언서 데이터는 자사 운영관리 시스템과 연동 작업 중입니다.
-              아래는 구성·필터 예시이며, 실제 프로필·채널 수치는 순차 공개됩니다.
-            </p>
-          </div>
-        )}
+        <div className="ppl-prepnote">
+          <span className="ppl-prepnote__badge">정리 중</span>
+          <p>
+            현재 인플루언서 목록을 정리·업데이트하고 있습니다. 일부만 우선
+            공개되어 있으며, 순차적으로 더 많은 크리에이터가 추가됩니다.
+          </p>
+        </div>
 
         <InfluencerFilter data={influencers} />
       </div>
