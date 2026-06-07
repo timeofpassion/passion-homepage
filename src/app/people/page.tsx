@@ -118,8 +118,11 @@ export default async function PeopleHome() {
         }}
       >
         <ClientsSection
-          title="열정의사람들을 믿고 세계로 나아간 우리 소중한 클라이언트"
-          subtitle="열정의사람들은 단순 노출이 아니라, 현지 인플루언서로 ‘진짜’ 결과를 만듭니다"
+          title={"열정의사람들을 믿고 세계로 나아간\n우리 소중한 클라이언트"}
+          subtitle={
+            "열정의사람들은 단순 노출이 아니라,\n현지 인플루언서로 ‘진짜’ 결과를 만듭니다."
+          }
+          showBrackets={false}
         />
       </div>
 

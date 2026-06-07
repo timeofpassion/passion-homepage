@@ -254,7 +254,7 @@ body:has(.ppl-root) {
 }
 @media (max-width: 767px) {
   .ppl-hero__inner {
-    padding: 72px 0 64px;
+    padding: 64px 8px 56px;
   }
 }
 .ppl-hero__badge {
@@ -274,13 +274,14 @@ body:has(.ppl-root) {
   line-height: 1.22;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
+  word-break: keep-all;
 }
 .ppl-hero__h1 b {
   color: #ff6a55;
 }
 @media (max-width: 767px) {
   .ppl-hero__h1 {
-    font-size: 31px;
+    font-size: 27px;
   }
 }
 .ppl-hero__sub {
@@ -289,10 +290,11 @@ body:has(.ppl-root) {
   color: rgba(255, 255, 255, 0.82);
   max-width: 560px;
   margin-bottom: 34px;
+  word-break: keep-all;
 }
 @media (max-width: 767px) {
   .ppl-hero__sub {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 .ppl-hero__stats {
