@@ -5,10 +5,12 @@ export default function ClientsSection({
   title = "열정의 시간을 오랫동안 믿고 맡겨주신 우리 소중한 클라이언트",
   subtitle = "열정의시간은 클라이언트의 ‘진짜’ 직원처럼 결과와 매출을 먼저 걱정합니다",
   medicalOnly = false,
+  showBrackets = true,
 }: {
   title?: string;
   subtitle?: string;
   medicalOnly?: boolean;
+  showBrackets?: boolean;
 } = {}) {
   // 열정의시간(/time)은 병원·의료만, 열정의사람들(/people)은 전체 노출
   const logos = medicalOnly ? clientLogos.filter((c) => c.medical) : clientLogos;
@@ -17,11 +19,11 @@ export default function ClientsSection({
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-          <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 800, marginBottom: 16, lineHeight: 1.4 }}>
+          <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 800, marginBottom: 16, lineHeight: 1.4, whiteSpace: "pre-line", wordBreak: "keep-all" }}>
             {title}
           </h2>
-          <p style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)", color: "#FFD700", fontWeight: 600 }}>
-            &lt;{subtitle}&gt;
+          <p style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)", color: "#FFD700", fontWeight: 600, whiteSpace: "pre-line", wordBreak: "keep-all" }}>
+            {showBrackets ? `<${subtitle}>` : subtitle}
           </p>
         </div>
 

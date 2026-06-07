@@ -53,12 +53,22 @@ type ApiInfluencer = {
   channels: ApiChannel[];
 };
 
+// 공개 노출 시 내부 표기("(가상)", "예시 …") 가 남아 있어도 화면엔 보이지 않도록 정화(방어).
+function cleanName(n: string): string {
+  return (n || "")
+    .replace(/,?\s*가상/g, "")
+    .replace(/\(\s*\)/g, "")
+    .replace(/^예시\s+/, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 function mapInfluencer(i: ApiInfluencer): Influencer | null {
   const country = MARKET_TO_COUNTRY[i.market];
   if (!country) return null; // 홈페이지 비노출 시장(영미권 등)은 제외
   return {
     id: i.id,
-    name: i.name,
+    name: cleanName(i.name),
     country,
     categories: Array.isArray(i.categories) ? i.categories : [],
     profileImage: i.photoUrl || undefined,
