@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/time/og-time.jpg",
+        url: "/time/og-time-v2.jpg",
         width: 1200,
         height: 630,
         alt: "열정의시간 — 병원 마케팅 & 해외환자 유치 전문 에이전시",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     title: "열정의시간 | 병원 마케팅 & 해외환자 유치 전문",
     description:
       "국내 마케팅부터 일본·중국·대만 해외환자 유치까지. 13년 노하우의 병원 전문 에이전시.",
-    images: ["/time/og-time.jpg"],
+    images: ["/time/og-time-v2.jpg"],
   },
   robots: {
     index: true,

@@ -36,7 +36,7 @@ export async function generateMetadata({
         type: "website",
         images: [
           {
-            url: "/people/og-people.jpg",
+            url: "/people/og-people-v2.jpg",
             width: 1200,
             height: 630,
             alt: "열정의사람들 — 글로벌 인플루언서 마케팅",
