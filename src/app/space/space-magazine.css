@@ -349,7 +349,7 @@ body:has(.psm-root) {
   font-family: var(--grotesk);
   font-weight: 900;
   font-size: clamp(46px, 9vw, 138px);
-  line-height: 0.92;
+  line-height: 1.12;
   letter-spacing: -3px;
   text-indent: -2px;
 }
