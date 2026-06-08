@@ -20,12 +20,23 @@ export type Channel = {
   followers: number;
 };
 
+export type Gender = "FEMALE" | "MALE" | "OTHER";
+export type AgeRange =
+  | "TEENS"
+  | "TWENTIES"
+  | "THIRTIES"
+  | "FORTIES"
+  | "FIFTIES"
+  | "SIXTIES_PLUS";
+
 export type Influencer = {
   id: string;
   name: string;
   country: Country;
   categories: string[]; // 자유 입력 분야(인트라넷과 동일): "뷰티", "여행" 등
-  profileImage?: string; // 비우면 플레이스홀더 표시
+  profileImage?: string; // 비우면 성별·연령대 매칭 AI 포트레이트로 폴백
+  gender?: Gender; // 사진 미등록 시 포트레이트 매칭에 사용
+  ageRange?: AgeRange; // 사진 미등록 시 포트레이트 매칭에 사용
   oneLiner: string;
   exclusive: boolean;
   channels: Channel[];
@@ -343,23 +354,49 @@ export const PORTFOLIO: Portfolio[] = [
 ];
 
 // 프로필 사진 미등록 인플루언서에게 임시로 보여줄 AI 생성 포트레이트(동아시아) 풀.
-// 실제 사진이 없으면 id 기반으로 하나 배정하고 "AI 이미지 · 교체예정" 배지를 함께 표시한다.
-export const AI_PORTRAITS = [
+// 성별·연령대(인트라넷 운영관리 입력값)에 맞는 얼굴을 배정한다 — 60대 여성에 20대 남성 얼굴이
+// 붙던 문제를 방지. 시니어(50대+) 여성은 전용 풀, 그 외는 성별별 풀에서 id 해시로 결정.
+const PORTRAITS_FEMALE_YOUNG = [
   "/people/influencers/jp-001.webp",
-  "/people/influencers/jp-002.webp",
   "/people/influencers/jp-003.webp",
   "/people/influencers/jp-004.webp",
   "/people/influencers/cn-001.webp",
-  "/people/influencers/cn-002.webp",
   "/people/influencers/cn-003.webp",
   "/people/influencers/tw-001.webp",
-  "/people/influencers/tw-002.webp",
   "/people/influencers/tw-003.webp",
 ];
-export function pickAiPortrait(seed: string): string {
+const PORTRAITS_MALE_YOUNG = [
+  "/people/influencers/jp-002.webp",
+  "/people/influencers/cn-002.webp",
+  "/people/influencers/tw-002.webp",
+];
+const PORTRAITS_FEMALE_SENIOR = [
+  "/people/influencers/kr-senior-f-01.webp", // 60대
+  "/people/influencers/kr-senior-f-02.webp", // 50대
+];
+
+// (구) 호환용 — 전체 풀(성별 무관 호출부가 남아 있을 때)
+export const AI_PORTRAITS = [...PORTRAITS_FEMALE_YOUNG, ...PORTRAITS_MALE_YOUNG];
+
+function hashSeed(seed: string): number {
   let h = 0;
   for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
-  return AI_PORTRAITS[h % AI_PORTRAITS.length];
+  return h;
+}
+
+// 성별·연령대 매칭 포트레이트 배정(사진 미등록 시). 시니어 남성 전용 풀은 아직 없어 남성 풀로 폴백.
+export function pickPortrait(seed: string, gender?: Gender, ageRange?: AgeRange): string {
+  const senior = ageRange === "FIFTIES" || ageRange === "SIXTIES_PLUS";
+  let pool: string[];
+  if (gender === "MALE") pool = PORTRAITS_MALE_YOUNG;
+  else if (senior) pool = PORTRAITS_FEMALE_SENIOR; // 여성/미상 + 시니어
+  else pool = PORTRAITS_FEMALE_YOUNG; // 여성/미상 + 비시니어
+  return pool[hashSeed(seed) % pool.length];
+}
+
+// (구) 호환용 — 성별 정보 없이 호출하던 곳을 위해 유지
+export function pickAiPortrait(seed: string): string {
+  return AI_PORTRAITS[hashSeed(seed) % AI_PORTRAITS.length];
 }
 
 // 팔로워 수 한국어 축약 (12만, 1.2만 등)

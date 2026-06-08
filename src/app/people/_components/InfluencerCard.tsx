@@ -3,7 +3,7 @@ import {
   type Platform,
   PLATFORM_LABEL,
   formatFollowers,
-  pickAiPortrait,
+  pickPortrait,
 } from "../_data/sample";
 import Flag from "./Flag";
 
@@ -21,8 +21,8 @@ const PLATFORM_BRAND: Record<Platform, string> = {
 };
 
 export default function InfluencerCard({ inf }: { inf: Influencer }) {
-  // 사진 미등록 시 AI 포트레이트로 대체(별도 표기 없음)
-  const photo = inf.profileImage || pickAiPortrait(inf.id);
+  // 사진 미등록 시 성별·연령대에 맞는 AI 포트레이트로 대체(별도 표기 없음)
+  const photo = inf.profileImage || pickPortrait(inf.id, inf.gender, inf.ageRange);
 
   return (
     <article className="ppl-card">

@@ -5,6 +5,8 @@ import {
   type Influencer,
   type Country,
   type Platform,
+  type Gender,
+  type AgeRange,
   COUNTRY_ORDER,
   COUNTRY_STRENGTH,
   PLATFORM_LABEL,
@@ -45,6 +47,8 @@ type ApiInfluencer = {
   photoUrl: string | null;
   market: string;
   nationality: string | null;
+  gender: string | null;
+  ageRange: string | null;
   languages: string[];
   categories: string[];
   grade: string;
@@ -72,6 +76,8 @@ function mapInfluencer(i: ApiInfluencer): Influencer | null {
     country,
     categories: Array.isArray(i.categories) ? i.categories : [],
     profileImage: i.photoUrl || undefined,
+    gender: (i.gender as Gender | null) ?? undefined,
+    ageRange: (i.ageRange as AgeRange | null) ?? undefined,
     oneLiner:
       i.publicHeadline?.trim() ||
       (i.categories?.length ? i.categories.join(" · ") : "현지 인플루언서"),
