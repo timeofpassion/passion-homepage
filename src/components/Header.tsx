@@ -8,6 +8,7 @@ const NAV_ITEMS: { label: string; href: string; quote?: boolean }[] = [
   { label: "팀", href: "/time#service-teams" },
   { label: "후기", href: "/time#testimonials" },
   { label: "블로그", href: "/time#blog" },
+  { label: "협력병원", href: "/ko/hospitals" },
   { label: "견적 의뢰", href: "/time/quote", quote: true },
 ];
 

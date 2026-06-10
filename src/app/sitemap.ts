@@ -1,7 +1,31 @@
 import type { MetadataRoute } from "next";
+import { ACTIVE_LOCALES, getHospitals } from "@/lib/hospital-portal";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.timeofpassion.com";
+
+  // 협력병원 포털 — 노출 locale × 병원 전 조합
+  const hospitalEntries: MetadataRoute.Sitemap = (
+    await Promise.all(
+      ACTIVE_LOCALES.map(async (lang) => {
+        const { hospitals } = await getHospitals(lang);
+        return [
+          {
+            url: `${baseUrl}/${lang}/hospitals`,
+            lastModified: new Date(),
+            changeFrequency: "weekly" as const,
+            priority: 0.9,
+          },
+          ...hospitals.map((h) => ({
+            url: `${baseUrl}/${lang}/hospitals/${h.slug}`,
+            lastModified: new Date(),
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+          })),
+        ];
+      }),
+    )
+  ).flat();
 
   return [
     {
@@ -40,5 +64,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.4,
     },
+    ...hospitalEntries,
   ];
 }
