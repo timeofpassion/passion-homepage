@@ -1055,3 +1055,268 @@
     gap: 20px 12px;
   }
 }
+
+/* ─────────────────────────────────────────────
+   레이아웃 래퍼 (모바일/태블릿: 520 센터, 데스크탑: 1080)
+   ───────────────────────────────────────────── */
+#mt .in {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+#mt .slide-in {
+  width: 100%;
+}
+#mt .story-grid,
+#mt .story-lead,
+#mt .story-side {
+  display: block;
+}
+#mt .d-grid {
+  max-width: 520px;
+  margin: 0 auto;
+}
+#mt .d-aside,
+#mt .d-content {
+  display: block;
+}
+
+/* ─────────────────────────────────────────────
+   데스크탑 레이아웃 (≥960px)
+   ───────────────────────────────────────────── */
+@media (min-width: 960px) {
+  #mt {
+    padding-bottom: 92px;
+  }
+  #mt .in {
+    max-width: 1080px;
+  }
+
+  /* 헤더 */
+  #mt .hd-in {
+    max-width: 1080px;
+    padding: 18px 40px;
+  }
+  #mt .logo {
+    font-size: 16px;
+  }
+  #mt .hd-lang {
+    font-size: 12px;
+  }
+
+  /* 히어로 (풀블리드·대형) */
+  #mt .hero {
+    height: 600px;
+  }
+  #mt .slide {
+    padding: 0 max(40px, calc((100% - 1080px) / 2)) 120px;
+  }
+  #mt .slide-in {
+    max-width: 720px;
+  }
+  #mt .slide .eyebrow {
+    font-size: 12px;
+    margin-bottom: 22px;
+  }
+  #mt .slide h1 {
+    font-size: 44px;
+    line-height: 1.4;
+  }
+  #mt .slide p {
+    font-size: 15px;
+    max-width: 480px;
+    margin-top: 20px;
+  }
+  #mt .hero-rule,
+  #mt .hero-prog {
+    left: max(40px, calc((100% - 1080px) / 2));
+    bottom: 64px;
+  }
+  #mt .hero-rule {
+    right: max(40px, calc((100% - 1080px) / 2));
+  }
+  #mt .hero-foot {
+    left: max(40px, calc((100% - 1080px) / 2));
+    right: max(40px, calc((100% - 1080px) / 2));
+    bottom: 36px;
+    font-size: 11px;
+  }
+
+  /* 신뢰 스트립 */
+  #mt .ts-in {
+    max-width: 1080px;
+  }
+  #mt .ts {
+    padding: 26px 0;
+    font-size: 12px;
+  }
+  #mt .ts b {
+    font-size: 22px;
+  }
+
+  /* 공통 섹션 */
+  #mt section {
+    padding: 76px 40px 8px;
+  }
+  #mt .sec-title {
+    font-size: 26px;
+  }
+  #mt .sec-k {
+    font-size: 12px;
+  }
+
+  /* 회사 소개 2단 */
+  #mt .story-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: start;
+  }
+  #mt .story-quote {
+    font-size: 27px;
+  }
+  #mt .story p {
+    font-size: 14.5px;
+  }
+  #mt .criteria {
+    margin-top: 4px;
+  }
+  #mt .story-side {
+    padding-top: 6px;
+  }
+
+  /* 등록기관: 가독 폭으로 센터 */
+  #mt .cert-sec .in {
+    max-width: 760px;
+  }
+
+  /* 병원 찾기 */
+  #mt .finder-head {
+    max-width: 1080px;
+    padding: 76px 40px 0;
+    text-align: center;
+  }
+  #mt .cat-bar {
+    top: 67px;
+  }
+  #mt .cat-scroll {
+    max-width: 1080px;
+    padding: 0 40px;
+    justify-content: center;
+    gap: 36px;
+  }
+  #mt .tag-zone {
+    max-width: 1080px;
+    padding: 22px 40px 0;
+  }
+  #mt .tag-zone .tag-scroll {
+    justify-content: center;
+  }
+  #mt .result-row {
+    max-width: 1080px;
+    padding: 34px 40px 0;
+  }
+  #mt .cards {
+    max-width: 1080px;
+    padding: 0 40px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px 22px;
+    margin-top: 28px;
+  }
+  #mt .card-img {
+    aspect-ratio: 4 / 3.4;
+  }
+  #mt .card-img .mono {
+    font-size: 52px;
+  }
+  #mt .sig {
+    font-size: 15px;
+  }
+  #mt .empty {
+    max-width: 1080px;
+  }
+
+  /* 후기 */
+  #mt .rv {
+    width: 330px;
+  }
+
+  /* 프로세스: 가독 폭 */
+  #mt .steps-sec .in {
+    max-width: 760px;
+  }
+
+  /* 푸터 */
+  #mt .foot .in {
+    max-width: 1080px;
+  }
+
+  /* CTA: 한 줄 배치 */
+  #mt .cta-bar {
+    padding: 0 40px calc(env(safe-area-inset-bottom, 0px) + 16px);
+  }
+  #mt .cta-in {
+    max-width: 1080px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+  }
+  #mt .cta-note {
+    margin-bottom: 0;
+    font-size: 11.5px;
+  }
+  #mt .cta-btn {
+    width: auto;
+    padding: 16px 44px;
+    border-radius: 16px;
+  }
+
+  /* ── 상세: 2단(좌 sticky 요약 + 우 본문) ── */
+  #mt .d-grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 48px;
+    max-width: 1100px;
+    padding: 44px 40px 0;
+    align-items: start;
+  }
+  #mt .d-aside {
+    position: sticky;
+    top: 90px;
+  }
+  #mt .d-hero {
+    height: 300px;
+    border-radius: 22px;
+  }
+  #mt .d-hero .mono {
+    font-size: 72px;
+  }
+  #mt .head-card {
+    margin: -64px 14px 0;
+  }
+  #mt .one-price {
+    margin: 14px 14px 0;
+  }
+  #mt .d-content section {
+    padding: 0 0 38px;
+  }
+  #mt .d-content section:first-child {
+    padding-top: 6px;
+  }
+  #mt .d-content .foot {
+    padding: 18px 0 30px;
+  }
+  #mt .tx-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+}
+
+/* 와이드(≥1280): 카드 살짝 키움 */
+@media (min-width: 1280px) {
+  #mt .slide h1 {
+    font-size: 48px;
+  }
+}
