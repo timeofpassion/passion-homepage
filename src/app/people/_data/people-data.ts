@@ -13,6 +13,7 @@ import {
   SAMPLE_INFLUENCERS,
   NETWORK_SIZE,
   NETWORK_PLATFORMS,
+  assignPortraits,
 } from "./sample";
 
 const INTRANET_URL =
@@ -111,6 +112,8 @@ export async function getInfluencers(): Promise<{
       .map(mapInfluencer)
       .filter((x): x is Influencer => x !== null);
     if (mapped.length === 0) return { influencers: SAMPLE_INFLUENCERS, usingSample: true };
+    // 사진 미등록 인플루언서에게 성별·연령대별 전용 풀에서 '중복 없이' 임시 AI 프로필을 순차 배정.
+    assignPortraits(mapped);
     return { influencers: mapped, usingSample: false };
   } catch {
     // 인트라넷 미응답 → 폴백

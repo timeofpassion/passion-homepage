@@ -353,26 +353,42 @@ export const PORTFOLIO: Portfolio[] = [
   },
 ];
 
-// 프로필 사진 미등록 인플루언서에게 임시로 보여줄 AI 생성 포트레이트(동아시아) 풀.
-// 성별·연령대(인트라넷 운영관리 입력값)에 맞는 얼굴을 배정한다 — 60대 여성에 20대 남성 얼굴이
-// 붙던 문제를 방지. 시니어(50대+) 여성은 전용 풀, 그 외는 성별별 풀에서 id 해시로 결정.
+// AI 배정 전용 풀(2026-06-12 신규 생성). 시드 인플루언서가 쓰는 사진(jp-/cn-/tw-/kr-senior-)과
+// 완전히 분리해 "기존 AI와 같은 얼굴" 중복을 없앴다. 성별·연령대별로 넉넉히 둬서, 같은 세그먼트
+// 인원이 늘어도 같은 화면에 같은 얼굴이 안 나오게 한다(assignPortraits 가 세그먼트별 순차 배정).
 const PORTRAITS_FEMALE_YOUNG = [
-  "/people/influencers/jp-001.webp",
-  "/people/influencers/jp-003.webp",
-  "/people/influencers/jp-004.webp",
-  "/people/influencers/cn-001.webp",
-  "/people/influencers/cn-003.webp",
-  "/people/influencers/tw-001.webp",
-  "/people/influencers/tw-003.webp",
+  "/people/influencers/ai-fy-01.webp",
+  "/people/influencers/ai-fy-02.webp",
+  "/people/influencers/ai-fy-03.webp",
+  "/people/influencers/ai-fy-04.webp",
+  "/people/influencers/ai-fy-05.webp",
+  "/people/influencers/ai-fy-06.webp",
+  "/people/influencers/ai-fy-07.webp",
+  "/people/influencers/ai-fy-08.webp",
+  "/people/influencers/ai-fy-09.webp",
+  "/people/influencers/ai-fy-10.webp",
+  "/people/influencers/ai-fy-11.webp",
+  "/people/influencers/ai-fy-12.webp",
+  "/people/influencers/ai-fy-13.webp",
+  "/people/influencers/ai-fy-14.webp",
+  "/people/influencers/ai-fy-15.webp",
+  "/people/influencers/ai-fy-16.webp",
+  "/people/influencers/ai-fy-17.webp",
+  "/people/influencers/ai-fy-18.webp",
 ];
 const PORTRAITS_MALE_YOUNG = [
-  "/people/influencers/jp-002.webp",
-  "/people/influencers/cn-002.webp",
-  "/people/influencers/tw-002.webp",
+  "/people/influencers/ai-m-01.webp",
+  "/people/influencers/ai-m-02.webp",
+  "/people/influencers/ai-m-03.webp",
+  "/people/influencers/ai-m-04.webp",
 ];
 const PORTRAITS_FEMALE_SENIOR = [
-  "/people/influencers/kr-senior-f-01.webp", // 60대
-  "/people/influencers/kr-senior-f-02.webp", // 50대
+  "/people/influencers/ai-fs-01.webp", // 50대
+  "/people/influencers/ai-fs-02.webp", // 50대
+  "/people/influencers/ai-fs-03.webp", // 50대
+  "/people/influencers/ai-fs-04.webp", // 60대
+  "/people/influencers/ai-fs-05.webp", // 60대
+  "/people/influencers/ai-fs-06.webp", // 60대
 ];
 
 // (구) 호환용 — 전체 풀(성별 무관 호출부가 남아 있을 때)
@@ -397,6 +413,24 @@ export function pickPortrait(seed: string, gender?: Gender, ageRange?: AgeRange)
 // (구) 호환용 — 성별 정보 없이 호출하던 곳을 위해 유지
 export function pickAiPortrait(seed: string): string {
   return AI_PORTRAITS[hashSeed(seed) % AI_PORTRAITS.length];
+}
+
+// 사진 미등록 인플루언서에게 세그먼트(성별·시니어)별로 '중복 없이' 포트레이트를 순차 배정한다.
+// 해시 배정(pickPortrait)은 인원이 풀보다 많으면 같은 얼굴이 겹쳤다 — 순차 배정으로 같은 화면
+// 중복을 없앤다(풀 < 인원이면 wrap되며 그때만 재사용). 목록을 직접 변형(profileImage 채움).
+export function assignPortraits(list: Influencer[]): void {
+  const c = { fy: 0, fs: 0, m: 0 };
+  for (const inf of list) {
+    if (inf.profileImage) continue; // 실제 사진이 있으면 그대로
+    const senior = inf.ageRange === "FIFTIES" || inf.ageRange === "SIXTIES_PLUS";
+    if (inf.gender === "MALE") {
+      inf.profileImage = PORTRAITS_MALE_YOUNG[c.m++ % PORTRAITS_MALE_YOUNG.length];
+    } else if (senior) {
+      inf.profileImage = PORTRAITS_FEMALE_SENIOR[c.fs++ % PORTRAITS_FEMALE_SENIOR.length];
+    } else {
+      inf.profileImage = PORTRAITS_FEMALE_YOUNG[c.fy++ % PORTRAITS_FEMALE_YOUNG.length];
+    }
+  }
 }
 
 // 팔로워 수 한국어 축약 (12만, 1.2만 등)
