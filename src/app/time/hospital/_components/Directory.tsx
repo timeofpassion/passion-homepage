@@ -62,6 +62,24 @@ const STEPS = [
   ["05", "사후관리", "귀국 후에도 채팅으로 경과 케어"],
 ];
 
+const REVIEWS = [
+  [
+    "일본에서 LINE으로 상담하고 도착하니 통역 매니저가 병원까지 함께해줬어요. 한국 친구가 다니는 병원이라 더 안심됐습니다.",
+    "Yuki · 도쿄 · 피부과",
+    "2026.03",
+  ],
+  [
+    "여행 일정 안에 진료가 끝났어요. 가격도 안내받은 그대로, 추가 비용이 전혀 없었습니다.",
+    "Chia-ling · 타이베이",
+    "2026.02",
+  ],
+  [
+    "위챗으로 모든 일정이 정리됐고, 진료 당일 통역이 함께했습니다. 귀국 후 케어까지 받았어요.",
+    "Wang · 상하이",
+    "2026.04",
+  ],
+];
+
 const HERO_DUR = 5400;
 
 export default function Directory({
@@ -75,7 +93,6 @@ export default function Directory({
   const [prog, setProg] = useState(0);
   const startRef = useRef<number>(0);
 
-  // 히어로 자동 롤링 + 진행 바
   useEffect(() => {
     let raf = 0;
     startRef.current = performance.now();
@@ -92,7 +109,6 @@ export default function Directory({
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  // 등장 카테고리(빈 카테고리 탭 숨김)
   const categories = useMemo(() => {
     const present = new Set(clinics.map((c) => c.category));
     return CATEGORY_ORDER.filter((c) => present.has(c));
@@ -108,7 +124,6 @@ export default function Directory({
   }, [clinics]);
 
   const tagOptions = cat === "all" ? [] : CATEGORY_TAGS[cat];
-
   const visible = clinics.filter(
     (c) =>
       (cat === "all" || c.category === cat) && (!tag || c.tags.includes(tag)),
@@ -122,7 +137,7 @@ export default function Directory({
   return (
     <>
       <header className="mt-head">
-        <div className="hd-in">
+        <div className="hd-in in">
           <div className="logo">
             열정의시간<i>.</i>
             <span>MEDICAL CONCIERGE</span>
@@ -131,99 +146,103 @@ export default function Directory({
         </div>
       </header>
 
-      <div className="wrap">
-        {/* 히어로 롤링 */}
-        <div className="hero">
-          {HERO_SLIDES.map((s, i) => (
-            <div className={`slide ${i === slide ? "on" : ""}`} key={i}>
-              <div
-                className="bgimg"
-                style={{
-                  backgroundColor: ["#14352c", "#0e4a3f", "#13302a"][i],
-                }}
-              />
+      {/* 히어로 롤링 (풀블리드) */}
+      <div className="hero">
+        {HERO_SLIDES.map((s, i) => (
+          <div className={`slide ${i === slide ? "on" : ""}`} key={i}>
+            <div
+              className="bgimg"
+              style={{ backgroundColor: ["#14352c", "#0e4a3f", "#13302a"][i] }}
+            />
+            <div className="slide-in">
               <div className="eyebrow">{s.eyebrow}</div>
               <h1>{s.title}</h1>
               <p>{s.desc}</p>
             </div>
-          ))}
-          <div className="hero-rule" />
-          <div className="hero-prog" style={{ width: `${prog}%` }} />
-          <div className="hero-foot">
-            <span>보건복지부 유치업 등록기관</span>
-            <span>
-              {String(slide + 1).padStart(2, "0")} — 0{HERO_SLIDES.length}
-            </span>
+          </div>
+        ))}
+        <div className="hero-rule" />
+        <div className="hero-prog" style={{ width: `${prog}%` }} />
+        <div className="hero-foot">
+          <span>보건복지부 유치업 등록기관</span>
+          <span>
+            {String(slide + 1).padStart(2, "0")} — 0{HERO_SLIDES.length}
+          </span>
+        </div>
+      </div>
+
+      {/* 신뢰 스트립 (풀블리드) */}
+      <div className="trust-strip">
+        <div className="ts-in in">
+          <div className="ts">
+            <b>13년</b>의료 마케팅
+          </div>
+          <div className="ts">
+            <b>50+</b>파트너 병원 경험
+          </div>
+          <div className="ts">
+            <b>4개국</b>전담 컨시어지
           </div>
         </div>
+      </div>
 
-        {/* 신뢰 스트립 */}
-        <div className="trust-strip">
-          <div className="ts-in">
-            <div className="ts">
-              <b>13년</b>의료 마케팅
-            </div>
-            <div className="ts">
-              <b>50+</b>파트너 병원 경험
-            </div>
-            <div className="ts">
-              <b>4개국</b>전담 컨시어지
-            </div>
-          </div>
-        </div>
-
-        {/* 회사 소개 + One Price 서약 */}
-        <section className="story">
-          <div className="sec-k">About Us</div>
-          <div className="story-quote">
-            우리는 병원을 소개하는 회사가 아니라,
-            <br />
-            병원과 <b>함께 일해 온</b> 회사입니다.
-          </div>
-          <p>
-            열정의시간은 13년간 한국 병원들의 마케팅을 만들어 온 회사입니다. 누가
-            어떤 시술을 잘하는지, 어떤 병원에 한국인 환자가 돌아오는지 — 광고가
-            아니라 데이터로 알고 있습니다.
-          </p>
-
-          <div className="pledge">
-            <div className="pledge-k">Our One Price Pledge</div>
-            <div className="pledge-t">
-              국내와 해외 환자의 수가가 다른 병원은
+      {/* 회사 소개 + One Price 서약 */}
+      <section className="story">
+        <div className="in story-grid">
+          <div className="story-lead">
+            <div className="sec-k">About Us</div>
+            <div className="story-quote">
+              우리는 병원을 소개하는 회사가 아니라,
               <br />
-              <b>선택하지 않습니다.</b>
+              병원과 <b>함께 일해 온</b> 회사입니다.
             </div>
-            <div className="pledge-p">
-              외국인이라는 이유로 더 내는 가격은 없습니다.
-              <br />
-              한국인 환자와 동일한 수가를 약속하는 병원만
-              <br />
-              열정의시간의 협력병원이 됩니다.
-            </div>
-          </div>
-
-          <div className="criteria">
-            {CRITERIA.map(([n, t, s]) => (
-              <div className="cri" key={n}>
-                <div className="cri-n">{n}.</div>
-                <div>
-                  <b>{t}</b>
-                  <span>{s}</span>
-                </div>
+            <p>
+              열정의시간은 13년간 한국 병원들의 마케팅을 만들어 온 회사입니다.
+              누가 어떤 시술을 잘하는지, 어떤 병원에 한국인 환자가 돌아오는지 —
+              광고가 아니라 데이터로 알고 있습니다.
+            </p>
+            <div className="pledge">
+              <div className="pledge-k">Our One Price Pledge</div>
+              <div className="pledge-t">
+                국내와 해외 환자의 수가가 다른 병원은
+                <br />
+                <b>선택하지 않습니다.</b>
               </div>
-            ))}
+              <div className="pledge-p">
+                외국인이라는 이유로 더 내는 가격은 없습니다.
+                <br />
+                한국인 환자와 동일한 수가를 약속하는 병원만
+                <br />
+                열정의시간의 협력병원이 됩니다.
+              </div>
+            </div>
           </div>
 
-          <div className="story-sign">
-            <span>
-              <b>한동남</b> · 열정의시간 대표
-            </span>
-            <span>Time of Passion</span>
+          <div className="story-side">
+            <div className="criteria">
+              {CRITERIA.map(([n, t, s]) => (
+                <div className="cri" key={n}>
+                  <div className="cri-n">{n}.</div>
+                  <div>
+                    <b>{t}</b>
+                    <span>{s}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="story-sign">
+              <span>
+                <b>한동남</b> · 열정의시간 대표
+              </span>
+              <span>Time of Passion</span>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* 정식 등록기관 */}
-        <section className="cert-sec">
+      {/* 정식 등록기관 */}
+      <section className="cert-sec">
+        <div className="in">
           <div className="sec-k">Government Licensed</div>
           <div className="sec-title">
             보건복지부가 승인한
@@ -234,7 +253,6 @@ export default function Directory({
             대한민국에서 외국인 환자 유치는 정부에 등록된 기관만 할 수 있습니다.
             열정의시간은 의료해외진출법에 따라 등록을 마친 합법 유치업자입니다.
           </div>
-
           <div className="cert">
             <div className="cert-gov">대한민국 보건복지부</div>
             <div className="cert-title">외국인환자 유치업 등록증</div>
@@ -259,7 +277,6 @@ export default function Directory({
             </div>
             <div className="cert-ph">실제 등록증 스캔 이미지로 교체 예정</div>
           </div>
-
           <div className="cert-legal">
             등록 유치기관을 통한 진료만이 법의 보호를 받습니다. 무등록 브로커를
             통한 유치는 한국에서 <b>불법</b>이며, 문제 발생 시 구제가 어렵습니다.
@@ -282,121 +299,104 @@ export default function Directory({
               <span>모든 협력병원 또한 외국인환자 수용 등록 의료기관입니다</span>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* 병원 찾기 */}
-        <div className="finder">
-          <div className="finder-head">
-            <div className="sec-k">Find Your Clinic</div>
-            <div className="sec-title">엄선 협력병원</div>
-            <div className="sec-sub">
-              다섯 가지 기준을 통과한 병원만 이 페이지에 올라옵니다.
-            </div>
+      {/* 병원 찾기 */}
+      <div className="finder">
+        <div className="finder-head in">
+          <div className="sec-k">Find Your Clinic</div>
+          <div className="sec-title">엄선 협력병원</div>
+          <div className="sec-sub">
+            다섯 가지 기준을 통과한 병원만 이 페이지에 올라옵니다.
           </div>
+        </div>
 
-          <div className="cat-bar">
-            <div className="cat-scroll">
+        <div className="cat-bar">
+          <div className="cat-scroll in">
+            <button
+              className={`ctab ${cat === "all" ? "on" : ""}`}
+              onClick={() => pickCat("all")}
+            >
+              전체<span className="n">{counts.all}</span>
+            </button>
+            {categories.map((c) => (
               <button
-                className={`ctab ${cat === "all" ? "on" : ""}`}
-                onClick={() => pickCat("all")}
+                key={c}
+                className={`ctab ${cat === c ? "on" : ""}`}
+                onClick={() => pickCat(c)}
               >
-                전체<span className="n">{counts.all}</span>
+                {CATEGORY_LABEL[c]}
+                <span className="n">{counts[c] || 0}</span>
               </button>
-              {categories.map((c) => (
+            ))}
+          </div>
+        </div>
+
+        {tagOptions.length > 0 && (
+          <div className="tag-zone in">
+            <div className="tag-scroll">
+              {tagOptions.map((t) => (
                 <button
-                  key={c}
-                  className={`ctab ${cat === c ? "on" : ""}`}
-                  onClick={() => pickCat(c)}
+                  key={t}
+                  className={`ttag ${tag === t ? "on" : ""}`}
+                  onClick={() => setTag(tag === t ? null : t)}
                 >
-                  {CATEGORY_LABEL[c]}
-                  <span className="n">{counts[c] || 0}</span>
+                  {t}
                 </button>
               ))}
             </div>
           </div>
+        )}
 
-          {tagOptions.length > 0 && (
-            <div className="tag-zone">
-              <div className="tag-scroll">
-                {tagOptions.map((t) => (
-                  <button
-                    key={t}
-                    className={`ttag ${tag === t ? "on" : ""}`}
-                    onClick={() => setTag(tag === t ? null : t)}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="result-row">
-            <b>
-              협력병원 <em>{visible.length}</em>
-            </b>
-            {(cat !== "all" || tag) && (
-              <button className="reset" onClick={() => pickCat("all")}>
-                초기화
-              </button>
-            )}
-          </div>
-
-          {visible.length > 0 ? (
-            <div className="cards">
-              {visible.map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`/time/hospital/${lang}/${c.slug}`}
-                  className="card"
-                >
-                  <div
-                    className="card-img"
-                    style={{ backgroundColor: c.tone }}
-                  >
-                    <div className="mono">{c.mono}</div>
-                  </div>
-                  <div className="card-cat">{c.catEn}</div>
-                  <div className="sig">{c.signature}</div>
-                  <div className="clinic-name">{c.name}</div>
-                  <div className="card-tags">
-                    <b>{c.mainTag}</b> · {c.tags.slice(0, 2).join(" · ")}
-                  </div>
-                  <div className="card-foot">{c.cardFoot}</div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="empty">
-              조건에 맞는 병원이 아직 없습니다.
-              <br />
-              컨시어지에 문의하시면 직접 찾아드립니다.
-            </div>
+        <div className="result-row in">
+          <b>
+            협력병원 <em>{visible.length}</em>
+          </b>
+          {(cat !== "all" || tag) && (
+            <button className="reset" onClick={() => pickCat("all")}>
+              초기화
+            </button>
           )}
         </div>
 
-        {/* 후기 */}
-        <section className="reviews-sec">
+        {visible.length > 0 ? (
+          <div className="cards in">
+            {visible.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/time/hospital/${lang}/${c.slug}`}
+                className="card"
+              >
+                <div className="card-img" style={{ backgroundColor: c.tone }}>
+                  <div className="mono">{c.mono}</div>
+                </div>
+                <div className="card-cat">{c.catEn}</div>
+                <div className="sig">{c.signature}</div>
+                <div className="clinic-name">{c.name}</div>
+                <div className="card-tags">
+                  <b>{c.mainTag}</b> · {c.tags.slice(0, 2).join(" · ")}
+                </div>
+                <div className="card-foot">{c.cardFoot}</div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="empty in">
+            조건에 맞는 병원이 아직 없습니다.
+            <br />
+            컨시어지에 문의하시면 직접 찾아드립니다.
+          </div>
+        )}
+      </div>
+
+      {/* 후기 */}
+      <section className="reviews-sec">
+        <div className="in">
           <div className="sec-k">Patient Stories</div>
           <div className="sec-title">다녀간 분들의 이야기</div>
           <div className="rv-scroll">
-            {[
-              [
-                "일본에서 LINE으로 상담하고 도착하니 통역 매니저가 병원까지 함께해줬어요. 한국 친구가 다니는 병원이라 더 안심됐습니다.",
-                "Yuki · 도쿄 · 피부과",
-                "2026.03",
-              ],
-              [
-                "여행 일정 안에 진료가 끝났어요. 가격도 안내받은 그대로, 추가 비용이 전혀 없었습니다.",
-                "Chia-ling · 타이베이",
-                "2026.02",
-              ],
-              [
-                "위챗으로 모든 일정이 정리됐고, 진료 당일 통역이 함께했습니다. 귀국 후 케어까지 받았어요.",
-                "Wang · 상하이",
-                "2026.04",
-              ],
-            ].map(([q, who, date], i) => (
+            {REVIEWS.map(([q, who, date], i) => (
               <div className="rv" key={i}>
                 <p className="rv-q">{q}</p>
                 <div className="rv-meta">
@@ -406,10 +406,12 @@ export default function Directory({
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* 프로세스 */}
-        <section>
+      {/* 프로세스 */}
+      <section className="steps-sec">
+        <div className="in">
           <div className="sec-k">How It Works</div>
           <div className="sec-title">컨시어지 이용 방법</div>
           <div className="steps">
@@ -427,9 +429,11 @@ export default function Directory({
             컨시어지 비용은 <b>무료</b>입니다. 병원에 직접 예약해도 더 저렴해지지
             않으며, 통역 동행과 사후관리는 컨시어지 예약 고객에게만 제공됩니다.
           </div>
-        </section>
+        </div>
+      </section>
 
-        <div className="foot">
+      <div className="foot">
+        <div className="in">
           열정의시간 · 보건복지부 외국인환자 유치업 등록기관
           <br />
           본 페이지의 모든 예약과 상담은 열정의시간 컨시어지를 통해 진행됩니다.
@@ -437,7 +441,7 @@ export default function Directory({
       </div>
 
       <div className="cta-bar">
-        <div className="cta-in">
+        <div className="cta-in in">
           <div className="cta-note">
             컨시어지 비용 <b>무료</b> · 한국인과 동일 수가 · 보건복지부 등록기관
           </div>
