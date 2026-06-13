@@ -30,8 +30,8 @@ export default function DiagnosticsSection() {
             DIAGNOSTIC REPORT
             <span className="w-12 h-px bg-[#cc0000]/50"></span>
           </p>
-          <h2 className="font-black text-4xl md:text-5xl lg:text-6xl text-white mb-4">병원 마케팅의 핵심 문제</h2>
-          <p className="text-white/50 text-base md:text-lg">세 가지 근본적인 문제를 진단하고 해결합니다</p>
+          <h2 className="font-black text-4xl md:text-5xl lg:text-6xl text-white mb-4">원장님, 혹시 이런 고민 있으신가요?</h2>
+          <p className="text-white/50 text-base md:text-lg">병원 마케팅에서 가장 자주 막히는 세 가지를 짚어드립니다</p>
         </div>
 
         {/* 카드 그리드 */}
