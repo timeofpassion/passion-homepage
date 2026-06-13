@@ -115,7 +115,7 @@ const jsonLd = {
         "SNS 마케팅",
         "샤오홍슈 마케팅",
       ],
-      sameAs: ["https://pf.kakao.com/_timfofpassion"],
+      sameAs: ["https://pf.kakao.com/_RgYcxj"],
     },
     {
       "@type": "ProfessionalService",

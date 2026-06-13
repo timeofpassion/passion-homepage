@@ -91,18 +91,21 @@ export default function CTASection() {
         </div>
 
         <div style={{ textAlign: "center", position: "relative" }}>
-          {/* KakaoTalk */}
-          <div style={{ marginTop: 28, display: "inline-flex", alignItems: "center", gap: 10, padding: "8px 20px", background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.06)" }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FEE500">
+          {/* KakaoTalk — 무료 진단 받기 버튼 */}
+          <a
+            href="https://pf.kakao.com/_RgYcxj/chat"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ marginTop: 28, display: "inline-flex", alignItems: "center", gap: 12, padding: "16px 34px", background: "#FEE500", color: "#3c1e1e", fontWeight: 800, fontSize: "1.05rem", textDecoration: "none", boxShadow: "0 16px 40px -12px rgba(254,229,0,0.45)" }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#3c1e1e">
               <path d="M12 3c-5.523 0-10 3.538-10 7.9 0 2.85 1.848 5.347 4.636 6.74l-1.185 4.316c-.056.205.18.366.353.243l5.06-3.327c.373.048.755.074 1.146.074 5.523 0 10-3.538 10-7.9s-4.477-7.9-10-7.9z" />
             </svg>
-            <span className="font-mono-sys" style={{ fontSize: 12, color: "rgba(255,255,255,0.35)" }}>
-              카카오톡 채널:
-            </span>
-            <span className="font-mono-sys" style={{ fontSize: 13, color: "#fff", fontWeight: 500, letterSpacing: "0.1em" }}>
-              @timfofpassion
-            </span>
-          </div>
+            카카오톡으로 무료 진단 받기
+          </a>
+          <p className="font-mono-sys" style={{ marginTop: 16, fontSize: 12, color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em" }}>
+            열정의시간 채널 · 평일 10:00 ~ 18:00
+          </p>
         </div>
       </div>
     </section>

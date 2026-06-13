@@ -158,7 +158,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
         <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "2rem", fontSize: "1rem" }}>
           무료 전략 상담으로 귀사의 마케팅 전략을 함께 설계해보세요.
         </p>
-        <a href="https://kakao.me/@timfofpassion" target="_blank" rel="noopener noreferrer" style={{
+        <a href="https://pf.kakao.com/_RgYcxj/chat" target="_blank" rel="noopener noreferrer" style={{
           display: "inline-block",
           padding: "0.8rem 2rem",
           background: "#FFD700",
