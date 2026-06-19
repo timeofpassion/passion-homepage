@@ -29,12 +29,21 @@ export const metadata: Metadata = {
     siteName: "PASSION GROUP",
     locale: "ko_KR",
     type: "website",
+    images: [
+      {
+        url: "/og-passion.jpg",
+        width: 1200,
+        height: 630,
+        alt: "PASSION GROUP — 열정의시간 · 열정의사람들 · 열정의공간",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "PASSION GROUP",
     description:
       "열정으로 시간·사람·공간을 잇습니다. 열정의시간 · 열정의사람들 · 열정의공간.",
+    images: ["/og-passion.jpg"],
   },
   robots: {
     index: true,

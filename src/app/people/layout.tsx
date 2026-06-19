@@ -18,6 +18,21 @@ export const metadata: Metadata = {
     siteName: "열정의사람들",
     locale: "ko_KR",
     type: "website",
+    images: [
+      {
+        url: "/people/og-people.jpg",
+        width: 1200,
+        height: 630,
+        alt: "열정의사람들 — 글로벌 인플루언서 마케팅",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "열정의사람들 | 글로벌 인플루언서 마케팅",
+    description:
+      "일본·중국·대만, 현지 인플루언서로 진출하다. 동아시아 시장 진출 인플루언서 마케팅 전문.",
+    images: ["/people/og-people.jpg"],
   },
 };
 
