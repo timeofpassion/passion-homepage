@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Clinic } from "../_data/clinics";
 import { CATEGORY_LABEL } from "../_data/clinics";
 
@@ -118,7 +119,18 @@ export default function ClinicDetail({
                 background: `linear-gradient(155deg, #e7d6c0, #caa06b 42%, ${clinic.tone} 125%)`,
               }}
             >
-              <div className="cap">실제 시설 · 분위기 이미지 영역</div>
+              {clinic.photos?.hero ? (
+                <Image
+                  src={clinic.photos.hero}
+                  alt={`${clinic.name} 내부`}
+                  fill
+                  sizes="(max-width: 900px) 100vw, 45vw"
+                  style={{ objectFit: "cover" }}
+                  priority
+                />
+              ) : (
+                <div className="cap">실제 시설 · 분위기 이미지 영역</div>
+              )}
             </div>
             <div className="fcard1">
               <div className="k">Since · {enArea}</div>
@@ -186,6 +198,15 @@ export default function ClinicDetail({
       <section className="sec doctor">
         <div className="wrap">
           <div className="portrait r d1">
+            {clinic.photos?.doctor && (
+              <Image
+                src={clinic.photos.doctor}
+                alt={clinic.doctor.name}
+                fill
+                sizes="(max-width: 900px) 100vw, 35vw"
+                style={{ objectFit: "cover", objectPosition: "top center" }}
+              />
+            )}
             <div className="pcap">Doctor</div>
             <div className="pc">
               <div className="n">{clinic.doctor.name}</div>
@@ -200,9 +221,11 @@ export default function ClinicDetail({
                 <i key={t}>{t}</i>
               ))}
             </div>
-            <p className="note-i">
-              ※ 원장 사진은 병원이 제공한 실제 이미지로 교체됩니다.
-            </p>
+            {!clinic.photos?.doctor && (
+              <p className="note-i">
+                ※ 원장 사진은 병원이 제공한 실제 이미지로 교체됩니다.
+              </p>
+            )}
           </div>
         </div>
       </section>
@@ -298,15 +321,44 @@ export default function ClinicDetail({
             머무는 동안, 편안하도록
           </h2>
           <div className="gal">
-            <div className="g g1 big r d1">리셉션 · 라운지</div>
-            <div className="g g2 r d2">상담실</div>
-            <div className="g g3 r d3">시술실</div>
-            <div className="g g4 r d2">회복실</div>
-            <div className="g g5 r d3">파우더룸</div>
+            {clinic.photos?.space?.length ? (
+              clinic.photos.space.map((s, i) => (
+                <div
+                  className={`g r d${(i % 3) + 1}${i === 0 ? " big" : ""}`}
+                  key={i}
+                >
+                  <Image
+                    src={s.src}
+                    alt={`${clinic.name} ${s.label}`}
+                    fill
+                    sizes={i === 0 ? "(max-width: 900px) 100vw, 70vw" : "(max-width: 900px) 50vw, 24vw"}
+                    style={{ objectFit: "cover" }}
+                  />
+                  <span className="lab">{s.label}</span>
+                </div>
+              ))
+            ) : (
+              <>
+                <div className="g g1 big r d1">
+                  <span className="lab">리셉션 · 라운지</span>
+                </div>
+                <div className="g g2 r d2">
+                  <span className="lab">상담실</span>
+                </div>
+                <div className="g g3 r d3">
+                  <span className="lab">시술실</span>
+                </div>
+                <div className="g g4 r d2">
+                  <span className="lab">회복실</span>
+                </div>
+              </>
+            )}
           </div>
-          <p className="note-i" style={{ marginTop: 18 }}>
-            ※ 실제 병원 시설 사진으로 교체됩니다.
-          </p>
+          {!clinic.photos?.space?.length && (
+            <p className="note-i" style={{ marginTop: 18 }}>
+              ※ 실제 병원 시설 사진으로 교체됩니다.
+            </p>
+          )}
         </div>
       </section>
 

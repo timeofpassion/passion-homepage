@@ -48,6 +48,13 @@ export type Clinic = {
     revisitRate?: number;
     reviews?: { text: string; meta: string }[];
   };
+
+  // 실제 병원 사진(있으면 렌더, 없으면 톤 그라데이션 플레이스홀더)
+  photos?: {
+    hero?: string;
+    doctor?: string;
+    space?: { src: string; label: string }[];
+  };
 };
 
 export const CATEGORY_LABEL: Record<ClinicCategory, string> = {
@@ -88,6 +95,16 @@ export const CLINICS: Clinic[] = [
     mono: "M",
     tone: "#0E4A3F",
     badges: { koreanPatients: true, foreignRegistered: true, interpreter: true },
+    photos: {
+      hero: "/time/hospital/mellow/hero.jpg",
+      doctor: "/time/hospital/mellow/doctor.png",
+      space: [
+        { src: "/time/hospital/mellow/space-1.jpg", label: "리셉션 · 라운지" },
+        { src: "/time/hospital/mellow/space-2.jpg", label: "리셉션" },
+        { src: "/time/hospital/mellow/space-3.jpg", label: "대기 라운지" },
+        { src: "/time/hospital/mellow/space-4.jpg", label: "피부 진단" },
+      ],
+    },
     doctor: {
       name: "고영욱 대표원장",
       title: "피부과 전문의",
