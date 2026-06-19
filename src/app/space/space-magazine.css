@@ -74,7 +74,9 @@ body:has(.psm-root) {
 /* ---------- 영상 듀오톤 트리트먼트 ---------- */
 /* 무처리 스톡 영상을 잉크/버밀리언 톤으로 통일해 '아트디렉션된' 느낌 부여 */
 .psm-treat video,
-.psm-net__cell video {
+.psm-treat img,
+.psm-net__cell video,
+.psm-net__cell img {
   filter: grayscale(100%) contrast(1.12) brightness(0.82) sepia(22%);
 }
 .psm-treat::after,
@@ -674,6 +676,7 @@ body:has(.psm-root) {
   border-right: none;
 }
 .psm-net__cell video,
+.psm-net__cell img,
 .psm-net__cell .ph {
   position: absolute;
   inset: 0;
@@ -684,6 +687,7 @@ body:has(.psm-root) {
   transition: transform 1.4s ease;
 }
 .psm-net__cell:hover video,
+.psm-net__cell:hover img,
 .psm-net__cell:hover .ph {
   transform: scale(1.06);
 }

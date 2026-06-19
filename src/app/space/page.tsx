@@ -2,7 +2,6 @@ import Link from "next/link";
 import "./space-magazine.css";
 import MagNav from "./_components/MagNav";
 import Reveal from "./_components/Reveal";
-import GalleryBento from "./_components/GalleryBento";
 import { MEDIA, CONTACT } from "./_data/media";
 import { PLACES } from "./_data/places";
 
@@ -56,21 +55,6 @@ const GOV = [
   },
 ];
 
-const GALLERY = [
-  { src: "shinan-aerial.jpg", cap: "천 개의 섬", area: "B1", size: "big" },
-  { src: "shinan-kayak.jpg", cap: "바다 위에서", area: "B2", size: "big" },
-  { src: "shinan-salt.jpg", cap: "천일염전", area: "W1", size: "" },
-  { src: "shinan-purple.jpg", cap: "퍼플섬", area: "n1", size: "" },
-  { src: "shinan-lighthouse.jpg", cap: "등대", area: "n2", size: "" },
-  { src: "shinan-campfire.jpg", cap: "밤의 모닥불", area: "B3", size: "big" },
-  { src: "shinan-mudflat.jpg", cap: "갯벌 노을", area: "W2", size: "" },
-  { src: "shinan-walk.jpg", cap: "함께 걷는 해변", area: "W3", size: "" },
-  { src: "shinan-beach.jpg", cap: "백사장", area: "n3", size: "" },
-  { src: "shinan-cycle.jpg", cap: "해안 라이딩", area: "n4", size: "" },
-  { src: "shinan-camellia.jpg", cap: "동백길", area: "n5", size: "" },
-  { src: "shinan-tea.jpg", cap: "노을 티타임", area: "n6", size: "" },
-];
-
 const WHO = [
   { nm: "마케터 · CMO", d: "지역을 알릴 전략과 브랜딩", gv: "Strategy" },
   { nm: "영상 PD · 크리에이터", d: "지역을 담는 콘텐츠", gv: "Content" },
@@ -94,29 +78,20 @@ const jsonLd = {
   alternateName: "PASSIONSPACE",
   url: "https://www.timeofpassion.com/space",
   description:
-    "사라져가는 지역에 영향력 있는 사람들을 모아 깊이 쉬게 하고, 그들이 남긴 재능과 영감으로 지역을 되살리는 지역재생 리트릿 운동. 지자체·공공기관과 함께 거점을 늘려갑니다. 신안 1호 운영 중.",
+    "사라져가는 지역에 영향력 있는 사람들을 모아 깊이 쉬게 하고, 그들이 남긴 재능과 영감으로 지역을 되살리는 지역재생 리트릿 운동. 지자체·공공기관과 함께 사라져가는 지역마다 거점을 넓혀갑니다.",
   parentOrganization: {
     "@type": "Organization",
     name: "PASSION GROUP",
     url: "https://www.timeofpassion.com",
   },
-  location: {
-    "@type": "Place",
-    name: "신안 1호",
-    address: {
-      "@type": "PostalAddress",
-      addressRegion: "전라남도",
-      addressLocality: "신안군",
-      addressCountry: "KR",
-    },
-  },
+  areaServed: { "@type": "Country", name: "대한민국" },
 };
 
 // SEO: 자주 묻는 질문 — 지역재생·지자체 협력·리트릿 키워드를 자연스럽게 담는다.
 const FAQ = [
   {
     q: "열정의공간(PASSION SPACE)은 무엇인가요?",
-    a: "열정의공간은 사라져가는 지역에 영향력 있는 사람들을 모아 깊이 쉬게 하고, 그들이 남긴 재능과 영감으로 지역을 되살리는 지역재생 리트릿 운동입니다. 현재 전남 신안에서 1호 거점을 운영하며, 다른 지역으로 거점을 넓혀가고 있습니다.",
+    a: "열정의공간은 사라져가는 지역에 영향력 있는 사람들을 모아 깊이 쉬게 하고, 그들이 남긴 재능과 영감으로 지역을 되살리는 지역재생 리트릿 운동입니다. 한 곳에 머무는 시설이 아니라, 사라져가는 지역마다 거점을 넓혀가는 운동입니다.",
   },
   {
     q: "기존 관광·숙박 사업과 무엇이 다른가요?",
@@ -135,8 +110,8 @@ const FAQ = [
     a: "네. 깊이 쉬면서 자신의 일과 재능을 지역에 연결하는 워케이션형 리트릿으로 참여할 수 있습니다. 일정·기간은 거점 사정에 따라 안내됩니다.",
   },
   {
-    q: "첫 거점 신안은 어떤 곳인가요?",
-    a: "신안은 1,004개의 섬으로 이루어진 다도해로, 퍼플섬·증도 슬로시티·유네스코 세계자연유산 갯벌 등 천혜의 풍경을 가진 곳입니다. 자세한 내용은 신안 거점 페이지에서 확인할 수 있습니다.",
+    q: "거점은 어디에 있나요?",
+    a: "열정의공간은 사라져가는 지역마다 거점을 넓혀가는 운동입니다. 현재 첫 거점으로 순천 어왕분교(방치된 폐교)를 청년 크리에이터 베이스캠프로 되살리는 민관 협력 사업을 추진하고 있습니다. 진행 상황은 거점 네트워크에서 확인할 수 있습니다.",
   },
 ];
 
@@ -230,7 +205,7 @@ export default function SpaceBrandHome() {
           <div className="psm-hero__bottom">
             <p className="psm-hero__lead">
               사라져가는 지역에 영향력 있는 사람들을 모읍니다. 쉬러 왔다가, 그
-              지역의 내일을 만들고 갑니다. 첫 시작은 신안입니다.
+              지역의 내일을 만들고 갑니다. 사라져가는 지역마다, 다시 사람을 모읍니다.
             </p>
             <a href="#how" className="psm-hero__enter">
               <span className="dot" />
@@ -406,6 +381,11 @@ export default function SpaceBrandHome() {
                       />
                       <div className="duo" />
                     </>
+                  ) : p.img ? (
+                    <>
+                      <img src={p.img} alt={p.name} loading="lazy" />
+                      <div className="duo" />
+                    </>
                   ) : (
                     <>
                       <div className="ph">{p.placeholder}</div>
@@ -445,24 +425,6 @@ export default function SpaceBrandHome() {
             );
           })}
         </Reveal>
-      </section>
-
-      {/* 첫 거점 신안 미리보기 — 갤러리(축소·재배치) + 상세 링크 */}
-      <section className="psm-gallery" id="shinan-preview" aria-label="첫 거점 신안 미리보기">
-        <Reveal className="psm-gallery__head">
-          <div className="psm-gallery__kick">No.01 · 첫 거점</div>
-          <h2 className="psm-gallery__h2">
-            첫 시작은, <span className="hl">신안입니다</span>
-          </h2>
-          <p className="psm-gallery__sub">
-            천 개의 섬과 노을 위에서 모델을 처음 증명하는 거점. 신안 이야기는 따로
-            담았습니다.
-          </p>
-          <Link href="/space/shinan" className="psm-gallery__link">
-            신안 거점 자세히 보기 <span>→</span>
-          </Link>
-        </Reveal>
-        <GalleryBento items={GALLERY} />
       </section>
 
       {/* 05 WHO / PEOPLE */}
@@ -571,7 +533,7 @@ export default function SpaceBrandHome() {
           </div>
           <div className="psm-footer__col">
             <h5>Network</h5>
-            <Link href="/space/shinan">No.01 신안</Link>
+            <Link href="/space/eowang">No.01 순천 어왕분교</Link>
             <a href={CONTACT.kakao} target="_blank" rel="noopener noreferrer">
               거점 제안
             </a>

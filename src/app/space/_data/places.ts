@@ -1,4 +1,4 @@
-import { MEDIA, CONTACT } from "./media";
+import { CONTACT } from "./media";
 
 /**
  * 열정의공간 거점(Network) 데이터.
@@ -23,21 +23,22 @@ export type Place = {
   light?: boolean; // 종이 톤 셀(당신의 지역)
   video?: string;
   poster?: string;
-  placeholder?: string; // 영상 없을 때 표시 텍스트
+  img?: string; // 영상 없이 이미지로 채울 때
+  placeholder?: string; // 영상·이미지 없을 때 표시 텍스트
 };
 
 export const PLACES: Place[] = [
   {
-    slug: "shinan",
+    slug: "eowang",
     no: "No.01",
-    status: "open",
-    statusLabel: "No.01 · Open",
-    name: "신안",
-    desc: "천 개의 섬과 노을, 예술의 바다",
-    href: "/space/shinan",
+    status: "soon",
+    statusLabel: "No.01 · 추진 중",
+    name: "순천 어왕분교",
+    desc: "방치된 폐교를 청년 크리에이터 베이스캠프로",
+    href: "/space/eowang",
     arrow: "자세히 보기 →",
-    video: MEDIA.feature1.video,
-    poster: MEDIA.feature1.poster,
+    feat: true,
+    img: "/space/eowang/garden-01.jpg",
   },
   {
     slug: "your-region",

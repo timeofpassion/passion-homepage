@@ -1,26 +1,25 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { CONTACT } from "../_data/media";
 
 const MENU = [
-  { label: "Manifesto", href: "#manifesto" },
-  { label: "Model", href: "#how" },
-  { label: "Network", href: "#network" },
-  { label: "People", href: "#who" },
+  { label: "왜 어왕분교", href: "#why" },
+  { label: "순천 풍경", href: "#landscape" },
+  { label: "공간 계획", href: "#space" },
+  { label: "추진 일정", href: "#plan" },
 ];
 
-const INVITE = CONTACT.kakao;
-
-export default function MagNav() {
+export default function EowangNav() {
   const [open, setOpen] = useState(false);
 
   return (
     <nav className="psm-nav">
       <div className="psm-nav__nl">
-        <a href="#top" className="psm-nav__logo">
+        <Link href="/space" className="psm-nav__logo">
           PASSION<span className="o">SPACE</span>
-        </a>
+        </Link>
       </div>
 
       <div className="psm-nav__menu">
@@ -32,14 +31,14 @@ export default function MagNav() {
       </div>
 
       <div className="psm-nav__right">
-        <span className="psm-nav__iss">ISSUE 01 — 순천</span>
+        <span className="psm-nav__iss">No.01 — 순천</span>
         <a
-          href={INVITE}
+          href={CONTACT.kakao}
           target="_blank"
           rel="noopener noreferrer"
           className="psm-nav__invite"
         >
-          초대 신청
+          협력 문의
         </a>
         <button
           type="button"
@@ -60,14 +59,17 @@ export default function MagNav() {
             {m.label}
           </a>
         ))}
+        <Link href="/space" onClick={() => setOpen(false)}>
+          ← 열정의공간 (운동)
+        </Link>
         <a
-          href={INVITE}
+          href={CONTACT.kakao}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => setOpen(false)}
           style={{ color: "var(--spot)" }}
         >
-          초대 신청
+          협력 문의
         </a>
       </div>
     </nav>
