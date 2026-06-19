@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import "../../medical-tourism.css";
+import "../../clinic-detail.css";
 import { activeClinics, getClinic } from "../../_data/clinics";
 import ClinicDetail from "../../_components/ClinicDetail";
 
