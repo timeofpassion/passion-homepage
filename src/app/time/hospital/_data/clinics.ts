@@ -53,6 +53,7 @@ export type Clinic = {
   photos?: {
     hero?: string;
     doctor?: string;
+    doctorPos?: string; // 원장 사진 object-position (기본 "top center")
     space?: { src: string; label: string }[];
   };
 };
@@ -154,6 +155,17 @@ export const CLINICS: Clinic[] = [
     mono: "O",
     tone: "#13614F",
     badges: { koreanPatients: true, foreignRegistered: true, interpreter: true },
+    photos: {
+      hero: "/time/hospital/olara/hero.jpg",
+      doctor: "/time/hospital/olara/doctor.webp",
+      doctorPos: "30% center",
+      space: [
+        { src: "/time/hospital/olara/space-1.jpg", label: "파우더룸" },
+        { src: "/time/hospital/olara/space-2.jpg", label: "상담실" },
+        { src: "/time/hospital/olara/space-3.jpg", label: "내부 전경" },
+        { src: "/time/hospital/olara/space-4.jpg", label: "진료 공간" },
+      ],
+    },
     doctor: {
       name: "이지영 대표원장",
       title: "원장 직접 1:1 진료",
@@ -199,6 +211,10 @@ export const CLINICS: Clinic[] = [
     mono: "I",
     tone: "#1C3640",
     badges: { koreanPatients: true, foreignRegistered: true, interpreter: true },
+    photos: {
+      doctor: "/time/hospital/inique/doctor.png",
+      doctorPos: "center",
+    },
     doctor: {
       name: "양해원 대표원장",
       title: "성형외과 전문의",

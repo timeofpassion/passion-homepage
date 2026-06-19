@@ -22,9 +22,8 @@ export default function ClinicDetail({
   const sigLines = clinic.signature.split("\n");
   const brand = clinic.nameEn?.split(" ")[0] ?? clinic.name;
   const enArea = clinic.catEn.split("·").pop()?.trim() ?? "";
-  const areaShort =
-    clinic.location.areaHint.split("·").pop()?.trim() ??
-    clinic.location.areaHint;
+  // areaHint "서울 강남 · 신사역 인근" → "신사역 인근" (첫 도시 접두만 제거, 이후 세부는 보존)
+  const areaShort = clinic.location.areaHint.replace(/^[^·]+·\s*/, "").trim();
   const reviews = clinic.localTrust?.reviews ?? [];
 
   return (
@@ -204,7 +203,10 @@ export default function ClinicDetail({
                 alt={clinic.doctor.name}
                 fill
                 sizes="(max-width: 900px) 100vw, 35vw"
-                style={{ objectFit: "cover", objectPosition: "top center" }}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: clinic.photos?.doctorPos ?? "top center",
+                }}
               />
             )}
             <div className="pcap">Doctor</div>
