@@ -28,6 +28,9 @@ export default function Footer() {
               <Link href="/time#services">해외환자 유치 풀 프로세스</Link>
             </span>
             <span style={{ display: "block" }}>
+              <Link href="/time/blog">마케팅 인사이트</Link>
+            </span>
+            <span style={{ display: "block" }}>
               <Link href="/time/quote">견적 의뢰</Link>
             </span>
             <span style={{ display: "block" }}>
