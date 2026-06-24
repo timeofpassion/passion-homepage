@@ -204,10 +204,11 @@ export default async function PeopleHome() {
           </p>
 
           <div className="ppl-prepnote">
-            <span className="ppl-prepnote__badge">정리 중</span>
+            <span className="ppl-prepnote__badge">안내</span>
             <p>
-              현재 인플루언서 목록을 정리·업데이트하고 있습니다. 일부만 우선
-              공개되어 있으며, 순차적으로 더 많은 크리에이터가 추가됩니다.
+              아래 인플루언서는 실제 열정의사람들에 등록되어 있는 인플루언서입니다.
+              초상권 보호와 직접 컨택 방지를 위해 프로필을 자동 AI 이미지로 대체했으며,
+              인플루언서 관련 문의는 회사 카카오톡 채널로 주시기 바랍니다.
             </p>
           </div>
 
