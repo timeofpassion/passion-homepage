@@ -2,65 +2,108 @@
 
 import { useState } from "react";
 import {
+  portfolioRegions,
   portfolioCategories,
-  itemsByCategory,
-  categoryCount,
+  itemsByRegionAndCategory,
+  regionCount,
+  categoryCountInRegion,
+  type PortfolioRegion,
   type PortfolioCategory,
   type PortfolioItem,
 } from "@/data/portfolio";
 import PortfolioCard from "@/components/portfolio/PortfolioCard";
 import Lightbox from "@/components/portfolio/Lightbox";
 
-// 포트폴리오 창 본문: 카테고리 탭 + 카드 그리드 + 라이트박스
+// 포트폴리오 창 본문: 1차 권역 탭 + 2차 작업유형 탭 + 카드 그리드 + 라이트박스
 export default function PortfolioExplorer() {
-  const [active, setActive] = useState<PortfolioCategory>("homepage");
+  const [region, setRegion] = useState<PortfolioRegion>("own");
+  const [category, setCategory] = useState<PortfolioCategory>("homepage");
   const [lightbox, setLightbox] = useState<PortfolioItem | null>(null);
-  const items = itemsByCategory(active);
+  const items = itemsByRegionAndCategory(region, category);
 
   return (
     <section style={{ position: "relative", zIndex: 20, padding: "2.5rem 0 7rem" }}>
       <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>
-        {/* 카테고리 탭 */}
+        {/* 1차 탭: 마케팅 권역 */}
         <div
           style={{
             display: "flex",
             flexWrap: "wrap",
             gap: 10,
             justifyContent: "center",
+            marginBottom: "1.2rem",
+          }}
+        >
+          {portfolioRegions.map((r) => {
+            const count = regionCount(r.key);
+            const isActive = r.key === region;
+            return (
+              <button
+                key={r.key}
+                type="button"
+                onClick={() => setRegion(r.key)}
+                style={{
+                  padding: "11px 22px",
+                  borderRadius: 999,
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  background: isActive ? "#cc0000" : "rgba(255,255,255,0.04)",
+                  color: isActive ? "#fff" : "rgba(255,255,255,0.7)",
+                  border: `1px solid ${isActive ? "#cc0000" : "rgba(255,255,255,0.12)"}`,
+                  transition: "all 0.2s",
+                }}
+              >
+                {r.label}
+                <span style={{ marginLeft: 7, fontSize: "0.75rem", opacity: 0.7 }}>{count}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 2차 탭: 작업 유형 */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 8,
+            justifyContent: "center",
             marginBottom: "3rem",
           }}
         >
           {portfolioCategories.map((cat) => {
-            const count = categoryCount(cat.key);
-            const isActive = cat.key === active;
+            const count = categoryCountInRegion(region, cat.key);
+            const isActive = cat.key === category;
             const disabled = !cat.ready;
             return (
               <button
                 key={cat.key}
                 type="button"
                 disabled={disabled}
-                onClick={() => !disabled && setActive(cat.key)}
+                onClick={() => !disabled && setCategory(cat.key)}
                 style={{
-                  padding: "10px 20px",
+                  padding: "7px 16px",
                   borderRadius: 999,
-                  fontSize: "0.9rem",
-                  fontWeight: 700,
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
                   cursor: disabled ? "not-allowed" : "pointer",
-                  background: isActive ? "#cc0000" : "rgba(255,255,255,0.04)",
+                  background: "transparent",
                   color: disabled
-                    ? "rgba(255,255,255,0.3)"
+                    ? "rgba(255,255,255,0.28)"
                     : isActive
                       ? "#fff"
-                      : "rgba(255,255,255,0.7)",
-                  border: `1px solid ${isActive ? "#cc0000" : "rgba(255,255,255,0.12)"}`,
+                      : "rgba(255,255,255,0.55)",
+                  border: `1px solid ${
+                    isActive ? "rgba(204,0,0,0.6)" : "rgba(255,255,255,0.08)"
+                  }`,
                   transition: "all 0.2s",
                 }}
               >
                 {cat.label}
                 {cat.ready ? (
-                  <span style={{ marginLeft: 7, fontSize: "0.75rem", opacity: 0.7 }}>{count}</span>
+                  <span style={{ marginLeft: 6, fontSize: "0.72rem", opacity: 0.7 }}>{count}</span>
                 ) : (
-                  <span style={{ marginLeft: 7, fontSize: "0.7rem", opacity: 0.7 }}>준비중</span>
+                  <span style={{ marginLeft: 6, fontSize: "0.68rem", opacity: 0.7 }}>준비중</span>
                 )}
               </button>
             );
