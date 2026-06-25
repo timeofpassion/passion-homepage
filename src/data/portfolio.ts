@@ -374,27 +374,7 @@ export const portfolioItems: PortfolioItem[] = [
     accent: "#7c3aed",
   },
 
-  // ── 대만마케팅 · SNS·콘텐츠 (인플루언서) ─────────────────────
-  {
-    id: "sns-tw-derma-1",
-    regions: ["taiwan"],
-    category: "sns",
-    title: "대만 피부과 인스타 릴스",
-    summary: "중화권(대만·홍콩) 인플루언서 피부과 릴스",
-    liveUrl: "https://www.instagram.com/reel/DAOGh3Wyubr/",
-    tags: ["인스타그램", "인플루언서", "피부과"],
-    accent: "#c13584",
-  },
-  {
-    id: "sns-tw-derma-2",
-    regions: ["taiwan"],
-    category: "sns",
-    title: "대만 피부과 인스타 게시물",
-    summary: "중화권(대만·홍콩) 인플루언서 피부과 게시물",
-    liveUrl: "https://www.instagram.com/p/DPq9nAoE8il/",
-    tags: ["인스타그램", "인플루언서", "피부과"],
-    accent: "#c13584",
-  },
+  // 대만 SNS·콘텐츠: 지정 인스타 2건이 삭제/비공개라 제거(유효 링크 확보 시 재추가).
 ];
 
 // ── 헬퍼 ──────────────────────────────────────────────────────────
