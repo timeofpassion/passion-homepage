@@ -72,11 +72,32 @@ export default function HeroSection() {
         }}
       />
       <a
+        href="https://pf.kakao.com/_RgYcxj/chat"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          marginTop: "2.5rem",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 10,
+          padding: "16px 34px",
+          background: "#cc0000",
+          color: "#fff",
+          fontSize: "1.05rem",
+          fontWeight: 800,
+          textDecoration: "none",
+          boxShadow: "0 16px 40px -12px rgba(204,0,0,0.6)",
+        }}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#FEE500"><path d="M12 3c-5.523 0-10 3.538-10 7.9 0 2.85 1.848 5.347 4.636 6.74l-1.185 4.316c-.056.205.18.366.353.243l5.06-3.327c.373.048.755.074 1.146.074 5.523 0 10-3.538 10-7.9s-4.477-7.9-10-7.9z" /></svg>
+        무료 해외마케팅 진단 받기
+      </a>
+      <a
         href="https://docs.google.com/presentation/d/17fAOTFOwVV91fOpLUcWycyWzV6GFCpvfjwQGYgNYiZY/edit?slide=id.p#slide=id.p"
         target="_blank"
         rel="noopener noreferrer"
         style={{
-          marginTop: "2rem",
+          marginTop: "1rem",
           display: "inline-flex",
           alignItems: "center",
           gap: 8,

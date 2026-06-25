@@ -39,8 +39,10 @@ export async function generateMetadata({
   };
 }
 import HeroSection from "@/components/HeroSection";
+import DiagnosticsSection from "@/components/DiagnosticsSection";
 import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
+import OverseasChannelsSection from "@/components/OverseasChannelsSection";
 import ServicesSection from "@/components/ServicesSection";
 import ServiceTeamsSection from "@/components/ServiceTeamsSection";
 import PortfolioSection from "@/components/PortfolioSection";
@@ -61,8 +63,10 @@ export default function Home() {
       <main className="relative z-10">
         <Header />
         <HeroSection />
+        <DiagnosticsSection />
         <ClientsSection medicalOnly />
         <ArchitectureSection />
+        <OverseasChannelsSection />
         <ServicesSection />
         <ServiceTeamsSection />
         <PortfolioSection />
@@ -106,7 +110,7 @@ export default function Home() {
         <p>
           무료 전략 상담을 통해 현재 마케팅 비용 누수 진단, 채널 우선순위 분석,
           해외 진출 최적 루트 설계, 월 예산별 현실적 성과 예측을 받아보세요.
-          카카오톡 채널: @timfofpassion
+          카카오톡 채널: 열정의시간 (무료 전략 상담)
         </p>
       </div>
     </>
