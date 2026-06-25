@@ -3,21 +3,21 @@
 // 작품을 계속 쌓을 때 이 배열에 항목만 추가하면 양쪽에 자동 반영된다.
 //
 // ── 분류 체계 ────────────────────────────────────────────────────
-// 1차 = 마케팅 권역(region): 자사 / 국내마케팅 / 일본마케팅 / 중국마케팅 / 대만마케팅
+// 1차 = 마케팅 권역(region): 국내마케팅 / 일본마케팅 / 중국마케팅 / 대만마케팅
 //        한 작업이 여러 권역에 걸치면 regions 배열에 여러 개를 넣는다(예: 올라라 = 중국+대만).
 // 2차 = 작업 유형(category): 홈페이지 / 영상 / SNS·카드뉴스
 //        포트폴리오 창에서 권역 탭 → 작업 유형 탭 순으로 좁혀 본다.
+//   ※ 포트폴리오는 "고객사(클라이언트) 작업"만 노출한다. 자사 사이트(열정의시간·사람들·공간 등)는 제외.
 //
 // ── 항목 추가/수정 방법 ──────────────────────────────────────────
 // 1) thumbnail: public/portfolio/<id>.png 에 캡처 이미지를 넣는다.
 //    (이미지가 아직 없으면 카드가 자동으로 브랜드 색 폴백으로 표시됨)
 // 2) liveUrl: 살아있는 홈페이지 주소를 넣으면 카드 클릭 시 새 탭으로 이동.
-//    주소가 없거나 운영 종료된 작품은 liveUrl 을 비우고 expired: true 로 둔다.
-//    → 이 경우 클릭하면 캡처 이미지를 크게 보여준다(라이트박스).
+//    주소가 없고 캡처 이미지만 있으면 liveUrl 을 비운다 → 클릭 시 이미지 확대(라이트박스).
 // 3) featured: true 인 항목이 /time 메인 진입 섹션 미리보기에 노출된다.
 // ─────────────────────────────────────────────────────────────────
 
-export type PortfolioRegion = "own" | "domestic" | "japan" | "china" | "taiwan";
+export type PortfolioRegion = "domestic" | "japan" | "china" | "taiwan";
 export type PortfolioCategory = "homepage" | "video" | "sns";
 
 export type PortfolioItem = {
@@ -36,7 +36,6 @@ export type PortfolioItem = {
 
 // 1차 탭: 마케팅 권역
 export const portfolioRegions: { key: PortfolioRegion; label: string }[] = [
-  { key: "own", label: "자사" },
   { key: "domestic", label: "국내마케팅" },
   { key: "japan", label: "일본마케팅" },
   { key: "china", label: "중국마케팅" },
@@ -56,55 +55,6 @@ export const portfolioCategories: {
 ];
 
 export const portfolioItems: PortfolioItem[] = [
-  // ── 자사 브랜드 ──────────────────────────────────────────────
-  {
-    id: "passion-time",
-    regions: ["own"],
-    category: "homepage",
-    title: "열정의시간 공식 홈페이지",
-    summary: "병원 마케팅 에이전시 브랜드 사이트(본 사이트)",
-    thumbnail: "/portfolio/passion-time.png",
-    liveUrl: "https://www.timeofpassion.com/time",
-    tags: ["자사", "반응형", "브랜드"],
-    featured: true,
-    accent: "#cc0000",
-  },
-  {
-    id: "passion-people",
-    regions: ["own"],
-    category: "homepage",
-    title: "열정의사람들",
-    summary: "인플루언서·크리에이터 매칭 브랜드 사이트",
-    thumbnail: "/portfolio/passion-people.png",
-    liveUrl: "https://www.timeofpassion.com/people",
-    tags: ["자사", "브랜드"],
-    featured: true,
-    accent: "#0ea5e9",
-  },
-  {
-    id: "passion-space",
-    regions: ["own"],
-    category: "homepage",
-    title: "열정의공간",
-    summary: "공간 브랜드 사이트 · 거점 매거진",
-    thumbnail: "/portfolio/passion-space.png",
-    liveUrl: "https://www.timeofpassion.com/space",
-    tags: ["자사", "브랜드"],
-    featured: true,
-    accent: "#0d9488",
-  },
-  {
-    id: "beautyculize",
-    regions: ["own"],
-    category: "homepage",
-    title: "뷰티컬라이즈",
-    summary: "해외 마케팅 브랜드 랜딩 사이트",
-    thumbnail: "/portfolio/beautyculize.png",
-    liveUrl: "https://beautyculize-landing.vercel.app",
-    tags: ["랜딩", "브랜드"],
-    accent: "#e11d48",
-  },
-
   // ── 국내마케팅 · 멜로우피부과 ────────────────────────────────
   {
     id: "mellow-sinsa",
@@ -115,6 +65,7 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnail: "/portfolio/mellow-sinsa.png",
     liveUrl: "https://www.doctormellow.com",
     tags: ["의료", "반응형", "브랜드"],
+    featured: true,
     accent: "#db2777",
   },
   {
@@ -148,6 +99,7 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnail: "/portfolio/mellow-gangbuk.png",
     liveUrl: "http://doctormellow-db.com",
     tags: ["의료", "반응형"],
+    featured: true,
     accent: "#db2777",
   },
   {
@@ -172,6 +124,7 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnail: "/portfolio/rest-seogwan.png",
     liveUrl: "http://seogwanmyeonog.kr",
     tags: ["요식업", "브랜드"],
+    featured: true,
     accent: "#c2410c",
   },
   {
@@ -215,6 +168,7 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnail: "/portfolio/rest-kimchiok.png",
     liveUrl: "https://kimchi-ok.com",
     tags: ["요식업", "브랜드"],
+    featured: true,
     accent: "#ca8a04",
   },
   {
@@ -247,6 +201,7 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnail: "/portfolio/rest-ssangkyo.png",
     liveUrl: "http://ssangkyo.com",
     tags: ["요식업", "브랜드"],
+    featured: true,
     accent: "#78350f",
   },
 
@@ -272,6 +227,7 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnail: "/portfolio/olara.png",
     liveUrl: "https://www.olara.co.kr",
     tags: ["의료", "중국어", "대만"],
+    featured: true,
     accent: "#7c3aed",
   },
 ];

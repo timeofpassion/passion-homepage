@@ -16,7 +16,7 @@ import Lightbox from "@/components/portfolio/Lightbox";
 
 // 포트폴리오 창 본문: 1차 권역 탭 + 2차 작업유형 탭 + 카드 그리드 + 라이트박스
 export default function PortfolioExplorer() {
-  const [region, setRegion] = useState<PortfolioRegion>("own");
+  const [region, setRegion] = useState<PortfolioRegion>("domestic");
   const [category, setCategory] = useState<PortfolioCategory>("homepage");
   const [lightbox, setLightbox] = useState<PortfolioItem | null>(null);
   const items = itemsByRegionAndCategory(region, category);
