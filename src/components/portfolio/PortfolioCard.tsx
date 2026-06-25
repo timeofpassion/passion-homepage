@@ -79,7 +79,7 @@ export default function PortfolioCard({
               {item.title}
             </span>
             <span style={{ marginTop: 8, fontSize: "0.72rem", color: "rgba(255,255,255,0.72)" }}>
-              미리보기 준비중
+              {hasLive ? (item.tags?.[0] ?? "콘텐츠 보기") : "미리보기 준비중"}
             </span>
           </div>
         )}
