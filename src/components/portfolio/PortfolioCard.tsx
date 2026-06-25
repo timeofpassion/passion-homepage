@@ -21,10 +21,10 @@ export default function PortfolioCard({
   const showImage = Boolean(item.thumbnail) && !imgError;
   const accent = item.accent || "#cc0000";
 
-  const badge = item.expired
-    ? { label: "운영 종료", color: "#f59e0b" }
-    : hasLive
-      ? { label: "LIVE", color: "#22c55e" }
+  const badge = hasLive
+    ? { label: "LIVE", color: "#22c55e" }
+    : showImage
+      ? { label: "이미지", color: "rgba(255,255,255,0.55)" }
       : { label: "준비중", color: "rgba(255,255,255,0.45)" };
 
   const inner = (
@@ -157,7 +157,7 @@ export default function PortfolioCard({
             transition: "color 0.2s",
           }}
         >
-          {hasLive ? "사이트 방문" : "미리보기 보기"} <span aria-hidden>→</span>
+          {hasLive ? "사이트 방문" : showImage ? "이미지 보기" : "미리보기 보기"} <span aria-hidden>→</span>
         </span>
       </div>
     </>
