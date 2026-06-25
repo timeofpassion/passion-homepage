@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
-import PortfolioExplorer from "./PortfolioExplorer";
+import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
 
 export const metadata: Metadata = {
   title: "포트폴리오",
@@ -74,7 +74,7 @@ export default function PortfolioPage() {
           </div>
         </header>
 
-        <PortfolioExplorer />
+        <PortfolioGallery />
         <Footer />
       </main>
 

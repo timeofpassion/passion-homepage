@@ -14,8 +14,9 @@ import {
 import PortfolioCard from "@/components/portfolio/PortfolioCard";
 import Lightbox from "@/components/portfolio/Lightbox";
 
-// 포트폴리오 창 본문: 1차 권역 탭 + 2차 작업유형 탭 + 카드 그리드 + 라이트박스
-export default function PortfolioExplorer() {
+// 포트폴리오 갤러리(단일 소스): 1차 권역 탭 + 2차 작업유형 탭 + 카드 그리드 + 라이트박스
+// /time 메인 진입 섹션 + /time/portfolio 전용 페이지가 함께 사용한다(스키마 통일).
+export default function PortfolioGallery() {
   const [region, setRegion] = useState<PortfolioRegion>("domestic");
   const [category, setCategory] = useState<PortfolioCategory>("homepage");
   const [lightbox, setLightbox] = useState<PortfolioItem | null>(null);
@@ -128,6 +129,19 @@ export default function PortfolioExplorer() {
             곧 준비됩니다.
           </p>
         )}
+
+        {/* 지속 업데이트 안내 */}
+        <p
+          style={{
+            textAlign: "center",
+            color: "rgba(255,255,255,0.4)",
+            marginTop: "3.5rem",
+            fontSize: "0.9rem",
+            letterSpacing: "0.01em",
+          }}
+        >
+          포트폴리오는 지속적으로 업데이트 중입니다.
+        </p>
       </div>
 
       <Lightbox item={lightbox} onClose={() => setLightbox(null)} />
