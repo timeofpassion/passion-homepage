@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { PortfolioItem } from "@/data/portfolio";
 
 // 만료/주소없는 작품을 클릭하면 캡처 이미지를 크게 보여주는 라이트박스.
@@ -12,6 +12,12 @@ export default function Lightbox({
   item: PortfolioItem | null;
   onClose: () => void;
 }) {
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgError(false);
+  }, [item]);
+
   useEffect(() => {
     if (!item) return;
     const onKey = (e: KeyboardEvent) => {
@@ -27,6 +33,7 @@ export default function Lightbox({
 
   if (!item) return null;
   const accent = item.accent || "#cc0000";
+  const showImage = Boolean(item.thumbnail) && !imgError;
 
   return (
     <div
@@ -82,16 +89,21 @@ export default function Lightbox({
         <div
           style={{
             width: "100%",
-            background: item.thumbnail ? "#000" : `linear-gradient(135deg, ${accent}, rgba(0,0,0,0.85))`,
-            minHeight: item.thumbnail ? "auto" : 240,
+            background: showImage ? "#000" : `linear-gradient(135deg, ${accent}, rgba(0,0,0,0.85))`,
+            minHeight: showImage ? "auto" : 240,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          {item.thumbnail ? (
+          {showImage ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={item.thumbnail} alt={item.title} style={{ width: "100%", display: "block" }} />
+            <img
+              src={item.thumbnail}
+              alt={item.title}
+              onError={() => setImgError(true)}
+              style={{ width: "100%", display: "block" }}
+            />
           ) : (
             <span style={{ padding: "3rem 1rem", fontSize: "1.6rem", fontWeight: 800, color: "#fff", textAlign: "center" }}>
               {item.title}

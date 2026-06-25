@@ -4,7 +4,7 @@
 //
 // ── 항목 추가/수정 방법 ──────────────────────────────────────────
 // 1) thumbnail: public/portfolio/<id>.webp 에 캡처 이미지를 넣는다.
-//    (이미지가 아직 없으면 카드가 자동으로 브랜드 색 폴백으로 표시됨)
+//    (이미지가 아직 없으면 카드가 자동으로 브랜드 색 폴백으로 표시됨, 확장자 .png)
 // 2) liveUrl: 살아있는 홈페이지 주소를 넣으면 카드 클릭 시 새 탭으로 이동.
 //    주소가 없거나 운영 종료된 작품은 liveUrl 을 비우고 expired: true 로 둔다.
 //    → 이 경우 클릭하면 캡처 이미지를 크게 보여준다(라이트박스).
@@ -40,14 +40,35 @@ export const portfolioCategories: {
 
 export const portfolioItems: PortfolioItem[] = [
   {
+    id: "passion-time",
+    category: "homepage",
+    title: "열정의시간 공식 홈페이지",
+    summary: "병원 마케팅 에이전시 브랜드 사이트(본 사이트)",
+    thumbnail: "/portfolio/passion-time.png",
+    liveUrl: "https://www.timeofpassion.com/time",
+    tags: ["자사", "반응형", "브랜드"],
+    featured: true,
+    accent: "#cc0000",
+  },
+  {
+    id: "passion-people",
+    category: "homepage",
+    title: "열정의사람들",
+    summary: "인플루언서·크리에이터 매칭 브랜드 사이트",
+    thumbnail: "/portfolio/passion-people.png",
+    liveUrl: "https://www.timeofpassion.com/people",
+    tags: ["자사", "브랜드"],
+    featured: true,
+    accent: "#0ea5e9",
+  },
+  {
     id: "olara",
     category: "homepage",
     title: "올라라의원",
     summary: "중화권(중국·대만) 마케팅 페이지 제작 · 운영",
-    thumbnail: "/portfolio/olara.webp",
+    thumbnail: "/portfolio/olara.png",
     liveUrl: "https://www.olara.co.kr",
     tags: ["의료", "중국어", "대만"],
-    featured: true,
     accent: "#7c3aed",
   },
   {
@@ -55,9 +76,8 @@ export const portfolioItems: PortfolioItem[] = [
     category: "homepage",
     title: "멜로우피부과 신사점",
     summary: "피부과 브랜드 반응형 홈페이지",
-    thumbnail: "/portfolio/mellow-sinsa.webp",
+    thumbnail: "/portfolio/mellow-sinsa.png",
     tags: ["의료", "반응형", "브랜드"],
-    featured: true,
     accent: "#db2777",
   },
   {
@@ -65,7 +85,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "homepage",
     title: "열정의공간",
     summary: "공간 브랜드 사이트 · 거점 매거진",
-    thumbnail: "/portfolio/passion-space.webp",
+    thumbnail: "/portfolio/passion-space.png",
     liveUrl: "https://www.timeofpassion.com/space",
     tags: ["브랜드", "자사"],
     featured: true,
@@ -76,9 +96,8 @@ export const portfolioItems: PortfolioItem[] = [
     category: "homepage",
     title: "IMPETVS",
     summary: "향수 브랜드 사이트",
-    thumbnail: "/portfolio/impetus.webp",
+    thumbnail: "/portfolio/impetus.png",
     tags: ["브랜드", "뷰티"],
-    featured: true,
     accent: "#b45309",
   },
   {
@@ -86,7 +105,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "homepage",
     title: "SM성형외과 (일본)",
     summary: "일본 환자 대상 일본어 사이트",
-    thumbnail: "/portfolio/sm-plastic-jp.webp",
+    thumbnail: "/portfolio/sm-plastic-jp.png",
     tags: ["의료", "일본어"],
     accent: "#2563eb",
   },
@@ -95,7 +114,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "homepage",
     title: "뷰티컬라이즈",
     summary: "브랜드 랜딩페이지",
-    thumbnail: "/portfolio/beautyculize.webp",
+    thumbnail: "/portfolio/beautyculize.png",
     tags: ["랜딩", "뷰티"],
     accent: "#e11d48",
   },
@@ -104,7 +123,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "homepage",
     title: "멜로우 신사 · 일본 랜딩",
     summary: "일본 환자 유치 LINE 랜딩페이지",
-    thumbnail: "/portfolio/mellow-sinsa-jp.webp",
+    thumbnail: "/portfolio/mellow-sinsa-jp.png",
     tags: ["의료", "일본어", "랜딩"],
     accent: "#db2777",
   },
@@ -113,7 +132,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "homepage",
     title: "멜로우피부과 천호점",
     summary: "피부과 지점 홈페이지",
-    thumbnail: "/portfolio/mellow-cheonho.webp",
+    thumbnail: "/portfolio/mellow-cheonho.png",
     tags: ["의료", "반응형"],
     accent: "#db2777",
   },
@@ -122,7 +141,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "homepage",
     title: "OSTELLO MARE",
     summary: "브랜드 사이트",
-    thumbnail: "/portfolio/ostellomaree.webp",
+    thumbnail: "/portfolio/ostellomaree.png",
     tags: ["브랜드"],
     accent: "#0891b2",
   },
@@ -131,7 +150,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "homepage",
     title: "음식점 브랜드 홈페이지",
     summary: "요식업 브랜드 홈페이지 제작 사례",
-    thumbnail: "/portfolio/restaurant.webp",
+    thumbnail: "/portfolio/restaurant.png",
     expired: true,
     tags: ["요식업", "비의료"],
     accent: "#c2410c",
