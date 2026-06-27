@@ -4,6 +4,7 @@ import InfluencerFilter from "./_components/InfluencerFilter";
 import Flag from "./_components/Flag";
 import ClientsSection from "@/components/ClientsSection";
 import DirectAnswer from "@/components/DirectAnswer";
+import FaqSection from "@/components/FaqSection";
 import {
   PORTFOLIO,
   COUNTRY_LABEL,
@@ -15,6 +16,30 @@ import { buildOpenGraph } from "@/lib/og";
 
 // 열정의시간 카카오톡 채널 상담(채팅) — 전사 공용 채널
 const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
+
+// GEO FAQ — "정보형 질의" 인용 노림. 본문은 기존 사이트 사실만 사용(새 수치 창작 금지).
+const PEOPLE_FAQ = [
+  {
+    q: "왕홍(샤오홍슈) 마케팅은 어떻게 진행되나요?",
+    a: "중국 현지에서 직접 운영하는 크리에이터(왕홍·KOL) 풀에서 캠페인 목표에 맞는 인플루언서를 매칭하고, 샤오홍슈·더우인 콘텐츠를 ‘번역’이 아닌 ‘현지화’로 기획·발행한 뒤 성과를 리포트합니다. 에이전시 재하청 없이 한 팀이 끝까지 운영합니다.",
+  },
+  {
+    q: "일본·대만 인플루언서 마케팅도 가능한가요?",
+    a: "네. 일본은 인스타그램·X 인플루언서와 라인(LINE), 대만은 페이스북·인스타·유튜브와 라인(번체)을 활용합니다. 각 시장의 현지 크리에이터를 직접 관리해 정서에 맞는 콘텐츠로 진행합니다.",
+  },
+  {
+    q: "인플루언서 섭외부터 리포트까지 과정이 어떻게 되나요?",
+    a: "① 캠페인 목표에 맞는 현지 인플루언서 섭외 → ② 콘텐츠 기획·현지화 → ③ 발행·운영·현지 커뮤니케이션 → ④ 성과 리포트의 원스톱 흐름으로 진행합니다.",
+  },
+  {
+    q: "어떤 분야(업종)가 가능한가요?",
+    a: "병원·기업·관공서까지 분야를 가리지 않습니다. 단순 노출이 아니라 문의·방문·구매 전환을 목표로 캠페인을 설계합니다.",
+  },
+  {
+    q: "비용은 어떻게 되나요?",
+    a: "캠페인 규모(시장·인플루언서 등급·콘텐츠 수)에 따라 맞춤 견적으로 안내합니다. 카카오톡 채널로 문의하시면 평균 1영업일 내 담당자가 회신드립니다.",
+  },
+];
 
 // og:url 을 요청 주소(쿼리 포함)에 맞춰 동적 생성 → 카카오 캐시 ?v= 우회 갱신 지원.
 export async function generateMetadata({
@@ -337,6 +362,16 @@ export default async function PeopleHome() {
           </div>
         </div>
       </section>
+
+      {/* GEO FAQ — 정보형 질의 자답(FAQPage 구조화데이터 동반) */}
+      <FaqSection
+        items={PEOPLE_FAQ}
+        accent="#1e63c8"
+        color="#0f172a"
+        subColor="#475569"
+        background="#ffffff"
+        borderColor="rgba(15,23,42,0.1)"
+      />
 
       {/* 4-7 CTA BAND */}
       <section className="ppl-cta-band">
