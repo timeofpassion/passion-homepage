@@ -25,22 +25,49 @@ const chipStyle: React.CSSProperties = {
   letterSpacing: ".04em",
 };
 
-// 카테고리별 기본 실사 커버 — 인트라넷에서 커버 미지정 글에 자동 적용(무배포 자동화)
-const CATEGORY_DEFAULT_COVER: Record<string, string> = {
-  중국마케팅: "/time/blog/hospital-china-marketing.webp",
-  일본마케팅: "/time/blog/hospital-japan-marketing.webp",
-  대만마케팅: "/time/blog/hospital-taiwan-marketing.webp",
-  해외마케팅: "/time/blog/foreign-patient-attraction-guide.webp",
+// 카테고리별 실사 커버 풀 — 인트라넷에서 커버 미지정 글에 slug 해시로 자동 분배(무배포 자동화).
+// 같은 카테고리 글이 여러 편이어도 카드 썸네일이 겹치지 않게 풀에서 결정적으로 골라준다.
+const CATEGORY_COVER_POOL: Record<string, string[]> = {
+  중국마케팅: [
+    "/time/blog/hospital-china-marketing.webp",
+    "/time/blog/china-xiaohongshu-guide.webp",
+    "/time/blog/xiaohongshu-marketing-playbook.webp",
+  ],
+  일본마케팅: [
+    "/time/blog/hospital-japan-marketing.webp",
+    "/time/blog/japan-line-marketing.webp",
+  ],
+  대만마케팅: [
+    "/time/blog/hospital-taiwan-marketing.webp",
+    "/time/blog/taiwan-multichannel.webp",
+  ],
+  해외마케팅: [
+    "/time/blog/foreign-patient-attraction-guide.webp",
+    "/time/blog/overseas-medical-2.webp",
+    "/time/blog/overseas-medical-3.webp",
+    "/time/blog/overseas-medical-4.webp",
+  ],
 };
+
+// slug 문자열을 풀 인덱스로 — 결정적(같은 글은 항상 같은 썸네일)·균등 분배
+function pickFromPool(pool: string[], slug: string): string {
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+  return pool[h % pool.length];
+}
 
 export function BlogThumb({
   category,
   coverImageUrl,
+  slug,
 }: {
   category: string;
   coverImageUrl?: string;
+  slug?: string;
 }) {
-  const cover = coverImageUrl || CATEGORY_DEFAULT_COVER[category];
+  const pool = CATEGORY_COVER_POOL[category];
+  const fallback = pool ? pickFromPool(pool, slug || category) : undefined;
+  const cover = coverImageUrl || fallback;
   if (cover) {
     return (
       <div
@@ -123,7 +150,7 @@ function Card({ post }: { post: ContentPost }) {
         flexDirection: "column",
       }}
     >
-      <BlogThumb category={post.category} coverImageUrl={post.coverImageUrl} />
+      <BlogThumb category={post.category} coverImageUrl={post.coverImageUrl} slug={post.slug} />
       <div style={{ padding: "1.15rem 1.2rem 1.4rem", display: "flex", flexDirection: "column", flex: 1 }}>
         <div
           style={{
