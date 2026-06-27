@@ -40,6 +40,7 @@ export async function generateMetadata({
 }
 import HeroSection from "@/components/HeroSection";
 import DirectAnswer from "@/components/DirectAnswer";
+import FaqSection from "@/components/FaqSection";
 import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -54,6 +55,30 @@ import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
 // import Popup from "@/components/Popup"; // 팝업 내용 준비되면 주석 해제
+
+// GEO FAQ — "정보형 질의" 인용 노림. 본문은 기존 사이트 사실만 사용(새 수치·시설 창작 금지).
+const TIME_FAQ = [
+  {
+    q: "병원 마케팅 대행사는 어떤 기준으로 골라야 하나요?",
+    a: "노출·조회수 같은 표면 지표가 아니라 ‘상담에서 실제 내원으로’ 이어지는 전환을 설계하는지, 국내와 해외(일본·중국·대만) 채널을 한 곳에서 통합 운영하는지, 채널·계정 소유권이 병원에 있는지를 봐야 합니다. 열정의시간은 13년간 이 구조를 현지 전담팀과 함께 직접 운영해 왔습니다.",
+  },
+  {
+    q: "해외환자(외국인환자) 유치 마케팅은 어떻게 진행되나요?",
+    a: "유치업 등록과 위탁계약을 기반으로 합법적으로 진행합니다. 중국은 샤오홍슈·더우인에서 위챗 상담으로, 일본은 인스타그램·X에서 라인 상담으로, 대만은 페이스북·인스타·유튜브에서 라인(번체) 상담으로 전환합니다. 현지어 전담팀이 발견→상담→내원→통역·사후관리까지 운영합니다.",
+  },
+  {
+    q: "중국 환자 유치 마케팅은 어떻게 하나요?",
+    a: "샤오홍슈·더우인·바이두에서 발견되게 만들고 위챗 1:1 상담으로 전환하는 구조입니다. 간체 화법과 현지 KOL(왕홍)을 활용하며, 의료광고법과 현지 플랫폼 규정을 지켜 운영합니다.",
+  },
+  {
+    q: "국내 마케팅은 어떤 채널을 운영하나요?",
+    a: "블로그 SEO, 숏폼·영상, 인스타그램·유튜브 SNS, 네이버 플레이스, 플랫폼(강남언니·바비톡 등), 카페 바이럴을 통합 운영합니다. 하나의 계약으로 여러 전담팀이 함께 움직입니다.",
+  },
+  {
+    q: "비용은 어떻게 책정되나요?",
+    a: "진료과·목표 시장·운영 범위에 따라 맞춤 견적으로 안내합니다. 무료 전략 상담에서 현재 마케팅 비용 누수 진단과 채널 우선순위부터 점검합니다.",
+  },
+];
 
 export default async function Home() {
   const posts = (await loadPosts()).slice(0, 8);
@@ -127,6 +152,7 @@ export default async function Home() {
             </div>
           </section>
         )}
+        <FaqSection items={TIME_FAQ} />
         <CTASection />
         <Footer />
       </main>
