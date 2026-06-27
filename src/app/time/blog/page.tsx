@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
-import { getAllPosts } from "@/data/blog";
+import { TimeBlogCarousel, TimeBlogGrid } from "@/components/TimeBlogCarousel";
+import { loadPosts } from "@/lib/time-blog-source";
+
+// 인트라넷 발행 글을 5분 ISR 로 반영
+export const revalidate = 300;
 
 export const metadata: Metadata = {
-  // 그룹 템플릿("%s | PASSION GROUP") 우회 — 열정의시간 단일 브랜딩
   title: {
     absolute: "마케팅 인사이트 | 열정의시간 — 일본·중국·대만 해외환자 유치",
   },
@@ -38,8 +40,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogIndexPage() {
-  const posts = getAllPosts();
+export default async function BlogIndexPage() {
+  const posts = await loadPosts();
+  const latest = posts.slice(0, 6);
 
   return (
     <>
@@ -47,16 +50,16 @@ export default function BlogIndexPage() {
       <main className="relative z-10">
         <Header />
 
-        <section style={{ padding: "8rem 0 4rem" }}>
-          <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%" }}>
+        <section style={{ padding: "8rem 0 1.5rem" }}>
+          <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>
             <span
               style={{
                 color: "#FFD700",
-                fontSize: "0.85rem",
-                letterSpacing: "0.15em",
-                fontWeight: 700,
+                fontSize: ".85rem",
+                letterSpacing: ".15em",
+                fontWeight: 800,
                 display: "block",
-                marginBottom: "0.75rem",
+                marginBottom: ".75rem",
               }}
             >
               MARKETING INSIGHTS
@@ -86,79 +89,23 @@ export default function BlogIndexPage() {
           </div>
         </section>
 
-        <section style={{ padding: "0 0 6rem" }}>
-          <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%" }}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-                gap: "1.5rem",
-              }}
-            >
-              {posts.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/time/blog/${post.slug}`}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    borderRadius: 10,
-                    padding: "1.75rem",
-                    textDecoration: "none",
-                    color: "#fff",
-                    minHeight: 220,
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "#FFD700",
-                      fontSize: "0.75rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.1em",
-                      marginBottom: "0.9rem",
-                    }}
-                  >
-                    {post.category}
-                  </span>
-                  <h2
-                    style={{
-                      fontSize: "1.15rem",
-                      fontWeight: 800,
-                      lineHeight: 1.45,
-                      marginBottom: "0.9rem",
-                    }}
-                  >
-                    {post.title}
-                  </h2>
-                  <p
-                    style={{
-                      fontSize: "0.9rem",
-                      color: "rgba(255,255,255,0.55)",
-                      lineHeight: 1.6,
-                      fontWeight: 300,
-                      flexGrow: 1,
-                      display: "-webkit-box",
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {post.excerpt}
-                  </p>
-                  <span
-                    style={{
-                      marginTop: "1.25rem",
-                      fontSize: "0.8rem",
-                      color: "rgba(255,255,255,0.35)",
-                    }}
-                  >
-                    {post.date}
-                  </span>
-                </Link>
-              ))}
+        {latest.length > 0 && (
+          <section style={{ padding: "1rem 0" }}>
+            <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>
+              <h2 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: "1.1rem" }}>
+                최신 인사이트
+              </h2>
+              <TimeBlogCarousel posts={latest} />
             </div>
+          </section>
+        )}
+
+        <section style={{ padding: "1rem 0 6rem" }}>
+          <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>
+            <h2 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: "1.1rem" }}>
+              전체 글
+            </h2>
+            <TimeBlogGrid posts={posts} />
           </div>
         </section>
 

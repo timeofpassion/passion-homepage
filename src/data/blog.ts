@@ -22,6 +22,8 @@ export interface ContentPost {
   body: ContentBlock[];
   /** 자주 묻는 질문 — FAQPage 구조화데이터 + AI(LLM) 인용용 (선택) */
   faq?: { q: string; a: string }[];
+  /** 커버 이미지 URL (선택) — 없으면 카테고리별 자동 썸네일이 깔린다 */
+  coverImageUrl?: string;
 }
 
 export const blogPosts: ContentPost[] = [

@@ -45,14 +45,17 @@ import ServicesSection from "@/components/ServicesSection";
 import ServiceTeamsSection from "@/components/ServiceTeamsSection";
 import PortfolioSection from "@/components/PortfolioSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import BlogSection from "@/components/BlogSection";
+import Link from "next/link";
+import { TimeBlogCarousel } from "@/components/TimeBlogCarousel";
+import { loadPosts } from "@/lib/time-blog-source";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
 // import Popup from "@/components/Popup"; // 팝업 내용 준비되면 주석 해제
 
-export default function Home() {
+export default async function Home() {
+  const posts = (await loadPosts()).slice(0, 8);
   return (
     <>
       <BackgroundEffects />
@@ -67,7 +70,57 @@ export default function Home() {
         <ServiceTeamsSection />
         <PortfolioSection />
         <TestimonialsSection />
-        <BlogSection />
+        {posts.length > 0 && (
+          <section style={{ padding: "5rem 0 2rem" }}>
+            <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "space-between",
+                  gap: "1rem",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                <div>
+                  <span
+                    style={{
+                      color: "#FFD700",
+                      fontSize: ".85rem",
+                      fontWeight: 800,
+                      letterSpacing: ".15em",
+                    }}
+                  >
+                    MARKETING INSIGHTS
+                  </span>
+                  <h2
+                    style={{
+                      fontSize: "clamp(1.8rem,3.5vw,2.6rem)",
+                      fontWeight: 900,
+                      lineHeight: 1.2,
+                      marginTop: ".5rem",
+                    }}
+                  >
+                    마케팅 인사이트
+                  </h2>
+                </div>
+                <Link
+                  href="/time/blog"
+                  style={{
+                    color: "#FFD700",
+                    fontSize: ".85rem",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  전체 보기 →
+                </Link>
+              </div>
+              <TimeBlogCarousel posts={posts} />
+            </div>
+          </section>
+        )}
         <CTASection />
         <Footer />
       </main>
