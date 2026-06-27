@@ -30,11 +30,11 @@ export default function ComingSoon({
           <br />
           카카오톡 채널{" "}
           <a
-            href="https://pf.kakao.com/_timfofpassion"
+            href="https://pf.kakao.com/_RgYcxj/chat"
             target="_blank"
             rel="noopener noreferrer"
           >
-            @timfofpassion
+            열정의시간
           </a>
         </p>
 

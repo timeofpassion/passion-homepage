@@ -75,7 +75,7 @@ const jsonLd = {
       url: "https://www.timeofpassion.com",
       description:
         "열정으로 시간·사람·공간을 잇는 그룹. 열정의시간·열정의사람들·열정의공간으로 구성됩니다.",
-      sameAs: ["https://pf.kakao.com/_timfofpassion"],
+      sameAs: ["https://pf.kakao.com/_RgYcxj"],
       subOrganization: [
         {
           "@type": "Organization",

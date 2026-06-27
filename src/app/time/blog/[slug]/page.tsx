@@ -6,9 +6,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
-import { blogPosts, getPostBySlug } from "@/data/blog";
+import { blogPosts, getAllPosts, getPostBySlug } from "@/data/blog";
 
 const BASE = "https://www.timeofpassion.com";
+const OG_IMAGE = `${BASE}/time/og-time-v2.jpg`;
+const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
 export function generateStaticParams() {
   return blogPosts.map((p) => ({ slug: p.slug }));
@@ -37,11 +39,13 @@ export async function generateMetadata({
       locale: "ko_KR",
       type: "article",
       publishedTime: post.date,
+      images: [OG_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
+      images: [OG_IMAGE],
     },
     alternates: { canonical: url },
   };
@@ -57,28 +61,66 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   const url = `${BASE}/time/blog/${post.slug}`;
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.date,
-    dateModified: post.date,
-    inLanguage: "ko-KR",
-    keywords: post.tags.join(", "),
-    articleSection: post.category,
-    mainEntityOfPage: { "@type": "WebPage", "@id": url },
-    author: {
-      "@type": "Organization",
-      name: "열정의시간",
-      url: `${BASE}/time`,
+
+  // 같은 권역(카테고리) 글을 우선해 관련글 최대 3개
+  const related = getAllPosts()
+    .filter((p) => p.slug !== post.slug)
+    .sort((a, b) => {
+      const ac = a.category === post.category ? 0 : 1;
+      const bc = b.category === post.category ? 0 : 1;
+      if (ac !== bc) return ac - bc;
+      return a.date < b.date ? 1 : -1;
+    })
+    .slice(0, 3);
+
+  // 구조화데이터 — BlogPosting + BreadcrumbList (+ FAQ 있으면 FAQPage)
+  const graph: Array<Record<string, unknown>> = [
+    {
+      "@type": "BlogPosting",
+      "@id": `${url}#article`,
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.date,
+      dateModified: post.date,
+      inLanguage: "ko-KR",
+      keywords: post.tags.join(", "),
+      articleSection: post.category,
+      mainEntityOfPage: { "@type": "WebPage", "@id": url },
+      image: [OG_IMAGE],
+      author: { "@type": "Organization", name: "열정의시간", url: `${BASE}/time` },
+      publisher: {
+        "@type": "Organization",
+        name: "열정의시간",
+        url: `${BASE}/time`,
+        logo: { "@type": "ImageObject", url: OG_IMAGE },
+      },
     },
-    publisher: {
-      "@type": "Organization",
-      name: "열정의시간",
-      url: `${BASE}/time`,
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "열정의시간", item: `${BASE}/time` },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "마케팅 인사이트",
+          item: `${BASE}/time/blog`,
+        },
+        { "@type": "ListItem", position: 3, name: post.title, item: url },
+      ],
     },
-  };
+  ];
+  if (post.faq && post.faq.length > 0) {
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${url}#faq`,
+      mainEntity: post.faq.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    });
+  }
+  const jsonLd = { "@context": "https://schema.org", "@graph": graph };
 
   return (
     <>
@@ -191,6 +233,57 @@ export default async function BlogPostPage({
               })}
             </div>
 
+            {/* 자주 묻는 질문 — FAQPage 구조화데이터와 동일 내용 */}
+            {post.faq && post.faq.length > 0 && (
+              <section style={{ marginTop: "3.5rem" }}>
+                <h2
+                  style={{
+                    fontSize: "1.5rem",
+                    fontWeight: 800,
+                    lineHeight: 1.4,
+                    marginBottom: "1.5rem",
+                    color: "#fff",
+                  }}
+                >
+                  자주 묻는 질문
+                </h2>
+                {post.faq.map((f, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      marginBottom: "1.5rem",
+                      paddingBottom: "1.5rem",
+                      borderBottom:
+                        i < post.faq!.length - 1
+                          ? "1px solid rgba(255,255,255,0.08)"
+                          : "none",
+                    }}
+                  >
+                    <h3
+                      style={{
+                        fontSize: "1.05rem",
+                        fontWeight: 700,
+                        color: "#FFD700",
+                        marginBottom: "0.6rem",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      Q. {f.q}
+                    </h3>
+                    <p
+                      style={{
+                        color: "rgba(255,255,255,0.8)",
+                        lineHeight: 1.75,
+                        fontWeight: 300,
+                      }}
+                    >
+                      {f.a}
+                    </p>
+                  </div>
+                ))}
+              </section>
+            )}
+
             {/* 본문 하단 CTA */}
             <div
               style={{
@@ -217,7 +310,7 @@ export default async function BlogPostPage({
                 지점을 무료로 진단해 드립니다.
               </p>
               <a
-                href="https://pf.kakao.com/_timfofpassion"
+                href={KAKAO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -234,6 +327,57 @@ export default async function BlogPostPage({
                 카카오톡으로 무료 상담 →
               </a>
             </div>
+
+            {/* 관련글 — 토픽 클러스터 내부링크 */}
+            {related.length > 0 && (
+              <section style={{ marginTop: "3.5rem" }}>
+                <h2
+                  style={{
+                    fontSize: "1.2rem",
+                    fontWeight: 800,
+                    marginBottom: "1.2rem",
+                    color: "#fff",
+                  }}
+                >
+                  함께 보면 좋은 글
+                </h2>
+                <div style={{ display: "grid", gap: "0.8rem" }}>
+                  {related.map((r) => (
+                    <Link
+                      key={r.slug}
+                      href={`/time/blog/${r.slug}`}
+                      style={{
+                        display: "block",
+                        padding: "1.1rem 1.3rem",
+                        borderRadius: 10,
+                        background: "rgba(255,255,255,0.03)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        textDecoration: "none",
+                        color: "#fff",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "#FFD700",
+                          fontSize: "0.72rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.08em",
+                          display: "block",
+                          marginBottom: "0.4rem",
+                        }}
+                      >
+                        {r.category}
+                      </span>
+                      <span
+                        style={{ fontSize: "0.98rem", fontWeight: 700, lineHeight: 1.5 }}
+                      >
+                        {r.title}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         </article>
 
