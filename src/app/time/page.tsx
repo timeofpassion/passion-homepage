@@ -41,6 +41,7 @@ export async function generateMetadata({
 import HeroSection from "@/components/HeroSection";
 import DirectAnswer from "@/components/DirectAnswer";
 import FaqSection from "@/components/FaqSection";
+import LastUpdated from "@/components/LastUpdated";
 import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -60,7 +61,7 @@ import KakaoFloat from "@/components/KakaoFloat";
 const TIME_FAQ = [
   {
     q: "병원 마케팅 대행사는 어떤 기준으로 골라야 하나요?",
-    a: "노출·조회수 같은 표면 지표가 아니라 ‘상담에서 실제 내원으로’ 이어지는 전환을 설계하는지, 국내와 해외(일본·중국·대만) 채널을 한 곳에서 통합 운영하는지, 채널·계정 소유권이 병원에 있는지를 봐야 합니다. 열정의시간은 13년간 이 구조를 현지 전담팀과 함께 직접 운영해 왔습니다.",
+    a: "노출·조회수 같은 표면 지표가 아니라 ‘상담에서 실제 내원으로’ 이어지는 전환을 설계하는지, 국내와 해외(일본·중국·대만) 채널을 한 곳에서 통합 운영하는지, 채널·계정 소유권이 병원에 있는지를 봐야 합니다. 열정의시간은 10년 이상 이 구조를 현지 전담팀과 함께 직접 운영해 왔습니다.",
   },
   {
     q: "해외환자(외국인환자) 유치 마케팅은 어떻게 진행되나요?",
@@ -93,7 +94,7 @@ export default async function Home() {
         <DirectAnswer
           eyebrow="WHO WE ARE"
           question="열정의시간은 어떤 회사인가요?"
-          answer="열정의시간은 국내·일본·중국·대만 마케팅을 한 곳에서 운영하는 병원·의료 전문 마케팅 에이전시입니다. 13년간 블로그·영상·SNS·플레이스 등 국내 통합 마케팅부터 일본·중국·대만 해외환자(외국인환자) 유치까지, 현지어 전담팀이 직접 운영합니다. 단순 노출·조회수가 아니라 상담에서 실제 내원으로 이어지는 전환 구조 자체를 설계하는 것이 핵심 차별점입니다."
+          answer="열정의시간은 국내·일본·중국·대만 마케팅을 한 곳에서 운영하는 병원·의료 전문 마케팅 에이전시입니다. 10년 이상 블로그·영상·SNS·플레이스 등 국내 통합 마케팅부터 일본·중국·대만 해외환자(외국인환자) 유치까지, 현지어 전담팀이 직접 운영합니다. 단순 노출·조회수가 아니라 상담에서 실제 내원으로 이어지는 전환 구조 자체를 설계하는 것이 핵심 차별점입니다."
         />
         <ClientsSection medicalOnly />
         <ArchitectureSection />
@@ -153,6 +154,7 @@ export default async function Home() {
           </section>
         )}
         <FaqSection items={TIME_FAQ} />
+        <LastUpdated date="2026.06.28" />
         <CTASection />
         <Footer />
       </main>
@@ -191,7 +193,7 @@ export default async function Home() {
         <p>
           무료 전략 상담을 통해 현재 마케팅 비용 누수 진단, 채널 우선순위 분석,
           해외 진출 최적 루트 설계, 월 예산별 현실적 성과 예측을 받아보세요.
-          카카오톡 채널: @timfofpassion
+          카카오톡 채널: 열정의시간 (pf.kakao.com/_RgYcxj)
         </p>
       </div>
     </>

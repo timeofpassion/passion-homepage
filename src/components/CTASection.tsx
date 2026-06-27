@@ -100,7 +100,7 @@ export default function CTASection() {
               카카오톡 채널:
             </span>
             <span className="font-mono-sys" style={{ fontSize: 13, color: "#fff", fontWeight: 500, letterSpacing: "0.1em" }}>
-              @timfofpassion
+              열정의시간
             </span>
           </div>
         </div>

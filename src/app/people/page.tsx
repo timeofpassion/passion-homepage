@@ -5,6 +5,7 @@ import Flag from "./_components/Flag";
 import ClientsSection from "@/components/ClientsSection";
 import DirectAnswer from "@/components/DirectAnswer";
 import FaqSection from "@/components/FaqSection";
+import LastUpdated from "@/components/LastUpdated";
 import {
   PORTFOLIO,
   COUNTRY_LABEL,
@@ -372,6 +373,7 @@ export default async function PeopleHome() {
         background="#ffffff"
         borderColor="rgba(15,23,42,0.1)"
       />
+      <LastUpdated date="2026.06.28" color="#94a3b8" background="#ffffff" />
 
       {/* 4-7 CTA BAND */}
       <section className="ppl-cta-band">
