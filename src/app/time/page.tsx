@@ -39,6 +39,7 @@ export async function generateMetadata({
   };
 }
 import HeroSection from "@/components/HeroSection";
+import DirectAnswer from "@/components/DirectAnswer";
 import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -64,6 +65,11 @@ export default async function Home() {
       <main className="relative z-10">
         <Header />
         <HeroSection />
+        <DirectAnswer
+          eyebrow="WHO WE ARE"
+          question="열정의시간은 어떤 회사인가요?"
+          answer="열정의시간은 국내·일본·중국·대만 마케팅을 한 곳에서 운영하는 병원·의료 전문 마케팅 에이전시입니다. 13년간 블로그·영상·SNS·플레이스 등 국내 통합 마케팅부터 일본·중국·대만 해외환자(외국인환자) 유치까지, 현지어 전담팀이 직접 운영합니다. 단순 노출·조회수가 아니라 상담에서 실제 내원으로 이어지는 전환 구조 자체를 설계하는 것이 핵심 차별점입니다."
+        />
         <ClientsSection medicalOnly />
         <ArchitectureSection />
         <ServicesSection />

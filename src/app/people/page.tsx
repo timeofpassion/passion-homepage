@@ -3,6 +3,7 @@ import Link from "next/link";
 import InfluencerFilter from "./_components/InfluencerFilter";
 import Flag from "./_components/Flag";
 import ClientsSection from "@/components/ClientsSection";
+import DirectAnswer from "@/components/DirectAnswer";
 import {
   PORTFOLIO,
   COUNTRY_LABEL,
@@ -136,6 +137,17 @@ export default async function PeopleHome() {
           </div>
         </div>
       </section>
+
+      {/* GEO Direct Answer — "열정의사람들은 어떤 회사인가" 자답(패시지 추출용) */}
+      <DirectAnswer
+        eyebrow="ABOUT"
+        question="열정의사람들은 어떤 회사인가요?"
+        answer="열정의사람들은 국내·일본·중국·대만 현지 인플루언서로 진출하는 글로벌 인플루언서 마케팅 전문 기업입니다. 에이전시 재하청이 아니라 각 시장의 크리에이터를 직접 운영하며, 샤오홍슈·더우인 왕홍(KOL)부터 일본·대만 인플루언서까지 캠페인 목표에 맞게 매칭합니다. ‘번역’이 아닌 ‘현지화’로, 단순 노출이 아니라 병원·기업·관공서의 문의·방문·구매 전환까지 설계하는 것이 핵심 차별점입니다."
+        accent="#1e63c8"
+        color="#0f172a"
+        subColor="#475569"
+        background="#ffffff"
+      />
 
       {/* 클라이언트 — 열정의시간과 동일 섹션 미러링(공용 ClientsSection).
           clients.ts(로고 목록)·ClientsSection(문구·디자인) 한 곳만 고치면 /time·/people 동시 반영 */}
