@@ -19,13 +19,17 @@ export default function PortfolioCard({
 
   const hasLive = Boolean(item.liveUrl) && !item.expired;
   const showImage = Boolean(item.thumbnail) && !imgError;
+  const isVideo = item.category === "video";
   const accent = item.accent || "#cc0000";
 
+  // 영상 카테고리는 "이미지" 대신 "영상" 배지로 표기(라이브 링크 없으면 미리보기 라이트박스).
   const badge = hasLive
-    ? { label: "LIVE", color: "#22c55e" }
-    : showImage
-      ? { label: "이미지", color: "rgba(255,255,255,0.55)" }
-      : { label: "준비중", color: "rgba(255,255,255,0.45)" };
+    ? { label: isVideo ? "영상" : "LIVE", color: isVideo ? "#ff8a80" : "#22c55e" }
+    : isVideo
+      ? { label: "영상", color: "#ff8a80" }
+      : showImage
+        ? { label: "이미지", color: "rgba(255,255,255,0.55)" }
+        : { label: "준비중", color: "rgba(255,255,255,0.45)" };
 
   const inner = (
     <>
@@ -79,7 +83,7 @@ export default function PortfolioCard({
               {item.title}
             </span>
             <span style={{ marginTop: 8, fontSize: "0.72rem", color: "rgba(255,255,255,0.72)" }}>
-              {hasLive ? (item.tags?.[0] ?? "콘텐츠 보기") : "미리보기 준비중"}
+              {hasLive ? (item.tags?.[0] ?? "콘텐츠 보기") : isVideo ? "영상 준비중" : "미리보기 준비중"}
             </span>
           </div>
         )}
@@ -157,7 +161,16 @@ export default function PortfolioCard({
             transition: "color 0.2s",
           }}
         >
-          {hasLive ? "사이트 방문" : showImage ? "이미지 보기" : "미리보기 보기"} <span aria-hidden>→</span>
+          {hasLive
+            ? isVideo
+              ? "영상 보기"
+              : "사이트 방문"
+            : isVideo
+              ? "영상 미리보기"
+              : showImage
+                ? "이미지 보기"
+                : "미리보기 보기"}{" "}
+          <span aria-hidden>→</span>
         </span>
       </div>
     </>
