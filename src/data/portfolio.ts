@@ -199,19 +199,8 @@ export const portfolioItems: PortfolioItem[] = [
     accent: "#78350f",
   },
 
-  // ── 국내마케팅 · 올라라의원 (한국 메인) ──────────────────────
-  {
-    id: "olara",
-    regions: ["domestic"],
-    category: "homepage",
-    title: "올라라의원 (한국)",
-    summary: "압구정 피부과 · 리프팅 — 한국 메인 사이트",
-    thumbnail: "/portfolio/olara.png",
-    liveUrl: "https://www.olara.co.kr",
-    tags: ["의료", "브랜드"],
-    featured: true,
-    accent: "#7c3aed",
-  },
+  // 올라라의원 한국 메인 사이트(olara.co.kr)는 클라이언트 자체 제작분이라 제외.
+  // 열정의시간이 만든 중국(간체)·대만(번체) 현지화 페이지만 포트폴리오에 노출(아래 참조).
 
   // ── 일본마케팅 · 홈페이지 ────────────────────────────────────
   {
