@@ -42,7 +42,7 @@ export default function HeroSection() {
           fontWeight: 300,
         }}
       >
-        13년의 노하우. 단순한 유입량이 아닌,
+        10년 이상의 노하우. 단순한 유입량이 아닌,
         <br />
         병원의 실질적 매출을 만드는<br className="sm:hidden" /> &lsquo;수익 구조&rsquo; 자체를 설계합니다.
       </p>
