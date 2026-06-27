@@ -29,9 +29,10 @@ export interface ContentPost {
 export const blogPosts: ContentPost[] = [
   {
     slug: "japan-line-marketing",
+    coverImageUrl: "/time/blog/japan-line-marketing.webp",
     title: "일본 환자 유치, 라인(LINE) 마케팅이 인스타그램보다 중요한 이유",
     excerpt:
-      "일본 환자 유치는 인스타그램 노출만으로 끝나지 않습니다. 문의가 실제 내원으로 이어지는 핵심은 라인(LINE) 1:1 상담 설계입니다. 13년 현장에서 검증한 일본 마케팅 구조를 정리했습니다.",
+      "일본 환자 유치는 인스타그램 노출만으로 끝나지 않습니다. 문의가 실제 내원으로 이어지는 핵심은 라인(LINE) 1:1 상담 설계입니다. 10년 이상 현장에서 검증한 일본 마케팅 구조를 정리했습니다.",
     date: "2026-06-23",
     category: "일본마케팅",
     tags: ["일본마케팅", "일본환자유치", "라인마케팅", "해외환자유치", "의료관광마케팅"],
@@ -85,6 +86,7 @@ export const blogPosts: ContentPost[] = [
   },
   {
     slug: "china-xiaohongshu-guide",
+    coverImageUrl: "/time/blog/china-xiaohongshu-guide.webp",
     title: "중국 환자를 병원으로 데려오는 샤오홍슈(小红书) 마케팅 실전 가이드",
     excerpt:
       "중국 의료관광 마케팅의 시작은 샤오홍슈입니다. 단순 노출이 아니라 검색·후기·키닥터(KOL) 구조를 어떻게 짜느냐가 중국 환자 유치의 성패를 가릅니다. 실전 관점에서 정리했습니다.",
@@ -142,6 +144,7 @@ export const blogPosts: ContentPost[] = [
   },
   {
     slug: "taiwan-multichannel",
+    coverImageUrl: "/time/blog/taiwan-multichannel.webp",
     title: "대만 환자 유치, 왜 한 채널이 아니라 ‘조합’으로 접근해야 하나",
     excerpt:
       "대만은 페이스북·인스타그램·라인·유튜브가 모두 살아있는 시장입니다. 한 채널에 올인하는 대신 채널 조합과 역할 분담을 어떻게 설계하느냐가 대만 환자 유치의 핵심입니다.",
@@ -195,9 +198,10 @@ export const blogPosts: ContentPost[] = [
   },
   {
     slug: "hospital-china-marketing",
+    coverImageUrl: "/time/blog/hospital-china-marketing.webp",
     title: "병원 중국마케팅, 돈 쓰고도 중국 환자가 안 오는 병원의 공통점",
     excerpt:
-      "병원 중국마케팅에 적지 않은 비용을 쓰고도 문의가 늘지 않는 병원에는 공통된 패턴이 있습니다. 노출은 샀지만 ‘전환 구조’를 사지 않은 경우입니다. 13년 현장에서 본 실패 패턴과 해법을 정리했습니다.",
+      "병원 중국마케팅에 적지 않은 비용을 쓰고도 문의가 늘지 않는 병원에는 공통된 패턴이 있습니다. 노출은 샀지만 ‘전환 구조’를 사지 않은 경우입니다. 10년 이상 현장에서 본 실패 패턴과 해법을 정리했습니다.",
     date: "2026-06-23",
     category: "중국마케팅",
     tags: [
@@ -260,6 +264,7 @@ export const blogPosts: ContentPost[] = [
   },
   {
     slug: "foreign-patient-attraction-guide",
+    coverImageUrl: "/time/blog/foreign-patient-attraction-guide.webp",
     title: "외국인환자유치, 등록부터 마케팅·내원까지 완벽 가이드",
     excerpt:
       "외국인환자유치는 마케팅 이전에 ‘유치업 등록’이라는 법적 요건에서 출발합니다. 등록 절차부터 위탁계약, 현지 마케팅, 내원·사후관리까지 병원이 알아야 할 전 과정을 정리했습니다.",
@@ -309,7 +314,7 @@ export const blogPosts: ContentPost[] = [
       { type: "h2", text: "열정의시간이 ‘풀 프로세스’로 보는 이유" },
       {
         type: "p",
-        text: "열정의시간은 등록·계약 검토부터 일·중·대 현지 마케팅, 상담, 내원·사후관리까지 전 과정을 하나의 흐름으로 설계합니다. 13년 노하우의 국가별 전담팀이 어느 단계가 비어 있는지부터 무료로 진단해 드립니다.",
+        text: "열정의시간은 등록·계약 검토부터 일·중·대 현지 마케팅, 상담, 내원·사후관리까지 전 과정을 하나의 흐름으로 설계합니다. 10년 이상 노하우의 국가별 전담팀이 어느 단계가 비어 있는지부터 무료로 진단해 드립니다.",
       },
     ],
     faq: [

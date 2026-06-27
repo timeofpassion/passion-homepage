@@ -311,7 +311,7 @@ export default async function BlogPostPage({
                   fontWeight: 300,
                 }}
               >
-                13년 노하우의 일본·중국·대만 전담팀이 현재 채널 구조의 끊긴
+                10년 이상 노하우의 일본·중국·대만 전담팀이 현재 채널 구조의 끊긴
                 지점을 무료로 진단해 드립니다.
               </p>
               <a

@@ -20,7 +20,7 @@ export const servicesData: ServiceData[] = [
     sysId: "SYS.01",
     title: "국내마케팅팀",
     shortDesc: "블로그 SEO · 플레이스 · 광고 · 플랫폼 운영",
-    fullDesc: "13년 경험의 병원 마케팅 전문 팀입니다. 블로그 SEO부터 네이버 플레이스 최적화, SNS 광고까지 국내 모든 채널을 아우릅니다.",
+    fullDesc: "10년 이상 경험의 병원 마케팅 전문 팀입니다. 블로그 SEO부터 네이버 플레이스 최적화, SNS 광고까지 국내 모든 채널을 아우릅니다.",
     services: [
       { name: "블로그 SEO", desc: "병원 전문 콘텐츠로 검색 상위권 달성" },
       { name: "네이버 플레이스", desc: "플레이스 최적화로 환자 유입 증대" },

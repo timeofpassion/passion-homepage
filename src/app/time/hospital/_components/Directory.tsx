@@ -175,7 +175,7 @@ export default function Directory({
       <div className="trust-strip">
         <div className="ts-in in">
           <div className="ts">
-            <b>13년</b>의료 마케팅
+            <b>10년 이상</b>의료 마케팅
           </div>
           <div className="ts">
             <b>50+</b>파트너 병원 경험
@@ -197,7 +197,7 @@ export default function Directory({
               병원과 <b>함께 일해 온</b> 회사입니다.
             </div>
             <p>
-              열정의시간은 13년간 한국 병원들의 마케팅을 만들어 온 회사입니다.
+              열정의시간은 10년 이상 한국 병원들의 마케팅을 만들어 온 회사입니다.
               누가 어떤 시술을 잘하는지, 어떤 병원에 한국인 환자가 돌아오는지 —
               광고가 아니라 데이터로 알고 있습니다.
             </p>

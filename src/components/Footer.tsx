@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="site-footer__col">
           <div className="site-footer__brand">열정의시간</div>
           <p>
-            13년의 노하우.
+            10년 이상의 노하우.
             <br />
             병원의 실질적 매출을 만드는
             <br />
