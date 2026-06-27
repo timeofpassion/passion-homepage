@@ -6,14 +6,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
-import { blogPosts, getAllPosts, getPostBySlug } from "@/data/blog";
+import { loadPosts, loadPostBySlug, loadAllSlugs } from "@/lib/time-blog-source";
 
 const BASE = "https://www.timeofpassion.com";
 const OG_IMAGE = `${BASE}/time/og-time-v2.jpg`;
 const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
-export function generateStaticParams() {
-  return blogPosts.map((p) => ({ slug: p.slug }));
+// 인트라넷에서 새로 발행한 글도 on-demand 로 렌더(빌드 후 추가분)
+export const revalidate = 300;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const slugs = await loadAllSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -22,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await loadPostBySlug(slug);
   if (!post) return {};
 
   const url = `${BASE}/time/blog/${post.slug}`;
@@ -57,13 +62,13 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await loadPostBySlug(slug);
   if (!post) notFound();
 
   const url = `${BASE}/time/blog/${post.slug}`;
 
   // 같은 권역(카테고리) 글을 우선해 관련글 최대 3개
-  const related = getAllPosts()
+  const related = (await loadPosts())
     .filter((p) => p.slug !== post.slug)
     .sort((a, b) => {
       const ac = a.category === post.category ? 0 : 1;
