@@ -25,6 +25,14 @@ const chipStyle: React.CSSProperties = {
   letterSpacing: ".04em",
 };
 
+// 카테고리별 기본 실사 커버 — 인트라넷에서 커버 미지정 글에 자동 적용(무배포 자동화)
+const CATEGORY_DEFAULT_COVER: Record<string, string> = {
+  중국마케팅: "/time/blog/hospital-china-marketing.webp",
+  일본마케팅: "/time/blog/hospital-japan-marketing.webp",
+  대만마케팅: "/time/blog/hospital-taiwan-marketing.webp",
+  해외마케팅: "/time/blog/foreign-patient-attraction-guide.webp",
+};
+
 export function BlogThumb({
   category,
   coverImageUrl,
@@ -32,13 +40,14 @@ export function BlogThumb({
   category: string;
   coverImageUrl?: string;
 }) {
-  if (coverImageUrl) {
+  const cover = coverImageUrl || CATEGORY_DEFAULT_COVER[category];
+  if (cover) {
     return (
       <div
         style={{
           position: "relative",
           height: 178,
-          backgroundImage: `linear-gradient(0deg,rgba(0,0,0,.5),rgba(0,0,0,.08)),url(${coverImageUrl})`,
+          backgroundImage: `linear-gradient(0deg,rgba(0,0,0,.5),rgba(0,0,0,.08)),url(${cover})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
