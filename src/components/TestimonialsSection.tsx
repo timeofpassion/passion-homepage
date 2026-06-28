@@ -83,8 +83,46 @@ function TestimonialCard({ t }: { t: Testimonial }) {
         <div className="scan-line" style={t.scanDelay ? { animationDelay: t.scanDelay } : undefined} />
       )}
 
+      {/* Large quote watermark */}
+      <span
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: 6,
+          right: 18,
+          fontSize: "5.5rem",
+          lineHeight: 1,
+          fontWeight: 900,
+          fontFamily: "Georgia, serif",
+          color: "rgba(204,0,0,0.14)",
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      >
+        &rdquo;
+      </span>
+
       <div style={{ position: "relative", zIndex: 10, display: "flex", flexDirection: "column", height: "100%" }}>
-        <div style={{ marginBottom: 16, paddingBottom: 14, borderBottom: "1px solid rgba(255,255,255,0.08)" }} />
+        {/* Rating */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 4,
+            marginBottom: 16,
+            paddingBottom: 14,
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
+          {Array.from({ length: 5 }).map((_, i) => (
+            <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill="#cc0000" aria-hidden="true">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          ))}
+          <span className="font-mono-sys" style={{ marginLeft: "auto", fontSize: 10, color: "rgba(255,255,255,0.3)" }}>
+            {t.recId}
+          </span>
+        </div>
 
         {/* Content */}
         <div style={{ flex: 1, marginBottom: 28 }}>
@@ -151,9 +189,36 @@ export default function TestimonialsSection() {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>
+          <div
+            className="font-mono-sys"
+            style={{
+              fontSize: 12,
+              letterSpacing: "0.2em",
+              color: "#FFD700",
+              marginBottom: 18,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 14,
+            }}
+          >
+            <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+            CLIENT VOICES
+            <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+          </div>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900 }}>
             함께한 원장님들의 이야기
           </h2>
+          <p
+            style={{
+              marginTop: 18,
+              fontSize: "clamp(0.95rem, 1.6vw, 1.1rem)",
+              color: "rgba(255,255,255,0.5)",
+              fontWeight: 300,
+            }}
+          >
+            성과는 말이 아니라 숫자로 증명됩니다.
+          </p>
         </div>
 
         {/* Grid - 2 columns on large */}

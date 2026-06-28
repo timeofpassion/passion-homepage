@@ -882,3 +882,201 @@ body {
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
 }
+
+/* ============================================ */
+/* SCROLL REVEAL + ENTRANCE MOTION              */
+/* ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-anim {
+  opacity: 0;
+  animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ============================================ */
+/* HERO GLOW + SCROLL INDICATOR                 */
+/* ============================================ */
+.hero-glow {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: min(880px, 125vw);
+  height: min(880px, 125vw);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(204, 0, 0, 0.32) 0%,
+    rgba(204, 0, 0, 0.1) 32%,
+    transparent 64%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: heroGlowPulse 7s ease-in-out infinite;
+}
+@keyframes heroGlowPulse {
+  0%, 100% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+.scroll-indicator {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.32em;
+  color: rgba(255, 255, 255, 0.4);
+}
+.scroll-indicator svg {
+  animation: scrollNudge 1.8s ease-in-out infinite;
+}
+@keyframes scrollNudge {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+/* ============================================ */
+/* PRIMARY / GHOST BUTTONS                       */
+/* ============================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 34px;
+  background: #cc0000;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid #cc0000;
+  box-shadow: 0 12px 32px -10px rgba(204, 0, 0, 0.55);
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn-primary:hover {
+  background: #ff1a1a;
+  border-color: #ff1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px -10px rgba(204, 0, 0, 0.65);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-2px);
+}
+
+/* ============================================ */
+/* STATS BAND                                    */
+/* ============================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.stat-cell {
+  position: relative;
+  text-align: center;
+  padding: 1.4rem 1rem;
+}
+/* 데스크톱(단일 행)에서만 컬럼 사이 세로 구분선 */
+@media (min-width: 768px) {
+  .stat-cell + .stat-cell::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 18%;
+    bottom: 18%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+.stat-value {
+  font-weight: 900;
+  font-size: clamp(2.3rem, 6vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+.stat-value .stat-unit {
+  color: #cc0000;
+  font-size: 0.55em;
+  margin-left: 2px;
+}
+.stat-label {
+  margin-top: 0.7rem;
+  font-size: clamp(0.78rem, 1.6vw, 0.92rem);
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+}
+
+/* ============================================ */
+/* REDUCED MOTION — accessibility               */
+/* ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .hero-anim {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .hero-glow,
+  .scan-line,
+  .scroll-indicator svg {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
