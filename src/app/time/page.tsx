@@ -47,7 +47,6 @@ import LastUpdated from "@/components/LastUpdated";
 import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
 import ServicesSection from "@/components/ServicesSection";
-import ServiceTeamsSection from "@/components/ServiceTeamsSection";
 import PortfolioSection from "@/components/PortfolioSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Link from "next/link";
@@ -109,9 +108,6 @@ export default async function Home() {
         </Reveal>
         <Reveal>
           <ServicesSection />
-        </Reveal>
-        <Reveal>
-          <ServiceTeamsSection />
         </Reveal>
         <Reveal>
           <PortfolioSection />

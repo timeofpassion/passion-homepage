@@ -1018,45 +1018,64 @@ body {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.8rem, 2vw, 1.4rem);
 }
 @media (min-width: 768px) {
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-.stat-cell {
+.stat-card {
   position: relative;
   text-align: center;
-  padding: 1.4rem 1rem;
+  padding: clamp(1.6rem, 3vw, 2.4rem) 1rem clamp(1.4rem, 2.5vw, 2rem);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(204, 0, 0, 0.12) 0%, transparent 60%),
+    rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease,
+    background 0.4s ease;
 }
-/* 데스크톱(단일 행)에서만 컬럼 사이 세로 구분선 */
-@media (min-width: 768px) {
-  .stat-cell + .stat-cell::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 18%;
-    bottom: 18%;
-    width: 1px;
-    background: rgba(255, 255, 255, 0.08);
-  }
+.stat-card:hover {
+  border-color: rgba(204, 0, 0, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 18px 44px -16px rgba(204, 0, 0, 0.4);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(204, 0, 0, 0.2) 0%, transparent 60%),
+    rgba(255, 255, 255, 0.04);
+}
+.stat-card__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #cc0000, transparent);
+  opacity: 0.85;
 }
 .stat-value {
   font-weight: 900;
-  font-size: clamp(2.3rem, 6vw, 3.6rem);
+  font-size: clamp(2.8rem, 7vw, 4.4rem);
   line-height: 1;
-  letter-spacing: -0.02em;
-  color: #ffffff;
+  letter-spacing: -0.03em;
+  background: linear-gradient(180deg, #ffffff 30%, #ff6a6a 140%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 38px rgba(204, 0, 0, 0.35);
 }
 .stat-value .stat-unit {
-  color: #cc0000;
-  font-size: 0.55em;
-  margin-left: 2px;
+  -webkit-text-fill-color: #ff3b3b;
+  color: #ff3b3b;
+  font-size: 0.42em;
+  margin-left: 3px;
+  text-shadow: none;
 }
 .stat-label {
-  margin-top: 0.7rem;
-  font-size: clamp(0.78rem, 1.6vw, 0.92rem);
-  color: rgba(255, 255, 255, 0.55);
+  margin-top: 0.9rem;
+  font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
 }
 

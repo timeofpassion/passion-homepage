@@ -13,8 +13,8 @@ interface Stat {
 // 사이트 기존 사실 기반 수치만 사용(새 수치 창작 금지).
 const STATS: Stat[] = [
   { value: 10, suffix: "년+", label: "병원 마케팅 노하우" },
-  { value: 6, suffix: "개 팀", label: "동시에 움직이는 전문팀" },
-  { value: 4, suffix: "개국", label: "국내·일본·중국·대만 통합" },
+  { value: 6, suffix: "개 팀", label: "한 지붕 아래 전문팀" },
+  { value: 4, suffix: "개국", label: "국내·일본·중국·대만" },
   { value: 2.4, decimals: 1, suffix: "배", label: "상담 전환율 개선" },
 ];
 
@@ -25,7 +25,7 @@ function format(n: number, decimals = 0) {
   });
 }
 
-function StatCell({ stat, run }: { stat: Stat; run: boolean }) {
+function StatCard({ stat, run }: { stat: Stat; run: boolean }) {
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
@@ -43,8 +43,7 @@ function StatCell({ stat, run }: { stat: Stat; run: boolean }) {
     const tick = (ts: number) => {
       if (!start) start = ts;
       const p = Math.min((ts - start) / duration, 1);
-      // easeOutCubic
-      const eased = 1 - Math.pow(1 - p, 3);
+      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
       setDisplay(stat.value * eased);
       if (p < 1) raf = requestAnimationFrame(tick);
       else setDisplay(stat.value);
@@ -54,7 +53,8 @@ function StatCell({ stat, run }: { stat: Stat; run: boolean }) {
   }, [run, stat.value]);
 
   return (
-    <div className="stat-cell">
+    <div className="stat-card">
+      <span className="stat-card__bar" aria-hidden="true" />
       <div className="stat-value font-mono-sys">
         {stat.prefix}
         {format(display, stat.decimals)}
@@ -93,20 +93,29 @@ export default function StatsSection() {
   }, []);
 
   return (
-    <section style={{ position: "relative", zIndex: 20, padding: "2rem 0 4rem" }}>
-      <div style={{ maxWidth: 1000, margin: "0 auto", padding: "0 6%" }}>
+    <section style={{ position: "relative", zIndex: 20, padding: "1rem 0 5rem" }}>
+      <div style={{ maxWidth: 1040, margin: "0 auto", padding: "0 6%" }}>
         <div
-          ref={ref}
-          className="glass-card stats-grid"
+          className="font-mono-sys"
           style={{
-            padding: "1rem 0.5rem",
-            position: "relative",
-            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 14,
+            fontSize: 12,
+            letterSpacing: "0.22em",
+            color: "#FFD700",
+            marginBottom: "2.2rem",
           }}
         >
-          <div className="tech-border" style={{ position: "absolute", inset: 0 }} />
+          <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+          BY THE NUMBERS
+          <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+        </div>
+
+        <div ref={ref} className="stats-grid">
           {STATS.map((stat) => (
-            <StatCell key={stat.label} stat={stat} run={run} />
+            <StatCard key={stat.label} stat={stat} run={run} />
           ))}
         </div>
       </div>

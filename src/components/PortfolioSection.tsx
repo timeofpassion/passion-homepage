@@ -15,10 +15,10 @@ export default function PortfolioSection() {
             PORTFOLIO
           </p>
           <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 900, marginBottom: 14 }}>
-            열정의시간이 만든 <span style={{ color: "#cc0000" }}>홈페이지</span>
+            열정의시간이 만든 <span style={{ color: "#cc0000" }}>결과물</span>
           </h2>
           <p style={{ fontSize: "clamp(0.9rem, 1.6vw, 1.05rem)", color: "rgba(255,255,255,0.55)" }}>
-            기획부터 디자인·퍼블리싱까지. 직접 만든 작업물을 확인하세요.
+            홈페이지 · 영상 · SNS 콘텐츠 · 해외 현지화까지. 기획부터 제작·운영까지 직접 만든 작업을 확인하세요.
           </p>
         </div>
       </div>

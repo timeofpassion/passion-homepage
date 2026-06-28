@@ -1,12 +1,5 @@
 import Link from "next/link";
 
-const TRUST = [
-  { value: "10년+", label: "노하우" },
-  { value: "6개 팀", label: "전문 인력" },
-  { value: "4개국", label: "통합 마케팅" },
-  { value: "100%", label: "채널 소유권" },
-];
-
 export default function HeroSection() {
   return (
     <section
@@ -153,52 +146,14 @@ export default function HeroSection() {
         </a>
       </div>
 
-      {/* Trust strip */}
-      <div
-        className="hero-anim"
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          gap: "0",
-          marginTop: "3rem",
-          position: "relative",
-          zIndex: 1,
-          animationDelay: "0.42s",
-        }}
-      >
-        {TRUST.map((t, i) => (
-          <div
-            key={t.label}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "0 clamp(0.8rem, 3vw, 1.6rem)",
-              borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.1)" : "none",
-            }}
-          >
-            <span
-              className="font-mono-sys"
-              style={{ fontSize: "clamp(1rem, 2.4vw, 1.35rem)", fontWeight: 900, color: "#fff" }}
-            >
-              {t.value}
-            </span>
-            <span style={{ fontSize: "clamp(0.72rem, 1.6vw, 0.85rem)", color: "rgba(255,255,255,0.5)" }}>
-              {t.label}
-            </span>
-          </div>
-        ))}
-      </div>
-
       {/* Scroll indicator */}
       <div
         className="hero-anim scroll-indicator"
         style={{
-          marginTop: "3.4rem",
+          marginTop: "3.8rem",
           position: "relative",
           zIndex: 1,
-          animationDelay: "0.6s",
+          animationDelay: "0.5s",
         }}
       >
         SCROLL

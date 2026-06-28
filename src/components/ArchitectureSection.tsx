@@ -2,7 +2,7 @@ import OrgChart from "./OrgChart";
 
 export default function ArchitectureSection() {
   return (
-    <section style={{ position: "relative", zIndex: 20, padding: "10rem 0" }}>
+    <section id="team" style={{ position: "relative", zIndex: 20, padding: "10rem 0" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%" }}>
         {/* Section header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>
