@@ -2,7 +2,7 @@ import OrgChart from "./OrgChart";
 
 export default function ArchitectureSection() {
   return (
-    <section id="team" style={{ position: "relative", zIndex: 20, padding: "10rem 0" }}>
+    <section id="team" style={{ position: "relative", zIndex: 20, padding: "10rem 0 5rem" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%" }}>
         {/* Section header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>
@@ -35,8 +35,12 @@ export default function ArchitectureSection() {
             <p style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", color: "rgba(255,255,255,0.75)", fontWeight: 300, lineHeight: 1.7, marginBottom: 16 }}>
               대부분의 마케팅 업체는 한 가지를 잘합니다.
             </p>
-            <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", marginBottom: 20 }}>
-              국내 콘텐츠 잘하는 곳, 일본 마케팅 한다는 곳, 영상 제작하는 곳.
+            <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", marginBottom: 20, lineHeight: 1.8 }}>
+              국내 콘텐츠 잘하는 곳,
+              <br />
+              일본 마케팅 한다는 곳,
+              <br />
+              영상 제작하는 곳.
             </p>
             <p style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", color: "rgba(255,255,255,0.75)", fontWeight: 300, lineHeight: 1.7 }}>
               그래서 원장님들은 업체를 3~4개 쓰고,{" "}
@@ -92,7 +96,8 @@ export default function ArchitectureSection() {
 
           <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
             <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", fontWeight: 300 }}>
-              이 구조를 갖춘 마케팅 에이전시,{" "}
+              이 구조를 갖춘 마케팅 에이전시,
+              <br />
               <span style={{ fontWeight: 700, color: "#fff", borderBottom: "1px solid #cc0000", paddingBottom: 2 }}>
                 국내에서 흔하지 않습니다.
               </span>

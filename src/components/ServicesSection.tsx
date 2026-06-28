@@ -263,7 +263,7 @@ function LayerCard({ layer, isLast }: { layer: Layer; isLast: boolean }) {
 
 export default function ServicesSection() {
   return (
-    <section id="services" style={{ position: "relative", zIndex: 20, padding: "8rem 0" }}>
+    <section id="services" style={{ position: "relative", zIndex: 20, padding: "4rem 0 8rem" }}>
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
@@ -285,7 +285,7 @@ export default function ServicesSection() {
             <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
           </div>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 900, lineHeight: 1.25 }}>
-            마케팅 3개를 따로 파는 게 아니라,
+            마케팅을 3개로 따로 파는 게 아니라,
             <br />
             <span style={{ borderBottom: "2px solid #cc0000", paddingBottom: 4 }}>하나의 흐름</span>으로 쌓습니다.
           </h2>
@@ -303,14 +303,13 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        {/* Stack flow indicator */}
+        {/* Stack flow indicator (세로 진행) */}
         <div
           style={{
             display: "flex",
-            flexWrap: "wrap",
+            flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
+            gap: 8,
             marginBottom: "4rem",
           }}
         >
@@ -319,25 +318,33 @@ export default function ServicesSection() {
             { ko: "해외 마케팅", sub: "확장" },
             { ko: "해외환자 유치", sub: "전환·정착" },
           ].map((s, i) => (
-            <div key={s.ko} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div
+              key={s.ko}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}
+            >
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  padding: "10px 16px",
+                  width: 240,
+                  maxWidth: "80vw",
+                  padding: "12px 16px",
                   background: "rgba(255,255,255,0.03)",
                   border: "1px solid rgba(255,255,255,0.12)",
                 }}
               >
-                <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "#fff" }}>{s.ko}</span>
+                <span style={{ fontSize: "0.95rem", fontWeight: 700, color: "#fff" }}>{s.ko}</span>
                 <span className="font-mono-sys" style={{ fontSize: 10, color: "#FFD700", marginTop: 2 }}>
                   {s.sub}
                 </span>
               </div>
               {i < 2 && (
-                <span className="font-mono-sys" style={{ color: "#cc0000", fontSize: "1.2rem", fontWeight: 900 }}>
-                  →
+                <span
+                  className="font-mono-sys"
+                  style={{ color: "#cc0000", fontSize: "1.3rem", fontWeight: 900, lineHeight: 1 }}
+                >
+                  ↓
                 </span>
               )}
             </div>
