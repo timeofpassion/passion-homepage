@@ -30,6 +30,9 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   padding-bottom: 100px; /* space for fixed CTA */
+  /* 한글 가독성: 어절 단위로만 줄바꿈(단어 중간 끊김 방지) — 모바일에서 특히 중요 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .font-mono-sys {

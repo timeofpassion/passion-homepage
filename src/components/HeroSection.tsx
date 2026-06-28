@@ -91,10 +91,9 @@ export default function HeroSection() {
           animationDelay: "0.2s",
         }}
       >
-        10년 이상의 노하우. 단순한 유입량이 아닌,
-        <br />
-        병원의 실질적 매출을 만드는
-        <br className="sm:hidden" /> &lsquo;수익 구조&rsquo; 자체를 설계합니다.
+        10년 이상의 노하우. 단순한 유입량이 아닌,{" "}
+        <br className="hidden sm:block" />
+        병원의 실질적 매출을 만드는 &lsquo;수익 구조&rsquo; 자체를 설계합니다.
       </p>
 
       <p
@@ -111,8 +110,8 @@ export default function HeroSection() {
           animationDelay: "0.26s",
         }}
       >
-        국내 · 일본 · 중국 · 대만을 한 곳에서 운영하는
-        <br />
+        국내 · 일본 · 중국 · 대만을 한 곳에서 운영하는{" "}
+        <br className="hidden sm:block" />
         병원 마케팅 통합 전문기업입니다.
       </p>
 

@@ -39,9 +39,9 @@ export default function ArchitectureSection() {
               국내 콘텐츠 잘하는 곳, 일본 마케팅 한다는 곳, 영상 제작하는 곳.
             </p>
             <p style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", color: "rgba(255,255,255,0.75)", fontWeight: 300, lineHeight: 1.7 }}>
-              그래서 원장님들은 업체를 3~4개 쓰고,
-              <br />
-              커뮤니케이션 비용과 조율 비용이<br className="sm:hidden" /> 마케팅 비용만큼 나갑니다.
+              그래서 원장님들은 업체를 3~4개 쓰고,{" "}
+              <br className="hidden sm:block" />
+              커뮤니케이션 비용과 조율 비용이 마케팅 비용만큼 나갑니다.
             </p>
           </div>
         </div>
@@ -74,8 +74,8 @@ export default function ArchitectureSection() {
             하나의 계약으로 6개 팀이 동시에 움직입니다.
           </p>
           <p style={{ fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", color: "rgba(255,255,255,0.5)", fontWeight: 300, lineHeight: 1.7, marginBottom: "4rem" }}>
-            국내 콘텐츠가 해외용으로 현지화되고,
-            <br />
+            국내 콘텐츠가 해외용으로 현지화되고,{" "}
+            <br className="hidden sm:block" />
             국내에서 쌓은 리뷰가 해외 환자 신뢰로 연결됩니다.
           </p>
 
