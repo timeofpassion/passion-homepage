@@ -155,10 +155,10 @@ const DICTS: Record<Locale, Dict> = {
     strengths: "강점",
     established: "개원",
     visitSite: "병원 홈페이지",
-    inquire: "문의하기",
+    inquire: "자세히 보기",
     backToList: "목록으로",
     form: {
-      heading: "이 병원에 문의하기",
+      heading: "열정의시간 무료 상담",
       name: "이름",
       contactType: "연락 수단",
       contact: "연락처",

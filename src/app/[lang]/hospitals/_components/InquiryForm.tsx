@@ -49,7 +49,7 @@ export default function InquiryForm({
   return (
     <form className="hp-form" onSubmit={submit}>
       <h2 className="hp-form__heading">{t.form.heading}</h2>
-      <p className="hp-form__hospital">{hospitalName}</p>
+      <p className="hp-form__hospital">관심 병원 · {hospitalName}</p>
 
       <label className="hp-form__label">
         {t.form.name}
