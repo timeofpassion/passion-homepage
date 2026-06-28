@@ -34,6 +34,14 @@ export function isLocale(v: string): v is Locale {
   return (LOCALES as readonly string[]).includes(v)
 }
 
+export type Doctor = {
+  name: string
+  title: string | null
+  specialty: string | null
+  bio: string | null
+  imageUrl: string | null
+}
+
 export type Hospital = {
   slug: string
   departments: string[]
@@ -42,7 +50,7 @@ export type Hospital = {
   logoUrl: string | null
   heroImageUrl: string | null
   galleryUrls: string[]
-  websiteUrl: string | null
+  doctors: Doctor[]
   name: string
   tagline: string | null
   summary: string | null
@@ -50,6 +58,26 @@ export type Hospital = {
   signatureTreatments: string[]
   seoTitle: string | null
   seoDescription: string | null
+}
+
+// 전 언어 묶음 — /hospital 통합 페이지(클라이언트 언어 토글)용.
+export type LocaleContent = {
+  name: string
+  tagline: string | null
+  summary: string | null
+  strengths: string[]
+  signatureTreatments: string[]
+}
+export type HospitalI18n = {
+  slug: string
+  departments: string[]
+  region: string | null
+  establishedYear: number | null
+  logoUrl: string | null
+  heroImageUrl: string | null
+  galleryUrls: string[]
+  doctors: Doctor[]
+  translations: Record<string, LocaleContent>
 }
 
 // 인트라넷 미응답·실데이터 0건일 때 화면이 비지 않도록 하는 폴백(데모/초기). ko 기준.
@@ -62,7 +90,7 @@ const SAMPLE_HOSPITALS: Hospital[] = [
     logoUrl: null,
     heroImageUrl: null,
     galleryUrls: [],
-    websiteUrl: null,
+    doctors: [],
     name: "샘플피부과의원",
     tagline: "색소·리프팅에 강한 강남 피부과",
     summary: "10년간 색소·리프팅 시술에 집중해 온 강남 피부과입니다.",
@@ -108,6 +136,82 @@ export async function getHospital(
   }
   return SAMPLE_HOSPITALS.find((h) => h.slug === slug) ?? null
 }
+
+// /hospital 통합 페이지 — 전 언어 묶음을 한 번에(allLocales=1). 클라이언트가 토글로 전환.
+const SAMPLE_I18N: HospitalI18n[] = SAMPLE_HOSPITALS.map((h) => ({
+  slug: h.slug,
+  departments: h.departments,
+  region: h.region,
+  establishedYear: h.establishedYear,
+  logoUrl: h.logoUrl,
+  heroImageUrl: h.heroImageUrl,
+  galleryUrls: h.galleryUrls,
+  doctors: h.doctors,
+  translations: {
+    ko: {
+      name: h.name,
+      tagline: h.tagline,
+      summary: h.summary,
+      strengths: h.strengths,
+      signatureTreatments: h.signatureTreatments,
+    },
+  },
+}))
+
+// API 응답을 HospitalI18n 으로 정규화. 구버전 API(단일 locale·translations 없음)도 ko 맵으로 폴백.
+function normalizeI18n(h: Record<string, unknown>): HospitalI18n {
+  const get = <T>(k: string, d: T): T => (h[k] === undefined || h[k] === null ? d : (h[k] as T))
+  const base = {
+    slug: get("slug", ""),
+    departments: get<string[]>("departments", []),
+    region: get<string | null>("region", null),
+    establishedYear: get<number | null>("establishedYear", null),
+    logoUrl: get<string | null>("logoUrl", null),
+    heroImageUrl: get<string | null>("heroImageUrl", null),
+    galleryUrls: get<string[]>("galleryUrls", []),
+    doctors: get<Doctor[]>("doctors", []),
+  }
+  const tr = h.translations as Record<string, LocaleContent> | undefined
+  if (tr && typeof tr === "object") return { ...base, translations: tr }
+  // 구형식 폴백 — 단일 locale 필드를 ko 맵으로
+  return {
+    ...base,
+    translations: {
+      ko: {
+        name: get<string>("name", base.slug),
+        tagline: get<string | null>("tagline", null),
+        summary: get<string | null>("summary", null),
+        strengths: get<string[]>("strengths", []),
+        signatureTreatments: get<string[]>("signatureTreatments", []),
+      },
+    },
+  }
+}
+
+export async function getAllHospitals(): Promise<{ hospitals: HospitalI18n[]; usingSample: boolean }> {
+  try {
+    const res = await fetch(`${INTRANET_URL}/api/public/partner-hospitals?allLocales=1`, {
+      next: { revalidate: 300 },
+    })
+    if (!res.ok) throw new Error(`status ${res.status}`)
+    const raw = await res.json()
+    const list = (Array.isArray(raw) ? raw : []).map(normalizeI18n)
+    if (list.length === 0) return { hospitals: SAMPLE_I18N, usingSample: true }
+    return { hospitals: list, usingSample: false }
+  } catch {
+    return { hospitals: SAMPLE_I18N, usingSample: true }
+  }
+}
+
+// /hospital 언어 토글 (한국어·영어·일본어·중국어·대만어)
+export const TOGGLE_LOCALES = [
+  { value: "ko", label: "한국어" },
+  { value: "en", label: "English" },
+  { value: "ja", label: "日本語" },
+  { value: "zh-CN", label: "简体中文" },
+  { value: "zh-TW", label: "繁體中文" },
+] as const
+export type ToggleLocale = (typeof TOGGLE_LOCALES)[number]["value"]
 
 // 진료과목 고정 표시 순서(의료관광 수요 높은 순). 데이터에 없는 과목은 뒤에 자동 추가.
 export const DEPARTMENT_ORDER = [
