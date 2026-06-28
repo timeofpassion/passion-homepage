@@ -205,6 +205,10 @@ export default function TimeLayout({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {/* JS 미실행 시 스크롤 리빌 콘텐츠가 숨지 않도록 폴백 */}
+      <noscript>
+        <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
+      </noscript>
       {children}
     </>
   );

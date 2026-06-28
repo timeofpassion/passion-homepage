@@ -1,3 +1,4 @@
+import Link from "next/link";
 import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
 
 // /time 메인 진입 섹션: 헤더 + 포트폴리오 갤러리(권역 탭).
@@ -15,15 +16,24 @@ export default function PortfolioSection() {
             PORTFOLIO
           </p>
           <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 900, marginBottom: 14 }}>
-            열정의시간이 만든 <span style={{ color: "#cc0000" }}>홈페이지</span>
+            열정의시간이 만든 <span style={{ color: "#cc0000" }}>결과물</span>
           </h2>
           <p style={{ fontSize: "clamp(0.9rem, 1.6vw, 1.05rem)", color: "rgba(255,255,255,0.55)" }}>
-            기획부터 디자인·퍼블리싱까지. 직접 만든 작업물을 확인하세요.
+            홈페이지 · 영상 · SNS 콘텐츠 · 해외 현지화까지. 기획부터 제작·운영까지 직접 만든 작업을 확인하세요.
           </p>
         </div>
       </div>
 
       <PortfolioGallery />
+
+      <div style={{ textAlign: "center", marginTop: "3rem", padding: "0 6%" }}>
+        <Link href="/time/portfolio" className="btn-ghost">
+          포트폴리오 더 보러가기
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </Link>
+      </div>
     </section>
   );
 }
