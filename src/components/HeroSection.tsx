@@ -35,7 +35,7 @@ export default function HeroSection() {
         }}
       >
         <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
-        MEDICAL MARKETING SYSTEM · SINCE 2013
+        MEDICAL MARKETING SYSTEM · 10Y+ EXPERTISE
         <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
       </div>
 

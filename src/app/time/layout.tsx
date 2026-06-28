@@ -95,8 +95,13 @@ const jsonLd = {
         url: "https://www.timeofpassion.com",
       },
       description:
-        "병원 마케팅 전문 에이전시. 국내 통합 마케팅부터 일본·중국·대만 해외환자 유치까지.",
-      foundingDate: "2013",
+        "병원 마케팅 전문 에이전시. 국내 통합 마케팅부터 일본·중국·대만 해외환자 유치까지. 대표의 병원 마케팅 운영 경력 10년 이상.",
+      foundingDate: "2023",
+      identifier: {
+        "@type": "PropertyValue",
+        name: "외국인환자 유치업 등록번호",
+        value: "A-2025-01-02-06178호",
+      },
       areaServed: [
         { "@type": "Country", name: "South Korea" },
         { "@type": "Country", name: "Japan" },
