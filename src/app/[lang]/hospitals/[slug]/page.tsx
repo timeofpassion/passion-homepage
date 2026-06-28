@@ -58,7 +58,7 @@ export default async function HospitalDetailPage({
           },
         }
       : {}),
-    ...(h.websiteUrl ? { url: h.websiteUrl } : {}),
+    // 직접 컨택 차단 — 병원 홈페이지 URL 은 공개 페이지·구조화데이터에 노출하지 않는다(모든 문의는 열정의시간으로).
     availableService: h.signatureTreatments.map((s) => ({
       "@type": "MedicalProcedure",
       name: s,
@@ -143,16 +143,7 @@ export default async function HospitalDetailPage({
             </section>
           )}
 
-          {h.websiteUrl && (
-            <a
-              href={h.websiteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hp-detail__site"
-            >
-              {t.visitSite} ↗
-            </a>
-          )}
+          {/* 직접 컨택 차단 — 병원 홈페이지 링크는 노출하지 않는다. 모든 문의는 아래 문의 폼(열정의시간 CRM)으로. */}
         </article>
 
         <aside className="hp-detail__aside">

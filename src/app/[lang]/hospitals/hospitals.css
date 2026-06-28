@@ -186,6 +186,32 @@
   max-height: 56%;
   object-fit: contain;
 }
+/* 사진(heroImageUrl)·로고가 없을 때 기본 썸네일 — 휑한 2글자 대신 브랜드 카드 */
+.hp-card__fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px;
+  text-align: center;
+}
+.hp-card__fallback-brand {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #e63329;
+}
+.hp-card__fallback-name {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.92);
+}
+.hp-card__fallback-dept {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
 .hp-card__body {
   padding: 18px 18px 20px;
   display: flex;

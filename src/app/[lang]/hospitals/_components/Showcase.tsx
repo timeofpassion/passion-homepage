@@ -77,7 +77,16 @@ export default function Showcase({
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={h.logoUrl} alt="" className="hp-card__logo" />
                     ) : (
-                      <span>{h.name.slice(0, 2)}</span>
+                      <div className="hp-card__fallback">
+                        <span className="hp-card__fallback-brand">TIME OF PASSION</span>
+                        <span className="hp-card__fallback-name">{h.name}</span>
+                        {h.departments[0] && (
+                          <span className="hp-card__fallback-dept">
+                            {h.departments[0]}
+                            {h.region ? ` · ${h.region}` : ""}
+                          </span>
+                        )}
+                      </div>
                     )}
                   </div>
                 )}
