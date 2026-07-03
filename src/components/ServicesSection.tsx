@@ -89,7 +89,7 @@ function LayerCard({ layer, isLast }: { layer: Layer; isLast: boolean }) {
         </div>
         <div
           className="font-mono-sys"
-          style={{ marginTop: 8, fontSize: 9, letterSpacing: "0.14em", color: "#FFD700", textAlign: "center" }}
+          style={{ marginTop: 8, fontSize: 9, letterSpacing: "0.14em", color: "#E7C46A", textAlign: "center" }}
         >
           {layer.phase}
         </div>
@@ -136,7 +136,7 @@ function LayerCard({ layer, isLast }: { layer: Layer; isLast: boolean }) {
           >
             <span style={{ color: "#cc0000", fontWeight: 700 }}>LAYER {layer.n}</span>
             <span style={{ color: "rgba(255,255,255,0.25)" }}>·</span>
-            <span style={{ color: "#FFD700" }}>{layer.phaseKo}</span>
+            <span style={{ color: "#E7C46A" }}>{layer.phaseKo}</span>
           </div>
 
           <h3 style={{ fontSize: "clamp(1.5rem, 3vw, 2.1rem)", fontWeight: 800, marginBottom: 6 }}>
@@ -272,7 +272,7 @@ export default function ServicesSection() {
             style={{
               fontSize: 12,
               letterSpacing: "0.2em",
-              color: "#FFD700",
+              color: "#E7C46A",
               marginBottom: 18,
               display: "flex",
               alignItems: "center",
@@ -280,9 +280,9 @@ export default function ServicesSection() {
               gap: 14,
             }}
           >
-            <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+            <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
             WHAT WE DO
-            <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+            <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
           </div>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 900, lineHeight: 1.25 }}>
             마케팅을 3개로 따로 파는 게 아니라,
@@ -335,7 +335,7 @@ export default function ServicesSection() {
                 }}
               >
                 <span style={{ fontSize: "0.95rem", fontWeight: 700, color: "#fff" }}>{s.ko}</span>
-                <span className="font-mono-sys" style={{ fontSize: 10, color: "#FFD700", marginTop: 2 }}>
+                <span className="font-mono-sys" style={{ fontSize: 10, color: "#E7C46A", marginTop: 2 }}>
                   {s.sub}
                 </span>
               </div>

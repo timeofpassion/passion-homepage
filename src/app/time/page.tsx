@@ -134,7 +134,7 @@ export default async function Home() {
                 <div>
                   <span
                     style={{
-                      color: "#FFD700",
+                      color: "#E7C46A",
                       fontSize: ".85rem",
                       fontWeight: 800,
                       letterSpacing: ".15em",
@@ -156,7 +156,7 @@ export default async function Home() {
                 <Link
                   href="/time/blog"
                   style={{
-                    color: "#FFD700",
+                    color: "#E7C46A",
                     fontSize: ".85rem",
                     fontWeight: 700,
                     textDecoration: "none",

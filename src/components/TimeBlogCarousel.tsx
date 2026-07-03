@@ -154,7 +154,7 @@ function Card({ post }: { post: ContentPost }) {
       <div style={{ padding: "1.15rem 1.2rem 1.4rem", display: "flex", flexDirection: "column", flex: 1 }}>
         <div
           style={{
-            color: "#FFD700",
+            color: "#E7C46A",
             fontSize: ".72rem",
             fontWeight: 800,
             letterSpacing: ".08em",

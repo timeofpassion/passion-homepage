@@ -18,7 +18,7 @@ export default function FaqSection({
   eyebrow = "FAQ",
   title = "자주 묻는 질문",
   items,
-  accent = "#FFD700",
+  accent = "#E7C46A",
   color = "#ffffff",
   subColor = "rgba(255,255,255,0.8)",
   background = "transparent",

@@ -46,7 +46,7 @@ export default function CTASection() {
         {/* Consult items header */}
         <div
           className="font-mono-sys"
-          style={{ textAlign: "center", marginBottom: 32, fontSize: 12, letterSpacing: "0.15em", color: "#FFD700", textTransform: "uppercase" }}
+          style={{ textAlign: "center", marginBottom: 32, fontSize: 12, letterSpacing: "0.15em", color: "#E7C46A", textTransform: "uppercase" }}
         >
           무료 전략 상담에서 확인할 수 있는 것
         </div>

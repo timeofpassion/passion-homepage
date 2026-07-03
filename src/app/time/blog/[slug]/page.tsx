@@ -142,7 +142,7 @@ export default async function BlogPostPage({
             <Link
               href="/time/blog"
               style={{
-                color: "#FFD700",
+                color: "#E7C46A",
                 textDecoration: "none",
                 fontSize: "0.85rem",
                 fontWeight: 600,
@@ -157,7 +157,7 @@ export default async function BlogPostPage({
 
             <span
               style={{
-                color: "#FFD700",
+                color: "#E7C46A",
                 fontSize: "0.78rem",
                 fontWeight: 700,
                 letterSpacing: "0.1em",
@@ -268,7 +268,7 @@ export default async function BlogPostPage({
                       style={{
                         fontSize: "1.05rem",
                         fontWeight: 700,
-                        color: "#FFD700",
+                        color: "#E7C46A",
                         marginBottom: "0.6rem",
                         lineHeight: 1.5,
                       }}
@@ -320,7 +320,7 @@ export default async function BlogPostPage({
                 rel="noopener noreferrer"
                 style={{
                   display: "inline-block",
-                  background: "#FFD700",
+                  background: "#E7C46A",
                   color: "#0a0000",
                   fontWeight: 800,
                   fontSize: "0.95rem",
@@ -363,7 +363,7 @@ export default async function BlogPostPage({
                     >
                       <span
                         style={{
-                          color: "#FFD700",
+                          color: "#E7C46A",
                           fontSize: "0.72rem",
                           fontWeight: 700,
                           letterSpacing: "0.08em",

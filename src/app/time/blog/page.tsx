@@ -54,7 +54,7 @@ export default async function BlogIndexPage() {
           <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>
             <span
               style={{
-                color: "#FFD700",
+                color: "#E7C46A",
                 fontSize: ".85rem",
                 letterSpacing: ".15em",
                 fontWeight: 800,

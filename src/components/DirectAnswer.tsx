@@ -15,7 +15,7 @@ export default function DirectAnswer({
   eyebrow,
   question,
   answer,
-  accent = "#FFD700",
+  accent = "#E7C46A",
   color = "#ffffff",
   subColor = "rgba(255,255,255,0.8)",
   background = "transparent",
