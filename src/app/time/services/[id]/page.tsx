@@ -13,7 +13,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
           <h1 style={{ fontSize: "2rem", fontWeight: 900, marginBottom: "1rem" }}>
             서비스를 찾을 수 없습니다
           </h1>
-          <Link href="/" style={{ color: "#FFD700", textDecoration: "underline" }}>
+          <Link href="/" style={{ color: "#E7C46A", textDecoration: "underline" }}>
             홈으로 돌아가기
           </Link>
         </div>
@@ -25,7 +25,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
     <main className="min-h-screen bg-[#0a0000]" style={{ paddingTop: "2rem" }}>
       {/* Navigation */}
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%", marginBottom: "3rem" }}>
-        <Link href="/time#architecture" style={{ color: "#FFD700", textDecoration: "none", fontSize: "0.9rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+        <Link href="/time#architecture" style={{ color: "#E7C46A", textDecoration: "none", fontSize: "0.9rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
           ← 팀 소개로 돌아가기
         </Link>
       </div>
@@ -33,7 +33,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
       {/* Hero Section */}
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6%", marginBottom: "6rem" }}>
         <div style={{ marginBottom: "2rem" }}>
-          <span style={{ color: "#FFD700", fontSize: "0.85rem", letterSpacing: "0.15em", fontWeight: 700, display: "block", marginBottom: "0.5rem" }}>
+          <span style={{ color: "#E7C46A", fontSize: "0.85rem", letterSpacing: "0.15em", fontWeight: 700, display: "block", marginBottom: "0.5rem" }}>
             {service.sysId}
           </span>
           <h1 style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: 900, marginBottom: "1.5rem", lineHeight: 1.2 }}>
@@ -58,20 +58,20 @@ export default function ServicePage({ params }: { params: { id: string } }) {
           {service.services.map((svc) => (
             <div key={svc.name} style={{
               padding: "2rem",
-              background: "rgba(255, 215, 0, 0.03)",
-              border: "1px solid rgba(255, 215, 0, 0.15)",
+              background: "rgba(231, 196, 106, 0.03)",
+              border: "1px solid rgba(231, 196, 106, 0.15)",
               borderRadius: "8px",
               transition: "all 0.3s ease"
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255, 215, 0, 0.08)";
-              e.currentTarget.style.borderColor = "rgba(255, 215, 0, 0.3)";
+              e.currentTarget.style.background = "rgba(231, 196, 106, 0.08)";
+              e.currentTarget.style.borderColor = "rgba(231, 196, 106, 0.3)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(255, 215, 0, 0.03)";
-              e.currentTarget.style.borderColor = "rgba(255, 215, 0, 0.15)";
+              e.currentTarget.style.background = "rgba(231, 196, 106, 0.03)";
+              e.currentTarget.style.borderColor = "rgba(231, 196, 106, 0.15)";
             }}>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.5rem", color: "#FFD700" }}>
+              <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.5rem", color: "#E7C46A" }}>
                 {svc.name}
               </h3>
               <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem", lineHeight: 1.6 }}>
@@ -95,14 +95,14 @@ export default function ServicePage({ params }: { params: { id: string } }) {
           <div style={{
             padding: "4rem 2rem",
             textAlign: "center",
-            background: "rgba(255, 215, 0, 0.03)",
-            border: "2px dashed rgba(255, 215, 0, 0.2)",
+            background: "rgba(231, 196, 106, 0.03)",
+            border: "2px dashed rgba(231, 196, 106, 0.2)",
             borderRadius: "8px"
           }}>
             <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1rem", marginBottom: "1rem" }}>
               포트폴리오는 차례대로 추가될 예정입니다.
             </p>
-            <p style={{ color: "rgba(255,215,0,0.6)", fontSize: "0.9rem", fontWeight: 600 }}>
+            <p style={{ color: "rgba(231,196,106,0.6)", fontSize: "0.9rem", fontWeight: 600 }}>
               문의하기: ceo@timeofpassion.com
             </p>
           </div>
@@ -113,15 +113,15 @@ export default function ServicePage({ params }: { params: { id: string } }) {
                 background: "rgba(255,255,255,0.02)",
                 borderRadius: "8px",
                 overflow: "hidden",
-                border: "1px solid rgba(255,215,0,0.1)",
+                border: "1px solid rgba(231,196,106,0.1)",
                 transition: "all 0.3s ease"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,215,0,0.3)";
+                e.currentTarget.style.borderColor = "rgba(231,196,106,0.3)";
                 e.currentTarget.style.transform = "translateY(-4px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,215,0,0.1)";
+                e.currentTarget.style.borderColor = "rgba(231,196,106,0.1)";
                 e.currentTarget.style.transform = "translateY(0)";
               }}>
                 <div style={{ paddingBottom: "66%", position: "relative", background: "rgba(0,0,0,0.8)" }}>
@@ -161,7 +161,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
         <a href="https://pf.kakao.com/_RgYcxj/chat" target="_blank" rel="noopener noreferrer" style={{
           display: "inline-block",
           padding: "0.8rem 2rem",
-          background: "#FFD700",
+          background: "#E7C46A",
           color: "#0a0000",
           fontWeight: 700,
           borderRadius: "4px",

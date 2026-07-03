@@ -24,13 +24,13 @@ export default function CompanyFacts() {
             gap: 14,
             fontSize: 12,
             letterSpacing: "0.22em",
-            color: "#FFD700",
+            color: "#E7C46A",
             marginBottom: "1.6rem",
           }}
         >
-          <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+          <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
           OFFICIAL RECORD · 공식 정보
-          <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+          <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
         </div>
 
         {/* 핵심 신뢰 메시지 */}

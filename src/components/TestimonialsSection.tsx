@@ -86,7 +86,7 @@ export default function TestimonialsSection() {
             style={{
               fontSize: 12,
               letterSpacing: "0.2em",
-              color: "#FFD700",
+              color: "#E7C46A",
               marginBottom: 18,
               display: "flex",
               alignItems: "center",
@@ -94,9 +94,9 @@ export default function TestimonialsSection() {
               gap: 14,
             }}
           >
-            <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+            <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
             CLIENT VOICES
-            <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+            <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
           </div>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900 }}>
             함께한 원장님들의 이야기

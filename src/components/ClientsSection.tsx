@@ -22,7 +22,7 @@ export default function ClientsSection({
           <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 800, marginBottom: 16, lineHeight: 1.4, whiteSpace: "pre-line", wordBreak: "keep-all" }}>
             {title}
           </h2>
-          <p style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)", color: "#FFD700", fontWeight: 600, whiteSpace: "pre-line", wordBreak: "keep-all" }}>
+          <p style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)", color: "#E7C46A", fontWeight: 600, whiteSpace: "pre-line", wordBreak: "keep-all" }}>
             {showBrackets ? `<${subtitle}>` : subtitle}
           </p>
         </div>

@@ -16,6 +16,19 @@ export default function HeroSection() {
         overflow: "hidden",
       }}
     >
+      {/* 글로벌 마케팅 커맨드센터 영상 배경 */}
+      <video
+        className="hero-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster="/time/hero-global-poster.png"
+        aria-hidden="true"
+      >
+        <source src="/time/hero-global.mp4" type="video/mp4" />
+      </video>
+      <div className="hero-video-scrim" aria-hidden="true" />
       <div className="hero-glow" aria-hidden="true" />
 
       {/* Eyebrow */}
@@ -27,16 +40,16 @@ export default function HeroSection() {
           gap: 14,
           fontSize: 12,
           letterSpacing: "0.22em",
-          color: "#FFD700",
+          color: "#E7C46A",
           marginBottom: "1.8rem",
           position: "relative",
           zIndex: 1,
           animationDelay: "0s",
         }}
       >
-        <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+        <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
         MEDICAL MARKETING SYSTEM · 10Y+ EXPERTISE
-        <span style={{ width: 28, height: 1, background: "rgba(255,215,0,0.5)" }} />
+        <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
       </div>
 
       <img

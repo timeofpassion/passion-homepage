@@ -14,7 +14,7 @@ export default function ServiceTeamsSection() {
             style={{
               fontSize: 12,
               letterSpacing: "0.2em",
-              color: "#FFD700",
+              color: "#E7C46A",
               marginBottom: 20,
               display: "flex",
               alignItems: "center",
@@ -22,9 +22,9 @@ export default function ServiceTeamsSection() {
               gap: 16,
             }}
           >
-            <span style={{ width: 32, height: 1, background: "rgba(255,215,0,0.5)" }} />
+            <span style={{ width: 32, height: 1, background: "rgba(231,196,106,0.5)" }} />
             세부 서비스 영역
-            <span style={{ width: 32, height: 1, background: "rgba(255,215,0,0.5)" }} />
+            <span style={{ width: 32, height: 1, background: "rgba(231,196,106,0.5)" }} />
           </div>
           <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 900, lineHeight: 1.2 }}>
             6개 팀, 각자의 전문 영역
@@ -52,7 +52,7 @@ export default function ServiceTeamsSection() {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-4px)";
-                  e.currentTarget.style.borderColor = "rgba(255,215,0,0.5)";
+                  e.currentTarget.style.borderColor = "rgba(231,196,106,0.5)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
@@ -96,7 +96,7 @@ export default function ServiceTeamsSection() {
                 <div
                   style={{
                     marginTop: "1.5rem",
-                    color: "#FFD700",
+                    color: "#E7C46A",
                     fontSize: "0.85rem",
                     fontWeight: 600,
                     opacity: 0.8,
