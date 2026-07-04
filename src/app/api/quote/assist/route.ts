@@ -83,26 +83,30 @@ export async function POST(req: Request) {
     note?: string;
   } | null = null;
 
+  let rawText = "";
   try {
     const r = await anthropic.messages.create({
       model: MODEL,
-      max_tokens: 1600,
+      max_tokens: 2500,
       temperature: 0.4,
       system: SYSTEM,
       messages: [
         {
           role: "user",
-          content: `[고객 요청]\n${text}\n\n[선택 가능한 상품 목록]\n${catalog}\n\n위 목록에서만 골라 JSON 으로 견적을 조합해줘.`,
+          content: `[고객 요청]\n${text}\n\n[선택 가능한 상품 목록]\n${catalog}\n\n위 목록에서만 골라 아래 스키마의 JSON 하나로만 답해줘(설명·코드펜스 없이 JSON 만).`,
         },
+        // 어시스턴트 응답을 '{' 로 프리필 → 반드시 JSON 오브젝트로 이어서 생성(순수 JSON 강제)
+        { role: "assistant", content: "{" },
       ],
     });
     const t = r.content.find((c) => c.type === "text");
-    const raw = t && t.type === "text" ? t.text : "";
-    const m = raw.match(/\{[\s\S]*\}/);
-    if (!m) throw new Error("no json");
-    parsed = JSON.parse(m[0]);
+    // 프리필한 '{' 를 앞에 복원하고, 마지막 '}' 까지만 취해 뒤 잡음 제거
+    rawText = "{" + (t && t.type === "text" ? t.text : "");
+    const end = rawText.lastIndexOf("}");
+    const jsonStr = end >= 0 ? rawText.slice(0, end + 1) : rawText;
+    parsed = JSON.parse(jsonStr);
   } catch (e) {
-    console.error("[quote/assist] fail:", (e as Error).message);
+    console.error("[quote/assist] fail:", (e as Error).message, "| raw:", rawText.slice(0, 500));
     return NextResponse.json({ ok: false, error: "AI 조합에 실패했습니다. 아래에서 직접 선택하거나 상담을 이용해주세요." }, { status: 502 });
   }
 
