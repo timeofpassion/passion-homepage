@@ -7,11 +7,16 @@ interface Product {
   id: string;
   name: string;
   category: string;
+  topCategory?: string; // 대분류(마케팅은 국가별). 없으면 category 로 폴백
+  category2?: string; // 세부 카테고리
   price: number;
   minQty: number;
   description: string;
   notionUrl: string;
 }
+
+// 대분류 표시 순서(해외 마케팅 우선)
+const TOP_ORDER = ["일본마케팅", "대만마케팅", "중국마케팅", "국내마케팅", "디자인", "영상·사진·음향", "번역·통역"];
 
 interface SelectedProduct {
   id: string;
@@ -97,7 +102,8 @@ export default function QuotePage() {
 
   // 서비스 직접 선택 — 검색 + 카테고리 필터
   const [search, setSearch] = useState("");
-  const [activeCat, setActiveCat] = useState("");
+  const [activeTop, setActiveTop] = useState("");
+  const [activeSub, setActiveSub] = useState("");
 
   useEffect(() => {
     fetch("/api/quote/products")
@@ -157,29 +163,53 @@ export default function QuotePage() {
   const vat = Math.round(subtotal * 0.1);
   const total = subtotal + vat;
 
-  const grouped = products.reduce<Record<string, Product[]>>((acc, p) => {
-    const cat = p.category || "기타";
-    if (!acc[cat]) acc[cat] = [];
-    acc[cat].push(p);
+  // 2단계 카테고리: 대분류(topCategory) → 세부(category2). 없으면 category(대분류)로 폴백.
+  const topOf = (p: Product) => p.topCategory || p.category || "기타";
+  const subOf = (p: Product) => p.category2 || p.category || "기타";
+
+  // 대분류 목록(선호 순서 정렬) + 건수
+  const topCounts = products.reduce<Record<string, number>>((acc, p) => {
+    const t = topOf(p);
+    acc[t] = (acc[t] || 0) + 1;
     return acc;
   }, {});
+  const topList = Object.keys(topCounts).sort(
+    (a, b) => (TOP_ORDER.indexOf(a) < 0 ? 99 : TOP_ORDER.indexOf(a)) - (TOP_ORDER.indexOf(b) < 0 ? 99 : TOP_ORDER.indexOf(b)),
+  );
 
-  // 검색 + 카테고리 필터 적용 결과
-  const categoryList = Object.keys(grouped);
+  // 선택된 대분류의 세부 카테고리 목록(검색·세부필터 무시, 대분류만 기준) — 2단계 칩용
+  const subCounts = products
+    .filter((p) => !activeTop || topOf(p) === activeTop)
+    .reduce<Record<string, number>>((acc, p) => {
+      const s = subOf(p);
+      acc[s] = (acc[s] || 0) + 1;
+      return acc;
+    }, {});
+  const subList = Object.keys(subCounts);
+
   const q = search.trim().toLowerCase();
   const matchP = (p: Product) =>
-    (!activeCat || p.category === activeCat) &&
+    (!activeTop || topOf(p) === activeTop) &&
+    (!activeSub || subOf(p) === activeSub) &&
     (!q ||
       p.name.toLowerCase().includes(q) ||
       (p.description || "").toLowerCase().includes(q) ||
-      (p.category || "").toLowerCase().includes(q));
+      (p.category || "").toLowerCase().includes(q) ||
+      (p.category2 || "").toLowerCase().includes(q));
   const visibleProducts = products.filter(matchP);
+  // 표시 그룹핑: 세부 카테고리(category2) 기준 헤더
   const visibleGrouped = visibleProducts.reduce<Record<string, Product[]>>((acc, p) => {
-    const cat = p.category || "기타";
-    if (!acc[cat]) acc[cat] = [];
-    acc[cat].push(p);
+    const g = subOf(p);
+    if (!acc[g]) acc[g] = [];
+    acc[g].push(p);
     return acc;
   }, {});
+
+  // 대분류 변경 시 세부 선택 초기화
+  const selectTop = (t: string) => {
+    setActiveTop(t);
+    setActiveSub("");
+  };
 
   const handleSubmit = async () => {
     if (!form.customerName || !form.email || selectedProducts.length === 0) {
@@ -525,17 +555,17 @@ export default function QuotePage() {
                   </button>
                 )}
               </div>
-              {/* 카테고리 필터 칩 */}
+              {/* 대분류 필터 칩 */}
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                 {([["", `전체 ${products.length}`]] as [string, string][])
-                  .concat(categoryList.map((c) => [c, `${c} ${grouped[c].length}`] as [string, string]))
+                  .concat(topList.map((c) => [c, `${c} ${topCounts[c]}`] as [string, string]))
                   .map(([val, label]) => {
-                    const active = activeCat === val;
+                    const active = activeTop === val;
                     return (
                       <button
                         key={val || "all"}
                         type="button"
-                        onClick={() => setActiveCat(val)}
+                        onClick={() => selectTop(val)}
                         style={{
                           fontSize: "0.8rem",
                           fontWeight: 700,
@@ -552,6 +582,35 @@ export default function QuotePage() {
                     );
                   })}
               </div>
+              {/* 세부 카테고리 칩 (대분류 선택 + 세부 2개 이상일 때) */}
+              {activeTop && subList.length > 1 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8, paddingLeft: 2 }}>
+                  {([["", `${activeTop} 전체`]] as [string, string][])
+                    .concat(subList.map((c) => [c, `${c} ${subCounts[c]}`] as [string, string]))
+                    .map(([val, label]) => {
+                      const active = activeSub === val;
+                      return (
+                        <button
+                          key={val || "suball"}
+                          type="button"
+                          onClick={() => setActiveSub(val)}
+                          style={{
+                            fontSize: "0.72rem",
+                            fontWeight: 600,
+                            padding: "5px 11px",
+                            borderRadius: 999,
+                            cursor: "pointer",
+                            background: active ? "rgba(204,0,0,0.85)" : "rgba(255,255,255,0.02)",
+                            color: active ? "#fff" : "rgba(255,255,255,0.5)",
+                            border: `1px solid ${active ? "rgba(204,0,0,0.6)" : "rgba(255,255,255,0.09)"}`,
+                          }}
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
+                </div>
+              )}
               <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.35)", marginTop: 10 }}>
                 {visibleProducts.length}개 서비스{selected.size > 0 ? ` · ${selected.size}개 담김` : ""}
               </div>
