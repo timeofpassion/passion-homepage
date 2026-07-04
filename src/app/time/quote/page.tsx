@@ -19,6 +19,26 @@ interface SelectedProduct {
   price: number;
 }
 
+interface AssistItem {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  minQty: number;
+  lineTotal: number;
+  reason: string;
+}
+interface AssistResult {
+  items: AssistItem[];
+  suggestions: { id: string; name: string; price: number; minQty: number; lineTotal: number; reason: string }[];
+  excluded: { name: string; reason: string }[];
+  note: string;
+  subtotal: number;
+  vat: number;
+  total: number;
+  needsConsult: boolean;
+}
+
 const format = (n: number) => new Intl.NumberFormat("ko-KR").format(n);
 
 const BUDGET_OPTIONS = [
@@ -70,6 +90,11 @@ export default function QuotePage() {
     memo: "",
   });
 
+  // 주관식 AI 견적 어시스턴트
+  const [assistText, setAssistText] = useState("");
+  const [assisting, setAssisting] = useState(false);
+  const [assistResult, setAssistResult] = useState<AssistResult | null>(null);
+
   useEffect(() => {
     fetch("/api/quote/products")
       .then((r) => r.json())
@@ -88,6 +113,37 @@ export default function QuotePage() {
       return next;
     });
   };
+
+  // 주관식 → AI 견적 조합 → 실제 선택(장바구니)에 자동 반영
+  const askAssistant = async () => {
+    const t = assistText.trim();
+    if (!t) return;
+    setAssisting(true);
+    try {
+      const res = await fetch("/api/quote/assist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: t }),
+      });
+      const data = await res.json();
+      if (!data.ok) {
+        alert(data.error || "AI 견적 조합에 실패했습니다.");
+        return;
+      }
+      setAssistResult(data as AssistResult);
+      setSelected(new Set((data.items as AssistItem[]).map((it) => it.id)));
+      setTimeout(
+        () => document.getElementById("quote-services")?.scrollIntoView({ behavior: "smooth", block: "start" }),
+        180,
+      );
+    } catch {
+      alert("네트워크 오류가 발생했습니다.");
+    } finally {
+      setAssisting(false);
+    }
+  };
+
+  const addSuggestion = (id: string) => setSelected((prev) => new Set(prev).add(id));
 
   const selectedProducts: SelectedProduct[] = products
     .filter((p) => selected.has(p.id))
@@ -306,8 +362,114 @@ export default function QuotePage() {
           </p>
         </div>
 
+        {/* AI 견적 어시스턴트 (주관식) */}
+        <div
+          style={{
+            marginBottom: "2.4rem",
+            border: "1px solid rgba(204,0,0,0.4)",
+            background: "linear-gradient(180deg, rgba(204,0,0,0.09), rgba(255,255,255,0.02))",
+            padding: "1.6rem",
+          }}
+        >
+          <div className="font-mono-sys" style={{ fontSize: 10, letterSpacing: "0.15em", color: "#ff5c5c", marginBottom: 10 }}>
+            AI QUOTE ASSISTANT
+          </div>
+          <h2 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: 6 }}>뭘 골라야 할지 모르겠다면, 말로 적어주세요</h2>
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", marginBottom: 14 }}>
+            지금 필요한 걸 편하게 적으면, 실제 서비스로 딱 맞는 견적을 조합해 드립니다.
+          </p>
+          <textarea
+            value={assistText}
+            onChange={(e) => setAssistText(e.target.value)}
+            placeholder="예: 일본에서 환자를 유치하고 싶어요. 인스타랑 라인 문의 응대까지 됐으면 좋겠고, 처음엔 크지 않게 시작하고 싶어요."
+            rows={3}
+            style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.5 }}
+          />
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, margin: "10px 0 14px" }}>
+            {[
+              "일본·대만 환자를 늘리고 싶어요",
+              "인스타 관리가 안 돼요. 콘텐츠가 필요해요",
+              "개원 준비 중이에요. 명함·홍보물이 필요해요",
+              "중국 샤오홍슈로 홍보하고 싶어요",
+            ].map((ex) => (
+              <button
+                key={ex}
+                type="button"
+                onClick={() => setAssistText(ex)}
+                style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", padding: "6px 10px", borderRadius: 999, cursor: "pointer" }}
+              >
+                {ex}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={askAssistant}
+            disabled={assisting || !assistText.trim()}
+            style={{ background: "#cc0000", color: "#fff", border: "none", padding: "12px 24px", fontWeight: 800, fontSize: "0.9rem", cursor: assisting || !assistText.trim() ? "default" : "pointer", opacity: assisting || !assistText.trim() ? 0.5 : 1 }}
+          >
+            {assisting ? "AI가 견적 짜는 중…" : "✦ AI 견적 받기"}
+          </button>
+
+          {assistResult && (
+            <div style={{ marginTop: 18, borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 16 }}>
+              {assistResult.needsConsult ? (
+                <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>
+                  딱 맞는 조합을 찾기 어려워요. 아래에서 직접 골라보시거나, 상담을 신청해 주시면 맞춤 견적을 제안해 드리겠습니다.
+                </p>
+              ) : (
+                <>
+                  <div className="font-mono-sys" style={{ fontSize: 10, color: "#ff5c5c", marginBottom: 10 }}>AI 추천 견적 · 초안 (아래에 자동 선택됨)</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {assistResult.items.map((it, i) => (
+                      <div key={it.id} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                        <span style={{ color: "#cc0000", fontWeight: 800, fontSize: "0.8rem", marginTop: 2 }}>{i + 1}</span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: 700, fontSize: "0.9rem" }}>{it.name}</div>
+                          {it.reason && <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.78rem", marginTop: 2 }}>{it.reason}</div>}
+                        </div>
+                        <div style={{ fontWeight: 800, fontSize: "0.85rem", whiteSpace: "nowrap" }}>{it.price ? format(it.lineTotal) + "원" : "별도문의"}</div>
+                      </div>
+                    ))}
+                  </div>
+                  {assistResult.excluded.length > 0 && (
+                    <div style={{ marginTop: 12 }}>
+                      {assistResult.excluded.map((e, i) => (
+                        <div key={i} style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", marginTop: 4 }}>
+                          · <b style={{ color: "rgba(255,255,255,0.6)" }}>{e.name}</b> 제외 — {e.reason}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {assistResult.suggestions.length > 0 && (
+                    <div style={{ marginTop: 12 }}>
+                      {assistResult.suggestions.map((s) => (
+                        <div key={s.id} style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 6, fontSize: "0.78rem", color: "rgba(255,255,255,0.6)" }}>
+                          <span style={{ flex: 1 }}>필요시 추가 · <b style={{ color: "#fff" }}>{s.name}</b> ({s.price ? format(s.lineTotal) + "원" : "별도문의"}) — {s.reason}</span>
+                          <button type="button" onClick={() => addSuggestion(s.id)} style={{ fontSize: "0.72rem", color: "#ff8a8a", border: "1px solid rgba(204,0,0,0.4)", background: "rgba(204,0,0,0.1)", padding: "3px 9px", borderRadius: 999, cursor: "pointer", whiteSpace: "nowrap" }}>담기</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {assistResult.note && (
+                    <p style={{ marginTop: 14, fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>
+                      <b style={{ color: "rgba(255,255,255,0.7)" }}>AI 메모:</b> {assistResult.note}
+                    </p>
+                  )}
+                  <p style={{ marginTop: 12, fontSize: "0.78rem", color: "rgba(255,255,255,0.4)" }}>
+                    ↓ 아래 &apos;서비스 선택&apos;에 자동 반영됐습니다. 항목을 더하거나 빼서 조정한 뒤 상담을 신청하세요.
+                  </p>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+        <div className="font-mono-sys" style={{ textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: "0.72rem", letterSpacing: "0.1em", marginBottom: 20 }}>
+          — 또는 직접 선택 —
+        </div>
+
         {/* 01 Service selection */}
-        <div style={{ marginBottom: "3rem" }}>
+        <div id="quote-services" style={{ marginBottom: "3rem" }}>
           <h2
             style={{
               fontSize: "1.1rem",
