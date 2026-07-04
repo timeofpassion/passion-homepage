@@ -5,7 +5,7 @@ import Anthropic from "@anthropic-ai/sdk";
 // 고객이 자유롭게 쓴 요청 → 실제 상품 카탈로그에서만 조합 → 추천 견적(항목·이유·제외·추가제안·메모).
 // 원칙: 없는 상품·가격 절대 생성 금지, 중복 배제, 예산 인식, 애매하면 상담 권유.
 const INTRANET_URL = process.env.INTRANET_API_URL ?? "https://intranet.timeofpassion.com";
-const MODEL = process.env.QUOTE_ASSIST_MODEL ?? "claude-sonnet-4-20250514";
+const MODEL = process.env.QUOTE_ASSIST_MODEL ?? "claude-haiku-4-5-20251001";
 
 export const maxDuration = 60;
 
