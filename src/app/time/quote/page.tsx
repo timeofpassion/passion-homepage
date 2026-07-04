@@ -18,6 +18,37 @@ interface Product {
 // 대분류 표시 순서(해외 마케팅 우선)
 const TOP_ORDER = ["일본마케팅", "대만마케팅", "중국마케팅", "국내마케팅", "디자인", "영상·사진·음향", "번역·통역"];
 
+interface DetailOption {
+  tier: string;
+  optionTitle: string;
+  price: number;
+  workDays: number | null;
+  workHours: number | null;
+  revisions: number | null;
+  sampleCount: number | null;
+  minQuantity: number | null;
+  unit: string;
+  description: string;
+  features: string[];
+}
+interface ProductDetail {
+  id: string;
+  name: string;
+  category: string;
+  category2: string;
+  summary: string;
+  descriptionText: string;
+  thumbnailUrl: string;
+  detailImages: string[];
+  videoUrl: string;
+  features: string[];
+  pricingMode: string;
+  priceMin: number | null;
+  priceMax: number | null;
+  options: DetailOption[];
+}
+const TIER_LABEL: Record<string, string> = { SINGLE: "", STANDARD: "STANDARD", DELUXE: "DELUXE", PREMIUM: "PREMIUM" };
+
 interface SelectedProduct {
   id: string;
   name: string;
@@ -105,6 +136,10 @@ export default function QuotePage() {
   const [activeTop, setActiveTop] = useState("");
   const [activeSub, setActiveSub] = useState("");
 
+  // 상품 상세 모달
+  const [detail, setDetail] = useState<ProductDetail | null>(null);
+  const [detailLoading, setDetailLoading] = useState(false);
+
   useEffect(() => {
     fetch("/api/quote/products")
       .then((r) => r.json())
@@ -122,6 +157,26 @@ export default function QuotePage() {
       else next.add(id);
       return next;
     });
+  };
+
+  // 상품 상세 열기(모달)
+  const openDetail = async (id: string) => {
+    setDetail(null);
+    setDetailLoading(true);
+    try {
+      const res = await fetch(`/api/quote/products/${id}`);
+      const d = await res.json();
+      if (res.ok && d && d.id) setDetail(d as ProductDetail);
+      else alert("상세 정보를 불러오지 못했습니다.");
+    } catch {
+      alert("상세 정보를 불러오지 못했습니다.");
+    } finally {
+      setDetailLoading(false);
+    }
+  };
+  const closeDetail = () => {
+    setDetail(null);
+    setDetailLoading(false);
   };
 
   // 주관식 → AI 견적 조합 → 실제 선택(장바구니)에 자동 반영
@@ -717,25 +772,27 @@ export default function QuotePage() {
                             {p.description}
                           </div>
                         )}
-                        {p.notionUrl && (
-                          <a
-                            href={p.notionUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            style={{
-                              display: "inline-block",
-                              marginTop: 6,
-                              fontSize: "0.75rem",
-                              color: "#cc0000",
-                              textDecoration: "none",
-                              borderBottom: "1px solid rgba(204,0,0,0.3)",
-                              paddingBottom: 1,
-                            }}
-                          >
-                            세부내역 보러가기 →
-                          </a>
-                        )}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openDetail(p.id);
+                          }}
+                          style={{
+                            display: "inline-block",
+                            marginTop: 7,
+                            fontSize: "0.75rem",
+                            color: "#ff8a8a",
+                            background: "none",
+                            border: "none",
+                            borderBottom: "1px solid rgba(204,0,0,0.4)",
+                            padding: "0 0 1px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          상세 · 옵션 보기 →
+                        </button>
                       </div>
                       <div
                         style={{
@@ -1040,6 +1097,120 @@ export default function QuotePage() {
           견적서는 입력하신 이메일로 자동 발송됩니다.
         </p>
       </div>
+
+      {/* 상품 상세 모달 */}
+      {(detailLoading || detail) && (
+        <div
+          onClick={closeDetail}
+          style={{ position: "fixed", inset: 0, zIndex: 100, background: "rgba(0,0,0,0.78)", display: "flex", alignItems: "flex-start", justifyContent: "center", overflowY: "auto", padding: "3vh 1rem" }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{ background: "#150606", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, maxWidth: 720, width: "100%", marginBottom: "4vh", position: "relative" }}
+          >
+            <button
+              type="button"
+              onClick={closeDetail}
+              style={{ position: "absolute", top: 12, right: 12, zIndex: 2, width: 32, height: 32, borderRadius: 999, background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", cursor: "pointer", fontSize: 14 }}
+            >
+              ✕
+            </button>
+            {detailLoading && !detail ? (
+              <div className="font-mono-sys" style={{ padding: "4rem", textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 12 }}>LOADING...</div>
+            ) : detail ? (
+              <div>
+                {detail.thumbnailUrl && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={detail.thumbnailUrl} alt={detail.name} style={{ width: "100%", borderRadius: "8px 8px 0 0", display: "block" }} />
+                )}
+                <div style={{ padding: "1.6rem 1.6rem 1.8rem" }}>
+                  <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", marginBottom: 6 }}>
+                    {detail.category}
+                    {detail.category2 ? " · " + detail.category2 : ""}
+                  </div>
+                  <h3 style={{ fontSize: "1.3rem", fontWeight: 800, marginBottom: 8, lineHeight: 1.3 }}>{detail.name}</h3>
+                  {detail.summary && <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.92rem", lineHeight: 1.6 }}>{detail.summary}</p>}
+
+                  {detail.features.length > 0 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 14 }}>
+                      {detail.features.map((f, i) => (
+                        <span key={i} style={{ fontSize: "0.72rem", fontWeight: 600, color: "#ff8a8a", background: "rgba(204,0,0,0.1)", border: "1px solid rgba(204,0,0,0.3)", padding: "4px 10px", borderRadius: 999 }}>{f}</span>
+                      ))}
+                    </div>
+                  )}
+
+                  {detail.options.length > 0 && (
+                    <div style={{ marginTop: 22 }}>
+                      <div style={{ fontSize: "0.9rem", fontWeight: 700, marginBottom: 10 }}>옵션 · 가격</div>
+                      <div style={{ display: "grid", gap: 10 }}>
+                        {detail.options.map((o, i) => (
+                          <div key={i} style={{ border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "14px 16px", background: "rgba(255,255,255,0.02)" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10 }}>
+                              <div style={{ fontWeight: 700, fontSize: "0.92rem" }}>
+                                {TIER_LABEL[o.tier] ? <span style={{ color: "#ff8a8a", marginRight: 6 }}>{TIER_LABEL[o.tier]}</span> : null}
+                                {o.optionTitle || "기본"}
+                              </div>
+                              <div style={{ fontWeight: 800, fontSize: "1rem", whiteSpace: "nowrap" }}>{o.price ? format(o.price) + "원" : "별도문의"}</div>
+                            </div>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px", marginTop: 6, fontSize: "0.75rem", color: "rgba(255,255,255,0.45)" }}>
+                              {(o.workDays != null || o.workHours != null) && <span>작업 {o.workHours != null ? o.workHours + "시간" : o.workDays + "일"}</span>}
+                              {o.revisions != null && <span>수정 {o.revisions}회</span>}
+                              {o.sampleCount != null && <span>시안 {o.sampleCount}개</span>}
+                              {o.minQuantity != null && <span>최소 {o.minQuantity}{o.unit || ""}</span>}
+                            </div>
+                            {o.description && <p style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)", marginTop: 6 }}>{o.description}</p>}
+                            {o.features.length > 0 && (
+                              <ul style={{ margin: "8px 0 0", padding: 0, listStyle: "none", display: "grid", gap: 3 }}>
+                                {o.features.map((f, j) => (
+                                  <li key={j} style={{ fontSize: "0.76rem", color: "rgba(255,255,255,0.6)" }}>· {f}</li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {detail.descriptionText && (
+                    <div style={{ marginTop: 22 }}>
+                      <div style={{ fontSize: "0.9rem", fontWeight: 700, marginBottom: 8 }}>상세 설명</div>
+                      <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, whiteSpace: "pre-wrap" }}>{detail.descriptionText}</p>
+                    </div>
+                  )}
+
+                  {detail.detailImages.length > 0 && (
+                    <div style={{ marginTop: 22 }}>
+                      <div style={{ fontSize: "0.9rem", fontWeight: 700, marginBottom: 10 }}>포트폴리오</div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 8 }}>
+                        {detail.detailImages.map((img, i) => (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img key={i} src={img} alt={`포트폴리오 ${i + 1}`} style={{ width: "100%", borderRadius: 6, border: "1px solid rgba(255,255,255,0.08)", display: "block" }} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {detail.videoUrl && (
+                    <a href={detail.videoUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 18, fontSize: "0.82rem", color: "#ff8a8a", textDecoration: "underline" }}>▶ 영상 보기</a>
+                  )}
+
+                  <div style={{ display: "flex", gap: 10, marginTop: 26 }}>
+                    <button
+                      type="button"
+                      onClick={() => { setSelected((prev) => new Set(prev).add(detail.id)); closeDetail(); }}
+                      style={{ flex: 1, padding: "13px", background: "#cc0000", border: "none", color: "#fff", fontWeight: 700, fontSize: "0.92rem", cursor: "pointer", borderRadius: 4 }}
+                    >
+                      이 서비스 담기
+                    </button>
+                    <button type="button" onClick={closeDetail} style={{ padding: "13px 20px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontWeight: 600, fontSize: "0.92rem", cursor: "pointer", borderRadius: 4 }}>닫기</button>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
