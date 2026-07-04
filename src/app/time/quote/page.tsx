@@ -95,6 +95,10 @@ export default function QuotePage() {
   const [assisting, setAssisting] = useState(false);
   const [assistResult, setAssistResult] = useState<AssistResult | null>(null);
 
+  // 서비스 직접 선택 — 검색 + 카테고리 필터
+  const [search, setSearch] = useState("");
+  const [activeCat, setActiveCat] = useState("");
+
   useEffect(() => {
     fetch("/api/quote/products")
       .then((r) => r.json())
@@ -154,6 +158,23 @@ export default function QuotePage() {
   const total = subtotal + vat;
 
   const grouped = products.reduce<Record<string, Product[]>>((acc, p) => {
+    const cat = p.category || "기타";
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(p);
+    return acc;
+  }, {});
+
+  // 검색 + 카테고리 필터 적용 결과
+  const categoryList = Object.keys(grouped);
+  const q = search.trim().toLowerCase();
+  const matchP = (p: Product) =>
+    (!activeCat || p.category === activeCat) &&
+    (!q ||
+      p.name.toLowerCase().includes(q) ||
+      (p.description || "").toLowerCase().includes(q) ||
+      (p.category || "").toLowerCase().includes(q));
+  const visibleProducts = products.filter(matchP);
+  const visibleGrouped = visibleProducts.reduce<Record<string, Product[]>>((acc, p) => {
     const cat = p.category || "기타";
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(p);
@@ -483,6 +504,60 @@ export default function QuotePage() {
             <span style={{ color: "#cc0000" }}>01</span> 서비스 선택
           </h2>
 
+          {!loading && products.length > 0 && (
+            <div style={{ marginBottom: 18 }}>
+              {/* 검색 */}
+              <div style={{ position: "relative", marginBottom: 12 }}>
+                <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.35)", fontSize: 15, pointerEvents: "none" }}>⌕</span>
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="서비스 검색 (예: 인스타, 명함, 일본, 통역...)"
+                  style={{ ...inputStyle, paddingLeft: 38, paddingRight: 36 }}
+                />
+                {search && (
+                  <button
+                    type="button"
+                    onClick={() => setSearch("")}
+                    style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 13 }}
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+              {/* 카테고리 필터 칩 */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {([["", `전체 ${products.length}`]] as [string, string][])
+                  .concat(categoryList.map((c) => [c, `${c} ${grouped[c].length}`] as [string, string]))
+                  .map(([val, label]) => {
+                    const active = activeCat === val;
+                    return (
+                      <button
+                        key={val || "all"}
+                        type="button"
+                        onClick={() => setActiveCat(val)}
+                        style={{
+                          fontSize: "0.8rem",
+                          fontWeight: 700,
+                          padding: "7px 14px",
+                          borderRadius: 999,
+                          cursor: "pointer",
+                          background: active ? "#cc0000" : "rgba(255,255,255,0.03)",
+                          color: active ? "#fff" : "rgba(255,255,255,0.6)",
+                          border: `1px solid ${active ? "#cc0000" : "rgba(255,255,255,0.12)"}`,
+                        }}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })}
+              </div>
+              <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.35)", marginTop: 10 }}>
+                {visibleProducts.length}개 서비스{selected.size > 0 ? ` · ${selected.size}개 담김` : ""}
+              </div>
+            </div>
+          )}
+
           {loading ? (
             <div
               style={{
@@ -511,8 +586,23 @@ export default function QuotePage() {
                 변경해주세요.
               </p>
             </div>
+          ) : visibleProducts.length === 0 ? (
+            <div
+              style={{
+                textAlign: "center",
+                padding: "2.5rem",
+                color: "rgba(255,255,255,0.4)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.02)",
+              }}
+            >
+              <p style={{ marginBottom: 6 }}>검색 결과가 없어요.</p>
+              <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.3)" }}>
+                검색어를 바꾸거나, 위 &apos;말로 적어주세요&apos;로 물어보시면 딱 맞는 걸 골라 드립니다.
+              </p>
+            </div>
           ) : (
-            Object.entries(grouped).map(([category, items]) => (
+            Object.entries(visibleGrouped).map(([category, items]) => (
               <div key={category} style={{ marginBottom: 24 }}>
                 <div
                   className="font-mono-sys"
