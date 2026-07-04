@@ -57,6 +57,30 @@
 .adc-main { padding: 34px 0 20px; }
 .adc-panel { background: var(--paper); border: 1px solid var(--line); border-radius: 18px;
   padding: 22px; box-shadow: 0 24px 50px -40px rgba(26, 21, 18, 0.4); }
+/* 입력 모드 탭 */
+.adc-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.adc-tabs button { font-family: var(--sans); font-size: 13.5px; font-weight: 650; color: var(--sub); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 100px; padding: 8px 15px; cursor: pointer; transition: all 0.15s ease; }
+.adc-tabs button:hover:not(:disabled):not(.on) { border-color: var(--crimson); color: var(--crimson); }
+.adc-tabs button.on { background: var(--crimson); border-color: var(--crimson); color: #fff; box-shadow: 0 8px 18px -10px rgba(158,27,19,0.6); }
+.adc-tabs button.soon { opacity: 0.6; cursor: default; display: inline-flex; align-items: center; gap: 6px; }
+.adc-tabs button.soon span { font-size: 9.5px; font-weight: 750; letter-spacing: 0.04em; color: var(--gold-deep);
+  background: var(--amber-bg); padding: 2px 6px; border-radius: 100px; }
+
+/* URL 입력 */
+.adc-urlinput { width: 100%; border: 1px solid var(--line-2); border-radius: 12px; padding: 15px 16px; font-family: var(--sans);
+  font-size: 15px; color: var(--ink); background: #fffdfb; outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+.adc-urlinput::placeholder { color: #b8ada6; }
+.adc-urlinput:focus { border-color: var(--crimson); box-shadow: 0 0 0 3px var(--crimson-tint); }
+.adc-urlnote { margin-top: 9px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+/* 검수 출처 */
+.adc-source { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; background: var(--paper);
+  border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px; }
+.adc-source .lb { font-size: 11px; font-weight: 750; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.adc-source a { font-size: 13.5px; font-weight: 600; color: var(--crimson); text-decoration: none; word-break: break-all; }
+.adc-source a:hover { text-decoration: underline; }
+
 .adc-panel-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
 .adc-panel-head h2 { font-size: 15px; font-weight: 750; letter-spacing: -0.02em; }
 .adc-panel-head .cnt { font-family: var(--mono); font-size: 12px; color: var(--muted); }

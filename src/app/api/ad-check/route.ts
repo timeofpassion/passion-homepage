@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { runRuleScan } from "@/lib/ad-review/engine";
+import { fetchAndExtract } from "@/lib/ad-review/extract-url";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -72,8 +73,21 @@ ${RULE_BRIEF}
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as { text?: string };
-    const text = (body.text ?? "").trim();
+    const body = (await request.json()) as { text?: string; url?: string; mode?: string };
+    const useUrl = body.mode === "url" || (!!body.url && !(body.text ?? "").trim());
+
+    let text = (body.text ?? "").trim();
+    let source: { type: "url"; url: string; title?: string } | undefined;
+
+    // URL 모드 — 이미 올라간 블로그·홈페이지 링크를 열어 본문 추출
+    if (useUrl) {
+      const extracted = await fetchAndExtract(body.url ?? "");
+      if (!extracted.ok) {
+        return NextResponse.json({ error: extracted.error ?? "URL 본문을 읽지 못했습니다." }, { status: 400 });
+      }
+      text = extracted.text;
+      source = { type: "url", url: (body.url ?? "").trim(), title: extracted.title };
+    }
 
     if (!text) {
       return NextResponse.json({ error: "검수할 문구를 입력해 주세요." }, { status: 400 });
@@ -88,7 +102,7 @@ export async function POST(request: Request) {
     // 2단 — Claude 문맥판정 (선택, 실패 시 null 폴백)
     const ai = await runClaudeJudgment(text);
 
-    return NextResponse.json({ rule, ai });
+    return NextResponse.json({ rule, ai, source, extractedText: source ? text : undefined });
   } catch (error) {
     console.error("[ad-check] 검수 실패:", error);
     return NextResponse.json({ error: "검수 처리 중 오류가 발생했습니다." }, { status: 500 });

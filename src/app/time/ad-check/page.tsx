@@ -14,8 +14,12 @@ interface AiFinding {
 interface CheckResponse {
   rule: ScanResult;
   ai: { findings: AiFinding[]; comment: string } | null;
+  source?: { type: string; url: string; title?: string };
+  extractedText?: string;
   error?: string;
 }
+
+type InputMode = "text" | "url";
 
 const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
@@ -46,33 +50,40 @@ function highlight(text: string, spans: ScanSpan[]): ReactNode {
 }
 
 export default function AdCheckPage() {
+  const [mode, setMode] = useState<InputMode>("text");
   const [text, setText] = useState("");
+  const [url, setUrl] = useState("");
   const [submitted, setSubmitted] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<CheckResponse | null>(null);
   const [error, setError] = useState("");
 
   async function handleCheck() {
-    const value = text.trim();
-    if (!value) {
+    setError("");
+    if (mode === "url") {
+      if (!url.trim()) {
+        setError("검수할 링크(URL)를 입력해 주세요.");
+        return;
+      }
+    } else if (!text.trim()) {
       setError("검수할 문구를 입력해 주세요.");
       return;
     }
-    setError("");
     setLoading(true);
     setData(null);
     try {
+      const payload = mode === "url" ? { mode: "url", url: url.trim() } : { text: text.trim() };
       const res = await fetch("/api/ad-check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: value }),
+        body: JSON.stringify(payload),
       });
       const json = (await res.json()) as CheckResponse;
       if (!res.ok || json.error) {
         setError(json.error || "검수 처리 중 오류가 발생했습니다.");
         return;
       }
-      setSubmitted(value);
+      setSubmitted(mode === "url" ? json.extractedText ?? "" : text.trim());
       setData(json);
     } catch {
       setError("네트워크 오류로 검수에 실패했습니다. 잠시 후 다시 시도해 주세요.");
@@ -112,40 +123,80 @@ export default function AdCheckPage() {
       <div className="adc-main">
         <div className="adc-wrap">
           <div className="adc-panel">
-            <div className="adc-panel-head">
-              <h2>검수할 문구를 붙여넣으세요</h2>
-              <span className="cnt">{text.length.toLocaleString()}자</span>
+            <div className="adc-tabs">
+              <button className={mode === "text" ? "on" : ""} onClick={() => { setMode("text"); setError(""); }}>텍스트 붙여넣기</button>
+              <button className={mode === "url" ? "on" : ""} onClick={() => { setMode("url"); setError(""); }}>링크(URL)</button>
+              <button className="soon" disabled>유튜브<span>준비중</span></button>
+              <button className="soon" disabled>인스타·페북<span>준비중</span></button>
+              <button className="soon" disabled>이미지<span>준비중</span></button>
             </div>
-            <textarea
-              className="adc-textarea"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder="예) 강남 최고의 리프팅! 100% 완벽한 효과, 부작용 없이 5년 유지. 선착순 50% 할인 이벤트..."
-              maxLength={12000}
-            />
+
+            {mode === "text" ? (
+              <>
+                <div className="adc-panel-head">
+                  <h2>검수할 문구를 붙여넣으세요</h2>
+                  <span className="cnt">{text.length.toLocaleString()}자</span>
+                </div>
+                <textarea
+                  className="adc-textarea"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="예) 강남 최고의 리프팅! 100% 완벽한 효과, 부작용 없이 5년 유지. 선착순 50% 할인 이벤트..."
+                  maxLength={12000}
+                />
+              </>
+            ) : (
+              <>
+                <div className="adc-panel-head">
+                  <h2>이미 올라간 글 링크를 붙여넣으세요</h2>
+                  <span className="cnt">블로그·홈페이지</span>
+                </div>
+                <input
+                  className="adc-urlinput"
+                  type="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  placeholder="예) https://blog.naver.com/브랜드/223... 또는 병원 홈페이지 이벤트 페이지 주소"
+                  onKeyDown={(e) => { if (e.key === "Enter") handleCheck(); }}
+                />
+                <div className="adc-urlnote">네이버 블로그·티스토리·병원 홈페이지 등 공개 페이지를 열어 본문을 검수합니다. 자바스크립트로만 렌더되는 페이지는 본문을 못 읽을 수 있어요.</div>
+              </>
+            )}
+
             <div className="adc-actions">
               <button className="adc-btn" onClick={handleCheck} disabled={loading}>
                 {loading ? <><span className="spin" /> 검수 중...</> : "검수하기"}
               </button>
               <button
                 className="adc-ghostbtn"
-                onClick={() => { setText(""); setData(null); setError(""); }}
+                onClick={() => { setText(""); setUrl(""); setData(null); setError(""); }}
                 disabled={loading}
               >
                 지우기
               </button>
-              <span className="adc-hint">입력한 문구는 저장되지 않습니다.</span>
+              <span className="adc-hint">{mode === "url" ? "링크는 저장되지 않습니다." : "입력한 문구는 저장되지 않습니다."}</span>
             </div>
-            <div className="adc-samples">
-              <span className="lb">예시로 해보기</span>
-              <button onClick={() => { setText(SAMPLE); setData(null); setError(""); }}>미용의료 블로그 문구 넣기</button>
-            </div>
+
+            {mode === "text" && (
+              <div className="adc-samples">
+                <span className="lb">예시로 해보기</span>
+                <button onClick={() => { setText(SAMPLE); setData(null); setError(""); }}>미용의료 블로그 문구 넣기</button>
+              </div>
+            )}
             {error && <div className="adc-err">{error}</div>}
           </div>
 
           {/* RESULT */}
           {rule && (
             <div className="adc-result">
+              {data?.source && (
+                <div className="adc-source">
+                  <span className="lb">검수한 출처</span>
+                  <a href={data.source.url} target="_blank" rel="noopener noreferrer">
+                    {data.source.title || data.source.url}
+                  </a>
+                </div>
+              )}
               <div className={`adc-light ${rule.overallRisk}`}>
                 <div className="adc-lamp">
                   <i className={rule.overallRisk === "high" ? "on red" : ""} />
