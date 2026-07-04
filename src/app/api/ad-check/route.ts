@@ -23,7 +23,12 @@ interface AiFinding {
   risk: "high" | "medium" | "low";
 }
 
+// 2단 AI 문맥판정은 Anthropic API 비용이 발생하므로 기본 OFF (무료 서비스 유지).
+// 켜려면 Vercel 환경변수 AD_CHECK_AI_ENABLED=true 설정 (그 전에 레이트리밋·일일 상한 필수).
+const AI_ENABLED = process.env.AD_CHECK_AI_ENABLED === "true";
+
 async function runClaudeJudgment(text: string): Promise<{ findings: AiFinding[]; comment: string } | null> {
+  if (!AI_ENABLED) return null;
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return null;
 
