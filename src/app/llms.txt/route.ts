@@ -68,6 +68,12 @@ export function GET() {
   lines.push(
     `- 왕홍(KOL)·샤오홍슈 체험단 마케팅 대행: ${BASE}/people/wanghong-marketing`,
   );
+  lines.push(
+    `- 일본 인플루언서 마케팅·LINE 마케팅 대행: ${BASE}/people/japan-influencer-marketing`,
+  );
+  lines.push(
+    `- 인플루언서 체험단·기자단 대행(국내+해외): ${BASE}/people/experience-group`,
+  );
 
   lines.push("");
   lines.push("## 주요 키워드");
