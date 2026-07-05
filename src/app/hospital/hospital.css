@@ -622,6 +622,33 @@
   font-size: 12px;
   font-weight: 800;
 }
+/* 카테고리 탭 — 누르면 해당 시술만 필터 */
+.hpd-price__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 4px;
+}
+.hpd-price__tab {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.hpd-price__tab:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.32);
+}
+.hpd-price__tab.is-active {
+  background: #e63329;
+  border-color: #e63329;
+  color: #fff;
+}
 .hpd-price__group {
   margin-top: 18px;
 }
