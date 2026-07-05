@@ -202,6 +202,60 @@ export const portfolioItems: PortfolioItem[] = [
   // 올라라의원 한국 메인 사이트(olara.co.kr)는 클라이언트 자체 제작분이라 제외.
   // 열정의시간이 만든 중국(간체)·대만(번체) 현지화 페이지만 포트폴리오에 노출(아래 참조).
 
+  // ── 국내마케팅 · SNS·콘텐츠(디자인) ──────────────────────────
+  // 실제 클라이언트 발행 디자인 작업물(카드뉴스·안내물·배너)에서 캡처.
+  // 공개 홈페이지 노출분이라 성과 수치·가격·전후 비교는 배제하고 "디자인 작업" 관점만 노출.
+  {
+    id: "sns-olara-cardnews",
+    regions: ["domestic"],
+    category: "sns",
+    title: "올라라의원 블로그 카드뉴스",
+    summary: "피부 상식 콘텐츠 카드뉴스 기획·디자인",
+    thumbnail: "/portfolio/sns-olara-cardnews.png",
+    tags: ["카드뉴스", "콘텐츠", "의료"],
+    accent: "#a86b60",
+  },
+  {
+    id: "sns-olara-cardnews2",
+    regions: ["domestic"],
+    category: "sns",
+    title: "올라라의원 콘텐츠 카드뉴스",
+    summary: "시술 정보 카드뉴스 시리즈 디자인",
+    thumbnail: "/portfolio/sns-olara-cardnews2.png",
+    tags: ["카드뉴스", "콘텐츠", "디자인"],
+    accent: "#a86b60",
+  },
+  {
+    id: "sns-olara-schedule",
+    regions: ["domestic"],
+    category: "sns",
+    title: "올라라의원 진료일정 안내",
+    summary: "월별 휴진·진료 안내 카드 디자인",
+    thumbnail: "/portfolio/sns-olara-schedule.png",
+    tags: ["안내 디자인", "SNS"],
+    accent: "#3b82f6",
+  },
+  {
+    id: "sns-olara-kakao",
+    regions: ["domestic"],
+    category: "sns",
+    title: "올라라의원 카카오톡 채널 배너",
+    summary: "카카오톡 채널 유입 프로모션 배너 디자인",
+    thumbnail: "/portfolio/sns-olara-kakao.png",
+    tags: ["배너", "채널 유입"],
+    accent: "#eab308",
+  },
+  {
+    id: "sns-mellow-director",
+    regions: ["domestic"],
+    category: "sns",
+    title: "멜로우피부과 원장 소개 배너",
+    summary: "지점 대표원장 소개 브랜드 배너 디자인",
+    thumbnail: "/portfolio/sns-mellow-director.png",
+    tags: ["배너", "브랜드", "의료"],
+    accent: "#a8886b",
+  },
+
   // ── 일본마케팅 · 홈페이지 ────────────────────────────────────
   {
     id: "mellow-jp",
