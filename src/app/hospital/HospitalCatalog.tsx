@@ -35,11 +35,11 @@ type UIStrings = {
 }
 
 const UI: Record<ToggleLocale, UIStrings> = {
-  ko: { title: "협력병원", subtitle: "열정의시간이 함께하는 병원들", intro: "각 병원의 강점·대표 시술·원장을 확인하고, 열정의시간으로 편하게 문의해 보세요.", all: "전체", strengths: "강점", signature: "대표 시술", doctors: "원장 소개", gallery: "시설·위치", detail: "자세히 보기", interest: "관심 병원", heading: "열정의시간 무료 상담", name: "이름", contactType: "연락 수단", contact: "연락처", message: "문의 내용", submit: "문의 보내기", sending: "전송 중…", success: "문의가 접수되었습니다. 곧 연락드리겠습니다.", consent: "개인정보 수집·이용에 동의합니다.", close: "닫기" },
-  en: { title: "Partner Hospitals", subtitle: "Clinics we work with", intro: "Explore each clinic's strengths, signature treatments and doctors, then reach out to Time of Passion.", all: "All", strengths: "Strengths", signature: "Signature", doctors: "Doctors", gallery: "Facility & Location", detail: "View details", interest: "Hospital of interest", heading: "Free consultation with Time of Passion", name: "Name", contactType: "Contact method", contact: "Contact", message: "Message", submit: "Send inquiry", sending: "Sending…", success: "Received. We'll contact you soon.", consent: "I agree to the collection and use of my personal information.", close: "Close" },
-  ja: { title: "提携病院", subtitle: "TIME OF PASSIONが共に歩む病院", intro: "各病院の強み・代表施術・院長をご確認のうえ、TIME OF PASSIONへお気軽にお問い合わせください。", all: "すべて", strengths: "強み", signature: "代表施術", doctors: "院長紹介", gallery: "施設・立地", detail: "詳細を見る", interest: "関心のある病院", heading: "TIME OF PASSION 無料相談", name: "お名前", contactType: "連絡手段", contact: "連絡先", message: "お問い合わせ内容", submit: "送信する", sending: "送信中…", success: "受け付けました。追ってご連絡いたします。", consent: "個人情報の収集・利用に同意します。", close: "閉じる" },
-  "zh-CN": { title: "合作医院", subtitle: "与TIME OF PASSION同行的医院", intro: "了解各医院的优势·代表项目·院长，并通过TIME OF PASSION轻松咨询。", all: "全部", strengths: "优势", signature: "代表项目", doctors: "院长介绍", gallery: "设施·位置", detail: "查看详情", interest: "感兴趣的医院", heading: "TIME OF PASSION 免费咨询", name: "姓名", contactType: "联系方式", contact: "联系方式", message: "咨询内容", submit: "发送咨询", sending: "发送中…", success: "已受理，我们会尽快与您联系。", consent: "我同意收集和使用个人信息。", close: "关闭" },
-  "zh-TW": { title: "合作醫院", subtitle: "與TIME OF PASSION同行的醫院", intro: "了解各醫院的優勢·代表療程·院長，並透過TIME OF PASSION輕鬆諮詢。", all: "全部", strengths: "優勢", signature: "代表療程", doctors: "院長介紹", gallery: "設施·位置", detail: "查看詳情", interest: "感興趣的醫院", heading: "TIME OF PASSION 免費諮詢", name: "姓名", contactType: "聯絡方式", contact: "聯絡方式", message: "諮詢內容", submit: "送出諮詢", sending: "傳送中…", success: "已受理，我們會盡快與您聯絡。", consent: "我同意蒐集與使用個人資訊。", close: "關閉" },
+  ko: { title: "협력병원", subtitle: "열정의시간이 함께하는 병원들", intro: "각 병원의 강점·대표 시술·원장을 확인하고, 열정의시간으로 편하게 문의해 보세요.", all: "전체", strengths: "강점", signature: "대표 시술", doctors: "원장 소개", gallery: "인테리어", detail: "자세히 보기", interest: "관심 병원", heading: "열정의시간 무료 상담", name: "이름", contactType: "연락 수단", contact: "연락처", message: "문의 내용", submit: "문의 보내기", sending: "전송 중…", success: "문의가 접수되었습니다. 곧 연락드리겠습니다.", consent: "개인정보 수집·이용에 동의합니다.", close: "닫기" },
+  en: { title: "Partner Hospitals", subtitle: "Clinics we work with", intro: "Explore each clinic's strengths, signature treatments and doctors, then reach out to Time of Passion.", all: "All", strengths: "Strengths", signature: "Signature", doctors: "Doctors", gallery: "Interior", detail: "View details", interest: "Hospital of interest", heading: "Free consultation with Time of Passion", name: "Name", contactType: "Contact method", contact: "Contact", message: "Message", submit: "Send inquiry", sending: "Sending…", success: "Received. We'll contact you soon.", consent: "I agree to the collection and use of my personal information.", close: "Close" },
+  ja: { title: "提携病院", subtitle: "TIME OF PASSIONが共に歩む病院", intro: "各病院の強み・代表施術・院長をご確認のうえ、TIME OF PASSIONへお気軽にお問い合わせください。", all: "すべて", strengths: "強み", signature: "代表施術", doctors: "院長紹介", gallery: "院内", detail: "詳細を見る", interest: "関心のある病院", heading: "TIME OF PASSION 無料相談", name: "お名前", contactType: "連絡手段", contact: "連絡先", message: "お問い合わせ内容", submit: "送信する", sending: "送信中…", success: "受け付けました。追ってご連絡いたします。", consent: "個人情報の収集・利用に同意します。", close: "閉じる" },
+  "zh-CN": { title: "合作医院", subtitle: "与TIME OF PASSION同行的医院", intro: "了解各医院的优势·代表项目·院长，并通过TIME OF PASSION轻松咨询。", all: "全部", strengths: "优势", signature: "代表项目", doctors: "院长介绍", gallery: "环境", detail: "查看详情", interest: "感兴趣的医院", heading: "TIME OF PASSION 免费咨询", name: "姓名", contactType: "联系方式", contact: "联系方式", message: "咨询内容", submit: "发送咨询", sending: "发送中…", success: "已受理，我们会尽快与您联系。", consent: "我同意收集和使用个人信息。", close: "关闭" },
+  "zh-TW": { title: "合作醫院", subtitle: "與TIME OF PASSION同行的醫院", intro: "了解各醫院的優勢·代表療程·院長，並透過TIME OF PASSION輕鬆諮詢。", all: "全部", strengths: "優勢", signature: "代表療程", doctors: "院長介紹", gallery: "環境", detail: "查看詳情", interest: "感興趣的醫院", heading: "TIME OF PASSION 免費諮詢", name: "姓名", contactType: "聯絡方式", contact: "聯絡方式", message: "諮詢內容", submit: "送出諮詢", sending: "傳送中…", success: "已受理，我們會盡快與您聯絡。", consent: "我同意蒐集與使用個人資訊。", close: "關閉" },
 }
 
 function pick(h: HospitalI18n, locale: ToggleLocale): LocaleContent {
@@ -177,6 +177,7 @@ function DetailModal({
   onClose: () => void
 }) {
   const c = pick(h, locale)
+  const [showForm, setShowForm] = useState(false)
   return (
     <div className="hp-modal" onClick={onClose}>
       <div className="hp-modal__panel" onClick={(e) => e.stopPropagation()}>
@@ -197,7 +198,7 @@ function DetailModal({
 
         {h.heroImageUrl && <img src={h.heroImageUrl} alt="" className="hp-detail__hero" />}
 
-        <div className="hp-detail__cols">
+        <div className="hp-detail__body">
           <article className="hp-detail__main">
             {c.summary && <p className="hp-detail__summary">{c.summary}</p>}
 
@@ -260,9 +261,19 @@ function DetailModal({
             )}
           </article>
 
-          <aside className="hp-detail__aside">
-            <InquiryForm slug={h.slug} hospitalName={c.name} locale={locale} t={t} />
-          </aside>
+          <div className="hp-detail__inquiry">
+            {showForm ? (
+              <InquiryForm slug={h.slug} hospitalName={c.name} locale={locale} t={t} />
+            ) : (
+              <button
+                type="button"
+                className="hp-detail__inquiry-btn"
+                onClick={() => setShowForm(true)}
+              >
+                {t.heading} →
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
