@@ -134,3 +134,63 @@
     font-size: 11px;
   }
 }
+
+/* ===== 2026-07-05 UI 개선: 썸네일 통일·인테리어·원장약력·상담 CTA ===== */
+
+/* 썸네일 강제 균일 크롭 — 세로 포스터도 16:9 박스로 잘라 카드 크기 통일 */
+.hp-card__media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+}
+.hp-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 상세: 항상 1열 풀폭 (사이드 상담폼 제거) */
+.hp-detail__body {
+  margin-top: 28px;
+}
+
+/* 원장 소개: 프로필 사진 크게 + 약력 줄바꿈 표시 */
+.hp-doctor__photo,
+.hp-doctor__photo--ph {
+  width: 72px;
+  height: 72px;
+}
+.hp-doctor__bio {
+  white-space: pre-line;
+}
+
+/* 무료 상담 — 항상 열린 폼 제거, 접이식 CTA 버튼 */
+.hp-detail__inquiry {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hp-border);
+}
+.hp-detail__inquiry-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border: none;
+  border-radius: 999px;
+  background: #e63329;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.hp-detail__inquiry-btn:hover {
+  background: #c92a21;
+}
+.hp-detail__inquiry .hp-form {
+  position: static;
+  top: auto;
+  max-width: 460px;
+}
