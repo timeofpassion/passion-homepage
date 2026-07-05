@@ -199,12 +199,95 @@
 }
 
 /* ===== 2026-07-05 협력병원 상세 = 공유용 고유 URL 페이지 (/hospital/[slug]) ===== */
+/* 배경 = 열정의시간 톤앤매너(딥크림슨 + 시네마틱 비네트, /time full-bleed-bg 정합) */
 .hpd {
   min-height: 100vh;
-  background: #0c0303;
+  background:
+    radial-gradient(120% 72% at 50% -8%, rgba(204, 0, 0, 0.42), rgba(110, 0, 7, 0.28) 32%, rgba(10, 3, 4, 0.94) 66%),
+    radial-gradient(90% 55% at 50% 118%, rgba(150, 0, 10, 0.22), transparent 60%),
+    #0a0304;
+  background-attachment: fixed;
   color: #fff;
-  padding: 40px 20px 80px;
+  padding: 78px 20px 80px;
 }
+
+/* 최상단 고정 브랜드 바 — 열정의시간 로고 + 텍스트, 스크롤해도 상단 고정 */
+.hpd-brandbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  height: 54px;
+  padding: 0 20px;
+  background: rgba(10, 3, 4, 0.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(231, 196, 106, 0.22);
+}
+.hpd-brandbar__in {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 1040px;
+  width: 100%;
+  margin: 0 auto;
+  text-decoration: none;
+}
+.hpd-brandbar__logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+.hpd-brandbar__name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.hpd-brandbar__sub {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #e7c46a;
+  padding-left: 10px;
+  margin-left: 2px;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* 독점 파트너 고지 */
+.hpd__exclusive {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 16px 18px;
+  border: 1px solid rgba(231, 196, 106, 0.34);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(231, 196, 106, 0.09), rgba(204, 0, 0, 0.06));
+}
+.hpd__exclusive-badge {
+  flex: 0 0 auto;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #e7c46a;
+  color: #2a1a02;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.hpd__exclusive-text {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+}
+.hpd__exclusive-text strong {
+  color: #fff;
+  font-weight: 800;
+}
+
 .hpd__inner {
   max-width: 1040px;
   margin: 0 auto;
@@ -716,7 +799,7 @@
 /* ===== 반응형 고도화 (PC·태블릿·모바일) ===== */
 @media (max-width: 900px) {
   .hpd {
-    padding: 32px 16px 64px;
+    padding: 72px 16px 64px;
   }
   .hpd__hero {
     aspect-ratio: 16 / 9;
@@ -740,7 +823,18 @@
 }
 @media (max-width: 480px) {
   .hpd {
-    padding: 22px 14px 52px;
+    padding: 66px 14px 52px;
+  }
+  .hpd-brandbar {
+    height: 50px;
+    padding: 0 14px;
+  }
+  .hpd-brandbar__sub {
+    display: none;
+  }
+  .hpd__exclusive {
+    flex-direction: column;
+    gap: 8px;
   }
   .hpd__topbar {
     flex-direction: column;
