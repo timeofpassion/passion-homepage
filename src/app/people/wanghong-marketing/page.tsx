@@ -216,27 +216,52 @@ export default function WanghongMarketingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* HERO (서브) */}
+      {/* HERO (서브) — 텍스트 + 컨셉 이미지 2단(모바일 스택) */}
       <section className="ppl-section ppl-fadeup" style={{ paddingBottom: 0 }}>
-        <div className="ppl-container">
-          <span className="ppl-eyebrow">王红 · KOL MARKETING</span>
-          <h1 className="ppl-section-title">
-            왕홍(샤오홍슈) 마케팅·체험단 대행
-          </h1>
-          <p className="ppl-section-sub">
-            중국 현지에서 직접 운영하는 왕홍·KOL 풀로, 샤오홍슈·더우인·웨이보
-            캠페인을 섭외부터 성과 리포트까지 원스톱으로 실행합니다.
-            에이전시 재하청은 없습니다.
-          </p>
-          <div className="ppl-center" style={{ marginTop: "1.6rem" }}>
-            <a
-              href={KAKAO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ppl-btn ppl-btn--red"
-            >
-              카카오톡 무료 상담 →
-            </a>
+        <div
+          className="ppl-container"
+          style={{
+            display: "flex",
+            gap: "2.5rem",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ flex: "1 1 340px", minWidth: 0 }}>
+            <span className="ppl-eyebrow">王红 · KOL MARKETING</span>
+            <h1 className="ppl-section-title">
+              왕홍(샤오홍슈) 마케팅·체험단 대행
+            </h1>
+            <p className="ppl-section-sub">
+              중국 현지에서 직접 운영하는 왕홍·KOL 풀로, 샤오홍슈·더우인·웨이보
+              캠페인을 섭외부터 성과 리포트까지 원스톱으로 실행합니다.
+              에이전시 재하청은 없습니다.
+            </p>
+            <div style={{ marginTop: "1.6rem" }}>
+              <a
+                href={KAKAO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ppl-btn ppl-btn--red"
+              >
+                카카오톡 무료 상담 →
+              </a>
+            </div>
+          </div>
+          <div style={{ flex: "1 1 380px", minWidth: 0 }}>
+            {/* 개념 이미지(가짜 인물·시술 없음). 교체 시 이 파일만 덮어쓰기: public/people/wanghong-hero.png */}
+            <img
+              src="/people/wanghong-hero.png"
+              alt="왕홍·샤오홍슈 마케팅 — 중국 소셜커머스 콘텐츠 개념 이미지"
+              width={1376}
+              height={768}
+              style={{
+                width: "100%",
+                height: "auto",
+                borderRadius: "20px",
+                boxShadow: "0 24px 60px rgba(15,23,42,0.12)",
+              }}
+            />
           </div>
         </div>
       </section>
