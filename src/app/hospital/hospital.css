@@ -209,13 +209,27 @@
   max-width: 1040px;
   margin: 0 auto;
 }
+.hpd__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.hpd__langbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
 .hpd__back {
   display: inline-block;
   color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  margin-bottom: 22px;
+  white-space: nowrap;
 }
 .hpd__back:hover {
   color: #fff;
@@ -560,14 +574,71 @@
   font-size: 13px;
   color: rgba(255, 255, 255, 0.72);
 }
+/* 전후 미등록 안내 */
+.hpd-ba__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 118px;
+  padding: 28px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  text-align: center;
+}
 
-@media (max-width: 680px) {
-  .hpd__doctor {
-    grid-template-columns: 120px 1fr;
-    gap: 18px;
-    padding: 16px;
+/* ===== 반응형 고도화 (PC·태블릿·모바일) ===== */
+@media (max-width: 900px) {
+  .hpd {
+    padding: 32px 16px 64px;
   }
   .hpd__hero {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 16 / 9;
+  }
+}
+@media (max-width: 680px) {
+  .hpd__doctor {
+    grid-template-columns: 132px 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+  .hpd__doctor-name {
+    font-size: 21px;
+  }
+  .hpd__hero {
+    aspect-ratio: 4 / 3;
+  }
+  .hpd__block {
+    margin-top: 32px;
+  }
+}
+@media (max-width: 480px) {
+  .hpd {
+    padding: 22px 14px 52px;
+  }
+  .hpd__topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .hpd__langbar {
+    justify-content: flex-start;
+  }
+  .hpd__doctor {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .hpd__doctor-photo,
+  .hpd__doctor-photo--ph {
+    width: 140px;
+    aspect-ratio: 3 / 4;
+  }
+  .hpd-gallery__thumb {
+    width: 96px;
+  }
+  .hpd__h2 {
+    font-size: 18px;
   }
 }

@@ -21,6 +21,7 @@ type UI = {
   beforeAfter: string
   before: string
   after: string
+  baEmpty: string
   mohw: string
   heading: string
   name: string
@@ -34,11 +35,11 @@ type UI = {
 }
 
 const STR: Record<ToggleLocale, UI> = {
-  ko: { back: "협력병원 목록", strengths: "강점", signature: "대표 시술", doctors: "의료진 소개", interior: "인테리어", beforeAfter: "시술 전후", before: "BEFORE", after: "AFTER", mohw: "보건복지부 등록 외국인환자 유치 마케팅 기업", heading: "열정의시간 무료 상담", name: "이름", contactType: "연락 수단", contact: "연락처", message: "문의 내용", submit: "문의 보내기", sending: "전송 중…", success: "문의가 접수되었습니다. 곧 연락드리겠습니다.", consent: "개인정보 수집·이용에 동의합니다." },
-  en: { back: "Partner hospitals", strengths: "Strengths", signature: "Signature", doctors: "Medical team", interior: "Interior", beforeAfter: "Before & After", before: "BEFORE", after: "AFTER", mohw: "Registered with Korea's Ministry of Health & Welfare (foreign patient attraction)", heading: "Free consultation with Time of Passion", name: "Name", contactType: "Contact method", contact: "Contact", message: "Message", submit: "Send inquiry", sending: "Sending…", success: "Received. We'll contact you soon.", consent: "I agree to the collection and use of my personal information." },
-  ja: { back: "提携病院一覧", strengths: "強み", signature: "代表施術", doctors: "医療陣紹介", interior: "院内", beforeAfter: "施術ビフォーアフター", before: "BEFORE", after: "AFTER", mohw: "韓国 保健福祉部 登録 外国人患者誘致マーケティング企業", heading: "TIME OF PASSION 無料相談", name: "お名前", contactType: "連絡手段", contact: "連絡先", message: "お問い合わせ内容", submit: "送信する", sending: "送信中…", success: "受け付けました。追ってご連絡いたします。", consent: "個人情報の収集・利用に同意します。" },
-  "zh-CN": { back: "合作医院列表", strengths: "优势", signature: "代表项目", doctors: "医疗团队", interior: "环境", beforeAfter: "术前术后", before: "术前", after: "术后", mohw: "韩国保健福祉部注册 外国患者招引营销企业", heading: "TIME OF PASSION 免费咨询", name: "姓名", contactType: "联系方式", contact: "联系方式", message: "咨询内容", submit: "发送咨询", sending: "发送中…", success: "已受理，我们会尽快与您联系。", consent: "我同意收集和使用个人信息。" },
-  "zh-TW": { back: "合作醫院列表", strengths: "優勢", signature: "代表療程", doctors: "醫療團隊", interior: "環境", beforeAfter: "術前術後", before: "術前", after: "術後", mohw: "韓國保健福祉部登錄 外國患者招攬行銷企業", heading: "TIME OF PASSION 免費諮詢", name: "姓名", contactType: "聯絡方式", contact: "聯絡方式", message: "諮詢內容", submit: "送出諮詢", sending: "傳送中…", success: "已受理，我們會盡快與您聯絡。", consent: "我同意蒐集與使用個人資訊。" },
+  ko: { back: "협력병원 목록", strengths: "강점", signature: "대표 시술", doctors: "의료진 소개", interior: "인테리어", beforeAfter: "시술 전후", before: "BEFORE", after: "AFTER", baEmpty: "시술 전후 사진은 준비 중입니다. (등록 전)", mohw: "보건복지부 등록 외국인환자 유치 마케팅 기업", heading: "열정의시간 무료 상담", name: "이름", contactType: "연락 수단", contact: "연락처", message: "문의 내용", submit: "문의 보내기", sending: "전송 중…", success: "문의가 접수되었습니다. 곧 연락드리겠습니다.", consent: "개인정보 수집·이용에 동의합니다." },
+  en: { back: "Partner hospitals", strengths: "Strengths", signature: "Signature", doctors: "Medical team", interior: "Interior", beforeAfter: "Before & After", before: "BEFORE", after: "AFTER", baEmpty: "Before & after photos coming soon.", mohw: "Registered with Korea's Ministry of Health & Welfare (foreign patient attraction)", heading: "Free consultation with Time of Passion", name: "Name", contactType: "Contact method", contact: "Contact", message: "Message", submit: "Send inquiry", sending: "Sending…", success: "Received. We'll contact you soon.", consent: "I agree to the collection and use of my personal information." },
+  ja: { back: "提携病院一覧", strengths: "強み", signature: "代表施術", doctors: "医療陣紹介", interior: "院内", beforeAfter: "施術ビフォーアフター", before: "BEFORE", after: "AFTER", baEmpty: "施術ビフォーアフター写真は準備中です。", mohw: "韓国 保健福祉部 登録 外国人患者誘致マーケティング企業", heading: "TIME OF PASSION 無料相談", name: "お名前", contactType: "連絡手段", contact: "連絡先", message: "お問い合わせ内容", submit: "送信する", sending: "送信中…", success: "受け付けました。追ってご連絡いたします。", consent: "個人情報の収集・利用に同意します。" },
+  "zh-CN": { back: "合作医院列表", strengths: "优势", signature: "代表项目", doctors: "医疗团队", interior: "环境", beforeAfter: "术前术后", before: "术前", after: "术后", baEmpty: "术前术后照片准备中。", mohw: "韩国保健福祉部注册 外国患者招引营销企业", heading: "TIME OF PASSION 免费咨询", name: "姓名", contactType: "联系方式", contact: "联系方式", message: "咨询内容", submit: "发送咨询", sending: "发送中…", success: "已受理，我们会尽快与您联系。", consent: "我同意收集和使用个人信息。" },
+  "zh-TW": { back: "合作醫院列表", strengths: "優勢", signature: "代表療程", doctors: "醫療團隊", interior: "環境", beforeAfter: "術前術後", before: "術前", after: "術後", baEmpty: "術前術後照片準備中。", mohw: "韓國保健福祉部登錄 外國患者招攬行銷企業", heading: "TIME OF PASSION 免費諮詢", name: "姓名", contactType: "聯絡方式", contact: "聯絡方式", message: "諮詢內容", submit: "送出諮詢", sending: "傳送中…", success: "已受理，我們會盡快與您聯絡。", consent: "我同意蒐集與使用個人資訊。" },
 }
 
 function pick(h: HospitalI18n, locale: ToggleLocale): LocaleContent {
@@ -62,24 +63,25 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
 
   return (
     <main className="hpd">
-      {/* 우측 고정 언어 토글 */}
-      <div className="hp-langbar">
-        {TOGGLE_LOCALES.map((l) => (
-          <button
-            key={l.value}
-            type="button"
-            className={`hp-lang ${locale === l.value ? "is-active" : ""}`}
-            onClick={() => setLocale(l.value)}
-          >
-            {l.label}
-          </button>
-        ))}
-      </div>
-
       <div className="hpd__inner">
-        <Link href="/hospital" className="hpd__back">
-          ← {t.back}
-        </Link>
+        {/* 상단 바 — 뒤로가기(좌) + 언어 토글(우). 인라인이라 스크롤 시 본문을 덮지 않음 */}
+        <div className="hpd__topbar">
+          <Link href="/hospital" className="hpd__back">
+            ← {t.back}
+          </Link>
+          <div className="hpd__langbar">
+            {TOGGLE_LOCALES.map((l) => (
+              <button
+                key={l.value}
+                type="button"
+                className={`hp-lang ${locale === l.value ? "is-active" : ""}`}
+                onClick={() => setLocale(l.value)}
+              >
+                {l.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <header className="hpd__header">
           <div className="hpd__tags">
@@ -115,12 +117,14 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
           </section>
         )}
 
-        {h.beforeAfterCases.length > 0 && (
-          <section className="hpd__block">
-            <h2 className="hpd__h2">{t.beforeAfter}</h2>
+        <section className="hpd__block">
+          <h2 className="hpd__h2">{t.beforeAfter}</h2>
+          {h.beforeAfterCases.length > 0 ? (
             <BeforeAfter cases={h.beforeAfterCases} t={t} />
-          </section>
-        )}
+          ) : (
+            <div className="hpd-ba__empty">{t.baEmpty}</div>
+          )}
+        </section>
 
         {c.signatureTreatments.length > 0 && (
           <section className="hpd__block">
