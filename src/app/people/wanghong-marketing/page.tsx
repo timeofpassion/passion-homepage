@@ -249,19 +249,78 @@ export default function WanghongMarketingPage() {
             </div>
           </div>
           <div style={{ flex: "1 1 380px", minWidth: 0 }}>
-            {/* 개념 이미지(가짜 인물·시술 없음). 교체 시 이 파일만 덮어쓰기: public/people/wanghong-hero.png */}
-            <img
-              src="/people/wanghong-hero.png"
-              alt="왕홍·샤오홍슈 마케팅 — 중국 소셜커머스 콘텐츠 개념 이미지"
-              width={1376}
-              height={768}
+            {/* 샤오홍슈 공식 워드마크(자사 검증 에셋)로 '누가 봐도 샤오홍슈'인 브랜드 카드. 가짜 인물·시술 없음. */}
+            <div
               style={{
-                width: "100%",
-                height: "auto",
                 borderRadius: "20px",
-                boxShadow: "0 24px 60px rgba(15,23,42,0.12)",
+                background: "linear-gradient(135deg, #ff2442 0%, #e60033 100%)",
+                padding: "2.8rem 2rem",
+                boxShadow: "0 24px 60px rgba(230,51,41,0.28)",
+                color: "#fff",
+                textAlign: "center",
               }}
-            />
+            >
+              <p
+                style={{
+                  fontSize: "0.78rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.12em",
+                  opacity: 0.92,
+                  marginBottom: "1.4rem",
+                }}
+              >
+                중국 소셜커머스 핵심 채널
+              </p>
+              <img
+                src="/people/platforms/xiaohongshu.svg"
+                alt="샤오홍슈(小红书)"
+                style={{
+                  width: "min(70%, 280px)",
+                  height: "auto",
+                  filter: "brightness(0) invert(1)",
+                  display: "block",
+                  margin: "0 auto 1.4rem",
+                }}
+              />
+              <p style={{ fontSize: "1.05rem", fontWeight: 700, lineHeight: 1.55 }}>
+                샤오홍슈 · 더우인 · 웨이보
+                <br />
+                왕홍(KOL) 캠페인 직접 운영
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.7rem",
+                  justifyContent: "center",
+                  marginTop: "1.6rem",
+                }}
+              >
+                {["xiaohongshu", "douyin"].map((p) => (
+                  <span
+                    key={p}
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: "50%",
+                      background: "rgba(255,255,255,0.16)",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      src={`/people/platforms/${p}.svg`}
+                      alt={p}
+                      style={{
+                        width: 20,
+                        height: 20,
+                        filter: "brightness(0) invert(1)",
+                      }}
+                    />
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
