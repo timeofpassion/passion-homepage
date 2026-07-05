@@ -48,6 +48,15 @@ export type BeforeAfterCase = {
   caption?: string | null
 }
 
+// 시술 과목·가격 한 줄. price 는 표기 문자열(예: "₩150,000", "22만원~", "상담 후 결정")로 자유.
+// category 로 묶어 그룹 표기. note 는 부위·용량 등 부가설명.
+export type PriceItem = {
+  category: string | null
+  name: string
+  price: string
+  note: string | null
+}
+
 export type Hospital = {
   slug: string
   departments: string[]
@@ -58,6 +67,8 @@ export type Hospital = {
   galleryUrls: string[]
   beforeAfterCases: BeforeAfterCase[]
   doctors: Doctor[]
+  priceItems: PriceItem[]
+  priceNote: string | null
   name: string
   tagline: string | null
   summary: string | null
@@ -85,6 +96,8 @@ export type HospitalI18n = {
   galleryUrls: string[]
   beforeAfterCases: BeforeAfterCase[]
   doctors: Doctor[]
+  priceItems: PriceItem[]
+  priceNote: string | null
   translations: Record<string, LocaleContent>
 }
 
@@ -100,6 +113,8 @@ const SAMPLE_HOSPITALS: Hospital[] = [
     galleryUrls: [],
     beforeAfterCases: [],
     doctors: [],
+    priceItems: [],
+    priceNote: null,
     name: "샘플피부과의원",
     tagline: "색소·리프팅에 강한 강남 피부과",
     summary: "10년간 색소·리프팅 시술에 집중해 온 강남 피부과입니다.",
@@ -157,6 +172,8 @@ const SAMPLE_I18N: HospitalI18n[] = SAMPLE_HOSPITALS.map((h) => ({
   galleryUrls: h.galleryUrls,
   beforeAfterCases: h.beforeAfterCases,
   doctors: h.doctors,
+  priceItems: h.priceItems,
+  priceNote: h.priceNote,
   translations: {
     ko: {
       name: h.name,
@@ -181,6 +198,8 @@ function normalizeI18n(h: Record<string, unknown>): HospitalI18n {
     galleryUrls: get<string[]>("galleryUrls", []),
     beforeAfterCases: get<BeforeAfterCase[]>("beforeAfterCases", []),
     doctors: get<Doctor[]>("doctors", []),
+    priceItems: get<PriceItem[]>("priceItems", []),
+    priceNote: get<string | null>("priceNote", null),
   }
   const tr = h.translations as Record<string, LocaleContent> | undefined
   if (tr && typeof tr === "object") return { ...base, translations: tr }

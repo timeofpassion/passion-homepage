@@ -324,10 +324,10 @@
 }
 .hpd__doctor {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 28px;
+  grid-template-columns: 300px 1fr;
+  gap: 32px;
   align-items: start;
-  padding: 22px;
+  padding: 26px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.03);
@@ -589,6 +589,103 @@
   text-align: center;
 }
 
+/* 시술 과목·가격 */
+.hpd-price {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 22px 22px;
+}
+.hpd-price__same {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 6px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(230, 51, 41, 0.1);
+  border: 1px solid rgba(230, 51, 41, 0.34);
+  color: #ffb3ab;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+.hpd-price__same-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #e63329;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+.hpd-price__group {
+  margin-top: 18px;
+}
+.hpd-price__cat {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #e6794f;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.hpd-price__rows {
+  display: flex;
+  flex-direction: column;
+}
+.hpd-price__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.hpd-price__row:last-child {
+  border-bottom: none;
+}
+.hpd-price__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+.hpd-price__pnote {
+  margin-left: 8px;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+}
+.hpd-price__val {
+  flex: 0 0 auto;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.hpd-price__extra {
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.66);
+  white-space: pre-line;
+}
+.hpd-price__disclaim {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.14);
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.44);
+}
+
 /* ===== 반응형 고도화 (PC·태블릿·모바일) ===== */
 @media (max-width: 900px) {
   .hpd {
@@ -600,9 +697,9 @@
 }
 @media (max-width: 680px) {
   .hpd__doctor {
-    grid-template-columns: 132px 1fr;
-    gap: 16px;
-    padding: 16px;
+    grid-template-columns: 190px 1fr;
+    gap: 18px;
+    padding: 18px;
   }
   .hpd__doctor-name {
     font-size: 21px;
@@ -628,12 +725,18 @@
   }
   .hpd__doctor {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
+    justify-items: center;
+    text-align: center;
   }
   .hpd__doctor-photo,
   .hpd__doctor-photo--ph {
-    width: 140px;
+    width: 100%;
+    max-width: 260px;
     aspect-ratio: 3 / 4;
+  }
+  .hpd__doctor-info {
+    width: 100%;
   }
   .hpd-gallery__thumb {
     width: 96px;

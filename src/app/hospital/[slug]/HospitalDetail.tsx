@@ -9,6 +9,7 @@ import {
   type HospitalI18n,
   type LocaleContent,
   type BeforeAfterCase,
+  type PriceItem,
   CONTACT_TYPES,
 } from "@/lib/hospital-portal"
 
@@ -16,6 +17,9 @@ type UI = {
   back: string
   strengths: string
   signature: string
+  prices: string
+  priceSame: string
+  priceDisclaim: string
   doctors: string
   interior: string
   beforeAfter: string
@@ -35,11 +39,11 @@ type UI = {
 }
 
 const STR: Record<ToggleLocale, UI> = {
-  ko: { back: "협력병원 목록", strengths: "강점", signature: "대표 시술", doctors: "의료진 소개", interior: "인테리어", beforeAfter: "시술 전후", before: "BEFORE", after: "AFTER", baEmpty: "시술 전후 사진은 준비 중입니다. (등록 전)", mohw: "보건복지부 등록 외국인환자 유치 마케팅 기업", heading: "열정의시간 무료 상담", name: "이름", contactType: "연락 수단", contact: "연락처", message: "문의 내용", submit: "문의 보내기", sending: "전송 중…", success: "문의가 접수되었습니다. 곧 연락드리겠습니다.", consent: "개인정보 수집·이용에 동의합니다." },
-  en: { back: "Partner hospitals", strengths: "Strengths", signature: "Signature", doctors: "Medical team", interior: "Interior", beforeAfter: "Before & After", before: "BEFORE", after: "AFTER", baEmpty: "Before & after photos coming soon.", mohw: "Registered with Korea's Ministry of Health & Welfare (foreign patient attraction)", heading: "Free consultation with Time of Passion", name: "Name", contactType: "Contact method", contact: "Contact", message: "Message", submit: "Send inquiry", sending: "Sending…", success: "Received. We'll contact you soon.", consent: "I agree to the collection and use of my personal information." },
-  ja: { back: "提携病院一覧", strengths: "強み", signature: "代表施術", doctors: "医療陣紹介", interior: "院内", beforeAfter: "施術ビフォーアフター", before: "BEFORE", after: "AFTER", baEmpty: "施術ビフォーアフター写真は準備中です。", mohw: "韓国 保健福祉部 登録 外国人患者誘致マーケティング企業", heading: "TIME OF PASSION 無料相談", name: "お名前", contactType: "連絡手段", contact: "連絡先", message: "お問い合わせ内容", submit: "送信する", sending: "送信中…", success: "受け付けました。追ってご連絡いたします。", consent: "個人情報の収集・利用に同意します。" },
-  "zh-CN": { back: "合作医院列表", strengths: "优势", signature: "代表项目", doctors: "医疗团队", interior: "环境", beforeAfter: "术前术后", before: "术前", after: "术后", baEmpty: "术前术后照片准备中。", mohw: "韩国保健福祉部注册 外国患者招引营销企业", heading: "TIME OF PASSION 免费咨询", name: "姓名", contactType: "联系方式", contact: "联系方式", message: "咨询内容", submit: "发送咨询", sending: "发送中…", success: "已受理，我们会尽快与您联系。", consent: "我同意收集和使用个人信息。" },
-  "zh-TW": { back: "合作醫院列表", strengths: "優勢", signature: "代表療程", doctors: "醫療團隊", interior: "環境", beforeAfter: "術前術後", before: "術前", after: "術後", baEmpty: "術前術後照片準備中。", mohw: "韓國保健福祉部登錄 外國患者招攬行銷企業", heading: "TIME OF PASSION 免費諮詢", name: "姓名", contactType: "聯絡方式", contact: "聯絡方式", message: "諮詢內容", submit: "送出諮詢", sending: "傳送中…", success: "已受理，我們會盡快與您聯絡。", consent: "我同意蒐集與使用個人資訊。" },
+  ko: { back: "협력병원 목록", strengths: "강점", signature: "대표 시술", prices: "시술 과목 · 가격", priceSame: "한국인과 동일 수가 · 외국인 추가요금 없음", priceDisclaim: "표시 가격은 부가세 포함 기준이며, 개인 상태에 따라 상담 후 최종 확정됩니다.", doctors: "의료진 소개", interior: "인테리어", beforeAfter: "시술 전후", before: "BEFORE", after: "AFTER", baEmpty: "시술 전후 사진은 준비 중입니다. (등록 전)", mohw: "보건복지부 등록 외국인환자 유치 마케팅 기업", heading: "열정의시간 무료 상담", name: "이름", contactType: "연락 수단", contact: "연락처", message: "문의 내용", submit: "문의 보내기", sending: "전송 중…", success: "문의가 접수되었습니다. 곧 연락드리겠습니다.", consent: "개인정보 수집·이용에 동의합니다." },
+  en: { back: "Partner hospitals", strengths: "Strengths", signature: "Signature", prices: "Treatments & Pricing", priceSame: "Same price as locals · No foreigner surcharge", priceDisclaim: "Prices include VAT and are finalized after consultation based on individual condition.", doctors: "Medical team", interior: "Interior", beforeAfter: "Before & After", before: "BEFORE", after: "AFTER", baEmpty: "Before & after photos coming soon.", mohw: "Registered with Korea's Ministry of Health & Welfare (foreign patient attraction)", heading: "Free consultation with Time of Passion", name: "Name", contactType: "Contact method", contact: "Contact", message: "Message", submit: "Send inquiry", sending: "Sending…", success: "Received. We'll contact you soon.", consent: "I agree to the collection and use of my personal information." },
+  ja: { back: "提携病院一覧", strengths: "強み", signature: "代表施術", prices: "施術メニュー・料金", priceSame: "韓国人と同一料金・外国人追加料金なし", priceDisclaim: "表示料金は税込で、個人の状態に応じてカウンセリング後に最終確定します。", doctors: "医療陣紹介", interior: "院内", beforeAfter: "施術ビフォーアフター", before: "BEFORE", after: "AFTER", baEmpty: "施術ビフォーアフター写真は準備中です。", mohw: "韓国 保健福祉部 登録 外国人患者誘致マーケティング企業", heading: "TIME OF PASSION 無料相談", name: "お名前", contactType: "連絡手段", contact: "連絡先", message: "お問い合わせ内容", submit: "送信する", sending: "送信中…", success: "受け付けました。追ってご連絡いたします。", consent: "個人情報の収集・利用に同意します。" },
+  "zh-CN": { back: "合作医院列表", strengths: "优势", signature: "代表项目", prices: "项目 · 价格", priceSame: "与本地人同价 · 外国人无附加费", priceDisclaim: "标示价格为含税价，将根据个人情况在咨询后最终确定。", doctors: "医疗团队", interior: "环境", beforeAfter: "术前术后", before: "术前", after: "术后", baEmpty: "术前术后照片准备中。", mohw: "韩国保健福祉部注册 外国患者招引营销企业", heading: "TIME OF PASSION 免费咨询", name: "姓名", contactType: "联系方式", contact: "联系方式", message: "咨询内容", submit: "发送咨询", sending: "发送中…", success: "已受理，我们会尽快与您联系。", consent: "我同意收集和使用个人信息。" },
+  "zh-TW": { back: "合作醫院列表", strengths: "優勢", signature: "代表療程", prices: "療程 · 價格", priceSame: "與本地人同價 · 外國人無附加費", priceDisclaim: "標示價格為含稅價，將依個人狀況於諮詢後最終確定。", doctors: "醫療團隊", interior: "環境", beforeAfter: "術前術後", before: "術前", after: "術後", baEmpty: "術前術後照片準備中。", mohw: "韓國保健福祉部登錄 外國患者招攬行銷企業", heading: "TIME OF PASSION 免費諮詢", name: "姓名", contactType: "聯絡方式", contact: "聯絡方式", message: "諮詢內容", submit: "送出諮詢", sending: "傳送中…", success: "已受理，我們會盡快與您聯絡。", consent: "我同意蒐集與使用個人資訊。" },
 }
 
 function pick(h: HospitalI18n, locale: ToggleLocale): LocaleContent {
@@ -117,15 +121,6 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
           </section>
         )}
 
-        <section className="hpd__block">
-          <h2 className="hpd__h2">{t.beforeAfter}</h2>
-          {h.beforeAfterCases.length > 0 ? (
-            <BeforeAfter cases={h.beforeAfterCases} t={t} />
-          ) : (
-            <div className="hpd-ba__empty">{t.baEmpty}</div>
-          )}
-        </section>
-
         {c.signatureTreatments.length > 0 && (
           <section className="hpd__block">
             <h2 className="hpd__h2">{t.signature}</h2>
@@ -134,6 +129,13 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
                 <span key={s} className="hpd__chip">{s}</span>
               ))}
             </div>
+          </section>
+        )}
+
+        {h.priceItems.length > 0 && (
+          <section className="hpd__block">
+            <h2 className="hpd__h2">{t.prices}</h2>
+            <PriceTable items={h.priceItems} note={h.priceNote} t={t} />
           </section>
         )}
 
@@ -172,11 +174,66 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
           </section>
         )}
 
+        {/* 시술 전후 — 인테리어 아래 배치(대표님 지시 2026-07-06) */}
+        <section className="hpd__block">
+          <h2 className="hpd__h2">{t.beforeAfter}</h2>
+          {h.beforeAfterCases.length > 0 ? (
+            <BeforeAfter cases={h.beforeAfterCases} t={t} />
+          ) : (
+            <div className="hpd-ba__empty">{t.baEmpty}</div>
+          )}
+        </section>
+
         <section className="hpd__inquiry">
           <Inquiry slug={h.slug} hospitalName={c.name} locale={locale} t={t} />
         </section>
       </div>
     </main>
+  )
+}
+
+function PriceTable({
+  items,
+  note,
+  t,
+}: {
+  items: PriceItem[]
+  note: string | null
+  t: UI
+}) {
+  // 입력 순서를 유지하며 category 로 그룹핑
+  const groups: { category: string | null; rows: PriceItem[] }[] = []
+  for (const it of items) {
+    const cat = it.category ?? null
+    const last = groups[groups.length - 1]
+    if (last && last.category === cat) last.rows.push(it)
+    else groups.push({ category: cat, rows: [it] })
+  }
+  return (
+    <div className="hpd-price">
+      <div className="hpd-price__same">
+        <span className="hpd-price__same-ico" aria-hidden>₩</span>
+        {t.priceSame}
+      </div>
+      {groups.map((g, gi) => (
+        <div className="hpd-price__group" key={gi}>
+          {g.category && <div className="hpd-price__cat">{g.category}</div>}
+          <div className="hpd-price__rows">
+            {g.rows.map((r, ri) => (
+              <div className="hpd-price__row" key={ri}>
+                <div className="hpd-price__name">
+                  {r.name}
+                  {r.note && <span className="hpd-price__pnote">{r.note}</span>}
+                </div>
+                <div className="hpd-price__val">{r.price}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      {note && <p className="hpd-price__extra">{note}</p>}
+      <p className="hpd-price__disclaim">{t.priceDisclaim}</p>
+    </div>
   )
 }
 
