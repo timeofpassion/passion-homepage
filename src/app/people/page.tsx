@@ -348,6 +348,16 @@ export default async function PeopleHome() {
             ))}
           </div>
 
+          {/* 분야별 상세(내부 링크) */}
+          <div className="ppl-center" style={{ marginTop: "1.5rem" }}>
+            <Link
+              href="/people/wanghong-marketing"
+              className="ppl-btn ppl-btn--ghost"
+            >
+              왕홍(샤오홍슈) 마케팅·체험단 자세히 →
+            </Link>
+          </div>
+
           <div className="ppl-center">
             <a
               href={KAKAO_URL}
