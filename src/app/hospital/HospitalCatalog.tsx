@@ -17,14 +17,15 @@ type UIStrings = {
   intro: string
   all: string
   detail: string
+  mohw: string
 }
 
 const UI: Record<ToggleLocale, UIStrings> = {
-  ko: { title: "협력병원", subtitle: "열정의시간이 함께하는 병원들", intro: "각 병원의 강점·대표 시술·원장을 확인하고, 열정의시간으로 편하게 문의해 보세요.", all: "전체", detail: "자세히 보기" },
-  en: { title: "Partner Hospitals", subtitle: "Clinics we work with", intro: "Explore each clinic's strengths, signature treatments and doctors, then reach out to Time of Passion.", all: "All", detail: "View details" },
-  ja: { title: "提携病院", subtitle: "TIME OF PASSIONが共に歩む病院", intro: "各病院の強み・代表施術・院長をご確認のうえ、TIME OF PASSIONへお気軽にお問い合わせください。", all: "すべて", detail: "詳細を見る" },
-  "zh-CN": { title: "合作医院", subtitle: "与TIME OF PASSION同行的医院", intro: "了解各医院的优势·代表项目·院长，并通过TIME OF PASSION轻松咨询。", all: "全部", detail: "查看详情" },
-  "zh-TW": { title: "合作醫院", subtitle: "與TIME OF PASSION同行的醫院", intro: "了解各醫院的優勢·代表療程·院長，並透過TIME OF PASSION輕鬆諮詢。", all: "全部", detail: "查看詳情" },
+  ko: { title: "협력병원", subtitle: "열정의시간이 함께하는 병원들", intro: "각 병원의 강점·대표 시술·원장을 확인하고, 열정의시간으로 편하게 문의해 보세요.", all: "전체", detail: "자세히 보기", mohw: "보건복지부 등록 외국인환자 유치 마케팅 기업" },
+  en: { title: "Partner Hospitals", subtitle: "Clinics we work with", intro: "Explore each clinic's strengths, signature treatments and doctors, then reach out to Time of Passion.", all: "All", detail: "View details", mohw: "Registered with Korea's Ministry of Health & Welfare (foreign patient attraction)" },
+  ja: { title: "提携病院", subtitle: "TIME OF PASSIONが共に歩む病院", intro: "各病院の強み・代表施術・院長をご確認のうえ、TIME OF PASSIONへお気軽にお問い合わせください。", all: "すべて", detail: "詳細を見る", mohw: "韓国 保健福祉部 登録 外国人患者誘致マーケティング企業" },
+  "zh-CN": { title: "合作医院", subtitle: "与TIME OF PASSION同行的医院", intro: "了解各医院的优势·代表项目·院长，并通过TIME OF PASSION轻松咨询。", all: "全部", detail: "查看详情", mohw: "韩国保健福祉部注册 外国患者招引营销企业" },
+  "zh-TW": { title: "合作醫院", subtitle: "與TIME OF PASSION同行的醫院", intro: "了解各醫院的優勢·代表療程·院長，並透過TIME OF PASSION輕鬆諮詢。", all: "全部", detail: "查看詳情", mohw: "韓國保健福祉部登錄 外國患者招攬行銷企業" },
 }
 
 function pick(h: HospitalI18n, locale: ToggleLocale): LocaleContent {
@@ -63,6 +64,10 @@ export default function HospitalCatalog({ hospitals }: { hospitals: HospitalI18n
         <h1 className="hp-hero__title">{t.title}</h1>
         <p className="hp-hero__subtitle">{t.subtitle}</p>
         <p className="hp-hero__intro">{t.intro}</p>
+        <div className="hp-hero__mohw">
+          <span className="hp-hero__mohw-ico" aria-hidden>✓</span>
+          {t.mohw}
+        </div>
 
         {/* 언어 토글 */}
         <div className="hp-langbar">

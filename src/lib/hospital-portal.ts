@@ -42,6 +42,12 @@ export type Doctor = {
   imageUrl: string | null
 }
 
+export type BeforeAfterCase = {
+  beforeUrl: string
+  afterUrl: string
+  caption?: string | null
+}
+
 export type Hospital = {
   slug: string
   departments: string[]
@@ -50,6 +56,7 @@ export type Hospital = {
   logoUrl: string | null
   heroImageUrl: string | null
   galleryUrls: string[]
+  beforeAfterCases: BeforeAfterCase[]
   doctors: Doctor[]
   name: string
   tagline: string | null
@@ -76,6 +83,7 @@ export type HospitalI18n = {
   logoUrl: string | null
   heroImageUrl: string | null
   galleryUrls: string[]
+  beforeAfterCases: BeforeAfterCase[]
   doctors: Doctor[]
   translations: Record<string, LocaleContent>
 }
@@ -90,6 +98,7 @@ const SAMPLE_HOSPITALS: Hospital[] = [
     logoUrl: null,
     heroImageUrl: null,
     galleryUrls: [],
+    beforeAfterCases: [],
     doctors: [],
     name: "샘플피부과의원",
     tagline: "색소·리프팅에 강한 강남 피부과",
@@ -146,6 +155,7 @@ const SAMPLE_I18N: HospitalI18n[] = SAMPLE_HOSPITALS.map((h) => ({
   logoUrl: h.logoUrl,
   heroImageUrl: h.heroImageUrl,
   galleryUrls: h.galleryUrls,
+  beforeAfterCases: h.beforeAfterCases,
   doctors: h.doctors,
   translations: {
     ko: {
@@ -169,6 +179,7 @@ function normalizeI18n(h: Record<string, unknown>): HospitalI18n {
     logoUrl: get<string | null>("logoUrl", null),
     heroImageUrl: get<string | null>("heroImageUrl", null),
     galleryUrls: get<string[]>("galleryUrls", []),
+    beforeAfterCases: get<BeforeAfterCase[]>("beforeAfterCases", []),
     doctors: get<Doctor[]>("doctors", []),
   }
   const tr = h.translations as Record<string, LocaleContent> | undefined
