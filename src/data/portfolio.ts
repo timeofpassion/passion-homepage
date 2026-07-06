@@ -16,7 +16,12 @@
 // ─────────────────────────────────────────────────────────────────
 
 export type PortfolioRegion = "domestic" | "japan" | "china" | "taiwan";
-export type PortfolioCategory = "homepage" | "video" | "sns" | "design";
+export type PortfolioCategory =
+  | "homepage"
+  | "video"
+  | "sns"
+  | "design"
+  | "service";
 
 export type PortfolioItem = {
   id: string;
@@ -47,6 +52,7 @@ export const portfolioCategories: {
   ready: boolean;
 }[] = [
   { key: "homepage", label: "홈페이지 제작", ready: true },
+  { key: "service", label: "실행 · 성과", ready: true },
   { key: "sns", label: "SNS · 콘텐츠", ready: true },
   { key: "design", label: "디자인 · 브랜드", ready: true },
   { key: "video", label: "영상", ready: true },
@@ -4638,6 +4644,98 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnail: "/portfolio/ovs-013.png",
     tags: ["SNS콘텐츠", "대만"],
     accent: "#7c2d12",
+  },
+
+  // ── [초안] 마케팅 실행·성과 (회사소개서 서비스 케이스: 플레이스·바이럴·블로그·체험단·리뷰·멀티채널) ───────────
+  {
+    id: "pf-svc-18",
+    regions: ["domestic"],
+    category: "service",
+    title: "플레이스 상위노출",
+    summary: "네이버 플레이스 1페이지 1위 상위노출 실사례",
+    thumbnail: "/portfolio/pf-svc-18.png",
+    tags: ["실행·성과", "국내"],
+    accent: "#16a34a",
+  },
+  {
+    id: "pf-svc-21",
+    regions: ["domestic"],
+    category: "service",
+    title: "페르소나 리뷰",
+    summary: "네이버·카카오·구글 리뷰 신뢰도 마케팅",
+    thumbnail: "/portfolio/pf-svc-21.png",
+    tags: ["실행·성과", "국내"],
+    accent: "#f59e0b",
+  },
+  {
+    id: "pf-svc-23",
+    regions: ["domestic"],
+    category: "service",
+    title: "카페 바이럴",
+    summary: "네이버 카페 침투 바이럴 마케팅",
+    thumbnail: "/portfolio/pf-svc-23.png",
+    tags: ["실행·성과", "국내"],
+    accent: "#15803d",
+  },
+  {
+    id: "pf-svc-27",
+    regions: ["domestic"],
+    category: "service",
+    title: "인플루언서 체험단",
+    summary: "준최~셀럽 4단계 체험단 모집·운영",
+    thumbnail: "/portfolio/pf-svc-27.png",
+    tags: ["실행·성과", "국내"],
+    accent: "#8b5cf6",
+  },
+  {
+    id: "pf-svc-35",
+    regions: ["domestic"],
+    category: "service",
+    title: "브랜드블로그 상위노출",
+    summary: "네이버 블로그 상위노출·운영관리",
+    thumbnail: "/portfolio/pf-svc-35.png",
+    tags: ["실행·성과", "국내"],
+    accent: "#0ea5e9",
+  },
+  {
+    id: "pf-svc-40",
+    regions: ["domestic"],
+    category: "service",
+    title: "멀티채널 운영",
+    summary: "유튜브·인스타·틱톡·페북 통합 운영",
+    thumbnail: "/portfolio/pf-svc-40.png",
+    tags: ["실행·성과", "국내"],
+    accent: "#ef4444",
+  },
+  {
+    id: "pf-svc-97",
+    regions: ["china"],
+    category: "service",
+    title: "중국 왕홍 시딩·체험단",
+    summary: "중국 왕홍 시딩 및 체험단 운영관리",
+    thumbnail: "/portfolio/pf-svc-97.png",
+    tags: ["실행·성과", "중국"],
+    accent: "#dc2626",
+  },
+  {
+    id: "pf-svc-108",
+    regions: ["japan"],
+    category: "service",
+    title: "일본 인플루언서 시딩",
+    summary: "일본 인플루언서 시딩전략·체험단 운영",
+    thumbnail: "/portfolio/pf-svc-108.png",
+    tags: ["실행·성과", "일본"],
+    accent: "#2563eb",
+  },
+  {
+    id: "pf-svc-102",
+    regions: ["japan"],
+    category: "service",
+    title: "일본 멀티채널 운영",
+    summary: "일본 콘텐츠 제작·멀티채널 운영관리",
+    thumbnail: "/portfolio/pf-svc-102.png",
+    tags: ["실행·성과", "일본"],
+    accent: "#3b82f6",
   },
 ];
 
