@@ -211,7 +211,7 @@
   padding: 78px 20px 80px;
 }
 
-/* 최상단 고정 브랜드 바 — 열정의시간 로고 + 텍스트, 스크롤해도 상단 고정 */
+/* 최상단 고정 브랜드 바 — 로고+텍스트(좌) + 언어 토글(우), 스크롤해도 상단 고정 */
 .hpd-brandbar {
   position: fixed;
   top: 0;
@@ -220,20 +220,44 @@
   z-index: 90;
   display: flex;
   align-items: center;
-  height: 54px;
-  padding: 0 20px;
+  min-height: 54px;
+  padding: 8px 20px;
   background: rgba(10, 3, 4, 0.86);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(231, 196, 106, 0.22);
+}
+.hpd-brandbar__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
 }
 .hpd-brandbar__in {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  max-width: 1040px;
-  width: 100%;
-  margin: 0 auto;
+  flex: 0 0 auto;
   text-decoration: none;
+}
+/* 언어 토글 — 넘치면 가로 스크롤(숨김 스크롤바) */
+.hpd-brandbar__langs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.hpd-brandbar__langs::-webkit-scrollbar {
+  display: none;
+}
+.hpd-brandbar__langs .hp-lang {
+  white-space: nowrap;
+  flex: 0 0 auto;
 }
 .hpd-brandbar__logo {
   width: 30px;
@@ -826,11 +850,16 @@
     padding: 66px 14px 52px;
   }
   .hpd-brandbar {
-    height: 50px;
-    padding: 0 14px;
+    min-height: 50px;
+    padding: 7px 14px;
   }
-  .hpd-brandbar__sub {
+  .hpd-brandbar__sub,
+  .hpd-brandbar__name {
     display: none;
+  }
+  .hpd-brandbar__langs .hp-lang {
+    padding: 5px 9px;
+    font-size: 11px;
   }
   .hpd__exclusive {
     flex-direction: column;

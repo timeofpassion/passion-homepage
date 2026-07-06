@@ -71,22 +71,15 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
 
   return (
     <main className="hpd">
-      {/* 최상단 고정 브랜드 바 — 스크롤해도 따라다님(대표님 지시 2026-07-06) */}
+      {/* 최상단 고정 브랜드 바 — 로고+텍스트(좌) + 언어 토글(우). 스크롤해도 따라다님(대표님 지시 2026-07-06) */}
       <div className="hpd-brandbar">
-        <Link href="/time" className="hpd-brandbar__in" aria-label="열정의시간">
-          <img src="/logo_passion.png" alt="" className="hpd-brandbar__logo" />
-          <span className="hpd-brandbar__name">열정의시간</span>
-          <span className="hpd-brandbar__sub">MEDICAL CONCIERGE</span>
-        </Link>
-      </div>
-
-      <div className="hpd__inner">
-        {/* 상단 바 — 뒤로가기(좌) + 언어 토글(우). 인라인이라 스크롤 시 본문을 덮지 않음 */}
-        <div className="hpd__topbar">
-          <Link href="/hospital" className="hpd__back">
-            ← {t.back}
+        <div className="hpd-brandbar__row">
+          <Link href="/time" className="hpd-brandbar__in" aria-label="열정의시간">
+            <img src="/logo_passion.png" alt="" className="hpd-brandbar__logo" />
+            <span className="hpd-brandbar__name">열정의시간</span>
+            <span className="hpd-brandbar__sub">MEDICAL CONCIERGE</span>
           </Link>
-          <div className="hpd__langbar">
+          <div className="hpd-brandbar__langs">
             {TOGGLE_LOCALES.map((l) => (
               <button
                 key={l.value}
@@ -98,6 +91,15 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
               </button>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="hpd__inner">
+        {/* 상단 바 — 뒤로가기(좌). 언어 토글은 고정 브랜드바로 이동 */}
+        <div className="hpd__topbar">
+          <Link href="/hospital" className="hpd__back">
+            ← {t.back}
+          </Link>
         </div>
 
         <header className="hpd__header">
