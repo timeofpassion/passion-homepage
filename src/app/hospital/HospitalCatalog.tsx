@@ -26,6 +26,7 @@ const UI: Record<ToggleLocale, UIStrings> = {
   ja: { title: "提携病院", subtitle: "TIME OF PASSIONが共に歩む病院", intro: "各病院の強み・代表施術・院長をご確認のうえ、TIME OF PASSIONへお気軽にお問い合わせください。", all: "すべて", detail: "詳細を見る", mohw: "韓国 保健福祉部 登録 外国人患者誘致マーケティング企業" },
   "zh-CN": { title: "合作医院", subtitle: "与TIME OF PASSION同行的医院", intro: "了解各医院的优势·代表项目·院长，并通过TIME OF PASSION轻松咨询。", all: "全部", detail: "查看详情", mohw: "韩国保健福祉部注册 外国患者招引营销企业" },
   "zh-TW": { title: "合作醫院", subtitle: "與TIME OF PASSION同行的醫院", intro: "了解各醫院的優勢·代表療程·院長，並透過TIME OF PASSION輕鬆諮詢。", all: "全部", detail: "查看詳情", mohw: "韓國保健福祉部登錄 外國患者招攬行銷企業" },
+  vi: { title: "Bệnh viện đối tác", subtitle: "Các bệnh viện đồng hành cùng Time of Passion", intro: "Khám phá thế mạnh·thủ thuật tiêu biểu·bác sĩ của từng bệnh viện, rồi liên hệ Time of Passion một cách thoải mái.", all: "Tất cả", detail: "Xem chi tiết", mohw: "Doanh nghiệp marketing thu hút bệnh nhân nước ngoài đã đăng ký với Bộ Y tế Hàn Quốc" },
 }
 
 function pick(h: HospitalI18n, locale: ToggleLocale): LocaleContent {
