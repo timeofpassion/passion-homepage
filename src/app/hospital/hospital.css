@@ -447,9 +447,9 @@
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.06);
 }
-/* 인물이 프레임 오른쪽으로 쏠린 원본(아이니크) 보정 — 얼굴을 중앙으로(대표님 지시 2026-07-07) */
+/* 인물이 프레임 오른쪽으로 쏠린 원본(아이니크) 보정 — 얼굴을 왼쪽으로 더 이동(대표님 지시 2026-07-07) */
 .hpd__doctor-photo--offset-r {
-  object-position: 70% center;
+  object-position: 85% center;
 }
 .hpd__doctor-photo--ph {
   display: flex;
