@@ -18,9 +18,19 @@
 export type PortfolioRegion = "domestic" | "japan" | "china" | "taiwan";
 export type PortfolioCategory =
   | "homepage"
-  | "video"
-  | "sns"
+  | "place"
+  | "cafe"
+  | "blog"
+  | "review"
+  | "experience"
+  | "multichannel"
+  | "platform"
+  | "crm"
+  | "ads"
   | "design"
+  | "video"
+  // 구 분류(마이그레이션 잔재 방지용, 탭에는 노출 안 함)
+  | "sns"
   | "service";
 
 export type PortfolioItem = {
@@ -52,8 +62,15 @@ export const portfolioCategories: {
   ready: boolean;
 }[] = [
   { key: "homepage", label: "홈페이지 제작", ready: true },
-  { key: "service", label: "실행 · 성과", ready: true },
-  { key: "sns", label: "SNS · 콘텐츠", ready: true },
+  { key: "place", label: "플레이스 상위노출", ready: true },
+  { key: "cafe", label: "카페 바이럴", ready: true },
+  { key: "blog", label: "브랜드블로그 운영관리", ready: true },
+  { key: "review", label: "리뷰 관리 (플레이스·구글·카카오맵)", ready: true },
+  { key: "experience", label: "체험단 (블로그·인스타)", ready: true },
+  { key: "multichannel", label: "멀티채널 운영", ready: true },
+  { key: "platform", label: "플랫폼 운영관리 (강남언니·바비톡·여신티켓)", ready: true },
+  { key: "crm", label: "CRM 데이터 분석", ready: false },
+  { key: "ads", label: "네이버 광고 운영관리", ready: false },
   { key: "design", label: "디자인 · 브랜드", ready: true },
   { key: "video", label: "영상", ready: true },
 ];
@@ -215,7 +232,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-olara-cardnews",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라의원 블로그 카드뉴스",
     summary: "피부 상식 콘텐츠 카드뉴스 기획·디자인",
     thumbnail: "/portfolio/sns-olara-cardnews.png",
@@ -225,7 +242,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-olara-cardnews2",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라의원 콘텐츠 카드뉴스",
     summary: "시술 정보 카드뉴스 시리즈 디자인",
     thumbnail: "/portfolio/sns-olara-cardnews2.png",
@@ -235,7 +252,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-olara-schedule",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라의원 진료일정 안내",
     summary: "월별 휴진·진료 안내 카드 디자인",
     thumbnail: "/portfolio/sns-olara-schedule.png",
@@ -245,7 +262,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-olara-kakao",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라의원 카카오톡 채널 배너",
     summary: "카카오톡 채널 유입 프로모션 배너 디자인",
     thumbnail: "/portfolio/sns-olara-kakao.png",
@@ -255,7 +272,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-mellow-director",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우피부과 원장 소개 배너",
     summary: "지점 대표원장 소개 브랜드 배너 디자인",
     thumbnail: "/portfolio/sns-mellow-director.png",
@@ -291,7 +308,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-jp-derma-1",
     regions: ["japan"],
-    category: "sns",
+    category: "experience",
     title: "일본 피부과 인스타 릴스 ①",
     summary: "일본 인플루언서 시술 후기 릴스",
     thumbnail: "/portfolio/sns-jp-derma-1.png",
@@ -302,7 +319,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-jp-derma-2",
     regions: ["japan"],
-    category: "sns",
+    category: "experience",
     title: "일본 피부과 인스타 릴스 ②",
     summary: "일본 인플루언서 시술 후기 릴스",
     thumbnail: "/portfolio/sns-jp-derma-2.png",
@@ -313,7 +330,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-jp-derma-3",
     regions: ["japan"],
-    category: "sns",
+    category: "experience",
     title: "일본 피부과 인스타 릴스 ③",
     summary: "일본 인플루언서 시술 후기 릴스",
     thumbnail: "/portfolio/sns-jp-derma-3.png",
@@ -324,7 +341,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-jp-food-1",
     regions: ["japan"],
-    category: "sns",
+    category: "experience",
     title: "일본 맛집 인스타 릴스",
     summary: "일본 타겟 맛집 콘텐츠 릴스",
     thumbnail: "/portfolio/sns-jp-food-1.png",
@@ -362,7 +379,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-cn-1",
     regions: ["china"],
-    category: "sns",
+    category: "experience",
     title: "중국 샤오홍슈 기자단 ①",
     summary: "샤오홍슈 피부과 기자단 콘텐츠",
     liveUrl: "https://www.xiaohongshu.com/explore/68d601f20000000012021e8c?xsec_token=ABtPSW56NuK0arBdnJTEav1acuFNlYi8712I1fO2IOwa0=&xsec_source=pc_search&source=web_search_result_notes",
@@ -372,7 +389,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-cn-2",
     regions: ["china"],
-    category: "sns",
+    category: "experience",
     title: "중국 샤오홍슈 기자단 ②",
     summary: "샤오홍슈 피부과 기자단 콘텐츠",
     liveUrl: "https://www.xiaohongshu.com/explore/697a306e000000002102b4fc?xsec_token=ABnulpnOnEX1pqkM_GqYFQUmskZhoe83oRB7Zugp2v7us=&xsec_source=pc_search&source=web_search_result_notes",
@@ -382,7 +399,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-cn-3",
     regions: ["china"],
-    category: "sns",
+    category: "experience",
     title: "중국 샤오홍슈 기자단 ③",
     summary: "샤오홍슈 피부과 기자단 콘텐츠",
     liveUrl: "https://www.xiaohongshu.com/explore/694a3b1f000000000d0353a5?xsec_token=ABW7hB8EFjS8GN3YXYFI9C-lg8oV648k4Ulmvm5XnhENo=&xsec_source=pc_search&source=web_search_result_notes",
@@ -392,7 +409,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-cn-4",
     regions: ["china"],
-    category: "sns",
+    category: "experience",
     title: "중국 더우인 기자단",
     summary: "더우인(중국판 틱톡) 피부과 기자단 영상",
     liveUrl: "https://www.douyin.com/video/7574297539656432521",
@@ -402,7 +419,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "sns-cn-5",
     regions: ["china"],
-    category: "sns",
+    category: "experience",
     title: "중국 샤오홍슈 기자단 ④",
     summary: "샤오홍슈 피부과 기자단 콘텐츠",
     liveUrl: "https://www.xiaohongshu.com/explore/682acef000000000220075d0?xsec_token=ABOOODCD0_6nf46tZDX-Fhb5h-w_ajjEPfkL2oOQI8wQc=&xsec_source=pc_search&source=web_search_result_notes",
@@ -629,7 +646,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-000",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 강북본점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mgb-000.png",
@@ -639,7 +656,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-001",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 블라인드",
     thumbnail: "/portfolio/pf-mgb-001.png",
@@ -649,7 +666,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-002",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 강북본점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mgb-002.png",
@@ -659,7 +676,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-003",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "멜로우 강북본점",
     summary: "기타 · 네이버플레이스 이미지",
     thumbnail: "/portfolio/pf-mgb-003.png",
@@ -669,7 +686,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-004",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 아크릴판_박세광원장님",
     thumbnail: "/portfolio/pf-mgb-004.png",
@@ -679,7 +696,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-005",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 강북본점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mgb-005.png",
@@ -689,7 +706,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-006",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "멜로우 강북본점",
     summary: "기타 · 네이버플레이스",
     thumbnail: "/portfolio/pf-mgb-006.png",
@@ -699,7 +716,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-007",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 강북본점",
     summary: "디자인 · 블로그스킨",
     thumbnail: "/portfolio/pf-mgb-007.png",
@@ -709,7 +726,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-008",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "배너 · 페이스북배너",
     thumbnail: "/portfolio/pf-mgb-008.png",
@@ -719,7 +736,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-009",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 강북본점",
     summary: "랜딩페이지 · 강남언니랜딩",
     thumbnail: "/portfolio/pf-mgb-009.png",
@@ -729,7 +746,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-010",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 강북본점",
     summary: "랜딩페이지 · 강남언니랜딩",
     thumbnail: "/portfolio/pf-mgb-010.png",
@@ -739,7 +756,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-011",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 강북본점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mgb-011.png",
@@ -769,7 +786,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-014",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 강북본점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mgb-014.png",
@@ -779,7 +796,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-015",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 강북본점",
     summary: "썸네일 · 숏츠썸네일_구태한원장님",
     thumbnail: "/portfolio/pf-mgb-015.png",
@@ -789,7 +806,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-016",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-mgb-016.png",
@@ -799,7 +816,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-017",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 강북본점",
     summary: "랜딩페이지 · 강남언니랜딩",
     thumbnail: "/portfolio/pf-mgb-017.png",
@@ -809,7 +826,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-018",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 강북본점",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-mgb-018.png",
@@ -819,7 +836,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-019",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 아크릴판_구태한원장님",
     thumbnail: "/portfolio/pf-mgb-019.png",
@@ -829,7 +846,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-020",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "배너 · 페이스북배너",
     thumbnail: "/portfolio/pf-mgb-020.png",
@@ -839,7 +856,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-021",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-mgb-021.png",
@@ -849,7 +866,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-022",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "진료일정·안내 · 안내문",
     thumbnail: "/portfolio/pf-mgb-022.png",
@@ -859,7 +876,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-023",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 서브페이지_색소",
     thumbnail: "/portfolio/pf-mgb-023.png",
@@ -869,7 +886,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-024",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 강북본점",
     summary: "디자인 · 강남언니",
     thumbnail: "/portfolio/pf-mgb-024.png",
@@ -879,7 +896,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-025",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 서브페이지_색소",
     thumbnail: "/portfolio/pf-mgb-025.png",
@@ -889,7 +906,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-026",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 서브페이지_색소",
     thumbnail: "/portfolio/pf-mgb-026.png",
@@ -899,7 +916,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-027",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 서브페이지_색소(1)",
     thumbnail: "/portfolio/pf-mgb-027.png",
@@ -909,7 +926,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-028",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 서브페이지_여드름",
     thumbnail: "/portfolio/pf-mgb-028.png",
@@ -919,7 +936,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-029",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 강북본점",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-mgb-029.png",
@@ -929,7 +946,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-030",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 서브페이지_색소",
     thumbnail: "/portfolio/pf-mgb-030.png",
@@ -939,7 +956,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-031",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 강북본점",
     summary: "디자인 · 서브페이지_여드름",
     thumbnail: "/portfolio/pf-mgb-031.png",
@@ -949,7 +966,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-032",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 강북본점",
     summary: "디자인 · 강남언니",
     thumbnail: "/portfolio/pf-mgb-032.png",
@@ -959,7 +976,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-033",
     regions: ["taiwan"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 강북본점",
     summary: "디자인 · [대만]강남언니",
     thumbnail: "/portfolio/pf-mgb-033.png",
@@ -969,7 +986,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mgb-034",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 강북본점",
     summary: "카드뉴스 · 블로그 이미지_8세트",
     thumbnail: "/portfolio/pf-mgb-034.png",
@@ -979,7 +996,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-035",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "배너 · 페이스북배너",
     thumbnail: "/portfolio/pf-mss-035.png",
@@ -989,7 +1006,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-036",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 신사점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mss-036.png",
@@ -999,7 +1016,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-037",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-mss-037.png",
@@ -1009,7 +1026,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-038",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 신사점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mss-038.png",
@@ -1019,7 +1036,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-039",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 신사점",
     summary: "랜딩페이지 · 강남언니랜딩페이지_5세트",
     thumbnail: "/portfolio/pf-mss-039.png",
@@ -1029,7 +1046,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-040",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "디자인 · 리플렛_일본",
     thumbnail: "/portfolio/pf-mss-040.png",
@@ -1049,7 +1066,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-042",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 신사점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mss-042.png",
@@ -1059,7 +1076,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-043",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-mss-043.png",
@@ -1069,7 +1086,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-044",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-mss-044.png",
@@ -1079,7 +1096,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-045",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 신사점",
     summary: "랜딩페이지 · 강남언니랜딩페이지_3세트",
     thumbnail: "/portfolio/pf-mss-045.png",
@@ -1089,7 +1106,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-046",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 신사점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mss-046.png",
@@ -1099,7 +1116,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-047",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "멜로우 신사점",
     summary: "기타 · 네이버플레이스",
     thumbnail: "/portfolio/pf-mss-047.png",
@@ -1109,7 +1126,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-048",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 신사점",
     summary: "랜딩페이지 · 강남언니랜딩페이지_4세트",
     thumbnail: "/portfolio/pf-mss-048.png",
@@ -1119,7 +1136,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-049",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 신사점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mss-049.png",
@@ -1129,7 +1146,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-050",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "진료일정·안내 · 진료일정표_5월",
     thumbnail: "/portfolio/pf-mss-050.png",
@@ -1139,7 +1156,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-051",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 신사점",
     summary: "랜딩페이지 · 캐시닥랜딩페이지_7세트",
     thumbnail: "/portfolio/pf-mss-051.png",
@@ -1149,7 +1166,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-052",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "멜로우 신사점",
     summary: "기타 · 네이버플레이스",
     thumbnail: "/portfolio/pf-mss-052.png",
@@ -1159,7 +1176,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-053",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "진료일정·안내 · 진료일정표_6월",
     thumbnail: "/portfolio/pf-mss-053.png",
@@ -1169,7 +1186,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-054",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "썸네일 · 라인썸네일",
     thumbnail: "/portfolio/pf-mss-054.png",
@@ -1179,7 +1196,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-055",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 신사점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mss-055.png",
@@ -1189,7 +1206,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-056",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 신사점",
     summary: "디자인 · 블로그스킨",
     thumbnail: "/portfolio/pf-mss-056.png",
@@ -1199,7 +1216,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-057",
     regions: ["domestic"],
-    category: "design",
+    category: "blog",
     title: "멜로우 신사점",
     summary: "프로필 · 블로그프로필",
     thumbnail: "/portfolio/pf-mss-057.png",
@@ -1209,7 +1226,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-058",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-mss-058.png",
@@ -1219,7 +1236,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-059",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 신사점",
     summary: "진료일정·안내 · 진료일정표_7월",
     thumbnail: "/portfolio/pf-mss-059.png",
@@ -1229,7 +1246,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mss-060",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 신사점",
     summary: "카드뉴스 · 블로그이미지_8세트",
     thumbnail: "/portfolio/pf-mss-060.png",
@@ -1239,7 +1256,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-062",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mch-062.png",
@@ -1249,7 +1266,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-063",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mch-063.png",
@@ -1259,7 +1276,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-064",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "디자인 · 멤버쉽",
     thumbnail: "/portfolio/pf-mch-064.png",
@@ -1269,7 +1286,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-065",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "멜로우 천호점",
     summary: "기타 · 네이버플레이스",
     thumbnail: "/portfolio/pf-mch-065.png",
@@ -1279,7 +1296,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-066",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mch-066.png",
@@ -1289,7 +1306,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-067",
     regions: ["china"],
-    category: "sns",
+    category: "review",
     title: "멜로우 천호점",
     summary: "SNS콘텐츠 · [중문]리뷰이벤트",
     thumbnail: "/portfolio/pf-mch-067.png",
@@ -1299,7 +1316,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-068",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mch-068.png",
@@ -1319,7 +1336,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-070",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mch-070.png",
@@ -1329,7 +1346,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-071",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "디자인 · 연예인방문",
     thumbnail: "/portfolio/pf-mch-071.png",
@@ -1339,7 +1356,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-072",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-mch-072.png",
@@ -1349,7 +1366,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-073",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-mch-073.png",
@@ -1359,7 +1376,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-074",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mch-074.png",
@@ -1369,7 +1386,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-075",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-mch-075.png",
@@ -1379,7 +1396,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-076",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-mch-076.png",
@@ -1389,7 +1406,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-077",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 천호점",
     summary: "랜딩페이지 · 캐시닥랜딩페이지_3세트",
     thumbnail: "/portfolio/pf-mch-077.png",
@@ -1399,7 +1416,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-078",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-mch-078.png",
@@ -1409,7 +1426,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-079",
     regions: ["china"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "썸네일 · 숏츠썸네일_중문",
     thumbnail: "/portfolio/pf-mch-079.png",
@@ -1419,7 +1436,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-080",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mch-080.png",
@@ -1429,7 +1446,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-081",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "진료일정·안내 · 안내문",
     thumbnail: "/portfolio/pf-mch-081.png",
@@ -1439,7 +1456,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-082",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 인스타카드뉴스_스킨인핸서_CN",
     thumbnail: "/portfolio/pf-mch-082.png",
@@ -1449,7 +1466,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-083",
     regions: ["taiwan"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "디자인 · 숏폼대만수정",
     thumbnail: "/portfolio/pf-mch-083.png",
@@ -1459,7 +1476,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-084",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "포스터 · 이벤트포스터_6,7,8월이벤트",
     thumbnail: "/portfolio/pf-mch-084.png",
@@ -1469,7 +1486,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-085",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "디자인 · 방송출연이미지_SBS좋은아침",
     thumbnail: "/portfolio/pf-mch-085.png",
@@ -1479,7 +1496,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-086",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 인스타카드뉴스_리쥬란_CN",
     thumbnail: "/portfolio/pf-mch-086.png",
@@ -1489,7 +1506,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-087",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-mch-087.png",
@@ -1499,7 +1516,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-088",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-mch-088.png",
@@ -1509,7 +1526,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-089",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-mch-089.png",
@@ -1519,7 +1536,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-090",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "멜로우 천호점",
     summary: "기타 · 네이버플레이스",
     thumbnail: "/portfolio/pf-mch-090.png",
@@ -1529,7 +1546,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-091",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-mch-091.png",
@@ -1539,7 +1556,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-092",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-mch-092.png",
@@ -1549,7 +1566,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-093",
     regions: ["domestic"],
-    category: "design",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "프로필 · 블로그프로필",
     thumbnail: "/portfolio/pf-mch-093.png",
@@ -1559,7 +1576,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-094",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "디자인 · 점_블로그스킨",
     thumbnail: "/portfolio/pf-mch-094.png",
@@ -1569,7 +1586,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-095",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "썸네일 · 점_숏츠썸네일",
     thumbnail: "/portfolio/pf-mch-095.png",
@@ -1579,7 +1596,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-096",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mch-096.png",
@@ -1589,7 +1606,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-097",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "배너 · 블로그콜투액션_수정",
     thumbnail: "/portfolio/pf-mch-097.png",
@@ -1609,7 +1626,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-099",
     regions: ["domestic"],
-    category: "design",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "프로필 · 블로그프로필_모바일",
     thumbnail: "/portfolio/pf-mch-099.png",
@@ -1619,7 +1636,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-100",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "포스터 · 이벤트포스터_여름",
     thumbnail: "/portfolio/pf-mch-100.png",
@@ -1629,7 +1646,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-101",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-mch-101.png",
@@ -1639,7 +1656,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-102",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "디자인 · 블로그스킨",
     thumbnail: "/portfolio/pf-mch-102.png",
@@ -1649,7 +1666,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-103",
     regions: ["domestic"],
-    category: "design",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "프로필 · 블로그프로필",
     thumbnail: "/portfolio/pf-mch-103.png",
@@ -1659,7 +1676,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-104",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "디자인 · 블로그스킨",
     thumbnail: "/portfolio/pf-mch-104.png",
@@ -1669,7 +1686,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-105",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "진료일정·안내 · 진료일정표_7월",
     thumbnail: "/portfolio/pf-mch-105.png",
@@ -1679,7 +1696,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-106",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "포스터 · 이벤트포스터_7월",
     thumbnail: "/portfolio/pf-mch-106.png",
@@ -1689,7 +1706,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mch-107",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 천호점",
     summary: "카드뉴스 · 블로그이미지_8세트",
     thumbnail: "/portfolio/pf-mch-107.png",
@@ -1719,7 +1736,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-110",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "META콘텐츠 · meta콘텐츠",
     thumbnail: "/portfolio/pf-mcd-110.png",
@@ -1729,7 +1746,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-111",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-mcd-111.png",
@@ -1739,7 +1756,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-112",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mcd-112.png",
@@ -1749,7 +1766,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-113",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-mcd-113.png",
@@ -1759,7 +1776,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-114",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-mcd-114.png",
@@ -1769,7 +1786,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-115",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "META콘텐츠 · meta콘텐츠",
     thumbnail: "/portfolio/pf-mcd-115.png",
@@ -1779,7 +1796,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-116",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mcd-116.png",
@@ -1789,7 +1806,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-117",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mcd-117.png",
@@ -1799,7 +1816,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-118",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "배너 · 광고띠배너",
     thumbnail: "/portfolio/pf-mcd-118.png",
@@ -1809,7 +1826,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-119",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "디자인 · 예진설문지",
     thumbnail: "/portfolio/pf-mcd-119.png",
@@ -1819,7 +1836,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-120",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "META콘텐츠 · meta콘텐츠",
     thumbnail: "/portfolio/pf-mcd-120.png",
@@ -1829,7 +1846,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-121",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 청담점",
     summary: "랜딩페이지 · 강남언니랜딩",
     thumbnail: "/portfolio/pf-mcd-121.png",
@@ -1839,7 +1856,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-122",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mcd-122.png",
@@ -1849,7 +1866,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-123",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "디자인 · 메타이미지_울쎄라피프라임",
     thumbnail: "/portfolio/pf-mcd-123.png",
@@ -1869,7 +1886,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-125",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "디자인 · 메타이미지_리투오",
     thumbnail: "/portfolio/pf-mcd-125.png",
@@ -1879,7 +1896,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-126",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "랜딩페이지 · 재방문랜딩",
     thumbnail: "/portfolio/pf-mcd-126.png",
@@ -1889,7 +1906,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-127",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mcd-127.png",
@@ -1899,7 +1916,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-128",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 청담점",
     summary: "배너 · 강남언니_배너",
     thumbnail: "/portfolio/pf-mcd-128.png",
@@ -1909,7 +1926,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-129",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-mcd-129.png",
@@ -1919,7 +1936,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-130",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-mcd-130.png",
@@ -1929,7 +1946,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-131",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 청담점",
     summary: "랜딩페이지 · 강남언니랜딩",
     thumbnail: "/portfolio/pf-mcd-131.png",
@@ -1939,7 +1956,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-132",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "디자인 · 이벤트톤앤매너",
     thumbnail: "/portfolio/pf-mcd-132.png",
@@ -1949,7 +1966,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-133",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mcd-133.png",
@@ -1959,7 +1976,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-134",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-mcd-134.png",
@@ -1969,7 +1986,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-135",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "썸네일 · 썸네일",
     thumbnail: "/portfolio/pf-mcd-135.png",
@@ -1979,7 +1996,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-136",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-mcd-136.png",
@@ -1999,7 +2016,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-138",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-mcd-138.png",
@@ -2009,7 +2026,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-139",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "META콘텐츠 · meta콘텐츠",
     thumbnail: "/portfolio/pf-mcd-139.png",
@@ -2019,7 +2036,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-140",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "멜로우 청담점",
     summary: "기타 · 네이버플레이스_외래교수인증",
     thumbnail: "/portfolio/pf-mcd-140.png",
@@ -2039,7 +2056,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-142",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "진료일정·안내 · 진료일정표_6월",
     thumbnail: "/portfolio/pf-mcd-142.png",
@@ -2049,7 +2066,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-143",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "디자인 · 리틀용 왓츠앱 QR코드 이미지",
     thumbnail: "/portfolio/pf-mcd-143.png",
@@ -2059,7 +2076,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-144",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "디자인 · 의료진소개",
     thumbnail: "/portfolio/pf-mcd-144.png",
@@ -2069,7 +2086,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-145",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-mcd-145.png",
@@ -2079,7 +2096,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-146",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "멜로우 청담점",
     summary: "카드뉴스 · 블로그이미지_1세트",
     thumbnail: "/portfolio/pf-mcd-146.png",
@@ -2089,7 +2106,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-147",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "META콘텐츠 · meta",
     thumbnail: "/portfolio/pf-mcd-147.png",
@@ -2099,7 +2116,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-148",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "진료일정·안내 · 진료일정표_7월",
     thumbnail: "/portfolio/pf-mcd-148.png",
@@ -2109,7 +2126,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mcd-149",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "디자인 · 공개채용_마케터",
     thumbnail: "/portfolio/pf-mcd-149.png",
@@ -2129,7 +2146,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mhd-151",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "멜로우 통합",
     summary: "META콘텐츠 · [중문]meta콘텐츠",
     thumbnail: "/portfolio/pf-mhd-151.png",
@@ -2139,7 +2156,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mhd-152",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 통합",
     summary: "META콘텐츠 · meta콘텐츠",
     thumbnail: "/portfolio/pf-mhd-152.png",
@@ -2149,7 +2166,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mhd-153",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 통합",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-mhd-153.png",
@@ -2159,7 +2176,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mhd-154",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 통합",
     summary: "썸네일 · 롱폼썸네일",
     thumbnail: "/portfolio/pf-mhd-154.png",
@@ -2169,7 +2186,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mhd-155",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 통합",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-mhd-155.png",
@@ -2189,7 +2206,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-mhd-157",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 통합",
     summary: "디자인 · 원장님사진",
     thumbnail: "/portfolio/pf-mhd-157.png",
@@ -2199,7 +2216,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-auvel-158",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "오벨",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-auvel-158.png",
@@ -2229,7 +2246,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-auvel-161",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "오벨",
     summary: "진료일정·안내 · 진료일정표_7월",
     thumbnail: "/portfolio/pf-auvel-161.png",
@@ -2239,7 +2256,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-auvel-162",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "오벨",
     summary: "디자인 · 하이라이트커버",
     thumbnail: "/portfolio/pf-auvel-162.png",
@@ -2249,7 +2266,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-auvel-163",
     regions: ["taiwan"],
-    category: "sns",
+    category: "design",
     title: "오벨",
     summary: "진료일정·안내 · 대만_인스타컨텐츠_7월이벤트안내",
     thumbnail: "/portfolio/pf-auvel-163.png",
@@ -2259,7 +2276,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-auvel-164",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "오벨",
     summary: "디자인 · 블로그스킨",
     thumbnail: "/portfolio/pf-auvel-164.png",
@@ -2269,7 +2286,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-auvel-165",
     regions: ["domestic"],
-    category: "design",
+    category: "blog",
     title: "오벨",
     summary: "프로필 · 블로그프로필",
     thumbnail: "/portfolio/pf-auvel-165.png",
@@ -2279,7 +2296,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-auvel-166",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "오벨",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-auvel-166.png",
@@ -2299,7 +2316,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-auvel-168",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "오벨",
     summary: "디자인 · 유의사항 봉투",
     thumbnail: "/portfolio/pf-auvel-168.png",
@@ -2309,7 +2326,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-auvel-169",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "오벨",
     summary: "디자인 · 종이컵",
     thumbnail: "/portfolio/pf-auvel-169.png",
@@ -2319,7 +2336,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-170",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-170.png",
@@ -2329,7 +2346,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-171",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-171.png",
@@ -2339,7 +2356,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-172",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-172.png",
@@ -2349,7 +2366,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-173",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-173.png",
@@ -2359,7 +2376,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-174",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-174.png",
@@ -2379,7 +2396,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-176",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-176.png",
@@ -2389,7 +2406,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-177",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-177.png",
@@ -2399,7 +2416,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-178",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-178.png",
@@ -2409,7 +2426,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-179",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-179.png",
@@ -2419,7 +2436,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-180",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-180.png",
@@ -2429,7 +2446,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-181",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-olara-181.png",
@@ -2439,7 +2456,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-182",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-182.png",
@@ -2449,7 +2466,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-183",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-183.png",
@@ -2459,7 +2476,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-184",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-184.png",
@@ -2469,7 +2486,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-185",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-185.png",
@@ -2479,7 +2496,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-186",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-186.png",
@@ -2489,7 +2506,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-187",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-187.png",
@@ -2499,7 +2516,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-188",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-188.png",
@@ -2509,7 +2526,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-189",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "올라라",
     summary: "랜딩페이지 · 강남언니랜딩",
     thumbnail: "/portfolio/pf-olara-189.png",
@@ -2519,7 +2536,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-190",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-190.png",
@@ -2529,7 +2546,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-191",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터_셀르디엠런칭이벤트",
     thumbnail: "/portfolio/pf-olara-191.png",
@@ -2539,7 +2556,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-192",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "올라라",
     summary: "랜딩페이지 · 바비톡랜딩",
     thumbnail: "/portfolio/pf-olara-192.png",
@@ -2549,7 +2566,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-193",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-olara-193.png",
@@ -2559,7 +2576,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-194",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-194.png",
@@ -2569,7 +2586,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-195",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트 포스터_2월",
     thumbnail: "/portfolio/pf-olara-195.png",
@@ -2579,7 +2596,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-196",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-196.png",
@@ -2589,7 +2606,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-198",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "디자인 · 리얼모델모집",
     thumbnail: "/portfolio/pf-olara-198.png",
@@ -2599,7 +2616,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-199",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-olara-199.png",
@@ -2609,7 +2626,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-200",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-olara-200.png",
@@ -2619,7 +2636,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-201",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스_8세트",
     thumbnail: "/portfolio/pf-olara-201.png",
@@ -2629,7 +2646,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-202",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트 포스터_3.4월",
     thumbnail: "/portfolio/pf-olara-202.png",
@@ -2639,7 +2656,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-203",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-203.png",
@@ -2649,7 +2666,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-204",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "진료일정·안내 · 진료일정표_4월",
     thumbnail: "/portfolio/pf-olara-204.png",
@@ -2659,7 +2676,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-205",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스_8세트",
     thumbnail: "/portfolio/pf-olara-205.png",
@@ -2669,7 +2686,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-206",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · [중문]이벤트포스터",
     thumbnail: "/portfolio/pf-olara-206.png",
@@ -2679,7 +2696,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-207",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-olara-207.png",
@@ -2689,7 +2706,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-208",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터_4월한정이벤트",
     thumbnail: "/portfolio/pf-olara-208.png",
@@ -2699,7 +2716,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-209",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터_화목금스페셜케어",
     thumbnail: "/portfolio/pf-olara-209.png",
@@ -2709,7 +2726,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-210",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-olara-210.png",
@@ -2719,7 +2736,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-211",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "디자인 · 채용공고",
     thumbnail: "/portfolio/pf-olara-211.png",
@@ -2729,7 +2746,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-212",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트 포스터_5.6월",
     thumbnail: "/portfolio/pf-olara-212.png",
@@ -2739,7 +2756,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-213",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스_8세트",
     thumbnail: "/portfolio/pf-olara-213.png",
@@ -2749,7 +2766,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-214",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "배너 · 블로그_배너",
     thumbnail: "/portfolio/pf-olara-214.png",
@@ -2759,7 +2776,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-215",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "올라라",
     summary: "카드뉴스 · 블로그카드뉴스_6세트",
     thumbnail: "/portfolio/pf-olara-215.png",
@@ -2769,7 +2786,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-216",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "진료일정·안내 · 진료일정표_5월",
     thumbnail: "/portfolio/pf-olara-216.png",
@@ -2779,7 +2796,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-217",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-olara-217.png",
@@ -2789,7 +2806,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-218",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-218.png",
@@ -2799,7 +2816,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-219",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · [중문]이벤트포스터",
     thumbnail: "/portfolio/pf-olara-219.png",
@@ -2809,7 +2826,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-olara-220",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-olara-220.png",
@@ -2819,7 +2836,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-221",
     regions: ["domestic"],
-    category: "design",
+    category: "multichannel",
     title: "신통",
     summary: "배너 · 유튜브채널아트",
     thumbnail: "/portfolio/pf-sht-221.png",
@@ -2829,7 +2846,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-222",
     regions: ["domestic"],
-    category: "design",
+    category: "multichannel",
     title: "신통",
     summary: "프로필 · 유튜브채널프로필",
     thumbnail: "/portfolio/pf-sht-222.png",
@@ -2839,7 +2856,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-223",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "신통",
     summary: "배너 · 페이스북배너",
     thumbnail: "/portfolio/pf-sht-223.png",
@@ -2849,7 +2866,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-224",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "신통",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-sht-224.png",
@@ -2869,7 +2886,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-226",
     regions: ["domestic"],
-    category: "design",
+    category: "multichannel",
     title: "신통",
     summary: "로고 · 유튜브로고",
     thumbnail: "/portfolio/pf-sht-226.png",
@@ -2879,7 +2896,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-227",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "신통",
     summary: "META콘텐츠 · meta콘텐츠",
     thumbnail: "/portfolio/pf-sht-227.png",
@@ -2889,7 +2906,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-228",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "신통",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-sht-228.png",
@@ -2909,7 +2926,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-230",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "신통",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-sht-230.png",
@@ -2919,7 +2936,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-231",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "신통",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-sht-231.png",
@@ -2929,7 +2946,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-232",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "신통",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-sht-232.png",
@@ -2939,7 +2956,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-233",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "신통",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-sht-233.png",
@@ -2949,7 +2966,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-234",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "신통",
     summary: "기타 · 네이버플레이스",
     thumbnail: "/portfolio/pf-sht-234.png",
@@ -2959,7 +2976,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-235",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "신통",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-sht-235.png",
@@ -2969,7 +2986,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-236",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "신통",
     summary: "썸네일 · 롱폼썸네일",
     thumbnail: "/portfolio/pf-sht-236.png",
@@ -2979,7 +2996,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-237",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "신통",
     summary: "진료일정·안내 · 안내문",
     thumbnail: "/portfolio/pf-sht-237.png",
@@ -2989,7 +3006,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-238",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "신통",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-sht-238.png",
@@ -2999,7 +3016,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-239",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "신통",
     summary: "디자인 · 블로그_스킨",
     thumbnail: "/portfolio/pf-sht-239.png",
@@ -3009,7 +3026,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-240",
     regions: ["domestic"],
-    category: "sns",
+    category: "platform",
     title: "신통",
     summary: "랜딩페이지 · 강남언니랜딩페이지",
     thumbnail: "/portfolio/pf-sht-240.png",
@@ -3019,7 +3036,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-241",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "신통",
     summary: "카드뉴스 · 인스타카드뉴스_하이라이트",
     thumbnail: "/portfolio/pf-sht-241.png",
@@ -3029,7 +3046,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-242",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "신통",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-sht-242.png",
@@ -3039,7 +3056,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-243",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "신통",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-sht-243.png",
@@ -3049,7 +3066,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-244",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "신통",
     summary: "썸네일 · 숏츠썸네일_3건",
     thumbnail: "/portfolio/pf-sht-244.png",
@@ -3059,7 +3076,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-245",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "신통",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-sht-245.png",
@@ -3069,7 +3086,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-sht-246",
     regions: ["domestic"],
-    category: "design",
+    category: "multichannel",
     title: "신통",
     summary: "배너 · 채널아트",
     thumbnail: "/portfolio/pf-sht-246.png",
@@ -3079,7 +3096,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-247",
     regions: ["domestic"],
-    category: "design",
+    category: "multichannel",
     title: "순수안",
     summary: "로고 · 유튜브채널로고",
     thumbnail: "/portfolio/pf-ssa-247.png",
@@ -3089,7 +3106,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-248",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "순수안",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-ssa-248.png",
@@ -3099,7 +3116,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-249",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-ssa-249.png",
@@ -3109,7 +3126,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-250",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-ssa-250.png",
@@ -3119,7 +3136,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-251",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "순수안",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-ssa-251.png",
@@ -3129,7 +3146,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-252",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "순수안",
     summary: "기타 · 네이버플레이스",
     thumbnail: "/portfolio/pf-ssa-252.png",
@@ -3139,7 +3156,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-253",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ssa-253.png",
@@ -3149,7 +3166,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-254",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ssa-254.png",
@@ -3159,7 +3176,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-255",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "카드뉴스 · 블로그카드뉴스_8세트",
     thumbnail: "/portfolio/pf-ssa-255.png",
@@ -3169,7 +3186,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-256",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "순수안",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-ssa-256.png",
@@ -3179,7 +3196,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-257",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "순수안",
     summary: "디자인 · 하이라이트커버",
     thumbnail: "/portfolio/pf-ssa-257.png",
@@ -3189,7 +3206,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-258",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ssa-258.png",
@@ -3199,7 +3216,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-259",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "순수안",
     summary: "진료일정·안내 · 진료일정표_5월",
     thumbnail: "/portfolio/pf-ssa-259.png",
@@ -3209,7 +3226,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-260",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "순수안",
     summary: "진료일정·안내 · 진료일정표_6월",
     thumbnail: "/portfolio/pf-ssa-260.png",
@@ -3219,7 +3236,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-261",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ssa-261.png",
@@ -3229,7 +3246,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-262",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "순수안",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-ssa-262.png",
@@ -3239,7 +3256,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-263",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "순수안",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-ssa-263.png",
@@ -3259,7 +3276,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-265",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "순수안",
     summary: "디자인 · 오시는길",
     thumbnail: "/portfolio/pf-ssa-265.png",
@@ -3269,7 +3286,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-266",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "순수안",
     summary: "진료일정·안내 · 진료시간",
     thumbnail: "/portfolio/pf-ssa-266.png",
@@ -3279,7 +3296,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-267",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "순수안",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-ssa-267.png",
@@ -3289,7 +3306,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-268",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "디자인 · 블로그스킨",
     thumbnail: "/portfolio/pf-ssa-268.png",
@@ -3299,7 +3316,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-269",
     regions: ["domestic"],
-    category: "sns",
+    category: "multichannel",
     title: "순수안",
     summary: "썸네일 · 숏츠썸네일",
     thumbnail: "/portfolio/pf-ssa-269.png",
@@ -3309,7 +3326,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-270",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "순수안",
     summary: "진료일정·안내 · 진료일정표",
     thumbnail: "/portfolio/pf-ssa-270.png",
@@ -3319,7 +3336,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-271",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "디자인 · 블로그스킨",
     thumbnail: "/portfolio/pf-ssa-271.png",
@@ -3329,7 +3346,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-272",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ssa-272.png",
@@ -3339,7 +3356,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ssa-273",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "순수안",
     summary: "카드뉴스 · 블로그이미지_10세트",
     thumbnail: "/portfolio/pf-ssa-273.png",
@@ -3349,7 +3366,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ian-274",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이안한방",
     summary: "배너 · 블로그배너",
     thumbnail: "/portfolio/pf-ian-274.png",
@@ -3359,7 +3376,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ian-275",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이안한방",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-ian-275.png",
@@ -3369,7 +3386,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-276",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "포스터 · 개원포스터",
     thumbnail: "/portfolio/pf-ihy-276.png",
@@ -3379,7 +3396,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-277",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "META콘텐츠 · meta콘텐츠",
     thumbnail: "/portfolio/pf-ihy-277.png",
@@ -3389,7 +3406,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-278",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "이현한방",
     summary: "기타 · 네이버플레이스",
     thumbnail: "/portfolio/pf-ihy-278.png",
@@ -3399,7 +3416,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-279",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-ihy-279.png",
@@ -3409,7 +3426,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-280",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-ihy-280.png",
@@ -3419,7 +3436,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-281",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-ihy-281.png",
@@ -3429,7 +3446,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-282",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-ihy-282.png",
@@ -3439,7 +3456,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-283",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "진료일정·안내 · 주차안내",
     thumbnail: "/portfolio/pf-ihy-283.png",
@@ -3449,7 +3466,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-284",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-ihy-284.png",
@@ -3459,7 +3476,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-285",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-ihy-285.png",
@@ -3479,7 +3496,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-287",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이현한방",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-ihy-287.png",
@@ -3489,7 +3506,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-288",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이현한방",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-ihy-288.png",
@@ -3519,7 +3536,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-291",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-ihy-291.png",
@@ -3529,7 +3546,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-292",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-ihy-292.png",
@@ -3539,7 +3556,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-293",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "META콘텐츠 · meta콘텐츠",
     thumbnail: "/portfolio/pf-ihy-293.png",
@@ -3549,7 +3566,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-294",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "디자인 · 물티슈",
     thumbnail: "/portfolio/pf-ihy-294.png",
@@ -3559,7 +3576,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-295",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "디자인 · 전단지",
     thumbnail: "/portfolio/pf-ihy-295.png",
@@ -3569,7 +3586,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-296",
     regions: ["domestic"],
-    category: "sns",
+    category: "cafe",
     title: "이현한방",
     summary: "디자인 · 카페스킨",
     thumbnail: "/portfolio/pf-ihy-296.png",
@@ -3579,7 +3596,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-297",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-ihy-297.png",
@@ -3589,7 +3606,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-298",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-ihy-298.png",
@@ -3599,7 +3616,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-299",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이현한방",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ihy-299.png",
@@ -3609,7 +3626,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-300",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "카드뉴스 · 인스타카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ihy-300.png",
@@ -3619,7 +3636,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-301",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "진료일정·안내 · 안내문",
     thumbnail: "/portfolio/pf-ihy-301.png",
@@ -3629,7 +3646,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-302",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-ihy-302.png",
@@ -3639,7 +3656,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-303",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-ihy-303.png",
@@ -3649,7 +3666,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-304",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이현한방",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ihy-304.png",
@@ -3659,7 +3676,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-305",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "진료일정·안내 · 진료일정",
     thumbnail: "/portfolio/pf-ihy-305.png",
@@ -3669,7 +3686,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-306",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "진료일정·안내 · 안내문",
     thumbnail: "/portfolio/pf-ihy-306.png",
@@ -3679,7 +3696,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-307",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-ihy-307.png",
@@ -3689,7 +3706,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-308",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이현한방",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ihy-308.png",
@@ -3699,7 +3716,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-309",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-ihy-309.png",
@@ -3709,7 +3726,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-310",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "진료일정·안내 · 진료일정표_4월",
     thumbnail: "/portfolio/pf-ihy-310.png",
@@ -3719,7 +3736,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-311",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-ihy-311.png",
@@ -3729,7 +3746,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-312",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "포스터 · 이벤트포스터",
     thumbnail: "/portfolio/pf-ihy-312.png",
@@ -3739,7 +3756,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-313",
     regions: ["domestic"],
-    category: "sns",
+    category: "place",
     title: "이현한방",
     summary: "기타 · 네이버플레이스",
     thumbnail: "/portfolio/pf-ihy-313.png",
@@ -3749,7 +3766,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-314",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "카드뉴스 · 인스타카드뉴스",
     thumbnail: "/portfolio/pf-ihy-314.png",
@@ -3759,7 +3776,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-315",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "진료일정·안내 · 안내문",
     thumbnail: "/portfolio/pf-ihy-315.png",
@@ -3779,7 +3796,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-317",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "진료일정·안내 · 진료일정표_5월",
     thumbnail: "/portfolio/pf-ihy-317.png",
@@ -3789,7 +3806,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-318",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이현한방",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ihy-318.png",
@@ -3799,7 +3816,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-319",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "랜딩페이지 · 회사소개_랜딩",
     thumbnail: "/portfolio/pf-ihy-319.png",
@@ -3809,7 +3826,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-320",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "진료일정·안내 · 진료일정표_6월",
     thumbnail: "/portfolio/pf-ihy-320.png",
@@ -3819,7 +3836,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-321",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이현한방",
     summary: "카드뉴스 · 블로그카드뉴스_10세트",
     thumbnail: "/portfolio/pf-ihy-321.png",
@@ -3829,7 +3846,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-322",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이현한방",
     summary: "카드뉴스 · 블로그이미지_20세트",
     thumbnail: "/portfolio/pf-ihy-322.png",
@@ -3839,7 +3856,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-323",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "이현한방",
     summary: "디자인 · 블로그스킨",
     thumbnail: "/portfolio/pf-ihy-323.png",
@@ -3849,7 +3866,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-324",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "이현한방",
     summary: "배너 · 콜투액션",
     thumbnail: "/portfolio/pf-ihy-324.png",
@@ -3859,7 +3876,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ihy-325",
     regions: ["domestic"],
-    category: "sns",
+    category: "experience",
     title: "이현한방",
     summary: "디자인 · 기자단용",
     thumbnail: "/portfolio/pf-ihy-325.png",
@@ -3889,7 +3906,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-328",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_3세트",
     thumbnail: "/portfolio/pf-ifs-328.png",
@@ -3899,7 +3916,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-329",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-ifs-329.png",
@@ -3909,7 +3926,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-330",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "기타 · 보도자료",
     thumbnail: "/portfolio/pf-ifs-330.png",
@@ -3919,7 +3936,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-331",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "카드뉴스 · 인스타하이라이트 커버",
     thumbnail: "/portfolio/pf-ifs-331.png",
@@ -3929,7 +3946,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-332",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "디자인 · 블로그스킨",
     thumbnail: "/portfolio/pf-ifs-332.png",
@@ -3939,7 +3956,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-333",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_2세트",
     thumbnail: "/portfolio/pf-ifs-333.png",
@@ -3949,7 +3966,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-334",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "카드뉴스 · 인스타그램",
     thumbnail: "/portfolio/pf-ifs-334.png",
@@ -3959,7 +3976,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-335",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_2세트",
     thumbnail: "/portfolio/pf-ifs-335.png",
@@ -3969,7 +3986,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-336",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_2세트",
     thumbnail: "/portfolio/pf-ifs-336.png",
@@ -3979,7 +3996,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-337",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_3세트",
     thumbnail: "/portfolio/pf-ifs-337.png",
@@ -3989,7 +4006,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-338",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_1세트",
     thumbnail: "/portfolio/pf-ifs-338.png",
@@ -3999,7 +4016,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-339",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_3세트",
     thumbnail: "/portfolio/pf-ifs-339.png",
@@ -4009,7 +4026,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-340",
     regions: ["domestic"],
-    category: "design",
+    category: "multichannel",
     title: "인퓨스킨",
     summary: "배너 · 유튜브채널스킨",
     thumbnail: "/portfolio/pf-ifs-340.png",
@@ -4019,7 +4036,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-341",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_3세트",
     thumbnail: "/portfolio/pf-ifs-341.png",
@@ -4029,7 +4046,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-342",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_1세트",
     thumbnail: "/portfolio/pf-ifs-342.png",
@@ -4039,7 +4056,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-343",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_2세트",
     thumbnail: "/portfolio/pf-ifs-343.png",
@@ -4049,7 +4066,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-344",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_2세트",
     thumbnail: "/portfolio/pf-ifs-344.png",
@@ -4059,7 +4076,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-345",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_3세트",
     thumbnail: "/portfolio/pf-ifs-345.png",
@@ -4069,7 +4086,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-346",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_3세트",
     thumbnail: "/portfolio/pf-ifs-346.png",
@@ -4079,7 +4096,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-347",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_4세트",
     thumbnail: "/portfolio/pf-ifs-347.png",
@@ -4089,7 +4106,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-348",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_4세트",
     thumbnail: "/portfolio/pf-ifs-348.png",
@@ -4099,7 +4116,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-349",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "기타 · 보도자료",
     thumbnail: "/portfolio/pf-ifs-349.png",
@@ -4109,7 +4126,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-350",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-ifs-350.png",
@@ -4119,7 +4136,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-351",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-ifs-351.png",
@@ -4129,7 +4146,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-352",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_2세트",
     thumbnail: "/portfolio/pf-ifs-352.png",
@@ -4139,7 +4156,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-353",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_4세트",
     thumbnail: "/portfolio/pf-ifs-353.png",
@@ -4149,7 +4166,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-354",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_2세트",
     thumbnail: "/portfolio/pf-ifs-354.png",
@@ -4159,7 +4176,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-355",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-ifs-355.png",
@@ -4169,7 +4186,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-356",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-ifs-356.png",
@@ -4179,7 +4196,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-357",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-ifs-357.png",
@@ -4189,7 +4206,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-358",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_2세트",
     thumbnail: "/portfolio/pf-ifs-358.png",
@@ -4199,7 +4216,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-359",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-ifs-359.png",
@@ -4209,7 +4226,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-360",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-ifs-360.png",
@@ -4219,7 +4236,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-361",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-ifs-361.png",
@@ -4229,7 +4246,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-362",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "인퓨스킨",
     summary: "랜딩페이지 · 랜딩페이지",
     thumbnail: "/portfolio/pf-ifs-362.png",
@@ -4239,7 +4256,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-363",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_1세트",
     thumbnail: "/portfolio/pf-ifs-363.png",
@@ -4249,7 +4266,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-364",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스",
     thumbnail: "/portfolio/pf-ifs-364.png",
@@ -4259,7 +4276,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-365",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_1세트",
     thumbnail: "/portfolio/pf-ifs-365.png",
@@ -4269,7 +4286,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-ifs-366",
     regions: ["domestic"],
-    category: "sns",
+    category: "blog",
     title: "인퓨스킨",
     summary: "카드뉴스 · 블로그카드뉴스_3세트",
     thumbnail: "/portfolio/pf-ifs-366.png",
@@ -4279,7 +4296,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-imp-367",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "임페투스",
     summary: "디자인 · 레퍼런스",
     thumbnail: "/portfolio/pf-imp-367.png",
@@ -4299,7 +4316,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-imp-369",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "임페투스",
     summary: "디자인 · 가이드",
     thumbnail: "/portfolio/pf-imp-369.png",
@@ -4319,7 +4336,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-imp-371",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "임페투스",
     summary: "디자인 · 자료",
     thumbnail: "/portfolio/pf-imp-371.png",
@@ -4339,7 +4356,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-imp-373",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "임페투스",
     summary: "카드뉴스 · 사내지원_인스타6분할피드",
     thumbnail: "/portfolio/pf-imp-373.png",
@@ -4359,7 +4376,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-imp-375",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "임페투스",
     summary: "디자인 · 사진자료_재미나이+클립아트코리아",
     thumbnail: "/portfolio/pf-imp-375.png",
@@ -4389,7 +4406,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-imp-378",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "임페투스",
     summary: "디자인 · 자료취합",
     thumbnail: "/portfolio/pf-imp-378.png",
@@ -4469,7 +4486,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-y-005",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "오스텔로마레",
     summary: "포스터 · 종합 홍보 포스터",
     thumbnail: "/portfolio/pf-y-005.png",
@@ -4479,7 +4496,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-y-006",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "멜로우 청담점",
     summary: "META콘텐츠 · META 광고소재",
     thumbnail: "/portfolio/pf-y-006.png",
@@ -4499,7 +4516,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-y-008",
     regions: ["domestic"],
-    category: "sns",
+    category: "design",
     title: "한세대학교",
     summary: "카드뉴스 · 기말 시험간식 이벤트(표지)",
     thumbnail: "/portfolio/pf-y-008.png",
@@ -4511,7 +4528,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-000",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · [중문] 첫방문 이벤트 포스터",
     thumbnail: "/portfolio/ovs-000.png",
@@ -4521,7 +4538,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-001",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "올라라",
     summary: "포스터 · [중문] 7월 이벤트 포스터",
     thumbnail: "/portfolio/ovs-001.png",
@@ -4531,7 +4548,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-002",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "기타 · [중문] 원장 프로필",
     tags: ["기타", "중국"],
@@ -4540,7 +4557,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-003",
     regions: ["china"],
-    category: "sns",
+    category: "review",
     title: "멜로우 천호점",
     summary: "SNS콘텐츠 · [중문] 리뷰 이벤트",
     thumbnail: "/portfolio/ovs-003.png",
@@ -4550,7 +4567,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-004",
     regions: ["china"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "썸네일 · [중문] 숏츠 썸네일(피부습관 월드컵)",
     thumbnail: "/portfolio/ovs-004.png",
@@ -4560,7 +4577,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-005",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "멜로우 천호점",
     summary: "카드뉴스 · [중문] 인스타 카드뉴스",
     thumbnail: "/portfolio/ovs-005.png",
@@ -4580,7 +4597,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-007",
     regions: ["china"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 강북본점",
     summary: "배너 · [중문] 강남언니 랜딩(듀얼토닝+백옥주사)",
     thumbnail: "/portfolio/ovs-007.png",
@@ -4590,7 +4607,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-008",
     regions: ["china"],
-    category: "sns",
+    category: "design",
     title: "멜로우 통합",
     summary: "META콘텐츠 · [중문] Meta 콘텐츠",
     thumbnail: "/portfolio/ovs-008.png",
@@ -4600,7 +4617,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-009",
     regions: ["taiwan"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 강북본점",
     summary: "배너 · [대만] 강남언니 랜딩(리프팅패키지)",
     tags: ["배너", "대만"],
@@ -4609,7 +4626,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-010",
     regions: ["taiwan"],
-    category: "sns",
+    category: "platform",
     title: "멜로우 강북본점",
     summary: "배너 · [대만] 강남언니 랜딩(레디어스)",
     tags: ["배너", "대만"],
@@ -4618,7 +4635,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-011",
     regions: ["taiwan"],
-    category: "sns",
+    category: "multichannel",
     title: "멜로우 천호점",
     summary: "SNS콘텐츠 · [대만] 숏폼 수정본",
     thumbnail: "/portfolio/ovs-011.png",
@@ -4628,7 +4645,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-012",
     regions: ["taiwan"],
-    category: "sns",
+    category: "design",
     title: "오벨",
     summary: "기타 · [대만] 고영욱 원장 약력",
     thumbnail: "/portfolio/ovs-012.png",
@@ -4638,7 +4655,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "ovs-013",
     regions: ["taiwan"],
-    category: "sns",
+    category: "design",
     title: "오벨",
     summary: "SNS콘텐츠 · [대만] 인스타 7월 이벤트 안내",
     thumbnail: "/portfolio/ovs-013.png",
@@ -4650,7 +4667,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-svc-18",
     regions: ["domestic"],
-    category: "service",
+    category: "place",
     title: "플레이스 상위노출",
     summary: "네이버 플레이스 1페이지 1위 상위노출 실사례",
     thumbnail: "/portfolio/pf-svc-18.png",
@@ -4660,7 +4677,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-svc-21",
     regions: ["domestic"],
-    category: "service",
+    category: "review",
     title: "페르소나 리뷰",
     summary: "네이버·카카오·구글 리뷰 신뢰도 마케팅",
     thumbnail: "/portfolio/pf-svc-21.png",
@@ -4670,7 +4687,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-svc-23",
     regions: ["domestic"],
-    category: "service",
+    category: "cafe",
     title: "카페 바이럴",
     summary: "네이버 카페 침투 바이럴 마케팅",
     thumbnail: "/portfolio/pf-svc-23.png",
@@ -4680,7 +4697,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-svc-27",
     regions: ["domestic"],
-    category: "service",
+    category: "experience",
     title: "인플루언서 체험단",
     summary: "준최~셀럽 4단계 체험단 모집·운영",
     thumbnail: "/portfolio/pf-svc-27.png",
@@ -4690,7 +4707,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-svc-35",
     regions: ["domestic"],
-    category: "service",
+    category: "blog",
     title: "브랜드블로그 상위노출",
     summary: "네이버 블로그 상위노출·운영관리",
     thumbnail: "/portfolio/pf-svc-35.png",
@@ -4700,7 +4717,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-svc-40",
     regions: ["domestic"],
-    category: "service",
+    category: "multichannel",
     title: "멀티채널 운영",
     summary: "유튜브·인스타·틱톡·페북 통합 운영",
     thumbnail: "/portfolio/pf-svc-40.png",
@@ -4710,7 +4727,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-svc-97",
     regions: ["china"],
-    category: "service",
+    category: "experience",
     title: "중국 왕홍 시딩·체험단",
     summary: "중국 왕홍 시딩 및 체험단 운영관리",
     thumbnail: "/portfolio/pf-svc-97.png",
@@ -4720,7 +4737,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-svc-108",
     regions: ["japan"],
-    category: "service",
+    category: "experience",
     title: "일본 인플루언서 시딩",
     summary: "일본 인플루언서 시딩전략·체험단 운영",
     thumbnail: "/portfolio/pf-svc-108.png",
@@ -4730,7 +4747,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "pf-svc-102",
     regions: ["japan"],
-    category: "service",
+    category: "multichannel",
     title: "일본 멀티채널 운영",
     summary: "일본 콘텐츠 제작·멀티채널 운영관리",
     thumbnail: "/portfolio/pf-svc-102.png",
