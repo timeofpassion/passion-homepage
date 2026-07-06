@@ -348,6 +348,43 @@ export default async function PeopleHome() {
             ))}
           </div>
 
+          {/* 분야별 상세(내부 링크) */}
+          <div
+            className="ppl-center"
+            style={{
+              marginTop: "1.5rem",
+              display: "flex",
+              gap: "0.7rem",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            <Link
+              href="/people/wanghong-marketing"
+              className="ppl-btn ppl-btn--ghost"
+            >
+              왕홍·샤오홍슈 마케팅 →
+            </Link>
+            <Link
+              href="/people/japan-influencer-marketing"
+              className="ppl-btn ppl-btn--ghost"
+            >
+              일본 인플루언서·LINE →
+            </Link>
+            <Link
+              href="/people/taiwan-influencer-marketing"
+              className="ppl-btn ppl-btn--ghost"
+            >
+              대만 인플루언서·Dcard →
+            </Link>
+            <Link
+              href="/people/experience-group"
+              className="ppl-btn ppl-btn--ghost"
+            >
+              인플루언서 체험단·기자단 →
+            </Link>
+          </div>
+
           <div className="ppl-center">
             <a
               href={KAKAO_URL}

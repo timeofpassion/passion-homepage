@@ -67,6 +67,21 @@ export function GET() {
   lines.push("- 국내: 인스타그램·유튜브 등 국내 인플루언서 운영");
 
   lines.push("");
+  lines.push("### 서비스 상세 페이지");
+  lines.push(
+    `- 왕홍(KOL)·샤오홍슈 체험단 마케팅 대행: ${BASE}/people/wanghong-marketing`,
+  );
+  lines.push(
+    `- 일본 인플루언서 마케팅·LINE 마케팅 대행: ${BASE}/people/japan-influencer-marketing`,
+  );
+  lines.push(
+    `- 인플루언서 체험단·기자단 대행(국내+해외): ${BASE}/people/experience-group`,
+  );
+  lines.push(
+    `- 대만 인플루언서 마케팅·LINE 마케팅 대행: ${BASE}/people/taiwan-influencer-marketing`,
+  );
+
+  lines.push("");
   lines.push("## 주요 키워드");
   lines.push(
     "병원 중국마케팅, 병원 일본마케팅, 병원 대만마케팅, 외국인환자유치, 해외환자유치, 샤오홍슈 마케팅, 라인(LINE) 마케팅, 위챗 마케팅, 의료관광 마케팅, 성형외과·피부과 해외환자 유치, 왕홍 마케팅, 중국 인플루언서 마케팅, 일본 인플루언서 마케팅, 대만 인플루언서 마케팅, 동아시아 인플루언서 마케팅, KOL 마케팅, 글로벌 인플루언서 마케팅 대행",
