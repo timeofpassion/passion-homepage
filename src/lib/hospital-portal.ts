@@ -233,13 +233,14 @@ export async function getAllHospitals(): Promise<{ hospitals: HospitalI18n[]; us
   }
 }
 
-// /hospital 언어 토글 (한국어·영어·일본어·중국어·대만어)
+// /hospital 언어 토글 (한국어·영어·일본어·중국어·대만어·베트남어)
 export const TOGGLE_LOCALES = [
   { value: "ko", label: "한국어" },
   { value: "en", label: "English" },
   { value: "ja", label: "日本語" },
   { value: "zh-CN", label: "简体中文" },
   { value: "zh-TW", label: "繁體中文" },
+  { value: "vi", label: "Tiếng Việt" },
 ] as const
 export type ToggleLocale = (typeof TOGGLE_LOCALES)[number]["value"]
 
