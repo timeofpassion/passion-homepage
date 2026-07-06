@@ -3,6 +3,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import KakaoFloat from "@/components/KakaoFloat"
 import {
   TOGGLE_LOCALES,
   type ToggleLocale,
@@ -164,7 +165,11 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
               {h.doctors.map((d, i) => (
                 <article key={i} className="hpd__doctor">
                   {d.imageUrl ? (
-                    <img src={d.imageUrl} alt={d.name} className="hpd__doctor-photo" />
+                    <img
+                      src={d.imageUrl}
+                      alt={d.name}
+                      className={`hpd__doctor-photo${h.slug === "inique-ps" ? " hpd__doctor-photo--offset-r" : ""}`}
+                    />
                   ) : (
                     <div className="hpd__doctor-photo hpd__doctor-photo--ph">{d.name.slice(0, 1)}</div>
                   )}
@@ -174,7 +179,7 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
                     )}
                     <p className="hpd__doctor-name">
                       {d.name}
-                      {d.title && <span className="hpd__doctor-title"> {d.title}</span>}
+                      {d.title && <span className="hpd__doctor-title">{d.title}</span>}
                     </p>
                     {d.specialty && <p className="hpd__doctor-specialty">{d.specialty}</p>}
                     {d.bio && <p className="hpd__doctor-bio">{d.bio}</p>}
@@ -216,6 +221,9 @@ export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n
           <Inquiry slug={h.slug} hospitalName={c.name} locale={locale} t={t} />
         </section>
       </div>
+
+      {/* 우측 하단 고정 — 열정의시간 카카오톡 채널 + 회사소개서(대표님 지시 2026-07-07) */}
+      <KakaoFloat />
     </main>
   )
 }
