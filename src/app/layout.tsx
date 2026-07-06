@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     google: "06n0KQdVtbte3e34Vp7VSlit0C3e8qqZmTDWaabne4Y",
     other: {
       "naver-site-verification": "4e9d8fd7b3f7336ec492afdb8fd61f5af93e5e07",
+      // Bing Webmaster Tools (ChatGPT 서치·Perplexity가 Bing 인덱스 사용 → GEO 필수)
+      "msvalidate.01": "994BEF517009C3276F0672E10D85AA5C",
     },
   },
   title: {
