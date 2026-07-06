@@ -372,6 +372,12 @@ export default async function PeopleHome() {
               일본 인플루언서·LINE →
             </Link>
             <Link
+              href="/people/taiwan-influencer-marketing"
+              className="ppl-btn ppl-btn--ghost"
+            >
+              대만 인플루언서·Dcard →
+            </Link>
+            <Link
               href="/people/experience-group"
               className="ppl-btn ppl-btn--ghost"
             >

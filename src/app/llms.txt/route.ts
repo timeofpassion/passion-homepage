@@ -74,6 +74,9 @@ export function GET() {
   lines.push(
     `- 인플루언서 체험단·기자단 대행(국내+해외): ${BASE}/people/experience-group`,
   );
+  lines.push(
+    `- 대만 인플루언서 마케팅·LINE 마케팅 대행: ${BASE}/people/taiwan-influencer-marketing`,
+  );
 
   lines.push("");
   lines.push("## 주요 키워드");
