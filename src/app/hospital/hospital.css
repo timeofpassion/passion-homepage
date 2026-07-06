@@ -199,12 +199,119 @@
 }
 
 /* ===== 2026-07-05 협력병원 상세 = 공유용 고유 URL 페이지 (/hospital/[slug]) ===== */
+/* 배경 = 열정의시간 톤앤매너(딥크림슨 + 시네마틱 비네트, /time full-bleed-bg 정합) */
 .hpd {
   min-height: 100vh;
-  background: #0c0303;
+  background:
+    radial-gradient(120% 72% at 50% -8%, rgba(204, 0, 0, 0.42), rgba(110, 0, 7, 0.28) 32%, rgba(10, 3, 4, 0.94) 66%),
+    radial-gradient(90% 55% at 50% 118%, rgba(150, 0, 10, 0.22), transparent 60%),
+    #0a0304;
+  background-attachment: fixed;
   color: #fff;
-  padding: 40px 20px 80px;
+  padding: 78px 20px 80px;
 }
+
+/* 최상단 고정 브랜드 바 — 로고+텍스트(좌) + 언어 토글(우), 스크롤해도 상단 고정 */
+.hpd-brandbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+  padding: 8px 20px;
+  background: rgba(10, 3, 4, 0.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(231, 196, 106, 0.22);
+}
+.hpd-brandbar__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+.hpd-brandbar__in {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  text-decoration: none;
+}
+/* 언어 토글 — 넘치면 가로 스크롤(숨김 스크롤바) */
+.hpd-brandbar__langs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.hpd-brandbar__langs::-webkit-scrollbar {
+  display: none;
+}
+.hpd-brandbar__langs .hp-lang {
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.hpd-brandbar__logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+.hpd-brandbar__name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.hpd-brandbar__sub {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #e7c46a;
+  padding-left: 10px;
+  margin-left: 2px;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* 독점 파트너 고지 */
+.hpd__exclusive {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 16px 18px;
+  border: 1px solid rgba(231, 196, 106, 0.34);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(231, 196, 106, 0.09), rgba(204, 0, 0, 0.06));
+}
+.hpd__exclusive-badge {
+  flex: 0 0 auto;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #e7c46a;
+  color: #2a1a02;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.hpd__exclusive-text {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+}
+.hpd__exclusive-text strong {
+  color: #fff;
+  font-weight: 800;
+}
+
 .hpd__inner {
   max-width: 1040px;
   margin: 0 auto;
@@ -324,10 +431,10 @@
 }
 .hpd__doctor {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 28px;
+  grid-template-columns: 300px 1fr;
+  gap: 32px;
   align-items: start;
-  padding: 22px;
+  padding: 26px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.03);
@@ -589,10 +696,134 @@
   text-align: center;
 }
 
+/* 시술 과목·가격 */
+.hpd-price {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 22px 22px;
+}
+.hpd-price__same {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 6px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(230, 51, 41, 0.1);
+  border: 1px solid rgba(230, 51, 41, 0.34);
+  color: #ffb3ab;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+.hpd-price__same-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #e63329;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+/* 카테고리 탭 — 누르면 해당 시술만 필터 */
+.hpd-price__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 4px;
+}
+.hpd-price__tab {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.hpd-price__tab:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.32);
+}
+.hpd-price__tab.is-active {
+  background: #e63329;
+  border-color: #e63329;
+  color: #fff;
+}
+.hpd-price__group {
+  margin-top: 18px;
+}
+.hpd-price__cat {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #e6794f;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.hpd-price__rows {
+  display: flex;
+  flex-direction: column;
+}
+.hpd-price__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.hpd-price__row:last-child {
+  border-bottom: none;
+}
+.hpd-price__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+.hpd-price__pnote {
+  margin-left: 8px;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+}
+.hpd-price__val {
+  flex: 0 0 auto;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.hpd-price__extra {
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.66);
+  white-space: pre-line;
+}
+.hpd-price__disclaim {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.14);
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.44);
+}
+
 /* ===== 반응형 고도화 (PC·태블릿·모바일) ===== */
 @media (max-width: 900px) {
   .hpd {
-    padding: 32px 16px 64px;
+    padding: 72px 16px 64px;
   }
   .hpd__hero {
     aspect-ratio: 16 / 9;
@@ -600,9 +831,9 @@
 }
 @media (max-width: 680px) {
   .hpd__doctor {
-    grid-template-columns: 132px 1fr;
-    gap: 16px;
-    padding: 16px;
+    grid-template-columns: 190px 1fr;
+    gap: 18px;
+    padding: 18px;
   }
   .hpd__doctor-name {
     font-size: 21px;
@@ -616,7 +847,23 @@
 }
 @media (max-width: 480px) {
   .hpd {
-    padding: 22px 14px 52px;
+    padding: 66px 14px 52px;
+  }
+  .hpd-brandbar {
+    min-height: 50px;
+    padding: 7px 14px;
+  }
+  .hpd-brandbar__sub,
+  .hpd-brandbar__name {
+    display: none;
+  }
+  .hpd-brandbar__langs .hp-lang {
+    padding: 5px 9px;
+    font-size: 11px;
+  }
+  .hpd__exclusive {
+    flex-direction: column;
+    gap: 8px;
   }
   .hpd__topbar {
     flex-direction: column;
@@ -628,12 +875,18 @@
   }
   .hpd__doctor {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
+    justify-items: center;
+    text-align: center;
   }
   .hpd__doctor-photo,
   .hpd__doctor-photo--ph {
-    width: 140px;
+    width: 100%;
+    max-width: 260px;
     aspect-ratio: 3 / 4;
+  }
+  .hpd__doctor-info {
+    width: 100%;
   }
   .hpd-gallery__thumb {
     width: 96px;
