@@ -1,7 +1,7 @@
 "use client"
 /* eslint-disable @next/next/no-img-element */
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import {
   TOGGLE_LOCALES,
@@ -9,6 +9,7 @@ import {
   type HospitalI18n,
   type LocaleContent,
   DEPARTMENT_ORDER,
+  toToggleLocale,
 } from "@/lib/hospital-portal"
 
 type UIStrings = {
@@ -46,6 +47,13 @@ function pick(h: HospitalI18n, locale: ToggleLocale): LocaleContent {
 export default function HospitalCatalog({ hospitals }: { hospitals: HospitalI18n[] }) {
   const [locale, setLocale] = useState<ToggleLocale>("ko")
   const [dept, setDept] = useState<string | null>(null)
+
+  // 외부(koreamedguide 등 영문) 유입이 ?lang=en 으로 언어를 고정해 딥링크할 때 초기 언어 반영.
+  // 서버 프리렌더는 ko(정적 유지), 마운트 후 URL 쿼리로 전환 → hydration 안전.
+  useEffect(() => {
+    const loc = toToggleLocale(new URLSearchParams(window.location.search).get("lang"))
+    if (loc) setLocale(loc)
+  }, [])
   const t = UI[locale]
 
   const departments = useMemo(() => {
