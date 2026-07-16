@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BackgroundEffects from "@/components/BackgroundEffects";
-import SystemLabels from "@/components/SystemLabels";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
@@ -244,7 +243,6 @@ export default function OverseasMarketingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <BackgroundEffects />
-      <SystemLabels />
 
       <main className="relative z-10">
         <Header />

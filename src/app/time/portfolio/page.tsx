@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import BackgroundEffects from "@/components/BackgroundEffects";
-import SystemLabels from "@/components/SystemLabels";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
@@ -34,7 +33,6 @@ export default function PortfolioPage() {
   return (
     <>
       <BackgroundEffects />
-      <SystemLabels />
 
       <main className="relative z-10">
         <Header />

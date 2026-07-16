@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { buildOpenGraph } from "@/lib/og";
 import BackgroundEffects from "@/components/BackgroundEffects";
-import SystemLabels from "@/components/SystemLabels";
 import Header from "@/components/Header";
 
 // 루트 그룹 템플릿("%s | PASSION GROUP")을 우회해 열정의시간 단일 브랜딩 유지.
@@ -88,7 +87,6 @@ export default async function Home() {
   return (
     <>
       <BackgroundEffects />
-      <SystemLabels />
 
       <main className="relative z-10">
         <Header />
