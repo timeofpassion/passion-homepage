@@ -7,7 +7,8 @@ export type ClientLogo = { name: string; logo: string; medical?: boolean };
 
 export const clientLogos: ClientLogo[] = [
   { name: "MELLOW", logo: "/clients/logo_mellow.png", medical: true },
-  { name: "오야로피부과", logo: "/clients/logo_oaro.png", medical: true },
+  { name: "오벨피부과 AUVEL", logo: "/clients/logo_auvel.png", medical: true },
+  { name: "오아로피부과", logo: "/clients/logo_oaro.png", medical: true },
   { name: "오체안피부과", logo: "/clients/logo_ozhean.png", medical: true },
   { name: "순수안 피부과", logo: "/clients/logo_soosoan.png", medical: true },
   { name: "별성형외과의원", logo: "/clients/logo_star.png", medical: true },
