@@ -254,3 +254,10 @@
   background: linear-gradient(180deg, #fff, var(--crimson-tint)); }
 .adc-hot .ht { font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.015em; }
 .adc-hot p { font-size: 13px; color: var(--sub); margin: 6px 0 14px; line-height: 1.6; }
+
+/* .adc-home 은 어두운 adc-close 전용(color:#fff)이라 밝은 배경에선 묻힌다.
+   결과 직후 CTA(.adc-hot)·해외 안내(.adc-overseas)는 밝은 배경이므로 대비를 되살린다. */
+.adc-hot .adc-home,
+.adc-overseas .adc-home { border-color: var(--line-2); color: var(--crimson); background: var(--paper); }
+.adc-hot .adc-home:hover,
+.adc-overseas .adc-home:hover { border-color: var(--crimson); background: #fff; }

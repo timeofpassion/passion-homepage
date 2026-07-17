@@ -59,6 +59,12 @@ export async function POST(request: Request) {
         { status: 503 },
       );
     }
+    if (msg === "AI_UNREADABLE") {
+      return NextResponse.json(
+        { error: "문구를 판독하지 못했습니다. 검수되지 않았으니 게시 전 다시 확인해 주세요." },
+        { status: 422 },
+      );
+    }
     console.error("[ad-check] 검수 실패:", error);
     return NextResponse.json(
       { error: "검수 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요." },
