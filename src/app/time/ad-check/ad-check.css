@@ -219,3 +219,38 @@
   .adc-result { animation: none; }
   .adc-btn .spin { animation: none; }
 }
+
+/* ---- 매체 선택 (11호 = 사전심의 대상 판정용) ---- */
+.adc-media { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.adc-media .lb { font-size: 12px; color: var(--muted); font-weight: 600; margin-right: 2px; }
+.adc-mchip { font-size: 12.5px; background: var(--bg); border: 1px solid var(--line); color: var(--sub);
+  padding: 6px 12px; border-radius: 999px; cursor: pointer; font-family: var(--sans); transition: all 0.15s; }
+.adc-mchip:hover:not(:disabled) { border-color: var(--line-2); color: var(--ink); }
+.adc-mchip.on { background: var(--crimson); border-color: var(--crimson); color: #fff; font-weight: 650; }
+.adc-mchip:disabled { opacity: 0.5; cursor: default; }
+
+.adc-media-note { margin-bottom: 18px; border: 1px solid var(--line); background: var(--paper);
+  border-radius: 10px; padding: 11px 14px; font-size: 13px; color: var(--sub); line-height: 1.6; }
+.adc-media-note b { color: var(--ink); }
+.adc-media-note.req { border-color: #ecd9ac; background: var(--amber-bg); color: var(--amber-tx); }
+.adc-media-note.req b { color: var(--amber-tx); }
+
+/* ---- 회색지대: 차단이 아니라 통과조건 안내 ---- */
+.adc-gray { margin-top: 18px; border: 1px solid #cfe6d9; background: var(--green-bg); border-radius: 12px; padding: 15px 17px; }
+.adc-gray .gh { font-size: 13px; font-weight: 750; color: var(--green-tx); margin-bottom: 8px; }
+.adc-gray .gi { font-size: 13px; color: #2c6647; line-height: 1.65; padding-left: 12px; position: relative; margin-top: 5px; }
+.adc-gray .gi::before { content: ""; position: absolute; left: 0; top: 8px; width: 4px; height: 4px;
+  border-radius: 50%; background: var(--green-tx); opacity: 0.6; }
+
+/* ---- 12호 → 해외 채널로 경로 안내 (차단이 아니라 기회) ---- */
+.adc-overseas { margin-top: 18px; border: 1px solid var(--line-2); border-radius: 14px; padding: 19px 21px;
+  background: linear-gradient(180deg, #fffdf8, #fdf8ee); }
+.adc-overseas .oh { font-size: 15px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 8px; }
+.adc-overseas p { font-size: 13.5px; color: var(--sub); line-height: 1.7; margin: 0 0 14px; }
+.adc-overseas b { color: var(--ink); font-weight: 700; }
+
+/* ---- 결과 직후 = 가장 뜨거운 순간 ---- */
+.adc-hot { margin-top: 22px; border: 1.5px solid var(--crimson); border-radius: 14px; padding: 19px 21px;
+  background: linear-gradient(180deg, #fff, var(--crimson-tint)); }
+.adc-hot .ht { font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.015em; }
+.adc-hot p { font-size: 13px; color: var(--sub); margin: 6px 0 14px; line-height: 1.6; }

@@ -1,101 +1,68 @@
 import { NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
-import { runRuleScan } from "@/lib/ad-review/engine";
+import { runAdCheck } from "@/lib/ad-review/engine";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-// 2단 — Claude 문맥판정에 쓰는 규칙 요약(정답 기준을 프롬프트에 주입 → AI가 법을 외워 판단하지 않게 함)
-const RULE_BRIEF = `한국 의료법 광고심의 기준 (판정 근거는 아래에 한정):
-- 제56조2항 3호(과장·거짓): 완치·100%·부작용 없이·영구 등 절대적 효과 단정.
-- 8호(최상급): 최고·유일·1등 등 객관근거 없는 최상급.
-- 13호·27조3항(할인·유인): 비급여 할인·이벤트·선착순·무료. 대상·기간·범위·할인전가격 4종 미명시 시 위반.
-- 2호(치료경험담): 협찬·원고료 등 대가성 + 병원 식별정보가 결합된 후기. 단순 방문후기는 위반 아님.
-- 4호(비교): 다른 의료기관과 비교. 9호(명칭): 학술근거 없는 시술명·자격. 14호(인증): 근거없는 수상·추천.
-- 7호(중요정보 누락): 시술을 다루며 부작용 고지 없음.`;
+// 2026-07-17: 룰베이스(정규식) 1단 + AI 2단(기본 OFF) 구조를 폐기하고 AI 단일 판정으로 교체.
+// 이유 — 정규식은 문맥을 못 읽어 정답지 100건 실측 47%(오탐 19·미탐 15)였고,
+// 무료 사용자에게 가장 나쁜 엔진을 첫인상으로 보여주는 구조였다. AI 판정은 90%(오탐 0·미탐 0).
+// 비용은 검수 1건당 수십원 수준이라, 신뢰를 잃는 대가에 비하면 무시할 수 있다.
 
-interface AiFinding {
-  sentence: string;
-  article: string;
-  reason: string;
-  fix: string;
-  risk: "high" | "medium" | "low";
-}
+// 남용 방지 — IP당 분당 상한 (인스턴스 메모리 기준. 서버리스라 완벽하진 않으나 대량 스크립트는 막는다)
+const RATE_LIMIT = 8;
+const WINDOW_MS = 60_000;
+const hits = new Map<string, number[]>();
 
-// 2단 AI 문맥판정은 Anthropic API 비용이 발생하므로 기본 OFF (무료 서비스 유지).
-// 켜려면 Vercel 환경변수 AD_CHECK_AI_ENABLED=true 설정 (그 전에 레이트리밋·일일 상한 필수).
-const AI_ENABLED = process.env.AD_CHECK_AI_ENABLED === "true";
-
-async function runClaudeJudgment(text: string): Promise<{ findings: AiFinding[]; comment: string } | null> {
-  if (!AI_ENABLED) return null;
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return null;
-
-  try {
-    const anthropic = new Anthropic({ apiKey });
-    const system = `당신은 한국 의료광고 심의 보조 도구입니다. 아래 "기준"에만 근거해 광고 문구의 위반 문장을 판정하세요. 기준에 없는 조항을 지어내지 마세요. 근거가 불명확하면 포함하지 마세요.
-
-${RULE_BRIEF}
-
-룰베이스 키워드 필터가 명백한 표현은 이미 잡았습니다. 당신은 특히 문맥 판단이 필요한 회색지대(대가성 후기, 은근한 과장, 명칭, 비교, 부작용 누락)와 키워드로 놓친 위반을 잡으세요.
-
-출력은 JSON만. 설명·마크다운 금지. 형식:
-{"findings":[{"sentence":"위반 추정 문장 원문","article":"56-2-3","reason":"위반 사유 한 줄","fix":"바로 쓸 수 있는 수정 문안","risk":"high|medium|low"}],"comment":"전체 한 줄 총평"}
-위반이 없으면 {"findings":[],"comment":"..."} 로.`;
-
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1800,
-      system,
-      messages: [{ role: "user", content: `검토 대상 의료광고 문구:\n"""\n${text.slice(0, 8000)}\n"""` }],
-    });
-
-    const textPart = response.content.find((c) => c.type === "text");
-    if (!textPart || textPart.type !== "text") return null;
-    const raw = textPart.text.trim();
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (!match) return null;
-    const parsed = JSON.parse(match[0]) as { findings?: AiFinding[]; comment?: string };
-    const findings = Array.isArray(parsed.findings)
-      ? parsed.findings
-          .filter((f) => f && typeof f.sentence === "string" && f.sentence.trim())
-          .slice(0, 12)
-          .map((f) => ({
-            sentence: String(f.sentence),
-            article: String(f.article ?? ""),
-            reason: String(f.reason ?? ""),
-            fix: String(f.fix ?? ""),
-            risk: (["high", "medium", "low"].includes(f.risk) ? f.risk : "medium") as AiFinding["risk"],
-          }))
-      : [];
-    return { findings, comment: String(parsed.comment ?? "") };
-  } catch (err) {
-    console.error("[ad-check] Claude 판정 실패, 룰베이스로 폴백:", err);
-    return null;
-  }
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const arr = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  arr.push(now);
+  hits.set(ip, arr);
+  if (hits.size > 5000) hits.clear(); // 메모리 폭주 방지
+  return arr.length > RATE_LIMIT;
 }
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as { text?: string };
+    const body = (await request.json()) as { text?: string; media?: string };
     const text = (body.text ?? "").trim();
+    const media = typeof body.media === "string" ? body.media : undefined;
 
-    if (!text) {
-      return NextResponse.json({ error: "검수할 문구를 입력해 주세요." }, { status: 400 });
+    if (text.length < 5) {
+      return NextResponse.json({ error: "검수할 문구를 5자 이상 입력해 주세요." }, { status: 400 });
     }
     if (text.length > 12000) {
       return NextResponse.json({ error: "한 번에 검수 가능한 길이(12,000자)를 초과했습니다." }, { status: 400 });
     }
 
-    // 1단 — 룰베이스 (항상 실행, 즉시)
-    const rule = runRuleScan(text);
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      "unknown";
+    if (rateLimited(ip)) {
+      return NextResponse.json(
+        { error: "요청이 많습니다. 잠시 후 다시 시도해 주세요." },
+        { status: 429 },
+      );
+    }
 
-    // 2단 — Claude 문맥판정 (기본 OFF · 무료 유지)
-    const ai = await runClaudeJudgment(text);
-
-    return NextResponse.json({ rule, ai });
+    const rule = await runAdCheck(text, media);
+    return NextResponse.json({ rule });
   } catch (error) {
+    // 판정 실패를 "안전"으로 위장하지 않는다. 실패는 실패로 알린다.
+    const msg = error instanceof Error ? error.message : "";
+    if (msg === "ANTHROPIC_API_KEY_MISSING") {
+      console.error("[ad-check] ANTHROPIC_API_KEY 미설정");
+      return NextResponse.json(
+        { error: "검수 엔진이 준비되지 않았습니다. 잠시 후 다시 시도해 주세요." },
+        { status: 503 },
+      );
+    }
     console.error("[ad-check] 검수 실패:", error);
-    return NextResponse.json({ error: "검수 처리 중 오류가 발생했습니다." }, { status: 500 });
+    return NextResponse.json(
+      { error: "검수 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요." },
+      { status: 500 },
+    );
   }
 }
