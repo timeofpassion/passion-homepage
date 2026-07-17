@@ -4,20 +4,15 @@ import { useState, type ReactNode } from "react";
 import type { ScanResult, ScanSpan } from "@/lib/ad-review/engine";
 import "./ad-check.css";
 
-interface AiFinding {
-  sentence: string;
-  article: string;
-  reason: string;
-  fix: string;
-  risk: "high" | "medium" | "low";
-}
 interface CheckResponse {
   rule: ScanResult;
-  ai: { findings: AiFinding[]; comment: string } | null;
   error?: string;
 }
 
 const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
+
+/** 매체 — 사전심의 대상 판정(11호)에 쓰인다. 문구만으로는 판정 불가한 절차 조항이라 매체로 본다. */
+const MEDIA = ["블로그", "인스타", "홈페이지", "이벤트배너", "유튜브", "현수막전단"] as const;
 
 const SAMPLE = `강남 최고의 리프팅! 단 한 번 시술로 100% 완벽한 리프팅 효과, 부작용 없이 5년 이상 유지됩니다. 이번 달 선착순 20명 50% 파격 할인 이벤트! 실제 시술받은 후기 보고 결정하세요.`;
 
@@ -32,6 +27,7 @@ function highlight(text: string, spans: ScanSpan[]): ReactNode {
   const nodes: ReactNode[] = [];
   let cursor = 0;
   spans.forEach((s, i) => {
+    if (s.start < cursor) return; // 겹치는 구간은 건너뛴다
     if (s.start > cursor) nodes.push(text.slice(cursor, s.start));
     const cls = s.risk === "high" ? "h" : s.risk === "medium" ? "m" : "g";
     nodes.push(
@@ -47,6 +43,7 @@ function highlight(text: string, spans: ScanSpan[]): ReactNode {
 
 export default function AdCheckPage() {
   const [text, setText] = useState("");
+  const [media, setMedia] = useState<string>("블로그");
   const [submitted, setSubmitted] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<CheckResponse | null>(null);
@@ -54,8 +51,8 @@ export default function AdCheckPage() {
 
   async function handleCheck() {
     const value = text.trim();
-    if (!value) {
-      setError("검수할 문구를 입력해 주세요.");
+    if (value.length < 5) {
+      setError("검수할 문구를 5자 이상 입력해 주세요.");
       return;
     }
     setError("");
@@ -65,7 +62,7 @@ export default function AdCheckPage() {
       const res = await fetch("/api/ad-check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: value }),
+        body: JSON.stringify({ text: value, media }),
       });
       const json = (await res.json()) as CheckResponse;
       if (!res.ok || json.error) {
@@ -82,7 +79,9 @@ export default function AdCheckPage() {
   }
 
   const rule = data?.rule;
-  const ai = data?.ai;
+  // 12호(외국인환자 국내유치)에 걸렸다면 = 해외 환자를 받고 싶은 원장님이다.
+  // 국내 매체엔 못 쓰지만 해외 채널은 별도 규정이고, 그건 우리가 하는 일이다. 차단이 아니라 경로 안내.
+  const hasOverseas = !!rule?.violations.some((v) => v.article === "56-2-12");
 
   return (
     <div className="adc-root">
@@ -123,6 +122,20 @@ export default function AdCheckPage() {
               placeholder="예) 강남 최고의 리프팅! 100% 완벽한 효과, 부작용 없이 5년 유지. 선착순 50% 할인 이벤트..."
               maxLength={12000}
             />
+            <div className="adc-media">
+              <span className="lb">게시할 매체</span>
+              {MEDIA.map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  className={`adc-mchip ${media === m ? "on" : ""}`}
+                  onClick={() => setMedia(m)}
+                  disabled={loading}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
             <div className="adc-actions">
               <button className="adc-btn" onClick={handleCheck} disabled={loading}>
                 {loading ? <><span className="spin" /> 검수 중...</> : "검수하기"}
@@ -155,10 +168,9 @@ export default function AdCheckPage() {
                 <div className="adc-verdict">
                   <b>{rule.riskLabel} — {rule.verdict}</b>
                   <small>
-                    위반 추정 {rule.violations.length}건
+                    지적 {rule.violations.length}건
                     {rule.counts.high > 0 && ` · 위험 ${rule.counts.high}`}
                     {rule.counts.medium > 0 && ` · 주의 ${rule.counts.medium}`}
-                    {rule.counts.gray > 0 && ` · 조건부 ${rule.counts.gray}`}
                   </small>
                 </div>
                 <div className="adc-score">
@@ -167,11 +179,15 @@ export default function AdCheckPage() {
                 </div>
               </div>
 
+              {/* 매체 기반 사전심의 판정 — 11호는 문구가 아니라 매체로 본다 */}
+              <div className={`adc-media-note ${rule.reviewRequired ? "req" : ""}`}>
+                <b>{media}</b> · {rule.mediaNote}
+              </div>
+
               {rule.violations.length > 0 ? (
                 <>
                   <div className="adc-sechead">
-                    <span className="idx">1단</span>
-                    <h3>룰베이스 검수 — 명백한 위반</h3>
+                    <h3>걸린 문장과 수정문안</h3>
                     <span className="tail">붉은 표시 위험 · 노란 표시 조건부</span>
                   </div>
                   {submitted && (
@@ -181,11 +197,11 @@ export default function AdCheckPage() {
                     {rule.violations.map((v) => (
                       <div key={v.id} className={`adc-vcard r-${v.risk}`}>
                         <div className="vtop">
-                          <span className="art">{v.article}</span>
+                          <span className="art">{v.law}</span>
                           <span className="lbl">{v.label}</span>
                           <span className="rtag">{riskWord(v.risk)}</span>
                         </div>
-                        {v.matches.length > 0 ? (
+                        {v.matches.length > 0 && (
                           <div className="quote">
                             {v.matches.map((m, i) => (
                               <span key={i}>
@@ -194,65 +210,74 @@ export default function AdCheckPage() {
                               </span>
                             ))}
                           </div>
-                        ) : (
-                          <div className="reason">{v.reason}</div>
                         )}
-                        {v.matches.length > 0 && <div className="reason">{v.reason}</div>}
+                        {v.reason && <div className="reason">{v.reason}</div>}
                         {v.allowCond && <div className="cond">통과 조건: {v.allowCond}</div>}
-                        <div className="fix">
-                          <div className="fl"><span className="d" /> 수정문안</div>
-                          <div className="ftx">{v.fix}</div>
-                        </div>
+                        {v.fix && (
+                          <div className="fix">
+                            <div className="fl"><span className="d" /> 수정문안</div>
+                            <div className="ftx">{v.fix}</div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
                 </>
               ) : (
-                <div className="adc-empty">명백한 금지 표현은 발견되지 않았습니다. 아래 AI 문맥 판정도 함께 확인하세요.</div>
+                <div className="adc-empty">
+                  의료법 제56조 제2항 위반 요소가 발견되지 않았습니다. 다만 최종 판단은 자율심의기구·전문가 확인이 필요합니다.
+                </div>
               )}
 
-              {/* 2단 — AI 문맥판정 */}
-              {ai && (
-                <>
-                  <div className="adc-sechead">
-                    <span className="idx">2단</span>
-                    <h3>AI 문맥 판정 — 회색지대</h3>
-                    <span className="tail">문맥이 필요한 후기·명칭·은근한 과장</span>
-                  </div>
-                  <div className="adc-ai">
-                    <div className="adc-ai-head">
-                      <span className="g" />
-                      <b>AI 문맥 검토</b>
-                      <small>법 기준에 대조한 결과</small>
-                    </div>
-                    <div className="adc-ai-body">
-                      {ai.comment && <div className="comment">{ai.comment}</div>}
-                      {ai.findings.length > 0 ? (
-                        <div className="adc-cards">
-                          {ai.findings.map((f, i) => (
-                            <div key={i} className={`adc-vcard r-${f.risk === "low" ? "gray" : f.risk}`}>
-                              <div className="vtop">
-                                {f.article && <span className="art">{f.article}</span>}
-                                <span className="lbl">{riskWord(f.risk)}</span>
-                              </div>
-                              <div className="quote"><em>{f.sentence}</em></div>
-                              {f.reason && <div className="reason">{f.reason}</div>}
-                              {f.fix && (
-                                <div className="fix">
-                                  <div className="fl"><span className="d" /> 수정문안</div>
-                                  <div className="ftx">{f.fix}</div>
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="adc-ai-none">문맥상 추가로 발견된 위반은 없습니다.</div>
-                      )}
-                    </div>
-                  </div>
-                </>
+              {/* 회색지대 — 차단이 아니라 통과조건 안내 */}
+              {rule.grayNotes.length > 0 && (
+                <div className="adc-gray">
+                  <div className="gh">이렇게 하면 게시할 수 있습니다</div>
+                  {rule.grayNotes.map((g, i) => (
+                    <div key={i} className="gi">{g}</div>
+                  ))}
+                </div>
               )}
+
+              {rule.missingDisclaimer && (
+                <div className="adc-gray">
+                  <div className="gh">부작용 고지문을 함께 넣으세요</div>
+                  <div className="gi">{rule.standardDisclaimer}</div>
+                </div>
+              )}
+
+              {/* 12호 — 차단이 아니라 해외 채널로 경로를 열어준다 */}
+              {hasOverseas && (
+                <div className="adc-overseas">
+                  <div className="oh">국내 매체에는 쓸 수 없지만, 해외 채널은 다릅니다</div>
+                  <p>
+                    외국인 환자 유치 광고는 <b>국내 매체</b>에 게시할 수 없습니다(제56조 2항 12호).
+                    다만 <b>샤오홍슈·LINE·일본 인스타그램·대만 유튜브 등 해외 채널은 국내 의료광고 심의 대상이 아니라 별도 규정</b>을 따릅니다.
+                    열정의시간은 중국·일본·대만에서 이 채널들을 직접 운영합니다.
+                  </p>
+                  <a className="adc-kakao" href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
+                    해외 환자 유치 상담하기
+                  </a>
+                </div>
+              )}
+
+              {/* 결과 직후 = 가장 뜨거운 순간. 여기에 문의를 붙인다. */}
+              <div className="adc-hot">
+                <div className="ht">
+                  {rule.overallRisk === "high"
+                    ? "이 문장, 심의 통과되게 다시 써드릴까요?"
+                    : rule.overallRisk === "medium"
+                      ? "조건을 어떻게 맞춰야 할지 애매하신가요?"
+                      : "이 원고, 실제로 성과가 나게 다듬어 드릴까요?"}
+                </div>
+                <p>통과되는 원고 작성부터 병원 콘텐츠 운영까지 열정의시간이 대행합니다.</p>
+                <div className="adc-cta">
+                  <a className="adc-kakao" href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
+                    카카오톡으로 문의하기
+                  </a>
+                  <a className="adc-home" href="/time">열정의시간 둘러보기</a>
+                </div>
+              </div>
 
               <div className="adc-disc">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -288,7 +313,7 @@ export default function AdCheckPage() {
         <div className="adc-wrap">
           <div className="co">열정의<span>시간</span></div>
           <div className="fine">
-            의료광고 자가검수 도구는 의료법 제56조·제27조·제57조 및 보건복지부 가이드를 근거로 AI 기반 참고 결과를 제공합니다.
+            의료광고 자가검수 도구는 의료법 제56조·제27조·제57조 및 시행령 제23조를 근거로 AI 기반 참고 결과를 제공합니다.
             법적 효력은 없으며 최종 판단·게시 책임은 게시자에게 있습니다.
           </div>
         </div>
