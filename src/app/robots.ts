@@ -26,12 +26,16 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/"],
+        // "/hospital$" · "/hospital/" 두 줄로 분리: robots 규칙은 접두 매칭이라
+        // "/hospital" 만 쓰면 공개 중인 "/ko/hospitals" 계열까지 함께 막힌다.
+        disallow: ["/api/", "/hospital$", "/hospital/"],
       },
       {
         userAgent: aiBots,
         allow: "/",
-        disallow: ["/api/"],
+        // "/hospital$" · "/hospital/" 두 줄로 분리: robots 규칙은 접두 매칭이라
+        // "/hospital" 만 쓰면 공개 중인 "/ko/hospitals" 계열까지 함께 막힌다.
+        disallow: ["/api/", "/hospital$", "/hospital/"],
       },
     ],
     sitemap: "https://www.timeofpassion.com/sitemap.xml",

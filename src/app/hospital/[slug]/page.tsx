@@ -2,12 +2,14 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getAllHospitals, type HospitalI18n } from "@/lib/hospital-portal"
 import HospitalDetail from "./HospitalDetail"
+import { HOSPITAL_PORTAL_PUBLIC } from "../_visibility"
 import "../../[lang]/hospitals/hospitals.css"
 import "../hospital.css"
 
 export const revalidate = 300
 
 export async function generateStaticParams() {
+  if (!HOSPITAL_PORTAL_PUBLIC) return []
   const { hospitals } = await getAllHospitals()
   return hospitals.map((h) => ({ slug: h.slug }))
 }
@@ -23,6 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
+  if (!HOSPITAL_PORTAL_PUBLIC) return { robots: { index: false, follow: false } }
   const h = await findHospital(slug)
   const ko = h ? (h.translations.ko ?? Object.values(h.translations)[0]) : null
   const name = ko?.name ?? slug
@@ -51,6 +54,7 @@ export default async function HospitalDetailPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
+  if (!HOSPITAL_PORTAL_PUBLIC) notFound()
   const h = await findHospital(slug)
   if (!h) notFound()
   return <HospitalDetail hospital={h} />
