@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { ACTIVE_LOCALES, getHospitals } from "@/lib/hospital-portal";
 import { getAllPosts } from "@/data/blog";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -13,28 +12,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  // 협력병원 포털 — 노출 locale × 병원 전 조합
-  const hospitalEntries: MetadataRoute.Sitemap = (
-    await Promise.all(
-      ACTIVE_LOCALES.map(async (lang) => {
-        const { hospitals } = await getHospitals(lang);
-        return [
-          {
-            url: `${baseUrl}/${lang}/hospitals`,
-            lastModified: new Date(),
-            changeFrequency: "weekly" as const,
-            priority: 0.9,
-          },
-          ...hospitals.map((h) => ({
-            url: `${baseUrl}/${lang}/hospitals/${h.slug}`,
-            lastModified: new Date(),
-            changeFrequency: "monthly" as const,
-            priority: 0.7,
-          })),
-        ];
-      }),
-    )
-  ).flat();
+  // 협력병원 카탈로그(/hospital)는 브로커·에이전시 전용 숨김 공개 페이지 →
+  // 사이트맵에 등재하지 않는다 (2026-07-21 대표 지시). 공개 전환 시 hospitalEntries 복원.
 
   return [
     {
@@ -110,6 +89,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.4,
     },
-    ...hospitalEntries,
   ];
 }
