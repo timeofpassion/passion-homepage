@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* Pretendard — CLAUDE.md §7 절대 원칙. CDN 은 회사망·병원 내부망에서 차단되면
+   맑은고딕으로 폴백되므로 자체 호스팅한다. 가변폰트 1개로 전 weight 커버. */
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+}
+
 @theme inline {
   --color-red-darkest: #0a0000;
   --color-red-base: #5a0000;
