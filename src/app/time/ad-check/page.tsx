@@ -14,6 +14,7 @@ const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 /** 매체 — 사전심의 대상 판정(11호)에 쓰인다. 문구만으로는 판정 불가한 절차 조항이라 매체로 본다. */
 const MEDIA = ["블로그", "인스타", "홈페이지", "이벤트배너", "유튜브", "현수막전단"] as const;
 
+// ai-tells-ignore — 의료광고법 위반 예시 문구. 상투어가 들어 있어야 검수 데모가 성립한다.
 const SAMPLE = `강남 최고의 리프팅! 단 한 번 시술로 100% 완벽한 리프팅 효과, 부작용 없이 5년 이상 유지됩니다. 이번 달 선착순 20명 50% 파격 할인 이벤트! 실제 시술받은 후기 보고 결정하세요.`;
 
 function riskWord(r: "high" | "medium" | "gray" | "low"): string {

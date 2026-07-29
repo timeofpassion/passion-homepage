@@ -3,13 +3,13 @@ import type { ContentPost } from "@/data/blog";
 
 // 카테고리별 자동 썸네일(이미지 없이 코드로 — 브랜드 비주얼). 커버 이미지가 있으면 그걸 우선.
 const THUMB: Record<string, { grad: string; han: string }> = {
-  중국마케팅: { grad: "linear-gradient(135deg,#7a0d0d,#cc0000 55%,#ff5252)", han: "中" },
+  중국마케팅: { grad: "linear-gradient(135deg,#7a0d0d,#E63329 55%,#ff5252)", han: "中" },
   일본마케팅: { grad: "linear-gradient(135deg,#1a1f4b,#3949ab 55%,#7986cb)", han: "日" },
   대만마케팅: { grad: "linear-gradient(135deg,#0d3b34,#0f8b7a 55%,#4dd0c4)", han: "台" },
   해외마케팅: { grad: "linear-gradient(135deg,#5a4500,#caa200 55%,#ffd740)", han: "外" },
   국내마케팅: { grad: "linear-gradient(135deg,#0d3b1f,#1b7a44 55%,#4dd07a)", han: "韓" },
 };
-const DEFAULT_THUMB = { grad: "linear-gradient(135deg,#3a0000,#cc0000)", han: "★" };
+const DEFAULT_THUMB = { grad: "linear-gradient(135deg,#3a0000,#E63329)", han: "★" };
 
 const chipStyle: React.CSSProperties = {
   position: "relative",

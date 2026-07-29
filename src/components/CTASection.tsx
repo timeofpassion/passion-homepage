@@ -31,14 +31,14 @@ export default function CTASection() {
 
         {/* Center badge */}
         <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-          <div style={{ display: "inline-block", position: "relative", padding: "20px 32px", background: "rgba(0,0,0,0.4)", border: "1px solid rgba(204,0,0,0.2)", boxShadow: "0 0 30px rgba(204,0,0,0.1)" }}>
+          <div style={{ display: "inline-block", position: "relative", padding: "20px 32px", background: "rgba(0,0,0,0.4)", border: "1px solid rgba(230,51,41,0.2)", boxShadow: "0 0 30px rgba(230,51,41,0.1)" }}>
             {/* Corner accents */}
-            <div style={{ position: "absolute", top: -1, left: -1, width: 14, height: 14, borderTop: "2px solid #cc0000", borderLeft: "2px solid #cc0000" }} />
-            <div style={{ position: "absolute", top: -1, right: -1, width: 14, height: 14, borderTop: "2px solid #cc0000", borderRight: "2px solid #cc0000" }} />
-            <div style={{ position: "absolute", bottom: -1, left: -1, width: 14, height: 14, borderBottom: "2px solid #cc0000", borderLeft: "2px solid #cc0000" }} />
-            <div style={{ position: "absolute", bottom: -1, right: -1, width: 14, height: 14, borderBottom: "2px solid #cc0000", borderRight: "2px solid #cc0000" }} />
+            <div style={{ position: "absolute", top: -1, left: -1, width: 14, height: 14, borderTop: "2px solid #E63329", borderLeft: "2px solid #E63329" }} />
+            <div style={{ position: "absolute", top: -1, right: -1, width: 14, height: 14, borderTop: "2px solid #E63329", borderRight: "2px solid #E63329" }} />
+            <div style={{ position: "absolute", bottom: -1, left: -1, width: 14, height: 14, borderBottom: "2px solid #E63329", borderLeft: "2px solid #E63329" }} />
+            <div style={{ position: "absolute", bottom: -1, right: -1, width: 14, height: 14, borderBottom: "2px solid #E63329", borderRight: "2px solid #E63329" }} />
             <h3 style={{ fontSize: "clamp(1.2rem, 3vw, 2rem)", fontWeight: 700, position: "relative", zIndex: 10 }}>
-              <span className="text-glow" style={{ color: "#cc0000" }}>열정의시간</span>은<br className="sm:hidden" /> 현재 상황 진단부터 시작합니다.
+              <span className="text-glow" style={{ color: "#E63329" }}>열정의시간</span>은<br className="sm:hidden" /> 현재 상황 진단부터 시작합니다.
             </h3>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function CTASection() {
 
         {/* System message */}
         <div style={{ maxWidth: 650, margin: "0 auto 4rem", textAlign: "center" }}>
-          <div style={{ textAlign: "left", display: "inline-block", borderLeft: "2px solid rgba(204,0,0,0.5)", paddingLeft: 24 }}>
+          <div style={{ textAlign: "left", display: "inline-block", borderLeft: "2px solid rgba(230,51,41,0.5)", paddingLeft: 24 }}>
             <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", fontWeight: 300, marginBottom: 6 }}>
               &ldquo;상담은 부담 없습니다.
             </p>

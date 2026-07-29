@@ -20,7 +20,7 @@ export default function PortfolioCard({
   const hasLive = Boolean(item.liveUrl) && !item.expired;
   const showImage = Boolean(item.thumbnail) && !imgError;
   const isVideo = item.category === "video";
-  const accent = item.accent || "#cc0000";
+  const accent = item.accent || "#E63329";
 
   // 영상 카테고리는 "이미지" 대신 "영상" 배지로 표기(라이브 링크 없으면 미리보기 라이트박스).
   const badge = hasLive
@@ -185,7 +185,7 @@ export default function PortfolioCard({
     margin: 0,
     font: "inherit",
     background: "rgba(255,255,255,0.03)",
-    border: `1px solid ${hover ? "rgba(204,0,0,0.45)" : "rgba(255,255,255,0.08)"}`,
+    border: `1px solid ${hover ? "rgba(230,51,41,0.45)" : "rgba(255,255,255,0.08)"}`,
     borderRadius: 10,
     overflow: "hidden",
     color: "#fff",
@@ -193,7 +193,7 @@ export default function PortfolioCard({
     textDecoration: "none",
     transition: "border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease",
     transform: hover ? "translateY(-4px)" : "translateY(0)",
-    boxShadow: hover ? "0 18px 40px -18px rgba(204,0,0,0.55)" : "none",
+    boxShadow: hover ? "0 18px 40px -18px rgba(230,51,41,0.55)" : "none",
   };
 
   if (hasLive) {

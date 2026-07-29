@@ -49,9 +49,9 @@ export default function PortfolioGallery() {
                   fontSize: "0.95rem",
                   fontWeight: 700,
                   cursor: "pointer",
-                  background: isActive ? "#cc0000" : "rgba(255,255,255,0.04)",
+                  background: isActive ? "#E63329" : "rgba(255,255,255,0.04)",
                   color: isActive ? "#fff" : "rgba(255,255,255,0.7)",
-                  border: `1px solid ${isActive ? "#cc0000" : "rgba(255,255,255,0.12)"}`,
+                  border: `1px solid ${isActive ? "#E63329" : "rgba(255,255,255,0.12)"}`,
                   transition: "all 0.2s",
                 }}
               >
@@ -95,7 +95,7 @@ export default function PortfolioGallery() {
                       ? "#fff"
                       : "rgba(255,255,255,0.55)",
                   border: `1px solid ${
-                    isActive ? "rgba(204,0,0,0.6)" : "rgba(255,255,255,0.08)"
+                    isActive ? "rgba(230,51,41,0.6)" : "rgba(255,255,255,0.08)"
                   }`,
                   transition: "all 0.2s",
                 }}

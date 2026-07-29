@@ -64,7 +64,7 @@ export default function QuoteReviewPage() {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#fafafa", flexDirection: "column", gap: 16 }}>
         <p style={{ color: "#666", fontSize: "1.1rem" }}>{error || "견적을 찾을 수 없습니다."}</p>
-        <Link href="/" style={{ color: "#cc0000", fontSize: "0.9rem" }}>홈으로 돌아가기</Link>
+        <Link href="/" style={{ color: "#E63329", fontSize: "0.9rem" }}>홈으로 돌아가기</Link>
       </div>
     );
   }

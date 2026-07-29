@@ -46,7 +46,7 @@ export async function generateQuotePDF(
 
     // ── Divider ──
     const divY = doc.y;
-    doc.moveTo(50, divY).lineTo(50 + W, divY).stroke("#cc0000");
+    doc.moveTo(50, divY).lineTo(50 + W, divY).stroke("#E63329");
     doc.moveDown(1);
 
     // ── Campaign info ──

@@ -64,7 +64,6 @@ export default function HeroSection() {
           position: "relative",
           zIndex: 1,
           animationDelay: "0.07s",
-          filter: "drop-shadow(0 0 24px rgba(204,0,0,0.45))",
         }}
       />
 
@@ -83,7 +82,7 @@ export default function HeroSection() {
       >
         병원 마케팅,
         <br />
-        <span style={{ background: "#cc0000", color: "#ffffff", padding: "0.05em 0.25em" }}>
+        <span style={{ background: "#E63329", color: "#ffffff", padding: "0.05em 0.25em" }}>
           광고비
         </span>
         만 쓰고
@@ -95,10 +94,10 @@ export default function HeroSection() {
         className="hero-anim"
         style={{
           fontSize: "clamp(1rem, 2vw, 1.2rem)",
-          color: "rgba(255,255,255,0.78)",
+          color: "rgba(255,255,255,0.86)",
           maxWidth: 620,
           lineHeight: 1.7,
-          fontWeight: 300,
+          fontWeight: 400,
           position: "relative",
           zIndex: 1,
           animationDelay: "0.2s",
@@ -113,10 +112,10 @@ export default function HeroSection() {
         className="hero-anim"
         style={{
           fontSize: "clamp(0.9rem, 1.6vw, 1.05rem)",
-          color: "rgba(255,255,255,0.45)",
+          color: "rgba(255,255,255,0.62)",
           maxWidth: 620,
           lineHeight: 1.7,
-          fontWeight: 300,
+          fontWeight: 400,
           marginTop: "1.1rem",
           position: "relative",
           zIndex: 1,
