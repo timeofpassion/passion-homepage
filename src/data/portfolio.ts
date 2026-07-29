@@ -408,7 +408,7 @@ export const portfolioItems: PortfolioItem[] = [
     liveUrl: "https://www.youtube.com/@glass_skin_project",
     tags: ["다큐멘터리", "의료", "유튜브"],
     featured: true,
-    accent: "#cc0000",
+    accent: "#E63329",
   },
   {
     id: "vid-letmei",

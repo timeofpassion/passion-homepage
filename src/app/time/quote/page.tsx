@@ -310,14 +310,14 @@ export default function QuotePage() {
               width: 64,
               height: 64,
               borderRadius: "50%",
-              background: "rgba(204,0,0,0.1)",
-              border: "2px solid #cc0000",
+              background: "rgba(230,51,41,0.1)",
+              border: "2px solid #E63329",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               margin: "0 auto 24px",
               fontSize: 28,
-              color: "#cc0000",
+              color: "#E63329",
             }}
           >
             ✓
@@ -353,7 +353,7 @@ export default function QuotePage() {
               display: "inline-block",
               padding: "14px 32px",
               background: "#1a0000",
-              border: "1px solid rgba(204,0,0,0.4)",
+              border: "1px solid rgba(230,51,41,0.4)",
               color: "#fff",
               textDecoration: "none",
               fontWeight: 700,
@@ -442,7 +442,7 @@ export default function QuotePage() {
             style={{
               fontSize: 11,
               letterSpacing: "0.2em",
-              color: "#cc0000",
+              color: "#E63329",
               marginBottom: 16,
             }}
           >
@@ -472,8 +472,8 @@ export default function QuotePage() {
         <div
           style={{
             marginBottom: "2.4rem",
-            border: "1px solid rgba(204,0,0,0.4)",
-            background: "linear-gradient(180deg, rgba(204,0,0,0.09), rgba(255,255,255,0.02))",
+            border: "1px solid rgba(230,51,41,0.4)",
+            background: "linear-gradient(180deg, rgba(230,51,41,0.09), rgba(255,255,255,0.02))",
             padding: "1.6rem",
           }}
         >
@@ -512,7 +512,7 @@ export default function QuotePage() {
             type="button"
             onClick={askAssistant}
             disabled={assisting || !assistText.trim()}
-            style={{ background: "#cc0000", color: "#fff", border: "none", padding: "12px 24px", fontWeight: 800, fontSize: "0.9rem", cursor: assisting || !assistText.trim() ? "default" : "pointer", opacity: assisting || !assistText.trim() ? 0.5 : 1 }}
+            style={{ background: "#E63329", color: "#fff", border: "none", padding: "12px 24px", fontWeight: 800, fontSize: "0.9rem", cursor: assisting || !assistText.trim() ? "default" : "pointer", opacity: assisting || !assistText.trim() ? 0.5 : 1 }}
           >
             {assisting ? "AI가 견적 짜는 중…" : "✦ AI 견적 받기"}
           </button>
@@ -529,7 +529,7 @@ export default function QuotePage() {
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     {assistResult.items.map((it, i) => (
                       <div key={it.id} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                        <span style={{ color: "#cc0000", fontWeight: 800, fontSize: "0.8rem", marginTop: 2 }}>{i + 1}</span>
+                        <span style={{ color: "#E63329", fontWeight: 800, fontSize: "0.8rem", marginTop: 2 }}>{i + 1}</span>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontWeight: 700, fontSize: "0.9rem" }}>{it.name}</div>
                           {it.reason && <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.78rem", marginTop: 2 }}>{it.reason}</div>}
@@ -552,7 +552,7 @@ export default function QuotePage() {
                       {assistResult.suggestions.map((s) => (
                         <div key={s.id} style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 6, fontSize: "0.78rem", color: "rgba(255,255,255,0.6)" }}>
                           <span style={{ flex: 1 }}>필요시 추가 · <b style={{ color: "#fff" }}>{s.name}</b> ({s.price ? format(s.lineTotal) + "원" : "별도문의"}) — {s.reason}</span>
-                          <button type="button" onClick={() => addSuggestion(s.id)} style={{ fontSize: "0.72rem", color: "#ff8a8a", border: "1px solid rgba(204,0,0,0.4)", background: "rgba(204,0,0,0.1)", padding: "3px 9px", borderRadius: 999, cursor: "pointer", whiteSpace: "nowrap" }}>담기</button>
+                          <button type="button" onClick={() => addSuggestion(s.id)} style={{ fontSize: "0.72rem", color: "#ff8a8a", border: "1px solid rgba(230,51,41,0.4)", background: "rgba(230,51,41,0.1)", padding: "3px 9px", borderRadius: 999, cursor: "pointer", whiteSpace: "nowrap" }}>담기</button>
                         </div>
                       ))}
                     </div>
@@ -586,7 +586,7 @@ export default function QuotePage() {
               gap: 8,
             }}
           >
-            <span style={{ color: "#cc0000" }}>01</span> 서비스 선택
+            <span style={{ color: "#E63329" }}>01</span> 서비스 선택
           </h2>
 
           {!loading && products.length > 0 && (
@@ -627,9 +627,9 @@ export default function QuotePage() {
                           padding: "7px 14px",
                           borderRadius: 999,
                           cursor: "pointer",
-                          background: active ? "#cc0000" : "rgba(255,255,255,0.03)",
+                          background: active ? "#E63329" : "rgba(255,255,255,0.03)",
                           color: active ? "#fff" : "rgba(255,255,255,0.6)",
-                          border: `1px solid ${active ? "#cc0000" : "rgba(255,255,255,0.12)"}`,
+                          border: `1px solid ${active ? "#E63329" : "rgba(255,255,255,0.12)"}`,
                         }}
                       >
                         {label}
@@ -655,9 +655,9 @@ export default function QuotePage() {
                             padding: "5px 11px",
                             borderRadius: 999,
                             cursor: "pointer",
-                            background: active ? "rgba(204,0,0,0.85)" : "rgba(255,255,255,0.02)",
+                            background: active ? "rgba(230,51,41,0.85)" : "rgba(255,255,255,0.02)",
                             color: active ? "#fff" : "rgba(255,255,255,0.5)",
-                            border: `1px solid ${active ? "rgba(204,0,0,0.6)" : "rgba(255,255,255,0.09)"}`,
+                            border: `1px solid ${active ? "rgba(230,51,41,0.6)" : "rgba(255,255,255,0.09)"}`,
                           }}
                         >
                           {label}
@@ -740,11 +740,11 @@ export default function QuotePage() {
                         gap: 14,
                         padding: "14px 18px",
                         background: selected.has(p.id)
-                          ? "rgba(204,0,0,0.08)"
+                          ? "rgba(230,51,41,0.08)"
                           : "rgba(255,255,255,0.02)",
                         border: `1px solid ${
                           selected.has(p.id)
-                            ? "rgba(204,0,0,0.3)"
+                            ? "rgba(230,51,41,0.3)"
                             : "rgba(255,255,255,0.08)"
                         }`,
                         cursor: "pointer",
@@ -755,7 +755,7 @@ export default function QuotePage() {
                         type="checkbox"
                         checked={selected.has(p.id)}
                         onChange={() => toggleProduct(p.id)}
-                        style={{ accentColor: "#cc0000", width: 16, height: 16 }}
+                        style={{ accentColor: "#E63329", width: 16, height: 16 }}
                       />
                       <div style={{ flex: 1 }}>
                         <div style={{ fontWeight: 600, fontSize: "0.95rem" }}>
@@ -786,7 +786,7 @@ export default function QuotePage() {
                             color: "#ff8a8a",
                             background: "none",
                             border: "none",
-                            borderBottom: "1px solid rgba(204,0,0,0.4)",
+                            borderBottom: "1px solid rgba(230,51,41,0.4)",
                             padding: "0 0 1px",
                             cursor: "pointer",
                           }}
@@ -837,8 +837,8 @@ export default function QuotePage() {
           <div
             style={{
               padding: "1.5rem 2rem",
-              background: "rgba(204,0,0,0.04)",
-              border: "1px solid rgba(204,0,0,0.2)",
+              background: "rgba(230,51,41,0.04)",
+              border: "1px solid rgba(230,51,41,0.2)",
               marginBottom: "3rem",
             }}
           >
@@ -904,7 +904,7 @@ export default function QuotePage() {
               }}
             >
               <span>총 견적 금액</span>
-              <span style={{ color: "#cc0000" }}>{format(total)}원</span>
+              <span style={{ color: "#E63329" }}>{format(total)}원</span>
             </div>
           </div>
         )}
@@ -921,7 +921,7 @@ export default function QuotePage() {
               gap: 8,
             }}
           >
-            <span style={{ color: "#cc0000" }}>02</span> 고객 정보
+            <span style={{ color: "#E63329" }}>02</span> 고객 정보
           </h2>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -1040,7 +1040,7 @@ export default function QuotePage() {
           style={{
             width: "100%",
             padding: "18px",
-            background: submitting ? "rgba(204,0,0,0.3)" : "#cc0000",
+            background: submitting ? "rgba(230,51,41,0.3)" : "#E63329",
             border: "none",
             color: "#fff",
             fontSize: "1.05rem",
@@ -1134,7 +1134,7 @@ export default function QuotePage() {
                   {detail.features.length > 0 && (
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 14 }}>
                       {detail.features.map((f, i) => (
-                        <span key={i} style={{ fontSize: "0.72rem", fontWeight: 600, color: "#ff8a8a", background: "rgba(204,0,0,0.1)", border: "1px solid rgba(204,0,0,0.3)", padding: "4px 10px", borderRadius: 999 }}>{f}</span>
+                        <span key={i} style={{ fontSize: "0.72rem", fontWeight: 600, color: "#ff8a8a", background: "rgba(230,51,41,0.1)", border: "1px solid rgba(230,51,41,0.3)", padding: "4px 10px", borderRadius: 999 }}>{f}</span>
                       ))}
                     </div>
                   )}
@@ -1199,7 +1199,7 @@ export default function QuotePage() {
                     <button
                       type="button"
                       onClick={() => { setSelected((prev) => new Set(prev).add(detail.id)); closeDetail(); }}
-                      style={{ flex: 1, padding: "13px", background: "#cc0000", border: "none", color: "#fff", fontWeight: 700, fontSize: "0.92rem", cursor: "pointer", borderRadius: 4 }}
+                      style={{ flex: 1, padding: "13px", background: "#E63329", border: "none", color: "#fff", fontWeight: 700, fontSize: "0.92rem", cursor: "pointer", borderRadius: 4 }}
                     >
                       이 서비스 담기
                     </button>

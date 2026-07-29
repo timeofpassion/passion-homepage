@@ -50,7 +50,7 @@ export default function PortfolioPage() {
           <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>
             <p
               className="font-mono-sys"
-              style={{ color: "#cc0000", fontSize: "0.8rem", letterSpacing: "0.15em", marginBottom: 16 }}
+              style={{ color: "#E63329", fontSize: "0.8rem", letterSpacing: "0.15em", marginBottom: 16 }}
             >
               OUR WORK
             </p>

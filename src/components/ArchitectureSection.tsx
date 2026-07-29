@@ -26,7 +26,7 @@ export default function ArchitectureSection() {
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, lineHeight: 1.2, marginBottom: 40 }}>
             한 곳에서 국내부터
             <br />
-            <span style={{ borderBottom: "2px solid #cc0000", paddingBottom: 4 }}>
+            <span style={{ borderBottom: "2px solid #E63329", paddingBottom: 4 }}>
               일본·중국·대만까지
             </span>{" "}
             됩니다.
@@ -52,21 +52,21 @@ export default function ArchitectureSection() {
 
         {/* Divider */}
         <div style={{ display: "flex", alignItems: "center", margin: "4rem 0", opacity: 0.9 }}>
-          <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, transparent, rgba(204,0,0,0.4), transparent)" }} />
+          <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, transparent, rgba(230,51,41,0.4), transparent)" }} />
           <div
             style={{
               padding: "12px 28px",
               background: "#0a0000",
-              border: "1px solid rgba(204,0,0,0.3)",
+              border: "1px solid rgba(230,51,41,0.3)",
               fontWeight: 700,
               fontSize: "clamp(1rem, 2.5vw, 1.4rem)",
-              boxShadow: "0 0 30px rgba(204,0,0,0.15)",
+              boxShadow: "0 0 30px rgba(230,51,41,0.15)",
               whiteSpace: "nowrap",
             }}
           >
             열정의시간은 다릅니다
           </div>
-          <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, transparent, rgba(204,0,0,0.4), transparent)" }} />
+          <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, transparent, rgba(230,51,41,0.4), transparent)" }} />
         </div>
 
         {/* Org Chart */}
@@ -85,8 +85,8 @@ export default function ArchitectureSection() {
 
           {/* Quote */}
           <div style={{ position: "relative", display: "inline-block", padding: "2.5rem 3rem" }}>
-            <div style={{ position: "absolute", top: 0, left: 0, width: 28, height: 28, borderTop: "2px solid rgba(204,0,0,0.6)", borderLeft: "2px solid rgba(204,0,0,0.6)" }} />
-            <div style={{ position: "absolute", bottom: 0, right: 0, width: 28, height: 28, borderBottom: "2px solid rgba(204,0,0,0.6)", borderRight: "2px solid rgba(204,0,0,0.6)" }} />
+            <div style={{ position: "absolute", top: 0, left: 0, width: 28, height: 28, borderTop: "2px solid rgba(230,51,41,0.6)", borderLeft: "2px solid rgba(230,51,41,0.6)" }} />
+            <div style={{ position: "absolute", bottom: 0, right: 0, width: 28, height: 28, borderBottom: "2px solid rgba(230,51,41,0.6)", borderRight: "2px solid rgba(230,51,41,0.6)" }} />
             <blockquote className="text-glow" style={{ fontSize: "clamp(1.3rem, 3vw, 2.2rem)", fontWeight: 900, lineHeight: 1.3 }}>
               &ldquo;국내 마케팅이 깔리고,
               <br />
@@ -98,7 +98,7 @@ export default function ArchitectureSection() {
             <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", fontWeight: 300 }}>
               이 구조를 갖춘 마케팅 에이전시,
               <br />
-              <span style={{ fontWeight: 700, color: "#fff", borderBottom: "1px solid #cc0000", paddingBottom: 2 }}>
+              <span style={{ fontWeight: 700, color: "#fff", borderBottom: "1px solid #E63329", paddingBottom: 2 }}>
                 국내에서 흔하지 않습니다.
               </span>
             </p>

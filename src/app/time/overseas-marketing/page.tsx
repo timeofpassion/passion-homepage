@@ -261,7 +261,7 @@ export default function OverseasMarketingPage() {
             <p
               className="font-mono-sys"
               style={{
-                color: "#cc0000",
+                color: "#E63329",
                 fontSize: "0.8rem",
                 letterSpacing: "0.15em",
                 marginBottom: 16,
@@ -297,7 +297,7 @@ export default function OverseasMarketingPage() {
               className="font-mono-sys"
               style={{
                 display: "inline-block",
-                border: "1px solid rgba(204,0,0,0.5)",
+                border: "1px solid rgba(230,51,41,0.5)",
                 borderRadius: 999,
                 padding: "0.5rem 1.1rem",
                 fontSize: "0.78rem",
@@ -314,7 +314,7 @@ export default function OverseasMarketingPage() {
                 rel="noopener noreferrer"
                 style={{
                   display: "inline-block",
-                  background: "#cc0000",
+                  background: "#E63329",
                   color: "#fff",
                   fontWeight: 800,
                   padding: "0.9rem 1.6rem",
@@ -341,7 +341,7 @@ export default function OverseasMarketingPage() {
             <p
               className="font-mono-sys"
               style={{
-                color: "#cc0000",
+                color: "#E63329",
                 fontSize: "0.8rem",
                 letterSpacing: "0.15em",
                 marginBottom: 12,
@@ -429,7 +429,7 @@ export default function OverseasMarketingPage() {
             <p
               className="font-mono-sys"
               style={{
-                color: "#cc0000",
+                color: "#E63329",
                 fontSize: "0.8rem",
                 letterSpacing: "0.15em",
                 marginBottom: 12,
@@ -486,7 +486,7 @@ export default function OverseasMarketingPage() {
             <p
               className="font-mono-sys"
               style={{
-                color: "#cc0000",
+                color: "#E63329",
                 fontSize: "0.8rem",
                 letterSpacing: "0.15em",
                 marginBottom: 12,
@@ -516,7 +516,7 @@ export default function OverseasMarketingPage() {
                   <div
                     className="font-mono-sys"
                     style={{
-                      color: "#cc0000",
+                      color: "#E63329",
                       fontSize: "0.8rem",
                       fontWeight: 800,
                       marginBottom: "0.5rem",
@@ -595,7 +595,7 @@ export default function OverseasMarketingPage() {
               rel="noopener noreferrer"
               style={{
                 display: "inline-block",
-                background: "#cc0000",
+                background: "#E63329",
                 color: "#fff",
                 fontWeight: 800,
                 padding: "0.9rem 1.8rem",

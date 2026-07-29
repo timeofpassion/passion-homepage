@@ -15,7 +15,7 @@ function Stars() {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: 14 }}>
       {Array.from({ length: 5 }).map((_, s) => (
-        <svg key={s} width="14" height="14" viewBox="0 0 24 24" fill="#cc0000" aria-hidden="true">
+        <svg key={s} width="14" height="14" viewBox="0 0 24 24" fill="#E63329" aria-hidden="true">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
       ))}
@@ -53,7 +53,7 @@ export const TestimonialsColumn = (props: {
                   borderRadius: 16,
                   background: "rgba(255,255,255,0.025)",
                   border: "1px solid rgba(255,255,255,0.1)",
-                  boxShadow: "0 14px 36px -16px rgba(204,0,0,0.18)",
+                  boxShadow: "0 14px 36px -16px rgba(230,51,41,0.18)",
                 }}
               >
                 <Stars />

@@ -53,7 +53,7 @@ function buildQuoteEmail(params: {
 
         <!-- Header -->
         <tr>
-          <td style="background:#cc0000;padding:28px 36px;">
+          <td style="background:#E63329;padding:28px 36px;">
             <p style="margin:0;font-size:11px;letter-spacing:0.2em;color:rgba(255,255,255,0.6);">QUOTE REQUEST</p>
             <h1 style="margin:8px 0 0;font-size:24px;font-weight:900;color:#fff;">견적서</h1>
           </td>
@@ -107,7 +107,7 @@ function buildQuoteEmail(params: {
               </tr>
               <tr>
                 <td style="color:#fff;font-size:18px;font-weight:900;padding-top:12px;border-top:1px solid #3a0000;">총 견적 금액</td>
-                <td style="color:#cc0000;font-size:18px;font-weight:900;text-align:right;padding-top:12px;border-top:1px solid #3a0000;">${format(total)}원</td>
+                <td style="color:#E63329;font-size:18px;font-weight:900;text-align:right;padding-top:12px;border-top:1px solid #3a0000;">${format(total)}원</td>
               </tr>
             </table>
           </td>
@@ -116,7 +116,7 @@ function buildQuoteEmail(params: {
         <!-- CTA -->
         <tr>
           <td style="padding:28px 36px;text-align:center;">
-            <a href="${reviewUrl}" style="display:inline-block;padding:14px 32px;background:#cc0000;color:#fff;text-decoration:none;font-weight:700;font-size:15px;">
+            <a href="${reviewUrl}" style="display:inline-block;padding:14px 32px;background:#E63329;color:#fff;text-decoration:none;font-weight:700;font-size:15px;">
               견적서 온라인으로 확인하기 →
             </a>
             <p style="margin:20px 0 0;font-size:12px;color:rgba(255,255,255,0.3);">

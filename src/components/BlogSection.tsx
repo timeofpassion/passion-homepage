@@ -59,7 +59,7 @@ export default function BlogSection() {
                 borderRadius: 6,
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(204,0,0,0.3)";
+                e.currentTarget.style.borderColor = "rgba(230,51,41,0.3)";
                 e.currentTarget.style.transform = "translateY(-2px)";
               }}
               onMouseLeave={(e) => {
@@ -68,7 +68,7 @@ export default function BlogSection() {
               }}
             >
               {/* Thumbnail */}
-              <div style={{ width: "100%", aspectRatio: "1/1", overflow: "hidden", background: "rgba(204,0,0,0.08)" }}>
+              <div style={{ width: "100%", aspectRatio: "1/1", overflow: "hidden", background: "rgba(230,51,41,0.08)" }}>
                 {post.thumbnail ? (
                   <img
                     src={post.thumbnail}
