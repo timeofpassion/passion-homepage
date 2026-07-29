@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     template: "%s | PASSION GROUP",
   },
   description:
-    "PASSION GROUP — 열정으로 시간·사람·공간을 잇습니다. 열정의시간(국내·해외 병의원 전문마케팅), 열정의사람들(글로벌·인플루언서 마케팅), 열정의공간(공간 비즈니스).",
+    "일본·중국·대만 환자를 노출이 아니라 내원까지. 현지어 전담팀을 직접 운영하는 10년차 병의원 전문마케팅 열정의시간, 글로벌 인플루언서 마케팅 열정의사람들, 공간 비즈니스 열정의공간 — PASSION GROUP.",
   openGraph: {
     title: "PASSION GROUP | 열정의시간 · 열정의사람들 · 열정의공간",
     description:
-      "열정으로 시간·사람·공간을 잇습니다. 병의원 전문마케팅 열정의시간, 글로벌·인플루언서 마케팅 열정의사람들, 공간 비즈니스 열정의공간.",
+      "일본·중국·대만 환자를 노출이 아니라 내원까지. 현지어 전담팀을 직접 운영하는 병의원 전문마케팅 그룹 — 열정의시간 · 열정의사람들 · 열정의공간.",
     url: "https://www.timeofpassion.com",
     siteName: "PASSION GROUP",
     locale: "ko_KR",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "PASSION GROUP",
     description:
-      "열정으로 시간·사람·공간을 잇습니다. 열정의시간 · 열정의사람들 · 열정의공간.",
+      "일본·중국·대만 환자를 노출이 아니라 내원까지. 현지 전담팀을 직접 운영하는 병의원 전문마케팅 PASSION GROUP.",
     images: ["/og-passion-v2.jpg"],
   },
   robots: {
@@ -76,7 +76,7 @@ const jsonLd = {
       alternateName: "열정 그룹",
       url: "https://www.timeofpassion.com",
       description:
-        "열정으로 시간·사람·공간을 잇는 그룹. 열정의시간·열정의사람들·열정의공간으로 구성됩니다.",
+        "국내·해외 병의원 전문마케팅 열정의시간, 글로벌 인플루언서 마케팅 열정의사람들, 공간 비즈니스 열정의공간으로 구성된 그룹. 일본·중국·대만 현지어 전담팀을 직접 운영해 해외환자 유치를 상담부터 내원까지 실행합니다.",
       sameAs: ["https://pf.kakao.com/_RgYcxj"],
       subOrganization: [
         {

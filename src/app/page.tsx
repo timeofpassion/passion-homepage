@@ -15,7 +15,7 @@ export async function generateMetadata({
       {
         title: "PASSION GROUP | 열정의시간 · 열정의사람들 · 열정의공간",
         description:
-          "열정으로 시간·사람·공간을 잇습니다. 병의원 전문마케팅 열정의시간, 글로벌·인플루언서 마케팅 열정의사람들, 공간 비즈니스 열정의공간.",
+          "일본·중국·대만 환자를 노출이 아니라 내원까지. 현지어 전담팀을 직접 운영하는 병의원 전문마케팅 그룹 — 열정의시간 · 열정의사람들 · 열정의공간.",
         siteName: "PASSION GROUP",
         locale: "ko_KR",
         type: "website",
