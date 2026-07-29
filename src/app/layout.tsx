@@ -120,10 +120,13 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${jetbrainsMono.variable}`}>
       <head>
+        {/* Pretendard — 자체 호스팅(globals.css @font-face) + preload 로 외부 CDN 의존 제거 */}
         <link
-          rel="stylesheet"
+          rel="preload"
+          href="/fonts/PretendardVariable.woff2"
+          as="font"
+          type="font/woff2"
           crossOrigin="anonymous"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
         <script
           type="application/ld+json"
