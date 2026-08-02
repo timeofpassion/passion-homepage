@@ -301,7 +301,9 @@ export default function AdCheckPage() {
                       : "이 원고, 실제로 성과가 나게 다듬어 드릴까요?"}
                 </div>
                 <p>통과되는 원고 작성부터 병원 콘텐츠 운영까지 열정의시간이 대행합니다.</p>
-                {leadSummary && (
+                {/* 12호가 걸렸으면 바로 위에 해외 채널 상담 폼이 이미 떠 있다.
+                    폼을 세 개 연달아 세우면 아무것도 안 채운다. 하나만 남긴다. */}
+                {leadSummary && !hasOverseas && (
                   <LeadForm variant="review" summary={leadSummary} sourceText={submitted} />
                 )}
                 <div className="adc-cta" style={{ marginTop: 12 }}>
