@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import type { ScanResult, ScanSpan } from "@/lib/ad-review/engine";
+import LeadForm from "./LeadForm";
 import "./ad-check.css";
 
 interface CheckResponse {
@@ -84,6 +85,18 @@ export default function AdCheckPage() {
   // 국내 매체엔 못 쓰지만 해외 채널은 별도 규정이고, 그건 우리가 하는 일이다. 차단이 아니라 경로 안내.
   const hasOverseas = !!rule?.violations.some((v) => v.article === "56-2-12");
 
+  // 리드 폼에 실어 보내는 값 — 원문이 아니라 판정 메타만이다.
+  // 페이지에 "입력한 문구는 저장되지 않습니다"라고 써놨고, 그 약속을 여기서 깨지 않는다.
+  const leadSummary = rule
+    ? {
+        media,
+        risk: rule.overallRisk,
+        riskLabel: rule.riskLabel,
+        violationCount: rule.violations.length,
+        articles: rule.violations.map((v) => v.law),
+      }
+    : null;
+
   return (
     <div className="adc-root">
       {/* HERO */}
@@ -105,6 +118,11 @@ export default function AdCheckPage() {
             <span className="adc-chip"><span className="k k-amber" /> 주의 · 조건 충족 시 통과</span>
             <span className="adc-chip"><span className="k k-green" /> 안전 · 명백한 위반 없음</span>
           </div>
+          {/* 검수하면 자료도 드린다는 걸 처음부터 알려둔다. 결과 화면에서 처음 보면 갑작스럽다. */}
+          <p className="adc-bait">
+            검수를 마치면 <b>의료광고 위반문구 대조표 12쪽</b>을 무료로 보내드립니다 —
+            14개 금지유형 위반→수정 대조, 금지어가 들어 있어도 정상인 문장 20선, 게시 전 체크리스트.
+          </p>
         </div>
       </div>
 
@@ -256,13 +274,24 @@ export default function AdCheckPage() {
                     다만 <b>샤오홍슈·LINE·일본 인스타그램·대만 유튜브 등 해외 채널은 국내 의료광고 심의 대상이 아니라 별도 규정</b>을 따릅니다.
                     열정의시간은 중국·일본·대만에서 이 채널들을 직접 운영합니다.
                   </p>
-                  <a className="adc-kakao" href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
-                    해외 환자 유치 상담하기
-                  </a>
+                  {leadSummary && (
+                    <LeadForm variant="overseas" summary={leadSummary} />
+                  )}
+                  <div className="adc-cta" style={{ marginTop: 12 }}>
+                    <a className="adc-kakao" href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
+                      카카오톡으로 바로 물어보기
+                    </a>
+                  </div>
                 </div>
               )}
 
-              {/* 결과 직후 = 가장 뜨거운 순간. 여기에 문의를 붙인다. */}
+              {/* ① 마찰이 가장 낮은 손내밀기 — 위험도와 무관하게 항상 연다.
+                  검수만 해주고 보내면 이 사람이 누구였는지 우리에겐 아무것도 안 남는다. */}
+              {leadSummary && (
+                <LeadForm variant="pdf" summary={leadSummary} />
+              )}
+
+              {/* ② 결과 직후 = 가장 뜨거운 순간. 여기에 문의를 붙인다. */}
               <div className="adc-hot">
                 <div className="ht">
                   {rule.overallRisk === "high"
@@ -272,7 +301,10 @@ export default function AdCheckPage() {
                       : "이 원고, 실제로 성과가 나게 다듬어 드릴까요?"}
                 </div>
                 <p>통과되는 원고 작성부터 병원 콘텐츠 운영까지 열정의시간이 대행합니다.</p>
-                <div className="adc-cta">
+                {leadSummary && (
+                  <LeadForm variant="review" summary={leadSummary} sourceText={submitted} />
+                )}
+                <div className="adc-cta" style={{ marginTop: 12 }}>
                   <a className="adc-kakao" href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
                     카카오톡으로 문의하기
                   </a>

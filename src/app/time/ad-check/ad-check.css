@@ -262,3 +262,59 @@
 .adc-overseas .adc-home { border-color: var(--line-2); color: var(--crimson); background: var(--paper); }
 .adc-hot .adc-home:hover,
 .adc-overseas .adc-home:hover { border-color: var(--crimson); background: #fff; }
+
+/* ---- 리드 폼: 검수 결과 직후의 손내밀기 ----
+   봉사로 끝나던 도구에 대화를 여는 지점을 만든다.
+   결과 카드들과 같은 종이 위에 있어야 하므로 광고 배너처럼 튀지 않게 한다. */
+.adc-lead { margin-top: 18px; border: 1px solid var(--line-2); border-radius: 14px;
+  padding: 19px 21px; background: linear-gradient(180deg, #fffdf8, var(--paper)); }
+.adc-lead.v-review, .adc-lead.v-overseas { margin-top: 14px; background: var(--paper); }
+
+.adc-lead .ld-eye { display: inline-block; font-size: 10.5px; font-weight: 750; letter-spacing: 0.16em;
+  color: var(--crimson); margin-bottom: 7px; }
+.adc-lead .ld-t { font-size: 15.5px; font-weight: 800; color: var(--ink);
+  letter-spacing: -0.018em; line-height: 1.35; }
+.adc-lead .ld-d { font-size: 13px; color: var(--sub); line-height: 1.7; margin: 7px 0 0; max-width: 62ch; }
+
+.adc-lead .ld-open { margin-top: 14px; }
+
+.ld-form { margin-top: 15px; }
+.ld-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ld-row + .ld-row { margin-top: 10px; }
+.ld-f { display: flex; flex-direction: column; gap: 5px; flex: 1 1 150px; min-width: 0; }
+.ld-f.ld-grow { flex: 2 1 220px; }
+.ld-f > span { font-size: 11.5px; font-weight: 650; color: var(--muted); letter-spacing: 0.01em; }
+.ld-f input { width: 100%; font-family: var(--sans); font-size: 14px; color: var(--ink);
+  background: #fff; border: 1px solid var(--line-2); border-radius: 9px; padding: 10px 12px;
+  transition: border-color 0.15s, box-shadow 0.15s; }
+.ld-f input::placeholder { color: #b8afa4; }
+.ld-f input:focus { outline: none; border-color: var(--crimson); box-shadow: 0 0 0 3px var(--crimson-tint); }
+
+.ld-chk { display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; cursor: pointer; }
+.ld-chk input { flex: 0 0 auto; width: 15px; height: 15px; margin-top: 2px; accent-color: var(--crimson); cursor: pointer; }
+.ld-chk > span { font-size: 12.5px; color: var(--sub); line-height: 1.6; }
+.ld-chk i { font-style: normal; color: var(--muted); font-size: 11.5px; }
+
+.ld-act { margin-top: 15px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+.adc-lead.is-done { border-color: #cfe6d9; background: var(--green-bg); }
+.ld-done { display: flex; gap: 11px; align-items: flex-start; }
+.ld-done .ck { flex: 0 0 22px; height: 22px; border-radius: 50%; background: var(--green-tx); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center; }
+.ld-done b { display: block; font-size: 14px; font-weight: 750; color: var(--green-tx); line-height: 1.5; }
+.ld-done p { font-size: 12.5px; color: #2c6647; margin: 5px 0 0; line-height: 1.6; }
+.ld-done a { color: var(--green-tx); font-weight: 700; text-underline-offset: 3px; }
+
+.adc-lead .adc-err { margin-top: 12px; }
+
+@media (max-width: 560px) {
+  .adc-lead { padding: 16px 15px; }
+  .ld-f, .ld-f.ld-grow { flex: 1 1 100%; }
+  .ld-act .adc-btn { width: 100%; justify-content: center; }
+}
+
+/* 히어로에서 미리 알려주는 무료 자료 — 결과 화면에서 처음 보면 갑작스럽다 */
+.adc-bait { margin-top: 16px; padding: 12px 15px; border: 1px solid var(--line-2);
+  border-left: 3px solid var(--gold-deep); border-radius: 0 10px 10px 0; background: var(--paper);
+  font-size: 13px; color: var(--sub); line-height: 1.68; max-width: 68ch; }
+.adc-bait b { color: var(--ink); font-weight: 750; }
