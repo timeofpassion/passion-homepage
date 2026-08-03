@@ -37,10 +37,10 @@ const COPY: Record<
 > = {
   pdf: {
     eye: "무료 자료",
-    title: "위반문구 대조표 12쪽, 이메일로 보내드립니다",
+    title: "위반문구 대조표 12쪽, 바로 받으세요",
     desc: "이 검수 도구가 판정하는 기준 그대로입니다. 14개 금지유형 위반→수정 대조, 금지어가 들어 있어도 정상인 문장 20선, 게시 전 12문항 체크리스트. 인쇄해서 원내 승인 서식으로 쓰셔도 됩니다.",
     cta: "대조표 받기",
-    done: "메일함을 확인해 주세요. 몇 분 안에 도착합니다.",
+    done: "받으실 준비가 됐습니다.",
   },
   review: {
     eye: "사람이 봅니다",
@@ -68,6 +68,7 @@ export default function LeadForm({ variant, summary, sourceText }: Props) {
   const [shareText, setShareText] = useState(variant === "review");
   const [agree, setAgree] = useState(false);
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
+  const [emailSent, setEmailSent] = useState(false);
   const [err, setErr] = useState("");
 
   const needsContact = variant !== "pdf";
@@ -105,6 +106,7 @@ export default function LeadForm({ variant, summary, sourceText }: Props) {
         setState("idle");
         return;
       }
+      setEmailSent(!!json.emailSent);
       setState("done");
     } catch {
       setErr("네트워크 오류로 전송에 실패했습니다.");
@@ -121,16 +123,18 @@ export default function LeadForm({ variant, summary, sourceText }: Props) {
               <path d="M4 12.5l5.5 5.5L20 7" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
-          <div>
+          <div className="ld-donebody">
             <b>{copy.done}</b>
-            {variant === "pdf" && (
-              <p>
-                오지 않으면 스팸함을 확인해 주세요.{" "}
-                <a href="/downloads/medical-ad-check-guide-2026.pdf" download>
-                  여기서 바로 내려받기
-                </a>
-              </p>
-            )}
+            <p>
+              {variant === "pdf"
+                ? emailSent
+                  ? "메일로도 보내드렸습니다. 아래에서 바로 내려받으셔도 됩니다."
+                  : "아래 버튼으로 바로 내려받으세요. 담당자가 확인 후 필요하시면 연락드리겠습니다."
+                : "아래 대조표를 먼저 보고 계시면 도움이 됩니다."}
+            </p>
+            <a className="adc-btn ld-dl" href="/downloads/medical-ad-check-guide-2026.pdf" download>
+              대조표 12쪽 내려받기
+            </a>
           </div>
         </div>
       </div>
