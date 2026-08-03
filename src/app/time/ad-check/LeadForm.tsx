@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { BOOKING_URL } from "./links";
 
 /**
  * 검수 결과 직후에 붙는 리드 폼.
@@ -132,9 +133,17 @@ export default function LeadForm({ variant, summary, sourceText }: Props) {
                   : "아래 버튼으로 바로 내려받으세요. 담당자가 확인 후 필요하시면 연락드리겠습니다."
                 : "아래 대조표를 먼저 보고 계시면 도움이 됩니다."}
             </p>
-            <a className="adc-btn ld-dl" href="/downloads/medical-ad-check-guide-2026.pdf" download>
-              대조표 12쪽 내려받기
-            </a>
+            <div className="ld-acts">
+              <a className="adc-btn ld-dl" href="/downloads/medical-ad-check-guide-2026.pdf" download>
+                대조표 12쪽 내려받기
+              </a>
+              {/* 자료만 받고 끝나지 않게, 받는 그 자리에서 시간을 잡을 수 있게 둔다. */}
+              {BOOKING_URL && variant === "pdf" && (
+                <a className="ld-book" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+                  30분 무료 상담 잡기
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -3,14 +3,13 @@
 import { useState, type ReactNode } from "react";
 import type { ScanResult, ScanSpan } from "@/lib/ad-review/engine";
 import LeadForm from "./LeadForm";
+import { KAKAO_URL, BOOKING_URL, TALING_URL } from "./links";
 import "./ad-check.css";
 
 interface CheckResponse {
   rule: ScanResult;
   error?: string;
 }
-
-const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
 /** 매체 — 사전심의 대상 판정(11호)에 쓰인다. 문구만으로는 판정 불가한 절차 조항이라 매체로 본다. */
 const MEDIA = ["블로그", "인스타", "홈페이지", "이벤트배너", "유튜브", "현수막전단"] as const;
@@ -278,6 +277,11 @@ export default function AdCheckPage() {
                     <LeadForm variant="overseas" summary={leadSummary} />
                   )}
                   <div className="adc-cta" style={{ marginTop: 12 }}>
+                    {BOOKING_URL && (
+                      <a className="adc-book" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+                        30분 무료 상담 시간 잡기
+                      </a>
+                    )}
                     <a className="adc-kakao" href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
                       카카오톡으로 바로 물어보기
                     </a>
@@ -307,10 +311,16 @@ export default function AdCheckPage() {
                   <LeadForm variant="review" summary={leadSummary} sourceText={submitted} />
                 )}
                 <div className="adc-cta" style={{ marginTop: 12 }}>
+                  {/* 예약 링크가 있으면 그게 1순위다. 카톡은 "언젠가 답장"이고 예약은 시간이 잡힌다. */}
+                  {BOOKING_URL && (
+                    <a className="adc-book" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+                      30분 무료 상담 시간 잡기
+                    </a>
+                  )}
                   <a className="adc-kakao" href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
                     카카오톡으로 문의하기
                   </a>
-                  <a className="adc-home" href="/time">열정의시간 둘러보기</a>
+                  {!BOOKING_URL && <a className="adc-home" href="/time">열정의시간 둘러보기</a>}
                 </div>
               </div>
 
@@ -334,11 +344,26 @@ export default function AdCheckPage() {
                 검수 결과가 궁금하시거나 심의를 통과하는 콘텐츠 운영이 필요하시면 편하게 문의 주세요.
               </p>
               <div className="adc-cta">
+                {BOOKING_URL && (
+                  <a className="adc-book" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+                    30분 무료 상담 시간 잡기
+                  </a>
+                )}
                 <a className="adc-kakao" href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
                   카카오톡 채널로 문의하기
                 </a>
                 <a className="adc-home" href="/time">열정의시간 홈페이지</a>
               </div>
+              {/* 전체판은 유료다. 무료 12쪽을 받아본 사람에게만 조용히 알린다. */}
+              {TALING_URL && (
+                <p className="adc-book-note">
+                  더 깊이 보시려면 —{" "}
+                  <a href={TALING_URL} target="_blank" rel="noopener noreferrer">
+                    병원마케팅·의료광고 실전가이드 전체 50쪽
+                  </a>
+                  {" "}(회색지대 FAQ 10문, 샤오홍슈 계정정지 대응, 심의 신청 실무 포함)
+                </p>
+              )}
             </div>
           </div>
         </div>
