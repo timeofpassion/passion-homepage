@@ -322,3 +322,33 @@
 .ld-dl { margin-top: 11px; background: var(--green-tx); box-shadow: none; text-decoration: none;
   font-size: 14px; padding: 11px 20px; }
 .ld-dl:hover { background: #17603a; }
+
+/* ---- 상담 예약 CTA ---- 카톡은 "언젠가 답장", 예약은 시간이 잡힌다. 그래서 1순위로 둔다 */
+.adc-book { display: inline-flex; align-items: center; gap: 8px; background: var(--ink-panel); color: #fff;
+  border: 1px solid var(--ink-panel); padding: 14px 22px; border-radius: 11px; font-weight: 700;
+  font-size: 15px; text-decoration: none; letter-spacing: -0.01em; transition: transform 0.12s, background 0.15s; }
+.adc-book::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+.adc-book:hover { transform: translateY(-1px); background: #241d18; }
+
+.adc-book-note { margin-top: 16px; font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+.adc-book-note a { color: var(--gold-deep); font-weight: 650; text-underline-offset: 3px; }
+
+.ld-acts { display: flex; gap: 9px; flex-wrap: wrap; align-items: center; margin-top: 11px; }
+.ld-acts .ld-dl { margin-top: 0; }
+.ld-book { display: inline-flex; align-items: center; padding: 11px 20px; border-radius: 11px;
+  border: 1px solid #b9d8c6; background: #fff; color: var(--green-tx); font-weight: 700; font-size: 14px;
+  text-decoration: none; }
+.ld-book:hover { border-color: var(--green-tx); }
+
+@media (max-width: 560px) {
+  .adc-book { width: 100%; justify-content: center; }
+  .ld-acts { flex-direction: column; align-items: stretch; }
+  .ld-acts a { justify-content: center; text-align: center; }
+}
+
+/* .adc-book 의 기본형은 밝은 배경(.adc-hot·.adc-overseas)용 어두운 버튼이다.
+   어두운 마무리 블록(.adc-close) 위에선 배경과 같은 색이라 통째로 묻힌다 — 반전시킨다.
+   여기서도 예약이 1순위라 카톡 노랑보다 먼저 눈에 들어와야 한다. */
+.adc-close .adc-book { background: var(--gold); border-color: var(--gold); color: #241a05; }
+.adc-close .adc-book::before { background: #241a05; }
+.adc-close .adc-book:hover { background: #f0d489; }
