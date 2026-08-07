@@ -373,9 +373,10 @@
   .adc-sell .sl-price { text-align: center; }
 }
 .ld-donebody { flex: 1 1 auto; }
-/* color 를 안 박으면 위 `.ld-done a` 가 이겨서 초록 배경에 초록 글씨가 된다 — 글자가 안 보였다 */
-.ld-dl { margin-top: 11px; background: var(--green-tx); color: #fff; box-shadow: none; text-decoration: none;
+.ld-dl { margin-top: 11px; background: var(--green-tx); box-shadow: none; text-decoration: none;
   font-size: 14px; padding: 11px 20px; }
+/* 위 `.ld-done a` 가 .ld-dl 보다 우선순위가 높아 초록 배경에 초록 글씨였다 — 글자가 안 보였다 */
+.ld-done a.ld-dl { color: #fff; }
 .ld-dl:hover { background: #17603a; }
 
 /* ---- 상담 예약 CTA ---- 카톡은 "언젠가 답장", 예약은 시간이 잡힌다. 그래서 1순위로 둔다 */
