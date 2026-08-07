@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import type { ScanResult, ScanSpan } from "@/lib/ad-review/engine";
 import LeadForm from "./LeadForm";
+import TalingCard from "./TalingCard";
 import { KAKAO_URL, BOOKING_URL, TALING_URL } from "./links";
 import "./ad-check.css";
 
@@ -102,26 +103,20 @@ export default function AdCheckPage() {
       <div className="adc-top">
         <div className="adc-wrap">
           <div className="adc-brand">
-            <span className="dot" /> 열정의시간
-            <span className="muted">· 의료광고 자가검수</span>
+            <span className="dot">열</span> 열정의시간
+            <span className="muted">의료광고 자가검수</span>
           </div>
+          {/* 후킹은 "이걸 안 보면 뭘 잃는가"에서 나온다. 기능 설명(문장 단위 검수)은 그 아래로 내린다. */}
+          <span className="adc-eyeb">의료법 제56조 제2항 · 14개 금지유형</span>
           <h1 className="adc-title">
-            게시 전 30초, 의료광고 위반을 <span className="em">문장 단위</span>로 잡아냅니다
+            문구 하나로 <span className="em">업무정지 1~2개월</span>, 사진 한 장으로 계정정지.
+            <span className="sm">게시 전 30초, 어느 문장이 왜 걸리는지 · 어떻게 고쳐 쓰면 되는지까지 나옵니다.</span>
           </h1>
-          <p className="adc-lede">
-            블로그 원고·이벤트 문구·SNS 스크립트를 붙여넣으면 — 어느 문장이 왜 걸리는지, 어떤 조항에 저촉되는지,
-            그리고 <b>바로 바꿔 쓸 수 있는 수정문안</b>까지 나옵니다. 로그인 없이 바로.
-          </p>
-          <div className="adc-legend">
-            <span className="adc-chip"><span className="k k-red" /> 위험 · 게시 시 처벌 위험</span>
-            <span className="adc-chip"><span className="k k-amber" /> 주의 · 조건 충족 시 통과</span>
-            <span className="adc-chip"><span className="k k-green" /> 안전 · 명백한 위반 없음</span>
+          <div className="adc-proof">
+            <span>정답지 <b>100건</b> 실측 정확도 <b>90%</b></span>
+            <span>로그인 없이 <b>무료</b></span>
+            <span>입력 문구 <b>저장 안 함</b></span>
           </div>
-          {/* 검수하면 자료도 드린다는 걸 처음부터 알려둔다. 결과 화면에서 처음 보면 갑작스럽다. */}
-          <p className="adc-bait">
-            검수를 마치면 <b>의료광고 위반문구 대조표 12쪽</b>을 무료로 받으실 수 있습니다 —
-            14개 금지유형 위반→수정 대조, 금지어가 들어 있어도 정상인 문장 20선, 게시 전 체크리스트.
-          </p>
         </div>
       </div>
 
@@ -172,6 +167,11 @@ export default function AdCheckPage() {
               <button onClick={() => { setText(SAMPLE); setData(null); setError(""); }}>미용의료 블로그 문구 넣기</button>
             </div>
             {error && <div className="adc-err">{error}</div>}
+            {/* 검수하면 자료도 드린다는 걸 처음부터 알려둔다. 결과 화면에서 처음 보면 갑작스럽다. */}
+            <p className="adc-bait">
+              검수를 마치면 <b>의료광고 위반문구 대조표 12쪽</b>을 무료로 드립니다 —
+              14개 금지유형 위반→수정 대조, 금지어가 들어 있어도 정상인 문장 20선, 게시 전 체크리스트.
+            </p>
           </div>
 
           {/* RESULT */}
@@ -195,6 +195,13 @@ export default function AdCheckPage() {
                   <div className="n">{rule.violations.length}</div>
                   <small>지적 건</small>
                 </div>
+              </div>
+
+              {/* 색 기준표 — 히어로에 있으면 아직 볼 게 없어 자리만 차지한다. 실제로 색이 나온 뒤에 보여준다. */}
+              <div className="adc-legend" style={{ margin: "0 0 14px" }}>
+                <span className="adc-chip"><span className="k k-red" /> 위험 · 게시 시 처벌 위험</span>
+                <span className="adc-chip"><span className="k k-amber" /> 주의 · 조건 충족 시 통과</span>
+                <span className="adc-chip"><span className="k k-green" /> 안전 · 명백한 위반 없음</span>
               </div>
 
               {/* 매체 기반 사전심의 판정 — 11호는 문구가 아니라 매체로 본다 */}
@@ -273,6 +280,9 @@ export default function AdCheckPage() {
                     다만 <b>샤오홍슈·LINE·일본 인스타그램·대만 유튜브 등 해외 채널은 국내 의료광고 심의 대상이 아니라 별도 규정</b>을 따릅니다.
                     열정의시간은 중국·일본·대만에서 이 채널들을 직접 운영합니다.
                   </p>
+                  {/* 12호에 걸렸다 = 해외 환자를 받고 싶다 = 전체판 2부(샤오홍슈)가 정확히 그 답이다.
+                      상담은 시간이 걸리지만 책은 지금 당장 답이 된다. 그래서 책을 먼저 둔다. */}
+                  <TalingCard where="overseas" />
                   {leadSummary && (
                     <LeadForm variant="overseas" summary={leadSummary} />
                   )}

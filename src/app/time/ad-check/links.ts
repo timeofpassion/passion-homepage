@@ -12,5 +12,8 @@ export const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 /** 30분 무료 상담 예약 (Cal.com 등). 예: https://cal.com/timeofpassion/30min */
 export const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL?.trim() || "";
 
-/** 전체판 50쪽 판매 페이지 (탈잉 클래스 URL) */
-export const TALING_URL = process.env.NEXT_PUBLIC_TALING_URL?.trim() || "";
+/** 전체판 50쪽 판매 페이지 (탈잉 클래스 URL).
+ *  공개 판매 링크라 기본값을 코드에 박는다 — 환경변수가 비어 있던 동안 판매 링크가
+ *  화면에서 통째로 사라져 있었고, 그걸 아무도 몰랐다. */
+export const TALING_URL =
+  process.env.NEXT_PUBLIC_TALING_URL?.trim() || "https://www.taling.me/talent/63547";

@@ -1,17 +1,18 @@
 /* 의료광고 자가검수 — /time/ad-check
-   톤: 딥 크림슨 + 샴페인 골드 + 웜 아이보리 (프리미엄 리걸테크) */
+   톤: 열정의시간 브랜드 레드(#E63329) + 웜 화이트. 골드는 "주의" 등급 표시에만 남긴다.
+   (기존 딥 크림슨 #9e1b13 은 회사 브랜드색이 아니라 이 페이지에만 있던 색이었다) */
 
 .adc-root {
-  --bg: #faf6f2;
+  --bg: #fff9f8;
   --paper: #ffffff;
-  --ink: #1a1512;
-  --sub: #6a625d;
-  --muted: #9c928c;
-  --line: #ece0d9;
-  --line-2: #e2d1c8;
-  --crimson: #9e1b13;
-  --crimson-2: #b3241a;
-  --crimson-tint: #f8ebe9;
+  --ink: #0f172a;
+  --sub: #475569;
+  --muted: #94a3b8;
+  --line: #f0e4e2;
+  --line-2: #e6d3d0;
+  --crimson: #e63329;
+  --crimson-2: #c8241b;
+  --crimson-tint: #fdecea;
   --gold: #e7c46a;
   --gold-deep: #b98f2f;
   --amber-tx: #9a6414;
@@ -34,19 +35,34 @@
 .adc-root *, .adc-root *::before, .adc-root *::after { box-sizing: border-box; }
 .adc-wrap { max-width: 1000px; margin: 0 auto; padding: 0 22px; }
 
-/* ---- top / hero ---- */
-.adc-top { padding: 54px 0 30px; border-bottom: 1px solid var(--line); background:
-  radial-gradient(60% 40% at 92% -10%, rgba(231, 196, 106, 0.16), transparent 60%),
-  radial-gradient(50% 40% at -8% 0%, rgba(158, 27, 19, 0.06), transparent 55%); }
-.adc-brand { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--crimson); margin-bottom: 22px; }
-.adc-brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--crimson);
-  box-shadow: 0 0 0 4px var(--crimson-tint); }
-.adc-brand .muted { color: var(--muted); font-weight: 600; letter-spacing: 0.08em; }
-.adc-title { font-weight: 850; font-size: clamp(28px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.035em; max-width: 18ch; }
+/* ---- top / hero ----
+   후킹은 헤드라인이 한다. 그래서 히어로는 짧다 — 문장 두 개와 증거 배지까지만 두고
+   입력창을 첫 화면 안으로 끌어올린다. (기존엔 설명 블록이 길어 입력창이 접힌 아래에 있었다) */
+.adc-top { padding: 34px 0 24px; background:
+  radial-gradient(70% 50% at 50% -20%, rgba(230, 51, 41, 0.07), transparent 62%); }
+.adc-brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 850;
+  letter-spacing: -0.03em; color: var(--ink); margin-bottom: 20px; }
+.adc-brand .dot { width: 22px; height: 22px; border-radius: 7px; background: var(--crimson);
+  display: inline-flex; align-items: center; justify-content: center; color: #fff;
+  font-size: 12px; font-weight: 800; letter-spacing: -0.04em; }
+.adc-brand .muted { color: var(--muted); font-weight: 600; font-size: 13px; letter-spacing: -0.01em; }
+.adc-eyeb { display: inline-block; font-size: 11.5px; font-weight: 750; letter-spacing: 0.06em;
+  color: var(--crimson); background: var(--crimson-tint); border-radius: 100px;
+  padding: 6px 12px; margin-bottom: 14px; }
+.adc-title { font-weight: 850; font-size: clamp(30px, 5.4vw, 50px); line-height: 1.14; letter-spacing: -0.04em; max-width: 20ch; }
 .adc-title .em { color: var(--crimson); }
+.adc-title .sm { display: block; margin-top: 10px; font-size: clamp(16px, 2.1vw, 20px);
+  font-weight: 650; color: var(--sub); letter-spacing: -0.02em; line-height: 1.5; }
 .adc-lede { margin-top: 18px; font-size: clamp(15px, 1.9vw, 17.5px); color: var(--sub); max-width: 54ch; font-weight: 450; }
 .adc-lede b { color: var(--ink); font-weight: 650; }
+
+/* 증거 배지 — "왜 이걸 믿어야 하나"에 대한 답을 헤드라인 바로 밑에 둔다 */
+.adc-proof { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
+.adc-proof span { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 100px;
+  background: var(--paper); border: 1px solid var(--line-2); font-size: 12.5px; font-weight: 650; color: var(--sub); }
+.adc-proof span b { color: var(--ink); font-weight: 800; }
+.adc-proof span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--crimson); }
+
 .adc-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
 .adc-chip { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 100px;
   background: var(--paper); border: 1px solid var(--line); font-size: 12.5px; font-weight: 600; color: var(--sub); }
@@ -54,7 +70,7 @@
 .k-red { background: var(--crimson); } .k-amber { background: var(--gold-deep); } .k-green { background: #2f9d64; }
 
 /* ---- form ---- */
-.adc-main { padding: 34px 0 20px; }
+.adc-main { padding: 10px 0 20px; }
 .adc-panel { background: var(--paper); border: 1px solid var(--line); border-radius: 18px;
   /* ai-tells-ignore — spread -40px 라 실제로는 아주 얕은 그림자다 */
   padding: 22px; box-shadow: 0 24px 50px -40px rgba(26, 21, 18, 0.4); }
@@ -63,7 +79,7 @@
 .adc-tabs button { font-family: var(--sans); font-size: 13.5px; font-weight: 650; color: var(--sub); background: var(--bg);
   border: 1px solid var(--line); border-radius: 100px; padding: 8px 15px; cursor: pointer; transition: all 0.15s ease; }
 .adc-tabs button:hover:not(:disabled):not(.on) { border-color: var(--crimson); color: var(--crimson); }
-.adc-tabs button.on { background: var(--crimson); border-color: var(--crimson); color: #fff; box-shadow: 0 8px 18px -10px rgba(158,27,19,0.6); }
+.adc-tabs button.on { background: var(--crimson); border-color: var(--crimson); color: #fff; box-shadow: 0 8px 18px -10px rgba(230,51,41,0.55); }
 .adc-tabs button.soon { opacity: 0.6; cursor: default; display: inline-flex; align-items: center; gap: 6px; }
 .adc-tabs button.soon span { font-size: 9.5px; font-weight: 750; letter-spacing: 0.04em; color: var(--gold-deep);
   background: var(--amber-bg); padding: 2px 6px; border-radius: 100px; }
@@ -94,7 +110,7 @@
 .adc-btn { display: inline-flex; align-items: center; gap: 9px; padding: 13px 24px; border-radius: 11px; border: none;
   background: var(--crimson); color: #fff; font-family: var(--sans); font-size: 15px; font-weight: 750; cursor: pointer;
   letter-spacing: -0.01em; transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.15s ease;
-  box-shadow: 0 14px 28px -14px rgba(158, 27, 19, 0.6); }
+  box-shadow: 0 14px 28px -14px rgba(230, 51, 41, 0.55); }
 .adc-btn:hover:not(:disabled) { transform: translateY(-1px); background: var(--crimson-2); }
 .adc-btn:disabled { opacity: 0.55; cursor: not-allowed; }
 .adc-btn .spin { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
@@ -146,7 +162,7 @@
 .adc-echo { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px;
   font-size: 14.5px; line-height: 1.9; color: var(--ink); white-space: pre-wrap; word-break: break-word; }
 .adc-echo mark { background: transparent; color: inherit; padding: 1px 2px; border-radius: 3px; font-weight: 600; }
-.adc-echo mark.h { background: var(--crimson-tint); box-shadow: inset 0 -2px 0 rgba(158,27,19,0.5); color: var(--crimson); }
+.adc-echo mark.h { background: var(--crimson-tint); box-shadow: inset 0 -2px 0 rgba(230,51,41,0.55); color: var(--crimson-2); }
 .adc-echo mark.m { background: var(--amber-bg); box-shadow: inset 0 -2px 0 rgba(185,143,47,0.55); color: var(--amber-tx); }
 .adc-echo mark.g { background: var(--amber-bg); box-shadow: inset 0 -2px 0 rgba(185,143,47,0.45); color: var(--amber-tx); }
 
@@ -313,11 +329,49 @@
   .ld-act .adc-btn { width: 100%; justify-content: center; }
 }
 
-/* 히어로에서 미리 알려주는 무료 자료 — 결과 화면에서 처음 보면 갑작스럽다 */
-.adc-bait { margin-top: 16px; padding: 12px 15px; border: 1px solid var(--line-2);
-  border-left: 3px solid var(--gold-deep); border-radius: 0 10px 10px 0; background: var(--paper);
-  font-size: 13px; color: var(--sub); line-height: 1.68; max-width: 68ch; }
-.adc-bait b { color: var(--ink); font-weight: 750; }
+/* 무료 자료를 미리 알려두는 한 줄 — 결과 화면에서 처음 보면 갑작스럽다.
+   히어로의 회색 박스였던 걸 입력창 아래 한 줄로 줄였다. 첫 화면은 입력창이 주인공이어야 한다. */
+.adc-bait { margin-top: 14px; padding-top: 13px; border-top: 1px dashed var(--line-2);
+  font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+.adc-bait b { color: var(--ink); font-weight: 700; }
+
+/* ---- 전체판(유료) 판매 카드 ----
+   무료 12쪽과 유료 50쪽의 경계를 화면에 그린다. 경계를 안 그리면 "무료로 다 준다"로 읽혀서
+   유료판을 살 이유가 사라진다. 링크 하나를 회사소개 문단에 흘려두던 걸 카드로 세운다. */
+.adc-sell { margin-top: 16px; border: 1px solid var(--line-2); border-radius: 14px; overflow: hidden;
+  background: var(--paper); }
+.adc-sell .sl-head { padding: 15px 17px 13px; background: linear-gradient(180deg, #fffdfc, var(--crimson-tint)); }
+.adc-sell .sl-eye { display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: 0.14em;
+  color: var(--crimson); margin-bottom: 7px; }
+.adc-sell .sl-t { font-size: 16px; font-weight: 850; color: var(--ink); letter-spacing: -0.025em; line-height: 1.35; }
+.adc-sell .sl-d { margin: 7px 0 0; font-size: 13px; color: var(--sub); line-height: 1.65; }
+.adc-sell .sl-cols { display: flex; border-top: 1px solid var(--line); }
+.adc-sell .sl-col { flex: 1 1 50%; padding: 14px 16px; min-width: 0; }
+.adc-sell .sl-col + .sl-col { border-left: 1px solid var(--line); background: #fffcfb; }
+.adc-sell .sl-col h4 { font-size: 12px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 9px; color: var(--muted); }
+.adc-sell .sl-col.paid h4 { color: var(--crimson); }
+.adc-sell .sl-col li { list-style: none; font-size: 12.5px; color: var(--sub); line-height: 1.55;
+  padding-left: 14px; position: relative; margin-top: 6px; }
+.adc-sell .sl-col li::before { content: ""; position: absolute; left: 0; top: 7px; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--line-2); }
+.adc-sell .sl-col.paid li::before { background: var(--crimson); }
+.adc-sell .sl-col.paid li { color: var(--ink); font-weight: 550; }
+.adc-sell .sl-act { display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 14px 17px; border-top: 1px solid var(--line); }
+.adc-sell .sl-buy { display: inline-flex; align-items: center; gap: 8px; background: var(--crimson); color: #fff;
+  text-decoration: none; padding: 12px 20px; border-radius: 11px; font-weight: 750; font-size: 14.5px;
+  box-shadow: 0 12px 24px -14px rgba(230, 51, 41, 0.6); transition: background 0.15s, transform 0.12s; }
+.adc-sell .sl-buy:hover { background: var(--crimson-2); transform: translateY(-1px); }
+.adc-sell .sl-price { font-size: 12.5px; color: var(--muted); }
+.adc-sell .sl-price b { color: var(--ink); font-weight: 800; font-size: 14px; }
+
+@media (max-width: 560px) {
+  .adc-sell .sl-cols { flex-direction: column; }
+  .adc-sell .sl-col + .sl-col { border-left: none; border-top: 1px solid var(--line); }
+  .adc-sell .sl-act { flex-direction: column; align-items: stretch; }
+  .adc-sell .sl-buy { justify-content: center; }
+  .adc-sell .sl-price { text-align: center; }
+}
 .ld-donebody { flex: 1 1 auto; }
 .ld-dl { margin-top: 11px; background: var(--green-tx); box-shadow: none; text-decoration: none;
   font-size: 14px; padding: 11px 20px; }

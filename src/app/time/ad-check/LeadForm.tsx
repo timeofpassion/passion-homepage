@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { BOOKING_URL } from "./links";
+import TalingCard from "./TalingCard";
 
 /**
  * 검수 결과 직후에 붙는 리드 폼.
@@ -144,6 +145,8 @@ export default function LeadForm({ variant, summary, sourceText }: Props) {
                 </a>
               )}
             </div>
+            {/* 자료를 손에 넣은 직후가 가장 신뢰가 높은 순간이다. 전체판을 알리는 자리는 여기 하나뿐. */}
+            {variant === "pdf" && <TalingCard where="pdf-done" />}
           </div>
         </div>
       </div>
