@@ -62,6 +62,15 @@ const jsonLd = {
       "@type": "Organization",
       "@id": "https://www.timeofpassion.com/people/#organization",
       name: "열정의사람들",
+      legalName: "주식회사 열정의사람들",
+      taxID: "324-88-03973",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "입춘로 45, B동 10층 06-08호",
+        addressLocality: "원주시",
+        addressRegion: "강원특별자치도",
+        addressCountry: "KR",
+      },
       url: "https://www.timeofpassion.com/people",
       parentOrganization: {
         "@type": "Organization",
@@ -189,10 +198,10 @@ export default function PeopleLayout({
 
           <div className="ppl-footer__col">
             <h4>Company</h4>
-            <p>상호: 열정의사람들</p>
+            <p>상호: 주식회사 열정의사람들</p>
             <p>대표: 한동남</p>
-            <p>사업자번호: 미정</p>
-            <p>주소: 미정</p>
+            <p>사업자번호: 324-88-03973</p>
+            <p>주소: 강원특별자치도 원주시 입춘로 45, B동 10층 06-08호</p>
           </div>
 
           <div className="ppl-footer__col">
