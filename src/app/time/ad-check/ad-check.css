@@ -373,7 +373,8 @@
   .adc-sell .sl-price { text-align: center; }
 }
 .ld-donebody { flex: 1 1 auto; }
-.ld-dl { margin-top: 11px; background: var(--green-tx); box-shadow: none; text-decoration: none;
+/* color 를 안 박으면 위 `.ld-done a` 가 이겨서 초록 배경에 초록 글씨가 된다 — 글자가 안 보였다 */
+.ld-dl { margin-top: 11px; background: var(--green-tx); color: #fff; box-shadow: none; text-decoration: none;
   font-size: 14px; padding: 11px 20px; }
 .ld-dl:hover { background: #17603a; }
 
