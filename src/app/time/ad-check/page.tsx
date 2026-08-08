@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { ScanResult, ScanSpan } from "@/lib/ad-review/engine";
 import LeadForm from "./LeadForm";
 import TalingCard from "./TalingCard";
@@ -50,6 +50,19 @@ export default function AdCheckPage() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<CheckResponse | null>(null);
   const [error, setError] = useState("");
+  // 이 도구는 검수 1건마다 실제 AI 비용이 나간다. 그걸 숨기지 않고 남은 횟수로 보여준다.
+  const [quota, setQuota] = useState<{ remaining: number; cap: number } | null>(null);
+  const [soldOut, setSoldOut] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/ad-check")
+      .then((r) => r.json())
+      .then((q) => {
+        setQuota(q);
+        if (q.remaining <= 0) setSoldOut(true);
+      })
+      .catch(() => {}); // 표시용이라 실패해도 조용히 넘어간다
+  }, []);
 
   async function handleCheck() {
     const value = text.trim();
@@ -66,7 +79,18 @@ export default function AdCheckPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: value, media }),
       });
-      const json = (await res.json()) as CheckResponse;
+      const json = (await res.json()) as CheckResponse & {
+        remaining?: number;
+        cap?: number;
+        soldOut?: boolean;
+      };
+      if (typeof json.remaining === "number" && typeof json.cap === "number") {
+        setQuota({ remaining: json.remaining, cap: json.cap });
+      }
+      if (json.soldOut) {
+        setSoldOut(true);
+        return;
+      }
       if (!res.ok || json.error) {
         setError(json.error || "검수 처리 중 오류가 발생했습니다.");
         return;
@@ -114,7 +138,12 @@ export default function AdCheckPage() {
           </h1>
           <div className="adc-proof">
             <span>정답지 <b>100건</b> 실측 정확도 <b>90%</b></span>
-            <span>로그인 없이 <b>무료</b></span>
+            {/* "무료"라고만 쓰면 공짜인 줄 안다. 하루치가 정해져 있다는 걸 숫자로 보여준다. */}
+            <span>
+              {quota
+                ? <>오늘 남은 무료 검수 <b>{quota.remaining}/{quota.cap}회</b></>
+                : <>로그인 없이 <b>무료</b></>}
+            </span>
             <span>입력 문구 <b>저장 안 함</b></span>
           </div>
         </div>
@@ -150,8 +179,9 @@ export default function AdCheckPage() {
               ))}
             </div>
             <div className="adc-actions">
-              <button className="adc-btn" onClick={handleCheck} disabled={loading}>
-                {loading ? <><span className="spin" /> 검수 중...</> : "검수하기"}
+              {/* 소진 상태에서 버튼이 살아 있으면 눌러도 아무 일이 안 일어나 먹통으로 읽힌다 */}
+              <button className="adc-btn" onClick={handleCheck} disabled={loading || soldOut}>
+                {loading ? <><span className="spin" /> 검수 중...</> : soldOut ? "오늘 몫 소진 — 자정에 열립니다" : "검수하기"}
               </button>
               <button
                 className="adc-ghostbtn"
@@ -172,7 +202,35 @@ export default function AdCheckPage() {
               검수를 마치면 <b>의료광고 위반문구 대조표 12쪽</b>을 무료로 드립니다 —
               14개 금지유형 위반→수정 대조, 금지어가 들어 있어도 정상인 문장 20선, 게시 전 체크리스트.
             </p>
+            {/* 대표 지시(2026-08-08) — 공짜가 아니라는 걸 원장님께 담백하게 알린다.
+                구걸이 아니라 사실 고지다. 이 문장이 있어야 전체판 구매가 "보답"으로 읽힌다. */}
+            <p className="adc-cost">
+              이 검수는 문구 1건마다 AI 판독 비용이 실제로 발생합니다.
+              하루 <b>{quota?.cap ?? 66}건</b>까지 열정의시간이 부담하고, 소진되면 자정에 다시 열립니다.
+            </p>
           </div>
+
+          {/* 소진 화면 — 빈 에러로 돌려보내지 않는다. 지금 답이 급한 사람에게 전체판이 답이다. */}
+          {soldOut && (
+            <div className="adc-soldout">
+              <div className="so-eye">오늘 몫 소진</div>
+              <h3>오늘 무료 검수 {quota?.cap ?? 66}회가 모두 사용됐습니다</h3>
+              <p>
+                검수 1건마다 나가는 AI 비용을 열정의시간이 부담하고 있어, 하루 한도를 두고 운영합니다.
+                <b> 한국시간 자정에 다시 열립니다.</b>
+              </p>
+              <p>
+                지금 확인이 급하시다면 — 이 도구가 쓰는 판단 기준 그대로가 전체판 50쪽에 문장으로 정리돼 있습니다.
+                순서를 기다리지 않고 직접 대조하실 수 있습니다.
+              </p>
+              <TalingCard where="soldout" />
+              <p className="so-alt">내일 다시 오실 생각이라면, 무료 대조표 12쪽부터 받아두세요.</p>
+              <LeadForm
+                variant="pdf"
+                summary={{ media, risk: "none", riskLabel: "검수 전", violationCount: 0, articles: [] }}
+              />
+            </div>
+          )}
 
           {/* RESULT */}
           {rule && (

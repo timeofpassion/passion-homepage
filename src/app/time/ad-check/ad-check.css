@@ -335,6 +335,21 @@
   font-size: 12.5px; color: var(--muted); line-height: 1.65; }
 .adc-bait b { color: var(--ink); font-weight: 700; }
 
+/* 비용 고지 — 이 도구가 공짜가 아니라는 사실을 담백하게 세운다.
+   불평처럼 보이면 역효과라, 경고색 대신 회색 한 줄로만 둔다. */
+.adc-cost { margin-top: 9px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+.adc-cost b { color: var(--ink); font-weight: 700; }
+
+/* 오늘 몫 소진 화면 — 에러 박스가 아니라 제안 화면이다 */
+.adc-soldout { margin-top: 18px; padding: 20px 18px; border: 1px solid var(--line-2);
+  border-radius: 16px; background: linear-gradient(180deg, #fff, var(--crimson-tint)); }
+.adc-soldout .so-eye { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.04em;
+  color: var(--crimson); background: #fff; border: 1px solid #f0cfcb; padding: 4px 10px; border-radius: 100px; }
+.adc-soldout h3 { margin: 11px 0 8px; font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1.4; }
+.adc-soldout p { margin: 0 0 8px; font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+.adc-soldout p b { color: var(--ink); font-weight: 700; }
+.adc-soldout .so-alt { margin-top: 16px; font-size: 12.5px; }
+
 /* ---- 전체판(유료) 판매 카드 ----
    무료 12쪽과 유료 50쪽의 경계를 화면에 그린다. 경계를 안 그리면 "무료로 다 준다"로 읽혀서
    유료판을 살 이유가 사라진다. 링크 하나를 회사소개 문단에 흘려두던 걸 카드로 세운다. */
@@ -364,6 +379,8 @@
 .adc-sell .sl-buy:hover { background: var(--crimson-2); transform: translateY(-1px); }
 .adc-sell .sl-price { font-size: 12.5px; color: var(--muted); }
 .adc-sell .sl-price b { color: var(--ink); font-weight: 800; font-size: 14px; }
+/* 구매를 "보답"으로 읽히게 하는 한 줄. 가격 바로 아래에서 값의 쓰임을 밝힌다. */
+.adc-sell .sl-fund { margin: 0; padding: 0 17px 15px; font-size: 11.5px; color: var(--muted); line-height: 1.65; }
 
 @media (max-width: 560px) {
   .adc-sell .sl-cols { flex-direction: column; }

@@ -23,6 +23,36 @@ function rateLimited(ip: string): boolean {
   return arr.length > RATE_LIMIT;
 }
 
+// 예산 상한 — 검수 1건에 AI 비용이 50원 안팎이라, 하루 66건 = 월 10만원 선에서 끊는다.
+// ponytail: 인스턴스 메모리 카운터라 서버리스 인스턴스가 여러 개면 그 배수만큼 초과될 수 있다.
+// 진짜 천장은 Anthropic 콘솔의 월 지출 한도(별도 설정)이고, 이건 그 앞의 1차 브레이크다.
+// 정확한 상한이 필요해지면 인트라넷(INTRANET_API_URL)에 카운터 엔드포인트를 두고 공유한다.
+const capEnv = process.env.AD_CHECK_DAILY_CAP;
+const DAILY_CAP = capEnv && Number.isFinite(Number(capEnv)) ? Number(capEnv) : 66; // 0도 유효값이라 `||` 금지
+let capDay = "";
+let capUsed = 0;
+
+/** 한국시간 기준 날짜 — 자정에 리셋된다 */
+function kstDay(): string {
+  return new Date(Date.now() + 9 * 3_600_000).toISOString().slice(0, 10);
+}
+
+function remainingToday(): number {
+  if (capDay !== kstDay()) {
+    capDay = kstDay();
+    capUsed = 0;
+  }
+  return Math.max(0, DAILY_CAP - capUsed);
+}
+
+// 히어로의 "오늘 남은 검수" 표시용. 이 도구가 공짜가 아니라는 걸 화면에 세우는 근거값이다.
+export async function GET() {
+  return NextResponse.json(
+    { remaining: remainingToday(), cap: DAILY_CAP },
+    { headers: { "Cache-Control": "no-store" } },
+  );
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as { text?: string; media?: string };
@@ -47,8 +77,21 @@ export async function POST(request: Request) {
       );
     }
 
+    if (remainingToday() <= 0) {
+      return NextResponse.json(
+        {
+          error: "오늘 무료 검수가 모두 소진됐습니다.",
+          soldOut: true,
+          remaining: 0,
+          cap: DAILY_CAP,
+        },
+        { status: 429 },
+      );
+    }
+    capUsed += 1; // 호출 전에 센다 — 실패해도 토큰은 이미 나갔을 수 있다
+
     const rule = await runAdCheck(text, media);
-    return NextResponse.json({ rule });
+    return NextResponse.json({ rule, remaining: remainingToday(), cap: DAILY_CAP });
   } catch (error) {
     // 판정 실패를 "안전"으로 위장하지 않는다. 실패는 실패로 알린다.
     const msg = error instanceof Error ? error.message : "";

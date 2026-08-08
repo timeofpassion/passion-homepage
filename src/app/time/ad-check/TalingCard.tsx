@@ -11,7 +11,7 @@ import { TALING_URL } from "./links";
  *
  * 무료와 유료의 경계를 표로 그린다. 안 그리면 "무료로 다 주는 것"으로 읽혀서 살 이유가 없다.
  */
-export default function TalingCard({ where }: { where: "pdf-done" | "overseas" }) {
+export default function TalingCard({ where }: { where: "pdf-done" | "overseas" | "soldout" }) {
   if (!TALING_URL) return null;
 
   return (
@@ -22,13 +22,15 @@ export default function TalingCard({ where }: { where: "pdf-done" | "overseas" }
         <p className="sl-d">
           {where === "overseas"
             ? "해외 채널을 여실 계획이라면 이 책의 2부가 그 부분입니다. 샤오홍슈 계정정지 사유와 복구 절차, 국내 심의 대상이 아닌 채널의 표기 기준을 실제 사례로 정리했습니다."
-            : "방금 받으신 12쪽이 '무엇이 걸리는가'라면, 전체판은 '그래서 어떻게 통과시키는가'입니다."}
+            : where === "soldout"
+              ? "이 검수 도구가 문장을 걸러내는 기준 그대로입니다. 한도에 걸리지 않고, 원내에서 직접 대조하며 쓰실 수 있습니다."
+              : "방금 받으신 12쪽이 '무엇이 걸리는가'라면, 전체판은 '그래서 어떻게 통과시키는가'입니다."}
         </p>
       </div>
 
       <div className="sl-cols">
         <div className="sl-col">
-          <h4>무료 12쪽 (방금 받으신 것)</h4>
+          <h4>{where === "pdf-done" ? "무료 12쪽 (방금 받으신 것)" : "무료 12쪽"}</h4>
           <ul>
             <li>14개 금지유형 위반 → 수정 대조</li>
             <li>금지어가 있어도 정상인 문장 20선</li>
@@ -60,6 +62,10 @@ export default function TalingCard({ where }: { where: "pdf-done" | "overseas" }
           <b>49,000원</b> · 전자책(PDF) · 결제 즉시 열람
         </span>
       </div>
+      {/* 대표 지시(2026-08-08) — 구매가 "도움이 됐으니 보답"으로 읽히게 하는 한 줄. 이게 없으면 그냥 배너다. */}
+      <p className="sl-fund">
+        이 검수 도구는 광고 없이, 전체판 판매 수익으로 운영합니다. 한 권이 팔릴 때마다 무료 검수 약 700건이 유지됩니다.
+      </p>
     </div>
   );
 }
