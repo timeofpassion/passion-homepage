@@ -77,6 +77,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    // 전자상거래법 표시의무 페이지 — PG(전자결제) 가맹 심사에서 실제 접속 확인 대상
+    ...["pay", "terms", "privacy", "refund"].map((slug) => ({
+      url: `${baseUrl}/people/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+    })),
     {
       url: `${baseUrl}/space`,
       lastModified: new Date(),
