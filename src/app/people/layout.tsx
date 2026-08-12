@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./people.css";
+import "./_styles/legal.css";
 import PplHeader from "./_components/PplHeader";
+import { BIZ } from "./_data/biz";
 
 // 열정의시간 카카오톡 채널 상담(채팅) — 전사 공용 채널
-const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
+const KAKAO_URL = BIZ.kakaoUrl;
 
 export const metadata: Metadata = {
   description:
@@ -62,6 +64,18 @@ const jsonLd = {
       "@type": "Organization",
       "@id": "https://www.timeofpassion.com/people/#organization",
       name: "열정의사람들",
+      legalName: BIZ.companyName,
+      taxID: BIZ.bizNumber,
+      telephone: BIZ.tel,
+      email: BIZ.email,
+      address: {
+        // ⚠️ 아래 3줄을 합치면 BIZ.address 와 같아야 한다 (푸터·플레이스·구글 NAP 일치)
+        "@type": "PostalAddress",
+        streetAddress: "입춘로 45, B동 10층 06-08호",
+        addressLocality: "원주시",
+        addressRegion: "강원특별자치도",
+        addressCountry: "KR",
+      },
       url: "https://www.timeofpassion.com/people",
       parentOrganization: {
         "@type": "Organization",
@@ -189,14 +203,18 @@ export default function PeopleLayout({
 
           <div className="ppl-footer__col">
             <h4>Company</h4>
-            <p>상호: 열정의사람들</p>
-            <p>대표: 한동남</p>
-            <p>사업자번호: 미정</p>
-            <p>주소: 미정</p>
+            <p>상호: {BIZ.companyName}</p>
+            <p>대표: {BIZ.ceo}</p>
+            <p>사업자등록번호: {BIZ.bizNumber}</p>
+            <p>통신판매업신고번호: {BIZ.mailOrderNumber}</p>
+            <p>주소: {BIZ.address}</p>
           </div>
 
           <div className="ppl-footer__col">
             <h4>Contact</h4>
+            <p>전화: {BIZ.tel}</p>
+            <p>이메일: {BIZ.email}</p>
+            <p>개인정보관리책임자: {BIZ.privacyOfficer}</p>
             <p>
               <a
                 href={KAKAO_URL}
@@ -212,7 +230,15 @@ export default function PeopleLayout({
           </div>
         </div>
         <div className="ppl-container ppl-footer__bottom">
-          © 2026 열정의사람들. ALL RIGHTS RESERVED.
+          <nav className="ppl-footer__legal">
+            <Link href="/people/terms">이용약관</Link>
+            <Link href="/people/privacy">
+              <b>개인정보처리방침</b>
+            </Link>
+            <Link href="/people/refund">취소·환불 규정</Link>
+            <Link href="/people/pay">결제 안내</Link>
+          </nav>
+          <span>© 2026 열정의사람들. ALL RIGHTS RESERVED.</span>
         </div>
       </footer>
 

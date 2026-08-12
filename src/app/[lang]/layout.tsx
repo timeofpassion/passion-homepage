@@ -18,15 +18,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params
   if (!isLocale(lang)) return {}
-  // 노출 중인 locale 만 hreflang 으로 (중복 콘텐츠 방지). P2에서 자동 확장.
-  const languages = Object.fromEntries(
-    ACTIVE_LOCALES.map((l) => [HTML_LANG[l], `${SITE}/${l}/hospitals`]),
-  )
+  // 협력병원 카탈로그는 브로커·에이전시 전용 숨김 공개 → 검색엔진에 hreflang 힌트를 주지 않는다
+  // (2026-07-21 대표 지시). 공개 전환 시 아래 hospitals hreflang 복원:
+  //   const languages = Object.fromEntries(
+  //     ACTIVE_LOCALES.map((l) => [HTML_LANG[l], `${SITE}/${l}/hospitals`]),
+  //   )
+  //   return { metadataBase: new URL(SITE),
+  //     alternates: { languages: { ...languages, "x-default": `${SITE}/ko/hospitals` } } }
   return {
     metadataBase: new URL(SITE),
-    alternates: {
-      languages: { ...languages, "x-default": `${SITE}/ko/hospitals` },
-    },
+    robots: { index: false, follow: false },
   }
 }
 

@@ -118,7 +118,7 @@ export default function Popup() {
             style={{
               display: "inline-block",
               padding: "12px 32px",
-              background: "#cc0000",
+              background: "#E63329",
               color: "#fff",
               fontWeight: 700,
               fontSize: "0.95rem",

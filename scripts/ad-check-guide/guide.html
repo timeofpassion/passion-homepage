@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>의료광고 위반문구 대조표 요약본</title>
+<style>
+@font-face{font-family:Pretendard;src:url('__FONT_URL__') format('woff2-variations');font-weight:45 920;font-display:block}
+
+@page{size:A4;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:Pretendard,'Malgun Gothic',sans-serif;color:#1a1512;background:#fff;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+
+:root{
+  --crimson:#E63329; --ink:#1a1512; --sub:#544c44; --muted:#8a8078;
+  --line:#e6ded3; --line2:#d4c8b8; --paper:#fffdf9;
+  --red-bg:#fdf1ef; --red-tx:#a5241c;
+  --amber-bg:#fdf7e8; --amber-tx:#8a6410;
+  --green-bg:#f0f7f2; --green-tx:#2f6b4a;
+}
+
+.pg{width:210mm;height:297mm;padding:19mm 17mm 15mm;position:relative;
+  page-break-after:always;overflow:hidden;background:#fff}
+.pg:last-child{page-break-after:auto}
+
+/* 러닝 헤더 / 푸터 */
+.rh{position:absolute;top:10mm;left:17mm;right:17mm;display:flex;justify-content:space-between;
+  align-items:baseline;font-size:7.6pt;color:var(--muted);letter-spacing:.06em;
+  padding-bottom:2.5mm;border-bottom:.6pt solid var(--line)}
+.rh b{color:var(--crimson);font-weight:750;letter-spacing:.02em}
+.pn{position:absolute;bottom:9mm;right:17mm;font-size:8pt;color:var(--muted);font-weight:600}
+.pf{position:absolute;bottom:9mm;left:17mm;font-size:7.4pt;color:#b5aca2}
+
+h2.sec{font-size:19pt;font-weight:850;letter-spacing:-.03em;line-height:1.2;margin-bottom:2mm}
+h2.sec .no{color:var(--crimson)}
+.dek{font-size:9.4pt;color:var(--sub);line-height:1.65;margin-bottom:6mm;max-width:64ch}
+h3{font-size:11.5pt;font-weight:800;letter-spacing:-.02em;margin:6mm 0 2.5mm;
+  padding-left:3mm;border-left:2.2pt solid var(--crimson)}
+h3:first-of-type{margin-top:0}
+h3 small{font-weight:600;font-size:8.2pt;color:var(--muted);margin-left:2mm;letter-spacing:0}
+
+p{font-size:9.3pt;line-height:1.72;color:var(--sub)}
+p b,li b{color:var(--ink);font-weight:750}
+p+p{margin-top:2mm}
+
+table{width:100%;border-collapse:collapse;margin-top:2mm}
+th{font-size:7.8pt;font-weight:750;color:var(--muted);text-align:left;letter-spacing:.04em;
+  padding:0 2.5mm 1.6mm;border-bottom:.8pt solid var(--line2)}
+td{font-size:8.5pt;line-height:1.58;color:var(--sub);padding:2.4mm 2.5mm;
+  border-bottom:.5pt solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.bad{color:var(--red-tx);background:var(--red-bg)}
+td.why{font-size:7.9pt;color:var(--muted)}
+td.fix{color:var(--green-tx);background:var(--green-bg)}
+td.ok{color:var(--green-tx)}
+td.warn{color:var(--amber-tx);background:var(--amber-bg)}
+td.k{font-weight:750;color:var(--ink);white-space:nowrap}
+.ho{display:inline-block;background:var(--ink);color:#fff;font-size:7pt;font-weight:750;
+  padding:.6mm 1.6mm;border-radius:1mm;margin-right:1.5mm;vertical-align:.4mm}
+
+.note{margin-top:4mm;padding:3.2mm 4mm;background:var(--paper);border:.6pt solid var(--line);
+  border-left:2.2pt solid var(--crimson);border-radius:0 1.5mm 1.5mm 0}
+.note .nh{font-size:8.6pt;font-weight:800;color:var(--ink);margin-bottom:1.2mm}
+.note p{font-size:8.5pt;line-height:1.6}
+
+ul{list-style:none}
+li{font-size:9pt;line-height:1.68;color:var(--sub);padding-left:5mm;position:relative;margin-top:1.6mm}
+li::before{content:"";position:absolute;left:1mm;top:2.6mm;width:1.4mm;height:1.4mm;
+  border-radius:50%;background:var(--crimson);opacity:.55}
+ol{counter-reset:c;list-style:none}
+ol li{padding-left:6.5mm}
+ol li::before{counter-increment:c;content:counter(c);position:absolute;left:0;top:.3mm;
+  width:4.4mm;height:4.4mm;border-radius:50%;background:var(--ink);color:#fff;
+  font-size:6.8pt;font-weight:750;text-align:center;line-height:4.4mm;opacity:1}
+
+/* ── 표지 ── */
+.cover{background:#140b09;color:#fff;padding:0;display:flex;flex-direction:column;justify-content:space-between}
+.cover::before{content:"";position:absolute;top:-60mm;right:-70mm;width:190mm;height:190mm;
+  border-radius:50%;background:radial-gradient(circle,rgba(230,51,41,.5),rgba(230,51,41,0) 68%)}
+.cv-top{position:relative;padding:22mm 17mm 0}
+.cv-mid{position:relative;padding:0 17mm}
+.cv-bot{position:relative;padding:0 17mm 20mm}
+.cv-brand{display:flex;align-items:center;gap:2.4mm;font-size:9pt;font-weight:750;letter-spacing:-.01em}
+.cv-brand i{width:2.6mm;height:2.6mm;border-radius:50%;background:var(--crimson);display:inline-block}
+.cv-brand span{color:rgba(255,255,255,.42);font-weight:550}
+.cv-eye{margin-top:26mm;font-size:8pt;letter-spacing:.28em;color:var(--crimson);font-weight:750}
+.cv-t{margin-top:5mm;font-size:38pt;font-weight:880;letter-spacing:-.045em;line-height:1.12}
+.cv-t em{font-style:normal;color:var(--crimson)}
+.cv-s{margin-top:7mm;font-size:11pt;color:rgba(255,255,255,.62);line-height:1.62;max-width:52ch;font-weight:450}
+.cv-rule{margin:11mm 0;height:.6pt;background:rgba(255,255,255,.16)}
+.cv-facts{display:flex;gap:11mm}
+.cv-f .n{font-size:22pt;font-weight:850;letter-spacing:-.03em;color:#fff}
+.cv-f .l{font-size:7.8pt;color:rgba(255,255,255,.44);margin-top:1mm;letter-spacing:.03em}
+.cv-from{font-size:8.4pt;color:rgba(255,255,255,.36);line-height:1.7}
+.cv-from b{color:rgba(255,255,255,.78);font-weight:700}
+
+/* ── 체크리스트 ── */
+.ck{border:.6pt solid var(--line);border-radius:2mm;overflow:hidden;margin-top:3mm}
+.ck-h{background:var(--ink);color:#fff;font-size:8.6pt;font-weight:750;padding:2.4mm 4mm;letter-spacing:-.01em}
+.ck-i{display:flex;gap:3mm;align-items:flex-start;padding:2.6mm 4mm;border-bottom:.5pt solid var(--line)}
+.ck-i:last-child{border-bottom:none}
+.ck-i .bx{flex:0 0 3.4mm;height:3.4mm;border:.9pt solid var(--line2);border-radius:.7mm;margin-top:.6mm}
+.ck-i .tx{font-size:8.7pt;line-height:1.55;color:var(--sub)}
+.ck-i .tx b{color:var(--ink);font-weight:750}
+.ck-i .tx i{font-style:normal;color:var(--muted);font-size:7.6pt}
+
+/* ── 마지막장 CTA ── */
+.cta{margin-top:6mm;background:#140b09;color:#fff;border-radius:2.5mm;padding:8mm 9mm;position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;top:-30mm;right:-30mm;width:90mm;height:90mm;border-radius:50%;
+  background:radial-gradient(circle,rgba(230,51,41,.42),rgba(230,51,41,0) 70%)}
+.cta .in{position:relative}
+.cta .eye{font-size:7.4pt;letter-spacing:.24em;color:var(--crimson);font-weight:750}
+.cta h4{font-size:16pt;font-weight:850;letter-spacing:-.032em;margin-top:3mm;line-height:1.28}
+.cta p{color:rgba(255,255,255,.6);font-size:9pt;margin-top:3.5mm;line-height:1.68;max-width:58ch}
+.cta .lines{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:3mm 7mm}
+.cta .li{border-top:.6pt solid rgba(255,255,255,.15);padding-top:2.4mm}
+.cta .li .l{font-size:7.2pt;color:rgba(255,255,255,.38);letter-spacing:.06em}
+.cta .li .v{font-size:9.4pt;color:#fff;font-weight:700;margin-top:.8mm;letter-spacing:-.01em}
+
+.book{margin-top:5mm;border:.8pt solid var(--line2);border-radius:2mm;padding:5mm 6mm;background:var(--paper)}
+.book .bt{font-size:10.5pt;font-weight:850;color:var(--ink);letter-spacing:-.02em}
+.book .bs{font-size:8.6pt;color:var(--sub);line-height:1.65;margin-top:2mm}
+.book .bl{margin-top:3.5mm;display:flex;flex-wrap:wrap;gap:1.6mm}
+.book .bl span{font-size:7.6pt;color:var(--sub);background:#fff;border:.5pt solid var(--line);
+  border-radius:1mm;padding:1.2mm 2.4mm}
+
+.disc{margin-top:auto;font-size:7.2pt;color:#a89e94;line-height:1.62;border-top:.5pt solid var(--line);padding-top:3mm}
+.flexcol{display:flex;flex-direction:column;height:100%}
+</style>
+</head>
+<body>
+
+<!-- 1. 표지 -->
+<div class="pg cover">
+  <div class="cv-top">
+    <div class="cv-brand"><i></i>열정의시간 <span>· 병원 마케팅</span></div>
+    <div class="cv-eye">FREE EXCERPT · 12P</div>
+    <h1 class="cv-t">의료광고<br><em>위반문구 대조표</em></h1>
+    <div class="cv-s">
+      게시하기 전에 이 표에서 내 문장과 가장 닮은 줄을 찾고,
+      오른쪽 수정 문구로 바꾸십시오. 그게 전부입니다.
+    </div>
+  </div>
+  <div class="cv-mid">
+    <div class="cv-rule"></div>
+    <div class="cv-facts">
+      <div class="cv-f"><div class="n">14</div><div class="l">금지 유형 전수</div></div>
+      <div class="cv-f"><div class="n">60+</div><div class="l">위반 → 수정 대조</div></div>
+      <div class="cv-f"><div class="n">20</div><div class="l">오해받는 정상 문장</div></div>
+    </div>
+    <div class="cv-rule"></div>
+  </div>
+  <div class="cv-bot">
+    <div class="cv-from">
+      의료법 제56조 제2항 · 제57조 · 시행령 제23조 기준<br>
+      <b>열정의시간</b> · 국내 · 중국 · 일본 · 대만 병원 마케팅<br>
+      www.timeofpassion.com/time/ad-check
+    </div>
+  </div>
+</div>
+
+<!-- 2. 규제는 두 겹 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>의료광고 위반문구 대조표</b> · 요약 발췌본</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="no">01</span> 먼저 이것부터 — 규제는 두 겹입니다</h2>
+  <p class="dek">이 둘을 하나로 섞어서 이해하면 반드시 사고가 납니다. 실무 사고의 대부분이 여기서 시작됩니다.</p>
+
+  <table>
+    <tr><th style="width:16%">구분</th><th style="width:30%">무엇을 규제하나</th><th style="width:22%">근거</th><th>안 지키면</th></tr>
+    <tr><td class="k">내용 규제</td><td>무슨 말을 썼는가</td><td>의료법 제56조</td><td><b>매체 불문</b> 처벌</td></tr>
+    <tr><td class="k">절차 규제</td><td>심의를 받았는가</td><td>의료법 제57조</td><td>미심의 광고로 별도 위반</td></tr>
+  </table>
+
+  <div class="note">
+    <div class="nh">심의를 안 받아도 되는 매체라도, 내용이 위반이면 처벌받습니다.</div>
+    <p>“제 블로그는 작아서 심의 대상이 아니래요”는 절반만 맞는 말입니다. 심의 의무가 없을 뿐,
+    제56조의 내용 금지는 <b>매체 크기와 무관하게 모든 의료광고에 적용</b>됩니다.</p>
+  </div>
+
+  <h3>심의를 받아야 하는 매체 <small>제57조</small></h3>
+  <ul>
+    <li>신문 · 인터넷신문 · 정기간행물</li>
+    <li>현수막 · 벽보 · 전단 등</li>
+    <li>교통시설 · 교통수단 광고, 전광판</li>
+    <li>전년도 말 기준 직전 3개월간 <b>일평균 이용자 수 10만 명 이상</b>인 인터넷 매체 및 SNS</li>
+  </ul>
+
+  <div class="note">
+    <div class="nh">기준은 ‘내 계정의 팔로워 수’가 아니라 ‘플랫폼 전체의 이용자 수’입니다.</div>
+    <p>네이버 · 카카오 · 유튜브 · 인스타그램 · 틱톡은 플랫폼 자체가 일평균 10만 명을 훨씬 넘습니다.
+    따라서 <b>팔로워가 100명인 병원 인스타그램 계정의 의료광고 게시물도 사전심의 대상</b>이 됩니다.
+    “우리는 작으니까 괜찮다”는 계산이 성립하지 않습니다.</p>
+  </div>
+
+  <h3>심의는 누가 하나 <small>2015년 헌재 결정 이후 자율심의기구 체제</small></h3>
+  <table>
+    <tr><th style="width:34%">대상</th><th>심의기구</th></tr>
+    <tr><td class="k">의과 (의원 · 병원)</td><td>대한의사협회 의료광고심의위원회</td></tr>
+    <tr><td class="k">치과</td><td>대한치과의사협회 의료광고심의위원회</td></tr>
+    <tr><td class="k">한방</td><td>대한한의사협회 한방의료광고심의위원회</td></tr>
+  </table>
+  <p style="margin-top:3mm">심의 승인의 <b>유효기간은 3년</b>입니다. 3년 전에 심의받은 문안을 그대로 두고 있다면
+  지금 확인하십시오 — 실무에서 가장 흔한 11호 위반이 바로 이것입니다.</p>
+
+  <div class="disc">본 요약본은 참고 자료이며 법적 효력이 없습니다. 개별 광고의 위법 여부는 관할 보건소 · 각 자율심의기구 · 법률 검토에 따라 최종 결정됩니다.</div>
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">2</div>
+</div>
+
+<!-- 3. 14개 한눈에 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>의료광고 위반문구 대조표</b> · 요약 발췌본</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="no">02</span> 제56조 제2항이 금지하는 것 — 한눈에</h2>
+  <p class="dek">조문 순서를 외울 필요는 없습니다. <b>원장님과 마케터가 실제로 쓰는 문장이 어디에 걸리는지</b>만 보시면 됩니다.</p>
+
+  <table>
+    <tr><th style="width:8%">호</th><th style="width:34%">금지 대상</th><th>현장에서 이렇게 나타납니다</th></tr>
+    <tr><td class="k">1호</td><td>평가받지 않은 신의료기술 광고</td><td class="bad">“국내 최초 도입”, “아직 어디서도 받을 수 없는”</td></tr>
+    <tr><td class="k">2호</td><td>치료경험담 등 치료효과 오인 우려 <b>· 적발 1위</b></td><td class="bad">후기, 체험담, 협찬 리뷰, 전후 사진</td></tr>
+    <tr><td class="k">3호</td><td>거짓 광고</td><td class="bad">“100% 완치”, “재발 없음”, “실패 사례 없음”</td></tr>
+    <tr><td class="k">4호</td><td>다른 의료인 · 기관과 비교</td><td class="bad">“타 병원보다 2배”, “다른 곳과 달리”</td></tr>
+    <tr><td class="k">5호</td><td>다른 의료인 · 기관 비방</td><td class="bad">“싼 곳은 부작용 많습니다”</td></tr>
+    <tr><td class="k">6호</td><td>수술 장면 등 시술행위 직접 노출</td><td class="bad">수술 영상, 주사 놓는 사진</td></tr>
+    <tr><td class="k">7호</td><td>심각한 부작용 등 중요정보 누락</td><td class="bad">“부작용 걱정 없는”, “무통증 무흉터”</td></tr>
+    <tr><td class="k">8호</td><td>객관적 사실의 과장</td><td class="bad">“국내 유일”, “최고”, “압도적 1위”, “기적”</td></tr>
+    <tr><td class="k">9호</td><td>법적 근거 없는 자격 · 명칭 표방</td><td class="bad">“명의”, “권위자”, “공식 지정”</td></tr>
+    <tr><td class="k">10호</td><td>기사 · 전문가 의견 형태의 광고</td><td class="bad">기자 바이라인, 인터뷰 형식, 광고 표기 누락</td></tr>
+    <tr><td class="k">11호</td><td>미심의 또는 심의내용과 다른 광고</td><td class="bad">심의 안 받고 게시, 승인본과 다르게 게시</td></tr>
+    <tr><td class="k">12호</td><td>외국인환자 유치를 위한 국내광고</td><td class="bad">국내 매체에 “외국인 환자 유치 전문”</td></tr>
+    <tr><td class="k">13호</td><td>소비자를 속이는 비급여 할인 · 면제</td><td class="bad">“선착순 50% 할인”, “친구 데려오면 면제”</td></tr>
+    <tr><td class="k">14호</td><td>상장 · 감사장 · 인증 · 보증 · 추천 광고</td><td class="bad">“OO일보 선정 대상 수상”, “고객만족도 1위”</td></tr>
+  </table>
+
+  <div class="note">
+    <div class="nh">여기에 포괄조항이 하나 더 있습니다</div>
+    <p>위 14개에 해당하지 않더라도 국민보건이나 건전한 의료경쟁 질서를 해칠 우려가 있으면
+    대통령령으로 규제 대상이 됩니다. <b>“조문에 없으니까 괜찮다”가 통하지 않는 이유</b>입니다.</p>
+  </div>
+
+  <h3>위반의 90%를 막는 세 가지 습관</h3>
+  <ol>
+    <li><b>단정하지 않습니다.</b> “됩니다 · 없어집니다 · 유지됩니다” → 서술을 사실로 바꾸거나 개인차 고지를 붙입니다.</li>
+    <li><b>비교하지 않습니다.</b> 다른 병원 · 다른 의사 · 다른 시술과 우열을 말하는 순간 4호 · 5호입니다.</li>
+    <li><b>좋은 얘기만 하지 않습니다.</b> 장점을 말했으면 부작용 · 주의사항을 같이 씁니다. 7호를 피하는 유일한 방법입니다.</li>
+  </ol>
+
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">3</div>
+</div>
+
+<!-- 4. 2호 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>위반 → 수정 대조표</b> · 2호 치료경험담</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="ho">2호</span>치료경험담 등 치료효과 오인 우려</h2>
+  <p class="dek"><b>가장 많이 걸리는 유형입니다.</b> 후기 마케팅이 병원 마케팅의 기본 문법이 되어버린 탓입니다.
+  핵심은 “후기”라는 단어가 아닙니다 — 아래 네 가지 중 <b>하나라도</b> 있으면 위반 신호입니다.</p>
+
+  <table style="margin-bottom:5mm">
+    <tr><th style="width:25%">① 대가</th><th style="width:25%">② 긍정만 강조</th><th style="width:25%">③ 의료행위·예후 서술</th><th>④ 병원정보 결합</th></tr>
+    <tr>
+      <td>금전 · 현물 등이 오갔는가</td>
+      <td>긍정적 측면만 쓰도록 유도했는가</td>
+      <td>구체적 시술 · 경과를 서술하는가</td>
+      <td>위치 · 연락처 · 진료비가 함께 노출되는가</td>
+    </tr>
+  </table>
+
+  <h3>위반 → 수정</h3>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr>
+      <td class="bad">OO의원에서 리프팅 받고 인생이 바뀌었어요! 5살은 어려 보인다는 말 들어요. 위치는 강남역 3번 출구입니다.</td>
+      <td class="why">치료경험담 + 효과 서술 + 병원 식별정보 결합</td>
+      <td class="fix">리프팅 시술 후 경과는 개인에 따라 다릅니다. 시술 방법과 주의사항은 상담 시 안내드립니다.</td>
+    </tr>
+    <tr>
+      <td class="bad">[협찬] 원장님이 직접 봐주셔서 시술받았는데 효과가 확실했습니다. 예약 문의는 프로필 링크로!</td>
+      <td class="why">대가성(협찬) + 효과 단정 + 유인</td>
+      <td class="fix">광고 게시물임을 명시하고, 개인 체험 서술과 효과 단정을 삭제합니다.</td>
+    </tr>
+    <tr>
+      <td class="bad">환자분들의 생생한 치료 후기 100건을 모았습니다. 다들 만족하셨습니다.</td>
+      <td class="why">치료경험담 집합으로 효과 오인 유도</td>
+      <td class="fix">진료 절차와 시술 정보를 객관적으로 안내합니다.</td>
+    </tr>
+    <tr>
+      <td class="bad">개원 3개월차 원장이지만 이 시술만큼은 자신 있습니다.</td>
+      <td class="why">시행령상 <b>6개월 이하 임상경력 광고 금지</b></td>
+      <td class="fix">경력 연차 언급을 삭제하고 실제 취득 자격만 표기합니다.</td>
+    </tr>
+  </table>
+
+  <h3>조건 충족 시 가능 <small>회색지대</small></h3>
+  <table>
+    <tr><th style="width:40%">문구</th><th>판단</th></tr>
+    <tr><td class="warn">진료 대기 공간이 편안했다는 방문 후기를 남겨주셨습니다.</td>
+      <td>단순 <b>방문</b> 후기는 치료경험담이 아닙니다. 다만 대가성 · 효과 서술 · 병원정보 결합 여부를 확인해야 합니다.</td></tr>
+    <tr><td class="warn">체험단을 모집합니다. 시술 후 후기를 남겨주시면 진료비를 할인해 드립니다.</td>
+      <td>대가성 후기 + 진료비 할인. 2호 · 13호에 더해 <b>제27조 제3항(환자 유인)</b> 소지까지 겹칩니다.
+      심의 권장이 아니라 <b>구조 자체를 재설계</b>해야 합니다.</td></tr>
+  </table>
+
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">4</div>
+</div>
+
+<!-- 5. 3호 + 7호 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>위반 → 수정 대조표</b> · 3호 거짓 · 7호 부작용 누락</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="ho">3호</span>거짓 광고</h2>
+  <p class="dek">검증할 수 없는 것을 단정하면 거짓입니다. <b>“100%”라는 숫자보다 “단정”이라는 형식이 문제</b>입니다.</p>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">100% 완치 보장, 재발은 없습니다.</td><td class="why">절대적 단정</td>
+      <td class="fix">치료 경과와 재발 가능성은 개인에 따라 다를 수 있습니다.</td></tr>
+    <tr><td class="bad">단 한 번의 시술로 평생 효과가 유지됩니다.</td><td class="why">영구 효과 단정</td>
+      <td class="fix">시술 후 유지 기간은 개인차가 있으며 상담 시 안내드립니다.</td></tr>
+    <tr><td class="bad">실패 사례가 단 한 건도 없습니다.</td><td class="why">검증 불가 단정</td>
+      <td class="fix">시술 결과는 개인에 따라 다를 수 있습니다.</td></tr>
+    <tr><td class="bad">시술 한 번이면 다시는 그 고민으로 병원 찾을 일 없습니다.</td>
+      <td class="why"><b>키워드 없이 우회한</b> 영구 효과 단정</td>
+      <td class="fix">시술 후 관리와 재시술 필요 여부는 경과에 따라 달라집니다.</td></tr>
+  </table>
+
+  <div class="note">
+    <div class="nh">마지막 문장을 보십시오</div>
+    <p>“100%”도 “평생”도 “완치”도 없습니다. 그런데 위반입니다.
+    <b>금지어 목록을 피하는 것으로는 안전해지지 않습니다.</b></p>
+  </div>
+
+  <h2 class="sec" style="margin-top:9mm"><span class="ho">7호</span>부작용 등 중요정보 누락</h2>
+  <p class="dek"><b>한방 · 미용 분야에서 적발이 특히 많은 유형</b>입니다. 판단 로직은 한 줄로 끝납니다 —
+  <b>안전성을 강조하는 문구가 있는데 부작용 안내가 없으면 위반 신호</b>입니다.</p>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">부작용 걱정 없는 안전한 시술입니다.</td><td class="why">안전성 강조 + 부작용 고지 없음</td>
+      <td class="fix">시술 후 붓기 · 멍 등이 나타날 수 있으며, 자세한 내용은 상담 시 안내드립니다.</td></tr>
+    <tr><td class="bad">무통증 무흉터 시술로 일상 복귀가 바로 가능합니다.</td><td class="why">위험 정보 누락</td>
+      <td class="fix">통증과 회복 기간은 개인차가 있습니다. 시술 후 주의사항은 상담 시 안내드립니다.</td></tr>
+    <tr><td class="bad">부작용요? 저희는 그런 거 모릅니다. 걱정 붙들어 매세요.</td>
+      <td class="why"><b>키워드 없이 우회한</b> 부작용 부인</td>
+      <td class="fix">발생 가능한 반응과 대처 방법을 상담 시 설명드립니다.</td></tr>
+    <tr><td class="bad">부작용 없이 안전한 추나요법</td>
+      <td class="why">추나요법은 부작용이 보고되는 시술로 <b>실제 시정조치 · 형사고발 사례</b>가 있습니다</td>
+      <td class="fix">추나요법 시행 시 나타날 수 있는 반응과 금기 사항을 상담 시 안내드립니다.</td></tr>
+  </table>
+
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">5</div>
+</div>
+
+<!-- 6. 8호 + 4·5호 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>위반 → 수정 대조표</b> · 8호 과장 · 4·5호 비교·비방</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="ho">8호</span>과장 광고 — 최상급 · 절대 표현</h2>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">국내 유일 최고의 기술력, 압도적인 1위 병원입니다.</td><td class="why">객관적 근거 없는 최상급</td>
+      <td class="fix">저희가 집중해온 진료 분야를 소개합니다.</td></tr>
+    <tr><td class="bad">기적 같은 드라마틱한 변화를 경험하세요.</td><td class="why">과장</td>
+      <td class="fix">시술 전후 변화는 개인에 따라 다릅니다.</td></tr>
+    <tr><td class="bad">이 분야에서 저희를 따라올 곳은 없습니다.</td><td class="why"><b>키워드 없이 우회한</b> 최상급</td>
+      <td class="fix">해당 분야 진료에 집중하고 있습니다.</td></tr>
+  </table>
+  <table style="margin-top:3mm">
+    <tr><th style="width:40%">조건 충족 시 가능</th><th>판단</th></tr>
+    <tr><td class="warn">보건복지부 지정 전문병원입니다.</td><td><b>법정 지정은 사실이면 가능</b>합니다. 실제 지정 여부를 확인하십시오.</td></tr>
+    <tr><td class="warn">누적 시술 1만 건을 넘었습니다.</td><td>객관적 수치는 사실이면 가능성이 있습니다. <b>산정 기준과 근거를 보관</b>하십시오.</td></tr>
+  </table>
+
+  <h2 class="sec" style="margin-top:8mm"><span class="ho">4호</span>비교 광고</h2>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">타 병원보다 2배 빠른 회복을 약속합니다.</td><td class="why">직접 비교 + 효과 단정(3호)</td>
+      <td class="fix">회복 기간은 시술 범위와 개인 상태에 따라 다릅니다.</td></tr>
+    <tr><td class="bad">다른 곳과 달리 저희는 원장이 직접 봅니다.</td><td class="why">타 기관 대비 우위 주장</td>
+      <td class="fix">원장이 진료합니다.</td></tr>
+  </table>
+  <table style="margin-top:3mm">
+    <tr><th style="width:40%">조건 충족 시 가능</th><th>판단</th></tr>
+    <tr><td class="warn">기존 방식보다 회복이 빠른 술식입니다.</td>
+      <td><b>기관 비교가 아니라 술식 간 비교</b>입니다. 객관적 근거가 있으면 가능성이 있으나 근거 확인이 필요합니다.
+      다만 “○○를 하는 곳들과 달리”는 술식 비교가 아니라 기관 비교입니다.</td></tr>
+  </table>
+
+  <h2 class="sec" style="margin-top:8mm"><span class="ho">5호</span>비방 광고</h2>
+  <p class="dek">대상을 특정하지 않아도 <b>집단을 폄훼하면 걸립니다.</b></p>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">싼 곳에서 받으면 부작용이 많으니 주의하세요.</td><td class="why">타 기관 비방</td>
+      <td class="fix">시술 전 담당 의료진과 충분히 상담하시기 바랍니다.</td></tr>
+    <tr><td class="bad">비전문의가 하는 시술은 위험합니다. 저희는 다릅니다.</td><td class="why">타 의료인 폄훼</td>
+      <td class="fix">시술 전 담당 의료진의 전문 분야를 확인하시는 것을 권해드립니다.</td></tr>
+    <tr><td class="bad">요즘 저가 이벤트로 환자 끌어모으는 곳들, 결국 재수술하러 저희한테 옵니다.</td>
+      <td class="why"><b>키워드 없이 우회한</b> 비방</td>
+      <td class="fix">재수술 상담도 받고 있습니다.</td></tr>
+  </table>
+
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">6</div>
+</div>
+
+<!-- 7. 13호 + 14호 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>위반 → 수정 대조표</b> · 13호 비급여 할인 · 14호 수상·인증</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="ho">13호</span>비급여 진료비 할인 · 면제 — 조건부</h2>
+  <p class="dek"><b>무조건 금지가 아닙니다.</b> 이 지점을 오해해서 이벤트를 아예 못 한다고 생각하는 병원이 많습니다.
+  문제는 할인 자체가 아니라 <b>소비자를 속이거나 잘못 알게 할 우려</b>입니다.</p>
+
+  <table style="margin-bottom:5mm">
+    <tr><th colspan="5" style="border-bottom:.8pt solid var(--crimson);color:var(--crimson)">비급여 할인 광고 5요소 — 하나라도 비면 위험</th></tr>
+    <tr>
+      <td class="k" style="width:20%">① 금액</td><td class="k" style="width:20%">② 대상</td>
+      <td class="k" style="width:20%">③ 기간</td><td class="k" style="width:20%">④ 범위</td>
+      <td class="k">⑤ 할인 전 가격</td>
+    </tr>
+  </table>
+
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">전 시술 50% 할인! 선착순 마감, 친구 데려오면 추가 할인!</td>
+      <td class="why">대상 · 기간 · 범위 불명확 + <b>유인성</b>(선착순 · 소개)</td>
+      <td class="fix">7월 1일~31일, 리프팅 1회 시술 정가 100만원 → 80만원 (신규 환자 대상)</td></tr>
+    <tr><td class="bad">리뷰 작성하시면 시술비 전액 환급해 드립니다.</td>
+      <td class="why">대가성 후기(2호) + 비급여 면제</td>
+      <td class="fix">구조 자체를 삭제합니다. 후기와 진료비를 연결하지 않습니다.</td></tr>
+    <tr><td class="bad">딱 이번 주만 특별가로 모십니다.</td>
+      <td class="why">할인 전 가격 · 범위 불명확한 우회 표현</td>
+      <td class="fix">기간 · 대상 시술 · 할인 전 가격 · 할인 후 가격을 모두 명시합니다.</td></tr>
+  </table>
+
+  <div class="note">
+    <div class="nh">“선착순”, “한정”, “데려오면”, “지금만”은 할인율보다 위험합니다</div>
+    <p>할인 폭이 아니라 <b>유인성 표현</b>이 위반 신호이기 때문입니다.
+    요건을 다 채워도 남는 리스크가 둘 있습니다 — <b>할인 폭의 과도성</b>은 별도 판단 대상이고,
+    유인성 표현은 요건 충족과 무관하게 걸립니다.</p>
+  </div>
+
+  <h2 class="sec" style="margin-top:8mm"><span class="ho">14호</span>상장 · 인증 · 보증 · 추천 광고</h2>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">OO일보 선정 2026 올해의 병원 대상 수상!</td>
+      <td class="why"><b>언론사 주관 수상 이력 게시는 14호 위반</b></td><td class="fix">문구 삭제</td></tr>
+    <tr><td class="bad">고객만족도 1위 인증, 소비자가 추천하는 병원으로 선정되었습니다.</td>
+      <td class="why">근거 없는 인증 · 추천 + 최상급(8호)</td><td class="fix">문구 삭제</td></tr>
+  </table>
+  <table style="margin-top:3mm">
+    <tr><th style="width:40%">조건 충족 시 가능</th><th>판단</th></tr>
+    <tr><td class="warn">보건복지부 의료기관 인증을 받았습니다.</td>
+      <td><b>정부 · 공공기관 인증은 시행령상 예외</b>입니다. 실제 인증 여부를 확인하십시오.</td></tr>
+    <tr><td class="warn">국제의료기관평가(JCI) 인증 병원입니다.</td>
+      <td>법정 예외 해당 여부 확인이 필요합니다. 심의 권장.</td></tr>
+  </table>
+
+  <div class="note">
+    <div class="nh">홈페이지 메인에 걸어둔 상패 이미지를 지금 확인하십시오</div>
+    <p>언론사 수상은 병원이 가장 자랑하고 싶어 하는 항목이면서 동시에 14호 위반의 대표 사례입니다.</p>
+  </div>
+
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">7</div>
+</div>
+
+<!-- 8. 나머지 호 압축 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>위반 → 수정 대조표</b> · 1 · 6 · 9 · 10 · 11 · 12호</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="no">03</span> 나머지 유형 — 놓치기 쉬운 것들</h2>
+
+  <h3><span class="ho">1호</span>평가받지 않은 신의료기술</h3>
+  <p style="margin-bottom:2mm">“최초”가 위험한 이유는 자랑이어서가 아니라, <b>평가를 안 거쳤다는 자백이 되기 때문</b>입니다.</p>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">국내 최초 도입 신개념 줄기세포 리프팅, 아직 어디서도 받을 수 없는 시술입니다.</td>
+      <td class="why">미평가 신의료기술 + 최초 표방</td>
+      <td class="fix">리프팅 시술을 시행하고 있습니다. 시술 방법과 적응증은 상담 시 안내드립니다.</td></tr>
+    <tr><td class="bad">아직 국내에 들어오지 않은 해외 최신 시술을 저희가 먼저 시작합니다.</td>
+      <td class="why">우회 표현이지만 실질은 미평가 신기술 광고</td>
+      <td class="fix">국내에서 허가된 장비 · 술식으로 진료합니다.</td></tr>
+  </table>
+
+  <h3><span class="ho">6호</span>시술행위 직접 노출 <small>텍스트가 아니라 이미지 · 영상의 문제라 검수 도구로 잘 안 잡힙니다</small></h3>
+  <table>
+    <tr><th style="width:37%">위반 상황</th><th style="width:24%">왜 위반인가</th><th>대안</th></tr>
+    <tr><td class="bad">실제 수술 장면 영상을 홈페이지에 공개. 절개 과정을 그대로 노출.</td>
+      <td class="why">직접적 시술행위 노출</td>
+      <td class="fix">시술 과정을 일러스트 · 다이어그램으로 설명합니다.</td></tr>
+    <tr><td class="bad">주사 놓는 사진을 인스타에 게시.</td>
+      <td class="why">직접적 시술행위 노출</td>
+      <td class="fix">시술실 전경 · 장비 사진 등 행위가 드러나지 않는 이미지로 대체합니다.</td></tr>
+  </table>
+
+  <h3><span class="ho">9호</span>법적 근거 없는 자격 · 명칭</h3>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">이 분야 최고 권위자이자 명의로 손꼽히는 원장이 진료합니다.</td>
+      <td class="why">법적 근거 없는 명칭 + 최상급(8호)</td>
+      <td class="fix">해당 분야를 진료하는 원장이 상담합니다.</td></tr>
+    <tr><td class="bad">보건복지부 공식 지정 리프팅 센터입니다.</td>
+      <td class="why">허위 공식 지정 표방</td>
+      <td class="fix">실제 지정이 아니라면 문구 삭제</td></tr>
+  </table>
+
+  <h3><span class="ho">10호</span>기사 · 전문가 의견 형태</h3>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">[의학전문기자] OO의원 원장, 리프팅의 새 기준을 제시하다</td>
+      <td class="why">기사 형태로 위장한 광고</td>
+      <td class="fix">본 게시물은 광고입니다. OO의원이 제공했습니다.</td></tr>
+    <tr><td class="bad">인터뷰 | “환자 중심 진료가 답이다” OO의원 원장을 만나다 (광고 표기 없음)</td>
+      <td class="why">인터뷰 형식 위장</td>
+      <td class="fix">광고 표기를 제목 · 상단에 추가합니다.</td></tr>
+  </table>
+
+  <h3><span class="ho">11호</span>미심의 · 심의내용과 다른 광고 <small>문구만으로는 판정 불가한 절차 조항</small></h3>
+  <p>실무에서 가장 흔한 11호 위반은 “심의를 안 받은 것”이 아니라
+  <b>“심의받은 뒤 문구를 조금 고쳐서 올린 것”</b>입니다. 승인본과 다르면 그 자체로 위반입니다.
+  이벤트 기간이나 가격을 나중에 수정하는 경우가 특히 위험합니다. 승인 유효기간은 <b>3년</b>입니다.</p>
+
+  <h3><span class="ho">12호</span>외국인환자 유치를 위한 국내광고 <small>해외마케팅 병원이 가장 무심코 위반하는 조항</small></h3>
+  <table>
+    <tr><th style="width:37%">위반 문구</th><th style="width:24%">왜 위반인가</th><th>수정 문구</th></tr>
+    <tr><td class="bad">외국인 환자 유치 전문! 중국 · 일본 환자분들 많이 오세요. <i>(네이버 블로그 게시)</i></td>
+      <td class="why">국내 매체에 외국인환자 유치 광고 (제27조 제3항)</td>
+      <td class="fix">국내 매체에서는 삭제. 해외 채널은 국내 심의 대상이 아니라 별도 규정을 따릅니다.</td></tr>
+  </table>
+  <p style="margin-top:2.5mm"><b>주의.</b> 의료해외진출법의 광고 특례는 <b>“장소”(공항 · 무역항 등) 기준</b>입니다.
+  온라인이라고 예외가 되는 게 아닙니다.</p>
+
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">8</div>
+</div>
+
+<!-- 9. 정상인데 오해받는 문장 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>오탐 방지</b> · 정상인데 오해받는 문장</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="no">04</span> 이건 정상입니다 — 겁내지 마십시오</h2>
+  <p class="dek">금지어 목록만 들고 검수하면 두 가지가 동시에 일어납니다.
+  <b>멀쩡한 문장이 막히고(오탐), 진짜 위반은 통과합니다(미탐).</b>
+  아래 20개 문장은 금지어를 품고 있지만 전부 정상입니다.
+  <b>단어가 아니라 문장이 무엇을 하고 있는지</b>를 보십시오.</p>
+
+  <table>
+    <tr><th style="width:52%">문장</th><th>왜 정상인가</th></tr>
+    <tr><td class="ok">상담 예약은 <b>100%</b> 사전 예약제로 운영됩니다.</td><td class="why">‘100%’가 예약 운영 방식이지 치료 효과가 아님</td></tr>
+    <tr><td class="ok">주차 공간은 <b>100%</b> 무료로 이용하실 수 있습니다.</td><td class="why">주차 안내</td></tr>
+    <tr><td class="ok">레이저 장비의 <b>영구적인</b> 손상을 막기 위해 정기 점검을 실시합니다.</td><td class="why">‘영구’가 장비 관리</td></tr>
+    <tr><td class="ok"><b>평생</b> 건강관리의 동반자가 되겠습니다.</td><td class="why">‘평생’이 다짐 표현</td></tr>
+    <tr><td class="ok">환자분의 <b>완벽한</b> 회복을 위해 사후관리에 최선을 다하겠습니다.</td><td class="why">‘완벽’이 다짐이지 효과 · 순위 주장이 아님</td></tr>
+    <tr><td class="ok"><b>최고의</b> 서비스를 위해 직원 교육을 정기적으로 실시합니다.</td><td class="why">‘최고’가 내부 지향 다짐</td></tr>
+    <tr><td class="ok"><b>유일하게</b> 남은 예약 시간대는 오후 5시입니다.</td><td class="why">‘유일’이 예약 안내</td></tr>
+    <tr><td class="ok">저희 병원은 <b>과장 광고</b>를 하지 않습니다. <b>최고</b>라는 말도 쓰지 않습니다.</td><td class="why">금지어를 언급하되 쓰지 않겠다는 문장</td></tr>
+    <tr><td class="ok"><b>1층</b>에 위치해 있어 거동이 불편하신 분도 편하게 오실 수 있습니다.</td><td class="why">‘1’이 층수</td></tr>
+    <tr><td class="ok">저희 병원은 시술 <b>후기 이벤트</b>를 일절 진행하지 않습니다.</td><td class="why">‘후기’가 들어갔지만 하지 않는다는 문장</td></tr>
+    <tr><td class="ok">본원은 <b>리뷰</b> 작성을 요청드리지 않습니다. 정직한 진료로 보답하겠습니다.</td><td class="why">요청하지 않는다는 서술</td></tr>
+    <tr><td class="ok"><b>대가성 후기</b>는 의료법 위반입니다. 저희는 하지 않습니다.</td><td class="why">위반을 설명하는 문장 자체는 위반이 아님</td></tr>
+    <tr><td class="ok"><b>다른 병원</b>에서 진료받으신 기록이 있으면 지참해 주세요.</td><td class="why">접수 안내</td></tr>
+    <tr><td class="ok"><b>타 병원</b> 진료의뢰서를 가져오시면 접수가 빠릅니다.</td><td class="why">접수 안내</td></tr>
+    <tr><td class="ok">수술실은 매일 소독하며 청결하게 관리합니다.</td><td class="why">시설 관리 안내</td></tr>
+    <tr><td class="ok"><b>안전한</b> 주차 환경을 제공하기 위해 CCTV를 설치했습니다.</td><td class="why">‘안전’이 주차 시설</td></tr>
+    <tr><td class="ok">시술 후 발생할 수 있는 붓기 · 멍 등은 상담 시 자세히 안내드립니다.</td><td class="why">7호가 요구하는 바로 그 형태</td></tr>
+    <tr><td class="ok"><b>명의</b> 도용 방지를 위해 본인 확인 절차를 거칩니다.</td><td class="why">‘명의’가 이름(名義)이지 명의(名醫)가 아님</td></tr>
+    <tr><td class="ok"><b>인증</b>받은 멸균 장비만 사용합니다.</td><td class="why">‘인증’이 장비 규격</td></tr>
+    <tr><td class="ok"><b>추천</b> 진료 시간대는 평일 오전입니다.</td><td class="why">‘추천’이 시간 안내</td></tr>
+  </table>
+
+  <div class="note">
+    <div class="nh">복합 위반 — 실제 현장의 문구는 한 호만 위반하지 않습니다</div>
+    <p><span style="color:var(--red-tx)">“국내 유일 무통증 리프팅! 100% 만족, 부작용 걱정 없는 안전한 시술로 −30% 이벤트 진행 중”</span>
+    → <b>8호(유일) + 3호(100%) + 7호(부작용 없음 · 무통증) + 13호(할인 불명확) = 4중 위반</b></p>
+  </div>
+
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">9</div>
+</div>
+
+<!-- 10. 채널별 지뢰 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>채널별 지뢰</b> · 같은 문장도 매체에 따라 달라집니다</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="no">05</span> 채널별로 가장 자주 터지는 것</h2>
+
+  <h3>네이버 블로그</h3>
+  <ul>
+    <li><b>체험단 · 기자단 원고.</b> 대가를 지급하고 작성된 후기는 2호 정면 위반입니다. “협찬” 표기를 붙여도 치료경험담이라는 성격은 사라지지 않습니다.</li>
+    <li><b>정보성 글로 위장한 광고.</b> “OO시술 완벽 정리”로 시작해 마지막에 병원 위치와 예약 링크를 붙이는 구조. 실질이 광고라면 광고입니다.</li>
+    <li><b>본문 하단의 진료비 · 이벤트 배너.</b> 본문은 통과해도 배너에서 13호가 터집니다.</li>
+  </ul>
+
+  <h3>인스타그램 · 릴스 <small>팔로워 수와 무관하게 심의 대상</small></h3>
+  <ul>
+    <li><b>전후 사진.</b> 인스타의 기본 문법이면서 2호의 대표 위반입니다. 개인차 고지를 붙여도 극적 변화를 나열하면 위험합니다.</li>
+    <li><b>시술 장면 릴스.</b> 주사 · 레이저 시술 장면은 6호입니다. 조회수가 잘 나오는 포맷이라 유혹이 큽니다.</li>
+    <li><b>스토리의 휘발성 착각.</b> 24시간 뒤 사라진다고 규제 대상이 아닌 게 아닙니다. 캡처가 남습니다.</li>
+    <li><b>“#광고” 표기는 공정거래법 요구사항이지 의료법 면책이 아닙니다.</b></li>
+    <li>댓글에 가격을 답변하는 것도 광고의 일부로 볼 수 있습니다. <b>DM 유도로 회피된다고 보지 마십시오.</b></li>
+  </ul>
+
+  <h3>유튜브 · 구글 광고 <small>규제가 두 겹 — 의료광고법 + Google Ads 정책</small></h3>
+  <p style="margin-bottom:2mm">처방의약품 브랜드명을 광고 소재나 랜딩페이지에서 홍보하면 <b>자동 비승인</b>됩니다.</p>
+  <table>
+    <tr><th style="width:40%">걸리는 브랜드명</th><th>안전한 대체 표현</th></tr>
+    <tr><td class="bad">보톡스 / Botox</td><td class="fix">보툴리눔 톡신, 주사 시술, 근육 이완 시술</td></tr>
+    <tr><td class="bad">레스틸렌 · 쥬비덤 · 래디어스</td><td class="fix">필러, 히알루론산 필러, 볼륨 시술</td></tr>
+    <tr><td class="bad">라티쎄</td><td class="fix">속눈썹 관리</td></tr>
+  </table>
+  <div class="note">
+    <div class="nh">Google은 광고 제목만 보지 않습니다</div>
+    <p>연결된 <b>영상의 음성 · 자막 · 설명, 그리고 도착 페이지(랜딩)까지 전부 스캔</b>합니다.
+    실제로 제목에 “보톡스”가 전혀 없는 영상 광고 2건이 “제한된 약물 용어 — 포함된 목적지: BOTOX”로 비승인된 사례가 있습니다.
+    제목만 고쳐서는 풀리지 않습니다. <b>체크 위치는 3곳 — 광고 소재 · 랜딩페이지 · 키워드.</b>
+    한국은 조건부 허용 국가가 아니며, 반복 비승인은 <b>계정 정지</b>로 이어질 수 있습니다.</p>
+  </div>
+
+  <h3>네이버 플레이스 <small>가장 오래 방치되는 채널</small></h3>
+  <ul>
+    <li><b>업체 소개란의 최상급 · 수상 이력.</b> 8호 · 14호. 한 번 써두고 몇 년째 방치된 경우가 많습니다.</li>
+    <li><b>리뷰 이벤트.</b> “리뷰 남기면 할인”은 2호 + 13호 + 유인의 3중 구조입니다.</li>
+    <li><b>사진첩의 시술 장면 · 전후 사진.</b> 6호 · 2호. 지금 열어서 확인하십시오.</li>
+  </ul>
+
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">10</div>
+</div>
+
+<!-- 11. 체크리스트 -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>게시 전 체크리스트</b> · 인쇄해서 쓰십시오</span><span>열정의시간</span></div>
+  <h2 class="sec"><span class="no">06</span> 게시 전 12문항 체크리스트</h2>
+  <p class="dek">대행사가 쓴 문구라도 <b>책임은 병원에 있습니다.</b> 의료광고의 주체는 의료기관 · 의료인이고,
+  위탁했다고 책임이 이전되지 않습니다. 이 표를 <b>게재 전 병원 최종 승인 서식</b>으로 쓰십시오.</p>
+
+  <div class="ck">
+    <div class="ck-h">내용 — 제56조 제2항</div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>효과를 단정하는 문장이 없는가</b> <i>— “됩니다 · 없어집니다 · 유지됩니다 · 보장”</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>다른 병원 · 의사 · 시술과 비교하거나 깎아내리지 않는가</b> <i>— 4호 · 5호</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>치료 후기 · 체험담 · 전후 사진이 없는가</b> <i>— 대가 · 긍정만 · 예후 서술 · 병원정보 결합 4요소</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>장점을 말한 만큼 부작용 · 주의사항을 함께 썼는가</b> <i>— 7호. “안전” 강조 + 부작용 미고지 = 위반 신호</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>최상급 · 절대 표현이 없는가</b> <i>— 최고 · 유일 · 1위 · 압도적 · 기적</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>“명의 · 권위자 · 공식 지정”처럼 법적 근거 없는 명칭이 없는가</b> <i>— 9호</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>수상 · 인증 · 추천 이력이 언론사 주관은 아닌가</b> <i>— 14호. 정부 · 공공기관 인증만 예외</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>할인을 광고한다면 5요소가 전부 있는가</b> <i>— 금액 · 대상 · 기간 · 범위 · 할인 전 가격. 선착순 · 소개 할인은 삭제</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>수술 · 주사 등 시술행위가 이미지 · 영상에 직접 드러나지 않는가</b> <i>— 6호</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>국내 매체에 외국인환자 유치 문구가 없는가</b> <i>— 12호</i></div></div>
+  </div>
+
+  <div class="ck" style="margin-top:5mm">
+    <div class="ck-h">절차 — 제57조</div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>이 매체가 사전심의 대상인가 확인했는가</b> <i>— 네이버 · 인스타 · 유튜브는 팔로워와 무관하게 대상</i></div></div>
+    <div class="ck-i"><div class="bx"></div><div class="tx"><b>심의를 받았다면 승인본과 한 글자도 다르지 않은가 / 3년이 지나지 않았는가</b> <i>— 11호. 기간 · 가격 수정이 특히 위험</i></div></div>
+  </div>
+
+  <h3 style="margin-top:6mm">이미 올라가 있는 것들 — 이 순서로 처리하십시오</h3>
+  <ol>
+    <li><b>홈페이지 메인 · 플레이스 소개글</b> — 가장 오래 방치되고 가장 먼저 조회됩니다. 최상급 · 수상 이력 · 전후 사진부터.</li>
+    <li><b>최근 6개월 블로그 · 인스타 게시물</b> — 활성 콘텐츠라 노출량이 큽니다.</li>
+    <li><b>심의받은 지 3년이 넘은 문안</b> — 11호 위반 상태일 수 있습니다.</li>
+    <li><b>광고 집행 중인 소재</b> — 비용이 나가면서 리스크도 같이 쌓입니다.</li>
+  </ol>
+
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">11</div>
+</div>
+
+<!-- 12. CTA -->
+<div class="pg flexcol">
+  <div class="rh"><span><b>다음 단계</b></span><span>열정의시간</span></div>
+  <h2 class="sec">여기까지가 요약본입니다</h2>
+  <p class="dek">이 12쪽은 <b>병원마케팅 · 의료광고 실전가이드</b> 전체 50쪽 중
+  1부 “국내 의료법 실전편”의 핵심만 뽑은 발췌본입니다.</p>
+
+  <div class="book">
+    <div class="bt">병원마케팅 · 의료광고 실전가이드 <span style="font-size:8pt;color:var(--muted);font-weight:600">— 전체 50쪽</span></div>
+    <div class="bs">요약본에서 덜어낸 것 — 14개 호 전수 사례, 회색지대 FAQ 10문, 채널별 상세 운영법,
+    중국 샤오홍슈 검열 룰과 계정정지 해결 절차, 자가검수 도구 운용법, 심의 신청 실무와 서식.</div>
+    <div class="bl">
+      <span>의료법 제56조 원문 발췌</span><span>회색지대 FAQ 10문</span><span>샤오홍슈 계정정지 대응</span>
+      <span>중국 · 일본 · 대만 채널별 규제</span><span>심의 신청 실무</span><span>체크리스트 서식</span>
+    </div>
+    <div class="bs" style="margin-top:3.5mm">__TALING_LINE__</div>
+  </div>
+
+  <div class="cta">
+    <div class="in">
+      <div class="eye">MADE BY 열정의시간</div>
+      <h4>문장을 고치는 것까지는 이 표로 됩니다.<br>고친 문장으로 환자가 오게 하는 건 다른 일입니다.</h4>
+      <p>열정의시간은 국내와 해외(중국 · 일본 · 대만)에서 병원 마케팅을 직접 운영합니다.
+      심의를 통과하는 원고 작성부터 채널 운영, 그리고 외국인 환자 유치까지 —
+      국내 매체에는 쓸 수 없는 12호 문구도 해외 채널에서는 별도 규정을 따릅니다. 그게 저희가 하는 일입니다.</p>
+      <div class="lines">
+        <div class="li"><div class="l">자가검수 도구 · 무료</div><div class="v">timeofpassion.com/time/ad-check</div></div>
+        <div class="li"><div class="l">회사 소개</div><div class="v">timeofpassion.com/time</div></div>
+        <div class="li"><div class="l">__BOOK_LABEL__</div><div class="v">__BOOK_VALUE__</div></div>
+        <div class="li"><div class="l">이메일</div><div class="v">ceo@timeofpassion.com</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disc">
+    본 자료는 의료법 제56조 · 제57조 및 시행령 제23조를 근거로 작성한 참고 자료이며 법적 효력이 없습니다.
+    회색지대 항목은 해석이 갈릴 수 있는 영역으로, 개별 광고의 위법 여부는 관할 보건소 · 각 자율심의기구 · 법률 검토에 따라 최종 결정됩니다.
+    게시 책임은 게시자에게 있습니다.<br>
+    출처 — 국가법령정보센터 의료법 제56조 · 제57조, 의료법 시행령 제23조, 의료광고 자율심의기구(admedical.org),
+    대한한의사협회 · 대한치과의사협회 의료광고심의, Google Ads 헬스케어 및 의약품 정책.<br>
+    © 열정의시간. 무단 전재 · 재배포를 금합니다. 사내 회람 및 인쇄 사용은 자유롭게 하셔도 됩니다.
+  </div>
+  <div class="pf">열정의시간 · 의료광고 위반문구 대조표</div><div class="pn">12</div>
+</div>
+
+</body>
+</html>

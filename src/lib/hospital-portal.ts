@@ -244,6 +244,23 @@ export const TOGGLE_LOCALES = [
 ] as const
 export type ToggleLocale = (typeof TOGGLE_LOCALES)[number]["value"]
 
+// URL 쿼리 ?lang= (소문자 관례) → 화면 토글 locale.
+// koreamedguide 등 외부(영문) 유입이 언어를 고정해 딥링크할 때 초기 언어를 잡는 용도.
+// 유효하지 않으면 null → 페이지는 기본(ko)으로.
+const LANG_PARAM_MAP: Record<string, ToggleLocale> = {
+  ko: "ko",
+  en: "en",
+  ja: "ja",
+  "zh-cn": "zh-CN",
+  "zh-tw": "zh-TW",
+  vi: "vi",
+}
+export function toToggleLocale(param: string | string[] | undefined | null): ToggleLocale | null {
+  const raw = Array.isArray(param) ? param[0] : param
+  if (!raw) return null
+  return LANG_PARAM_MAP[raw.toLowerCase()] ?? null
+}
+
 // 진료과목 고정 표시 순서(의료관광 수요 높은 순). 데이터에 없는 과목은 뒤에 자동 추가.
 export const DEPARTMENT_ORDER = [
   "피부과",

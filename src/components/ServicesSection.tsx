@@ -1,3 +1,4 @@
+import SectionLabel from "./SectionLabel";
 import Link from "next/link";
 
 interface Layer {
@@ -75,8 +76,8 @@ function LayerCard({ layer, isLast }: { layer: Layer; isLast: boolean }) {
             height: 64,
             borderRadius: "50%",
             background: "#0a0000",
-            border: "1px solid rgba(204,0,0,0.4)",
-            boxShadow: "0 0 24px rgba(204,0,0,0.18)",
+            border: "1px solid rgba(230,51,41,0.4)",
+            boxShadow: "0 0 24px rgba(230,51,41,0.18)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -134,7 +135,7 @@ function LayerCard({ layer, isLast }: { layer: Layer; isLast: boolean }) {
               marginBottom: 14,
             }}
           >
-            <span style={{ color: "#cc0000", fontWeight: 700 }}>LAYER {layer.n}</span>
+            <span style={{ color: "#E63329", fontWeight: 700 }}>LAYER {layer.n}</span>
             <span style={{ color: "rgba(255,255,255,0.25)" }}>·</span>
             <span style={{ color: "#E7C46A" }}>{layer.phaseKo}</span>
           </div>
@@ -176,14 +177,14 @@ function LayerCard({ layer, isLast }: { layer: Layer; isLast: boolean }) {
           <div style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.04)", padding: "1.1rem 1.3rem", marginBottom: 18 }}>
             <div
               className="font-mono-sys"
-              style={{ fontSize: 10, letterSpacing: "0.12em", color: "#cc0000", marginBottom: 12 }}
+              style={{ fontSize: 10, letterSpacing: "0.12em", color: "#E63329", marginBottom: 12 }}
             >
               우리 방식
             </div>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
               {layer.how.map((h, i) => (
                 <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                  <span className="font-mono-sys" style={{ color: "#cc0000", flexShrink: 0, marginTop: 1, fontSize: "0.85rem" }}>
+                  <span className="font-mono-sys" style={{ color: "#E63329", flexShrink: 0, marginTop: 1, fontSize: "0.85rem" }}>
                     _&gt;
                   </span>
                   <span style={{ color: "rgba(255,255,255,0.78)", fontWeight: 300, fontSize: "0.9rem", lineHeight: 1.6 }}>
@@ -199,8 +200,8 @@ function LayerCard({ layer, isLast }: { layer: Layer; isLast: boolean }) {
             style={{
               padding: "12px 18px",
               marginBottom: 18,
-              borderLeft: "2px solid #cc0000",
-              background: "linear-gradient(to right, rgba(204,0,0,0.1), transparent)",
+              borderLeft: "2px solid #E63329",
+              background: "linear-gradient(to right, rgba(230,51,41,0.1), transparent)",
             }}
           >
             <span className="font-mono-sys" style={{ color: "#ff5a5a", marginRight: 8, fontWeight: 700 }}>→</span>
@@ -227,8 +228,8 @@ function LayerCard({ layer, isLast }: { layer: Layer; isLast: boolean }) {
                     fontSize: "0.75rem",
                     fontWeight: 600,
                     color: "#ff8a8a",
-                    background: "rgba(204,0,0,0.08)",
-                    border: "1px solid rgba(204,0,0,0.3)",
+                    background: "rgba(230,51,41,0.08)",
+                    border: "1px solid rgba(230,51,41,0.3)",
                     borderRadius: 999,
                     padding: "5px 12px",
                   }}
@@ -248,7 +249,7 @@ function LayerCard({ layer, isLast }: { layer: Layer; isLast: boolean }) {
                 color: "#fff",
                 textDecoration: "none",
                 whiteSpace: "nowrap",
-                borderBottom: "1px solid rgba(204,0,0,0.6)",
+                borderBottom: "1px solid rgba(230,51,41,0.6)",
                 paddingBottom: 2,
               }}
             >
@@ -266,28 +267,12 @@ export default function ServicesSection() {
     <section id="services" style={{ position: "relative", zIndex: 20, padding: "4rem 0 8rem" }}>
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <div
-            className="font-mono-sys"
-            style={{
-              fontSize: 12,
-              letterSpacing: "0.2em",
-              color: "#E7C46A",
-              marginBottom: 18,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 14,
-            }}
-          >
-            <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
-            WHAT WE DO
-            <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
-          </div>
+        <div style={{ marginBottom: "3rem" }}>
+          <SectionLabel>WHAT WE DO</SectionLabel>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 900, lineHeight: 1.25 }}>
             마케팅을 3개로 따로 파는 게 아니라,
             <br />
-            <span style={{ borderBottom: "2px solid #cc0000", paddingBottom: 4 }}>하나의 흐름</span>으로 쌓습니다.
+            <span style={{ borderBottom: "2px solid #E63329", paddingBottom: 4 }}>하나의 흐름</span>으로 쌓습니다.
           </h2>
           <p
             style={{
@@ -342,7 +327,7 @@ export default function ServicesSection() {
               {i < 2 && (
                 <span
                   className="font-mono-sys"
-                  style={{ color: "#cc0000", fontSize: "1.3rem", fontWeight: 900, lineHeight: 1 }}
+                  style={{ color: "#E63329", fontSize: "1.3rem", fontWeight: 900, lineHeight: 1 }}
                 >
                   ↓
                 </span>

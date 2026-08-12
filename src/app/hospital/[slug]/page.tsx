@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getAllHospitals, type HospitalI18n } from "@/lib/hospital-portal"
 import HospitalDetail from "./HospitalDetail"
+import { HOSPITAL_PORTAL_LISTED } from "../_visibility"
 import "../../[lang]/hospitals/hospitals.css"
 import "../hospital.css"
 
@@ -33,6 +34,8 @@ export async function generateMetadata({
   return {
     title,
     description,
+    // 숨김 공개: 주소로는 열리되 검색엔진 색인은 금지.
+    robots: HOSPITAL_PORTAL_LISTED ? undefined : { index: false, follow: false },
     alternates: { canonical: url },
     openGraph: {
       title,

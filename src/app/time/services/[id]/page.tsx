@@ -51,7 +51,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
           <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800, marginBottom: "0.5rem" }}>
             제공 서비스
           </h2>
-          <div style={{ width: 40, height: 2, background: "#cc0000", borderRadius: 1 }} />
+          <div style={{ width: 40, height: 2, background: "#E63329", borderRadius: 1 }} />
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "2rem" }}>
@@ -88,7 +88,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
           <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800, marginBottom: "0.5rem" }}>
             포트폴리오
           </h2>
-          <div style={{ width: 40, height: 2, background: "#cc0000", borderRadius: 1 }} />
+          <div style={{ width: 40, height: 2, background: "#E63329", borderRadius: 1 }} />
         </div>
 
         {service.portfolio.length === 0 ? (
@@ -151,7 +151,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
       </div>
 
       {/* CTA Section */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "4rem 6%", marginBottom: "4rem", textAlign: "center", background: "rgba(204, 0, 0, 0.08)", borderRadius: "8px", border: "1px solid rgba(204, 0, 0, 0.2)" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "4rem 6%", marginBottom: "4rem", textAlign: "center", background: "rgba(230, 51, 41, 0.08)", borderRadius: "8px", border: "1px solid rgba(230, 51, 41, 0.2)" }}>
         <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem" }}>
           {service.title}에 대해 더 알고 싶으신가요?
         </h3>

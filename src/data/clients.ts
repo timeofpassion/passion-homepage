@@ -7,7 +7,8 @@ export type ClientLogo = { name: string; logo: string; medical?: boolean };
 
 export const clientLogos: ClientLogo[] = [
   { name: "MELLOW", logo: "/clients/logo_mellow.png", medical: true },
-  { name: "오야로피부과", logo: "/clients/logo_oaro.png", medical: true },
+  { name: "오벨피부과 AUVEL", logo: "/clients/logo_auvel.png", medical: true },
+  { name: "오아로피부과", logo: "/clients/logo_oaro.png", medical: true },
   { name: "오체안피부과", logo: "/clients/logo_ozhean.png", medical: true },
   { name: "순수안 피부과", logo: "/clients/logo_soosoan.png", medical: true },
   { name: "별성형외과의원", logo: "/clients/logo_star.png", medical: true },
@@ -30,6 +31,9 @@ export const clientLogos: ClientLogo[] = [
   { name: "더리즈의원", logo: "/clients/logo_theliz.png", medical: true },
   { name: "랩인큐브", logo: "/clients/logo_labincube.png", medical: true },
   { name: "이안한방병원", logo: "/clients/logo_eahn.png", medical: true },
+  { name: "INFUSKIN 인퓨스킨", logo: "/clients/logo_infuskin.png", medical: true },
+  { name: "캐시닥", logo: "/clients/logo_cashdoc.png", medical: true },
+  { name: "애프터닥", logo: "/clients/logo_afterdoc.png", medical: true },
   { name: "커피스미스", logo: "/clients/logo_coffeesmith.png" },
   { name: "제주본가", logo: "/clients/logo_jejubonga.png" },
   { name: "세민성형외과", logo: "/clients/logo_semin.png", medical: true },

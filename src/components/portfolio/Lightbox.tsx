@@ -32,7 +32,7 @@ export default function Lightbox({
   }, [item, onClose]);
 
   if (!item) return null;
-  const accent = item.accent || "#cc0000";
+  const accent = item.accent || "#E63329";
   const showImage = Boolean(item.thumbnail) && !imgError;
 
   return (
@@ -145,7 +145,7 @@ export default function Lightbox({
                 gap: 8,
                 marginTop: 16,
                 padding: "10px 18px",
-                background: "#cc0000",
+                background: "#E63329",
                 color: "#fff",
                 borderRadius: 8,
                 fontWeight: 700,

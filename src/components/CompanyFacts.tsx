@@ -1,3 +1,4 @@
+import SectionLabel from "./SectionLabel";
 // EXP-005 — GEO '통계·수치 슬롯' + 정부 등록 신뢰 근거(외국인환자 유치업 등록증).
 // 모든 값은 검증된 사실만 사용. 등록증은 대표 생년월일만 가린 실물 캡처.
 const FACTS: { k: string; v: string; strong?: boolean }[] = [
@@ -14,31 +15,13 @@ export default function CompanyFacts() {
   return (
     <section style={{ position: "relative", zIndex: 20, padding: "3rem 0" }}>
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "0 6%" }}>
-        {/* Eyebrow */}
-        <div
-          className="font-mono-sys"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 14,
-            fontSize: 12,
-            letterSpacing: "0.22em",
-            color: "#E7C46A",
-            marginBottom: "1.6rem",
-          }}
-        >
-          <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
-          OFFICIAL RECORD · 공식 정보
-          <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
-        </div>
+        <SectionLabel>OFFICIAL RECORD · 공식 정보</SectionLabel>
 
         {/* 핵심 신뢰 메시지 */}
         <p
           style={{
-            textAlign: "center",
             maxWidth: 720,
-            margin: "0 auto 2.4rem",
+            margin: "0 0 2.4rem",
             fontSize: "clamp(1.05rem, 2.2vw, 1.4rem)",
             fontWeight: 700,
             lineHeight: 1.5,

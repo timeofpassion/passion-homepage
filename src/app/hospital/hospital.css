@@ -203,7 +203,7 @@
 .hpd {
   min-height: 100vh;
   background:
-    radial-gradient(120% 72% at 50% -8%, rgba(204, 0, 0, 0.42), rgba(110, 0, 7, 0.28) 32%, rgba(10, 3, 4, 0.94) 66%),
+    radial-gradient(120% 72% at 50% -8%, rgba(230, 51, 41, 0.42), rgba(110, 0, 7, 0.28) 32%, rgba(10, 3, 4, 0.94) 66%),
     radial-gradient(90% 55% at 50% 118%, rgba(150, 0, 10, 0.22), transparent 60%),
     #0a0304;
   background-attachment: fixed;
@@ -289,7 +289,7 @@
   padding: 16px 18px;
   border: 1px solid rgba(231, 196, 106, 0.34);
   border-radius: 14px;
-  background: linear-gradient(180deg, rgba(231, 196, 106, 0.09), rgba(204, 0, 0, 0.06));
+  background: linear-gradient(180deg, rgba(231, 196, 106, 0.09), rgba(230, 51, 41, 0.06));
 }
 .hpd__exclusive-badge {
   flex: 0 0 auto;
@@ -447,7 +447,7 @@
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.06);
 }
-/* 인물이 프레임 오른쪽으로 쏠린 원본(아이니크) 보정 — 얼굴을 왼쪽으로 더 이동(대표님 지시 2026-07-07) */
+/* 인물이 프레임 오른쪽으로 쏠린 원본(아이니크) 보정 — 얼굴을 중앙으로(대표님 지시 2026-07-07) */
 .hpd__doctor-photo--offset-r {
   object-position: 85% center;
 }

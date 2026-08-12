@@ -8,7 +8,9 @@ const NAV_ITEMS: { label: string; href: string; quote?: boolean }[] = [
   { label: "팀", href: "/time#team" },
   { label: "후기", href: "/time#testimonials" },
   { label: "인사이트", href: "/time/blog" },
-  { label: "협력병원", href: "/ko/hospitals" },
+  // 협력병원 카탈로그(/hospital)는 브로커·에이전시에게 URL 직접 전달하는 숨김 공개 페이지.
+  // 홈페이지 메뉴에서 연결하지 않는다 (2026-07-21 대표 지시). 공개 전환 시 아래 복원:
+  // { label: "협력병원", href: "/hospital" },
   { label: "견적 의뢰", href: "/time/quote", quote: true },
 ];
 

@@ -1,7 +1,7 @@
 "use client"
 /* eslint-disable @next/next/no-img-element */
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import KakaoFloat from "@/components/KakaoFloat"
 import {
@@ -12,6 +12,7 @@ import {
   type BeforeAfterCase,
   type PriceItem,
   CONTACT_TYPES,
+  toToggleLocale,
 } from "@/lib/hospital-portal"
 
 type UI = {
@@ -68,6 +69,13 @@ function pick(h: HospitalI18n, locale: ToggleLocale): LocaleContent {
 
 export default function HospitalDetail({ hospital: h }: { hospital: HospitalI18n }) {
   const [locale, setLocale] = useState<ToggleLocale>("ko")
+
+  // ?lang=en 딥링크(koreamedguide 등 영문 유입) 시 초기 언어 반영. 서버는 ko 정적 유지.
+  useEffect(() => {
+    const loc = toToggleLocale(new URLSearchParams(window.location.search).get("lang"))
+    if (loc) setLocale(loc)
+  }, [])
+
   const t = STR[locale]
   const c = pick(h, locale)
 

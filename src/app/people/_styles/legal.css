@@ -1,0 +1,208 @@
+/* ============================================================ */
+/* 약관·개인정보·환불·결제안내 등 긴 글 문서 페이지 공통 스타일      */
+/* people.css 의 --ppl-* 토큰(.ppl-root 스코프)을 그대로 쓴다.      */
+/* ============================================================ */
+
+/* 푸터 하단 법적 문서 링크줄 */
+.ppl-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-bottom: 10px;
+}
+
+.ppl-footer__legal a {
+  font-size: 13.5px;
+  color: inherit;
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.ppl-footer__legal a:hover {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ppl-doc {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.ppl-doc__head {
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+  border-bottom: 2px solid var(--ppl-navy);
+}
+
+.ppl-doc__head h1 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ppl-navy);
+}
+
+.ppl-doc__meta {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ppl-slate);
+}
+
+.ppl-doc h2 {
+  margin: 40px 0 12px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ppl-navy);
+}
+
+.ppl-doc h3 {
+  margin: 24px 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ppl-ink);
+}
+
+.ppl-doc p,
+.ppl-doc li {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--ppl-ink);
+}
+
+.ppl-doc p {
+  margin: 0 0 12px;
+}
+
+/* people.css 가 ul 마커를 지우므로 문서 페이지에서는 되살린다 (약관 조항 번호가 사라지면 안 됨) */
+.ppl-doc ul,
+.ppl-doc ol {
+  margin: 0 0 16px;
+  padding-left: 22px;
+}
+
+.ppl-doc ul {
+  list-style: disc outside;
+}
+
+.ppl-doc ol {
+  list-style: decimal outside;
+}
+
+.ppl-doc ul ul {
+  margin: 6px 0 0;
+  list-style: circle outside;
+}
+
+.ppl-doc li {
+  margin-bottom: 6px;
+}
+
+.ppl-doc strong {
+  font-weight: 700;
+}
+
+.ppl-doc a {
+  color: var(--ppl-red);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 강조 박스 — 환불 핵심, 결제 유의사항 등 */
+.ppl-doc__note {
+  margin: 20px 0;
+  padding: 18px 20px;
+  background: var(--ppl-red-soft);
+  border-left: 4px solid var(--ppl-red);
+  border-radius: 8px;
+}
+
+.ppl-doc__note p:last-child {
+  margin-bottom: 0;
+}
+
+/* 표 — 가격표, 환불 기준표 */
+.ppl-doc__table-wrap {
+  overflow-x: auto;
+  margin: 0 0 20px;
+}
+
+.ppl-doc table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  background: var(--ppl-card);
+  border-radius: var(--ppl-radius);
+  overflow: hidden;
+  box-shadow: var(--ppl-shadow);
+}
+
+.ppl-doc th,
+.ppl-doc td {
+  padding: 13px 16px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  text-align: left;
+  border-bottom: 1px solid var(--ppl-line);
+}
+
+.ppl-doc th {
+  background: var(--ppl-navy);
+  color: #fff;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ppl-doc tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ppl-doc td.ppl-doc__num {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* 사업자정보 카드 (결제 페이지 상단 노출용) */
+.ppl-doc__bizcard {
+  margin: 0 0 28px;
+  padding: 22px 24px;
+  background: var(--ppl-card);
+  border: 1px solid var(--ppl-line);
+  border-radius: var(--ppl-radius);
+  box-shadow: var(--ppl-shadow);
+}
+
+.ppl-doc__bizcard dl {
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  gap: 8px 12px;
+  margin: 0;
+}
+
+.ppl-doc__bizcard dt {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ppl-slate);
+}
+
+.ppl-doc__bizcard dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ppl-ink);
+  word-break: keep-all;
+}
+
+@media (max-width: 640px) {
+  .ppl-doc__head h1 {
+    font-size: 26px;
+  }
+  .ppl-doc__bizcard dl {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .ppl-doc__bizcard dt {
+    margin-top: 10px;
+  }
+}

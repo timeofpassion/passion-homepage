@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import SectionLabel from "./SectionLabel";
 
 interface Stat {
   value: number;
@@ -95,23 +96,7 @@ export default function StatsSection() {
   return (
     <section style={{ position: "relative", zIndex: 20, padding: "1rem 0 5rem" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto", padding: "0 6%" }}>
-        <div
-          className="font-mono-sys"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 14,
-            fontSize: 12,
-            letterSpacing: "0.22em",
-            color: "#E7C46A",
-            marginBottom: "2.2rem",
-          }}
-        >
-          <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
-          BY THE NUMBERS
-          <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
-        </div>
+        <SectionLabel>BY THE NUMBERS</SectionLabel>
 
         <div ref={ref} className="stats-grid">
           {STATS.map((stat) => (

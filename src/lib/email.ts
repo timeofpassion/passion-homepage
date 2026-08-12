@@ -49,7 +49,7 @@ export async function sendQuoteEmail(params: QuoteEmailParams) {
           </p>
 
           <div style="text-align: center; margin: 32px 0;">
-            <a href="${reviewUrl}" style="display: inline-block; background: #0a0000; color: #ffffff; padding: 16px 40px; text-decoration: none; font-weight: 700; font-size: 15px; border: 1px solid #cc0000;">
+            <a href="${reviewUrl}" style="display: inline-block; background: #0a0000; color: #ffffff; padding: 16px 40px; text-decoration: none; font-weight: 700; font-size: 15px; border: 1px solid #E63329;">
               견적 검토하고 응답하기 →
             </a>
           </div>

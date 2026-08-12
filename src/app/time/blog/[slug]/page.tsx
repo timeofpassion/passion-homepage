@@ -295,8 +295,8 @@ export default async function BlogPostPage({
                 marginTop: "3.5rem",
                 padding: "2rem",
                 borderRadius: 12,
-                background: "rgba(204,0,0,0.08)",
-                border: "1px solid rgba(204,0,0,0.25)",
+                background: "rgba(230,51,41,0.08)",
+                border: "1px solid rgba(230,51,41,0.25)",
               }}
             >
               <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: "0.6rem" }}>

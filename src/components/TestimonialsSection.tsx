@@ -1,3 +1,4 @@
+import SectionLabel from "./SectionLabel";
 import {
   TestimonialsColumn,
   type ColumnTestimonial,
@@ -80,24 +81,8 @@ export default function TestimonialsSection() {
     <section id="testimonials" style={{ position: "relative", zIndex: 20, padding: "8rem 0" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 6%" }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-          <div
-            className="font-mono-sys"
-            style={{
-              fontSize: 12,
-              letterSpacing: "0.2em",
-              color: "#E7C46A",
-              marginBottom: 18,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 14,
-            }}
-          >
-            <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
-            CLIENT VOICES
-            <span style={{ width: 28, height: 1, background: "rgba(231,196,106,0.5)" }} />
-          </div>
+        <div style={{ marginBottom: "3.5rem" }}>
+          <SectionLabel>CLIENT VOICES</SectionLabel>
           <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900 }}>
             함께한 원장님들의 이야기
           </h2>

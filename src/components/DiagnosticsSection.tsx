@@ -25,10 +25,10 @@ export default function DiagnosticsSection() {
       <div className="mx-auto px-6 max-w-6xl">
         {/* 헤더 */}
         <div className="text-center mb-16 md:mb-20">
-          <p className="font-mono-sys text-xs md:text-sm text-[#cc0000] mb-6 inline-flex items-center gap-3">
-            <span className="w-12 h-px bg-[#cc0000]/50"></span>
+          <p className="font-mono-sys text-xs md:text-sm text-[#E63329] mb-6 inline-flex items-center gap-3">
+            <span className="w-12 h-px bg-[#E63329]/50"></span>
             DIAGNOSTIC REPORT
-            <span className="w-12 h-px bg-[#cc0000]/50"></span>
+            <span className="w-12 h-px bg-[#E63329]/50"></span>
           </p>
           <h2 className="font-black text-4xl md:text-5xl lg:text-6xl text-white mb-4">병원 마케팅의 핵심 문제</h2>
           <p className="text-white/50 text-base md:text-lg">세 가지 근본적인 문제를 진단하고 해결합니다</p>
@@ -41,13 +41,13 @@ export default function DiagnosticsSection() {
             return (
               <div
                 key={item.title}
-                className="glass-card tech-border group p-8 md:p-10 text-center transition-all duration-500 hover:translate-y-[-4px] hover:shadow-[0_20px_40px_-10px_rgba(204,0,0,0.2)]"
+                className="glass-card tech-border group p-8 md:p-10 text-center transition-all duration-500 hover:translate-y-[-4px] hover:shadow-[0_20px_40px_-10px_rgba(230,51,41,0.2)]"
               >
                 {/* 데코레이터 */}
                 <div className="relative mx-auto mb-6 w-36 h-36 [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]">
-                  <div className="absolute inset-0 opacity-[0.12]" style={{ background: 'linear-gradient(to right, rgba(204,0,0,0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(204,0,0,0.12) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-                  <div className="absolute inset-0 m-auto w-12 h-12 bg-[#0a0000] border-t border-l border-white/30 flex items-center justify-center group-hover:border-[#cc0000] transition-colors duration-500">
-                    <Icon className="w-6 h-6 text-[#cc0000]" aria-hidden />
+                  <div className="absolute inset-0 opacity-[0.12]" style={{ background: 'linear-gradient(to right, rgba(230,51,41,0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(230,51,41,0.12) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+                  <div className="absolute inset-0 m-auto w-12 h-12 bg-[#0a0000] border-t border-l border-white/30 flex items-center justify-center group-hover:border-[#E63329] transition-colors duration-500">
+                    <Icon className="w-6 h-6 text-[#E63329]" aria-hidden />
                   </div>
                 </div>
 
@@ -55,7 +55,7 @@ export default function DiagnosticsSection() {
                 <h3 className="font-bold text-xl md:text-2xl text-white mb-4">{item.title}</h3>
 
                 {/* 장식 라인 */}
-                <div className="w-12 h-px bg-[#cc0000]/50 mx-auto mb-4 group-hover:w-20 transition-all duration-500"></div>
+                <div className="w-12 h-px bg-[#E63329]/50 mx-auto mb-4 group-hover:w-20 transition-all duration-500"></div>
 
                 {/* 본문 */}
                 <p className="text-white/60 text-sm md:text-base font-light leading-relaxed">{item.desc}</p>
