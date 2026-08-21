@@ -259,6 +259,17 @@
 .adc-gray .gi::before { content: ""; position: absolute; left: 0; top: 8px; width: 4px; height: 4px;
   border-radius: 50%; background: var(--green-tx); opacity: 0.6; }
 
+/* ---- 서류 층 — 문구를 고쳐도 이게 없으면 반려된다 ----
+   회색지대(초록=통과조건)와 다른 축이라 색을 갈라야 한다. 여기는 "준비물" 이지 "수정" 이 아니다. */
+.adc-docs { margin-top: 18px; border: 1px solid #d7cbb4; background: #fdfaf3; border-radius: 12px; padding: 16px 18px; }
+.adc-docs .dh { font-size: 14px; font-weight: 800; color: var(--amber-tx); letter-spacing: -0.01em; }
+.adc-docs .dsub { font-size: 12.5px; color: var(--sub); line-height: 1.65; margin: 6px 0 12px; }
+.adc-docs .di { border-top: 1px solid #ece1cc; padding: 11px 0 2px; }
+.adc-docs .di:first-of-type { border-top: 0; padding-top: 2px; }
+.adc-docs .dit { font-size: 13.5px; font-weight: 750; color: var(--ink); }
+.adc-docs .diw { font-size: 13px; color: var(--sub); line-height: 1.65; margin-top: 4px; }
+.adc-docs .dig { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
 /* ---- 12호 → 해외 채널로 경로 안내 (차단이 아니라 기회) ---- */
 .adc-overseas { margin-top: 18px; border: 1px solid var(--line-2); border-radius: 14px; padding: 19px 21px;
   background: linear-gradient(180deg, #fffdf8, #fdf8ee); }
