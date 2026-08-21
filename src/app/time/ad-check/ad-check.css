@@ -238,6 +238,14 @@
 }
 
 /* ---- 매체 선택 (11호 = 사전심의 대상 판정용) ---- */
+.adc-url { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.adc-url .lb { font-size: 12px; color: var(--muted); font-weight: 600; }
+.adc-urlin { flex: 1; min-width: 240px; font-family: var(--sans); font-size: 13px; color: var(--ink);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 11px; }
+.adc-urlin::placeholder { color: var(--muted); }
+.adc-urlin:focus { outline: none; border-color: var(--line-2); }
+.adc-urlin:disabled { opacity: 0.5; }
+
 .adc-media { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
 .adc-media .lb { font-size: 12px; color: var(--muted); font-weight: 600; margin-right: 2px; }
 .adc-mchip { font-size: 12.5px; background: var(--bg); border: 1px solid var(--line); color: var(--sub);
