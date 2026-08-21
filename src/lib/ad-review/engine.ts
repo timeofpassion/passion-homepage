@@ -317,7 +317,9 @@ export async function runAdCheck(input: string, media?: string): Promise<ScanRes
     try {
       const res = await anthropic.messages.create({
         model: MODEL,
-        max_tokens: 2000,
+        // 2000 이면 긴 페이지(위반 다수 + 서류 목록)에서 JSON 이 중간에 잘려 파싱이 깨진다(실측 AI_PARSE_FAILED).
+        // 상한일 뿐이라 짧은 문구 검수 비용은 그대로다.
+        max_tokens: 8000,
         system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
         messages: [{ role: "user", content: `[매체] ${media ?? "미지정"}\n[검수할 문구]\n${text}` }],
       });
