@@ -3,7 +3,8 @@ import { runAdCheck } from "@/lib/ad-review/engine";
 import { fetchPageText } from "@/lib/ad-review/page-text";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+// 60초로는 긴 페이지 한 장을 못 끝낸다(실측 FUNCTION_INVOCATION_TIMEOUT). Vercel 상한인 300초로 연다.
+export const maxDuration = 300;
 
 // 2026-07-17: 룰베이스(정규식) 1단 + AI 2단(기본 OFF) 구조를 폐기하고 AI 단일 판정으로 교체.
 // 이유 — 정규식은 문맥을 못 읽어 정답지 100건 실측 47%(오탐 19·미탐 15)였고,
@@ -73,7 +74,9 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "요청이 많습니다. 잠시 후 다시 시도해 주세요." }, { status: 429 });
       }
       try {
-        text = await fetchPageText(url);
+        // 페이지 전문은 붙여넣기 문구보다 훨씬 길다. 판정이 시간 안에 끝나는 길이로 자른다.
+        // 잘린 건 화면 입력창에 그대로 돌아가므로 사용자가 무엇이 검수됐는지 눈으로 본다.
+        text = await fetchPageText(url, 8000);
         fromUrl = true;
       } catch (e) {
         const m = e instanceof Error ? e.message : "";
