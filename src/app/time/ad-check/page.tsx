@@ -322,6 +322,23 @@ export default function AdCheckPage() {
                 </div>
               )}
 
+              {/* 서류 층 — 문구를 고쳐도 이게 없으면 반려된다 */}
+              {rule.documents.length > 0 && (
+                <div className="adc-docs">
+                  <div className="dh">문구 말고, 이 서류가 있어야 통과됩니다</div>
+                  <div className="dsub">
+                    심의 반려의 상당수는 문구가 아니라 서류에서 납니다. 문구만 고쳐 다시 내면 또 반려됩니다.
+                  </div>
+                  {rule.documents.map((d, i) => (
+                    <div key={i} className="di">
+                      <div className="dit">{d.item}</div>
+                      {d.why && <div className="diw">{d.why}</div>}
+                      {d.trigger && <div className="dig">걸린 대목 — {d.trigger}</div>}
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {rule.missingDisclaimer && (
                 <div className="adc-gray">
                   <div className="gh">부작용 고지문을 함께 넣으세요</div>

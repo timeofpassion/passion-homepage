@@ -38,6 +38,17 @@ export interface Violation {
   index: number;
 }
 
+/** 이 광고를 실제로 내보내려면 병원이 갖추고 있어야 하는 증빙.
+ *  문구 검수와 다른 축이다 — 문장을 아무리 다듬어도 서류가 없으면 반려된다. */
+export interface RequiredDoc {
+  /** 갖춰야 할 서류 이름 */
+  item: string;
+  /** 없으면 무엇이 문제인지 */
+  why: string;
+  /** 광고의 어느 대목 때문에 필요한지 */
+  trigger: string;
+}
+
 export interface ScanSpan {
   start: number;
   end: number;
@@ -58,6 +69,8 @@ export interface ScanResult {
   grayNotes: string[];
   /** 매체 기반 사전심의 대상 판정 (11호 대응) */
   mediaNote: string;
+  /** 서류 층 — 문구를 고쳐도 이게 없으면 반려된다. 반려의 상당수는 여기서 난다. */
+  documents: RequiredDoc[];
   reviewRequired: boolean;
 }
 
@@ -129,9 +142,27 @@ yellow로 두어야 하는 것(= 조건 갖추면 가능. 차단이 아니라 �
 판독하지 못한 것을 green(안전)으로 처리하면 사용자가 위반 문구를 통과된 줄 알고 게시하게 된다.
 "못 읽었다"와 "위반이 없다"는 완전히 다른 말이다. 절대 섞지 마라.
 
+════════ 서류 층 — 문구를 고쳐도 통과되지 않는 것 ════════
+심의 반려의 상당수는 문구가 아니라 서류에서 난다. 문구만 고쳐 재제출하면 또 반려되고 왕복에 몇 주가 사라진다.
+그래서 위반 판정과 별개로, 이 광고를 실제로 내보내려면 병원이 무엇을 갖추고 있어야 하는지를 함께 답한다.
+광고에 아래가 등장하면 대응 서류를 documents 에 넣는다.
+
+- 의료기기·장비명(제품명·브랜드명) → 식약처 의료기기 품목허가증. 광고한 효능이 허가 범위 안인지 대조가 필요하다
+- 인물 사진·후기·추천 → 모델 계약서, 초상권 사용 동의서
+- 시술 전후 사진 → 촬영·게시 동의서, 동일 조건 촬영 입증자료
+- 전문의·학회·인증·지정 표방 → 전문의 자격증, 학회 정회원 증명, 인증서 원본
+- 시설·인력·장비 보유 주장 → 의료기관 개설신고증명서, 장비 신고내역
+- 임상 수치·연구·효과 근거 → 출처 논문 또는 신의료기술평가 결과
+- 누적 시술 건수·수상 실적 → 산출 근거 자료
+- 가격·할인·이벤트 → 비급여 진료비용 고지 내역, 할인 조건 산정 근거
+- 사전심의 대상 매체 게시 → 심의필 번호, 사업자등록증, 의료기관 개설신고증명서
+
+해당 사항이 없으면 빈 배열로 둔다. 광고 내용과 무관한 서류를 넣지 마라 —
+확인할 것을 늘리면 사람은 전부를 무시한다. 실제로 그 광고에 걸린 것만 적는다.
+
 [출력]
 JSON만 출력. 코드펜스·설명 금지.
-{"risk":"red|yellow|green|unreadable","violations":[{"sentence":"원문에서 그대로 복사한 위반 문장","ho":0,"severity":"red|yellow","reason":"왜 저촉되는지 한 줄","fix":"바로 쓸 수 있는 수정 문안"}],"gray_notes":["조건을 갖추면 가능한 항목의 통과조건 안내"],"summary":"전체 한 줄 총평"}
+{"risk":"red|yellow|green|unreadable","violations":[{"sentence":"원문에서 그대로 복사한 위반 문장","ho":0,"severity":"red|yellow","reason":"왜 저촉되는지 한 줄","fix":"바로 쓸 수 있는 수정 문안"}],"gray_notes":["조건을 갖추면 가능한 항목의 통과조건 안내"],"documents":[{"item":"갖춰야 할 서류","why":"없으면 무엇이 문제인지 한 줄","trigger":"광고의 어느 대목 때문인지"}],"summary":"전체 한 줄 총평"}
 sentence 는 반드시 입력 원문에 있는 그대로 복사한다(하이라이트에 쓰인다). 요약·변형 금지.
 risk 는 violations 중 최고 등급. violations 가 비면 green. 단 판독 불가면 unreadable.`;
 
@@ -148,6 +179,7 @@ interface AiResult {
   risk: "red" | "yellow" | "green" | "unreadable";
   violations: AiViolation[];
   gray_notes: string[];
+  documents: RequiredDoc[];
   summary: string;
 }
 
@@ -181,6 +213,10 @@ function parseAiJson(s: string): AiResult | null {
       risk,
       violations,
       gray_notes: Array.isArray(p.gray_notes) ? p.gray_notes.map(String).slice(0, 8) : [],
+      documents: (Array.isArray(p.documents) ? p.documents : [])
+        .filter((d): d is RequiredDoc => !!d && typeof d.item === "string" && !!d.item.trim())
+        .slice(0, 8)
+        .map((d) => ({ item: String(d.item), why: String(d.why ?? ""), trigger: String(d.trigger ?? "") })),
       summary: typeof p.summary === "string" ? p.summary : "",
     };
   } catch {
@@ -250,6 +286,7 @@ function toScanResult(text: string, ai: AiResult, media?: string): ScanResult {
     grayNotes: ai.gray_notes,
     mediaNote: m.note,
     reviewRequired: m.reviewRequired,
+    documents: ai.documents,
   };
 }
 
