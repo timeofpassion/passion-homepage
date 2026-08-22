@@ -46,6 +46,7 @@ function highlight(text: string, spans: ScanSpan[]): ReactNode {
 export default function AdCheckPage() {
   const [text, setText] = useState("");
   const [media, setMedia] = useState<string>("블로그");
+  const [url, setUrl] = useState("");
   const [submitted, setSubmitted] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<CheckResponse | null>(null);
@@ -66,8 +67,10 @@ export default function AdCheckPage() {
 
   async function handleCheck() {
     const value = text.trim();
-    if (value.length < 5) {
-      setError("검수할 문구를 5자 이상 입력해 주세요.");
+    const link = url.trim();
+    // 문구가 없으면 주소로 검수한다 — 이미 올려둔 페이지가 있는 원장님이 대부분이다
+    if (value.length < 5 && !link) {
+      setError("검수할 문구를 5자 이상 입력하거나, 페이지 주소를 넣어 주세요.");
       return;
     }
     setError("");
@@ -77,12 +80,13 @@ export default function AdCheckPage() {
       const res = await fetch("/api/ad-check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: value, media }),
+        body: JSON.stringify(value.length >= 5 ? { text: value, media } : { url: link, media }),
       });
       const json = (await res.json()) as CheckResponse & {
         remaining?: number;
         cap?: number;
         soldOut?: boolean;
+        text?: string;
       };
       if (typeof json.remaining === "number" && typeof json.cap === "number") {
         setQuota({ remaining: json.remaining, cap: json.cap });
@@ -95,7 +99,10 @@ export default function AdCheckPage() {
         setError(json.error || "검수 처리 중 오류가 발생했습니다.");
         return;
       }
-      setSubmitted(value);
+      // 주소로 검수한 경우 서버가 뽑아온 본문을 화면에 되돌려준다
+      const checked = json.text ?? value;
+      if (json.text) setText(json.text);
+      setSubmitted(checked);
       setData(json);
     } catch {
       setError("네트워크 오류로 검수에 실패했습니다. 잠시 후 다시 시도해 주세요.");
@@ -164,6 +171,17 @@ export default function AdCheckPage() {
               placeholder="예) 강남 최고의 리프팅! 100% 완벽한 효과, 부작용 없이 5년 유지. 선착순 50% 할인 이벤트..."
               maxLength={12000}
             />
+            <div className="adc-url">
+              <span className="lb">또는 페이지 주소</span>
+              <input
+                className="adc-urlin"
+                type="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://blog.naver.com/... 이미 올려둔 글 주소를 넣으면 본문을 가져옵니다"
+                disabled={loading}
+              />
+            </div>
             <div className="adc-media">
               <span className="lb">게시할 매체</span>
               {MEDIA.map((m) => (
@@ -185,7 +203,7 @@ export default function AdCheckPage() {
               </button>
               <button
                 className="adc-ghostbtn"
-                onClick={() => { setText(""); setData(null); setError(""); }}
+                onClick={() => { setText(""); setUrl(""); setData(null); setError(""); }}
                 disabled={loading}
               >
                 지우기

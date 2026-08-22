@@ -42,3 +42,7 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# 임시 캡처 스크립트·이미지 (커밋 대상 아님)
+shot*.mjs
+shot-*.png

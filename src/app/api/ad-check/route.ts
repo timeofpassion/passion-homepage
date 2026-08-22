@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { runAdCheck } from "@/lib/ad-review/engine";
+import { fetchPageText } from "@/lib/ad-review/page-text";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+// 60초로는 긴 페이지 한 장을 못 끝낸다(실측 FUNCTION_INVOCATION_TIMEOUT). Vercel 상한인 300초로 연다.
+export const maxDuration = 300;
 
 // 2026-07-17: 룰베이스(정규식) 1단 + AI 2단(기본 OFF) 구조를 폐기하고 AI 단일 판정으로 교체.
 // 이유 — 정규식은 문맥을 못 읽어 정답지 100건 실측 47%(오탐 19·미탐 15)였고,
@@ -55,9 +57,37 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as { text?: string; media?: string };
-    const text = (body.text ?? "").trim();
+    const body = (await request.json()) as { text?: string; media?: string; url?: string };
+    let text = (body.text ?? "").trim();
     const media = typeof body.media === "string" ? body.media : undefined;
+
+    // 페이지 주소만 준 경우 — 서버가 대신 열어 본문을 뽑는다.
+    // 남용 방지 카운터 앞에서 처리해야 남의 서버를 대신 긁는 용도로 쓰이지 않는다.
+    const url = typeof body.url === "string" ? body.url.trim() : "";
+    let fromUrl = false;
+    if (!text && url) {
+      const ipForUrl =
+        request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+        request.headers.get("x-real-ip") ||
+        "unknown";
+      if (rateLimited(ipForUrl)) {
+        return NextResponse.json({ error: "요청이 많습니다. 잠시 후 다시 시도해 주세요." }, { status: 429 });
+      }
+      try {
+        // 페이지 전문은 붙여넣기 문구보다 훨씬 길다. 판정이 시간 안에 끝나는 길이로 자른다.
+        // 잘린 건 화면 입력창에 그대로 돌아가므로 사용자가 무엇이 검수됐는지 눈으로 본다.
+        text = await fetchPageText(url, 8000);
+        fromUrl = true;
+      } catch (e) {
+        const m = e instanceof Error ? e.message : "";
+        const msg =
+          m === "URL_INVALID" ? "주소 형식이 올바르지 않습니다. https:// 로 시작하는 주소를 넣어 주세요."
+          : m === "URL_BLOCKED" ? "열 수 없는 주소입니다. 공개된 페이지 주소만 검수할 수 있습니다."
+          : m === "URL_EMPTY" ? "페이지에서 읽을 글이 없습니다. 문구를 직접 붙여넣어 주세요."
+          : "페이지를 열지 못했습니다. 주소를 확인하거나 문구를 직접 붙여넣어 주세요.";
+        return NextResponse.json({ error: msg }, { status: 400 });
+      }
+    }
 
     if (text.length < 5) {
       return NextResponse.json({ error: "검수할 문구를 5자 이상 입력해 주세요." }, { status: 400 });
@@ -91,7 +121,8 @@ export async function POST(request: Request) {
     capUsed += 1; // 호출 전에 센다 — 실패해도 토큰은 이미 나갔을 수 있다
 
     const rule = await runAdCheck(text, media);
-    return NextResponse.json({ rule, remaining: remainingToday(), cap: DAILY_CAP });
+    // 주소로 들어온 건 무엇을 검수했는지 화면에 되돌려준다 — 안 보여주면 결과를 믿을 근거가 없다
+    return NextResponse.json({ rule, remaining: remainingToday(), cap: DAILY_CAP, ...(fromUrl ? { text } : {}) });
   } catch (error) {
     // 판정 실패를 "안전"으로 위장하지 않는다. 실패는 실패로 알린다.
     const msg = error instanceof Error ? error.message : "";
