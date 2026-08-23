@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { runAdCheck } from "@/lib/ad-review/engine";
 import { fetchPageText } from "@/lib/ad-review/page-text";
+import { RULE_BOOK_BASELINE } from "@/lib/ad-review/rules";
+import { getMedicalAdLaw, toLawMeta } from "@/lib/law/lawgo";
 
 export const runtime = "nodejs";
 // 60초로는 긴 페이지 한 장을 못 끝낸다(실측 FUNCTION_INVOCATION_TIMEOUT). Vercel 상한인 300초로 연다.
@@ -120,9 +122,27 @@ export async function POST(request: Request) {
     }
     capUsed += 1; // 호출 전에 센다 — 실패해도 토큰은 이미 나갔을 수 있다
 
+    // 근거 조문의 현행 시행일·출처를 법제처에서 확인한다(24h 캐시).
+    // 판정과 무관하게 병렬로 돌리고, 실패하면 null 로 조용히 빠진다 — 검수는 멈추지 않는다.
+    const lawPromise = getMedicalAdLaw();
+
     const rule = await runAdCheck(text, media);
+
+    const snapshot = await lawPromise;
+    const law = snapshot ? toLawMeta(snapshot, RULE_BOOK_BASELINE) : null;
+    if (law?.stale.length) {
+      // 규칙 사전(rules.ts)이 대조한 시점 이후로 법이 바뀌었다. 사람이 손봐야 한다.
+      console.warn("[ad-check] 규칙 사전이 낡았을 수 있음:", JSON.stringify(law.stale));
+    }
+
     // 주소로 들어온 건 무엇을 검수했는지 화면에 되돌려준다 — 안 보여주면 결과를 믿을 근거가 없다
-    return NextResponse.json({ rule, remaining: remainingToday(), cap: DAILY_CAP, ...(fromUrl ? { text } : {}) });
+    return NextResponse.json({
+      rule,
+      law,
+      remaining: remainingToday(),
+      cap: DAILY_CAP,
+      ...(fromUrl ? { text } : {}),
+    });
   } catch (error) {
     // 판정 실패를 "안전"으로 위장하지 않는다. 실패는 실패로 알린다.
     const msg = error instanceof Error ? error.message : "";

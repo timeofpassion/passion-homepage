@@ -32,6 +32,15 @@ export const RULE_BOOK = `[의료법 제56조 제2항 — 검수 대상 13개 �
 
 [대상 아님] 11호(심의 미이행)는 문구로 판정 불가한 절차 조항 — 판정하지 말 것.`;
 
+/** RULE_BOOK 을 작성할 때 대조한 법령의 시행일 (YYYYMMDD).
+ *  현행 시행일이 이보다 뒤면 그 사이에 법이 바뀐 것이고, RULE_BOOK 은 그만큼 낡았다.
+ *  lawgo.checkStale() 이 매 검수마다 이 값을 현행과 대조한다.
+ *  ※ 규칙 사전을 손보고 나면 반드시 이 날짜도 함께 올릴 것. */
+export const RULE_BOOK_BASELINE: Record<string, string> = {
+  "의료법": "20260407",
+  "의료법 시행령": "20260210",
+};
+
 /** 호 번호 → 유형명 (UI 표시용) */
 export const HO_LABEL: Record<number, string> = {
   1: "미평가 신의료기술",
