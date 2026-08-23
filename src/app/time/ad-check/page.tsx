@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import type { ScanResult, ScanSpan } from "@/lib/ad-review/engine";
+import type { LawMeta } from "@/lib/law/lawgo";
 import LeadForm from "./LeadForm";
 import TalingCard from "./TalingCard";
 import { KAKAO_URL, BOOKING_URL, TALING_URL } from "./links";
@@ -9,7 +10,15 @@ import "./ad-check.css";
 
 interface CheckResponse {
   rule: ScanResult;
+  /** 판정 근거 조문의 현행 시행일·출처 (법제처). 조회 실패 시 null */
+  law?: LawMeta | null;
   error?: string;
+}
+
+/** "56-2-3" → 법제처 의료법 제56조 원문 */
+function articleUrl(article: string): string {
+  const jo = article.split("-")[0];
+  return `https://www.law.go.kr/법령/${encodeURIComponent("의료법")}/제${jo}조`;
 }
 
 /** 매체 — 사전심의 대상 판정(11호)에 쓰인다. 문구만으로는 판정 불가한 절차 조항이라 매체로 본다. */
@@ -114,6 +123,7 @@ export default function AdCheckPage() {
   const rule = data?.rule;
   // 12호(외국인환자 국내유치)에 걸렸다면 = 해외 환자를 받고 싶은 원장님이다.
   // 국내 매체엔 못 쓰지만 해외 채널은 별도 규정이고, 그건 우리가 하는 일이다. 차단이 아니라 경로 안내.
+  const law = data?.law ?? null;
   const hasOverseas = !!rule?.violations.some((v) => v.article === "56-2-12");
 
   // 리드 폼에 실어 보내는 값 — 원문이 아니라 판정 메타만이다.
@@ -285,6 +295,29 @@ export default function AdCheckPage() {
                 <b>{media}</b> · {rule.mediaNote}
               </div>
 
+              {/* 판정 근거의 현행성 — 법제처에서 조회한 시행일과 원문 링크.
+                  이 도구가 "기억으로 답하지 않는다"는 걸 화면에서 확인할 수 있게 한다. */}
+              {law && law.sources.length > 0 && (
+                <div className={`adc-lawbase ${law.stale.length ? "stale" : ""}`}>
+                  {law.stale.length > 0 ? (
+                    <div className="lw">
+                      규칙 사전 점검 이후 법이 개정됐습니다 —{" "}
+                      {law.stale.map((t) => `${t.law} ${t.baseline} → ${t.current}`).join(" · ")}.
+                      결과를 참고하되 개정 내용을 함께 확인해 주세요.
+                    </div>
+                  ) : (
+                    <div className="lw ok">판정 근거를 법제처 현행 조문으로 확인했습니다.</div>
+                  )}
+                  <div className="ls">
+                    {law.sources.map((src) => (
+                      <a key={`${src.law}-${src.article}`} href={src.url} target="_blank" rel="noopener noreferrer">
+                        {src.law} 제{src.article}조 <span>시행 {src.effDate}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {rule.violations.length > 0 ? (
                 <>
                   <div className="adc-sechead">
@@ -298,7 +331,15 @@ export default function AdCheckPage() {
                     {rule.violations.map((v) => (
                       <div key={v.id} className={`adc-vcard r-${v.risk}`}>
                         <div className="vtop">
-                          <span className="art">{v.law}</span>
+                          <a
+                            className="art"
+                            href={articleUrl(v.article)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="법제처 국가법령정보 원문 보기"
+                          >
+                            {v.law}
+                          </a>
                           <span className="lbl">{v.label}</span>
                           <span className="rtag">{riskWord(v.risk)}</span>
                         </div>
@@ -477,6 +518,7 @@ export default function AdCheckPage() {
           <div className="co">열정의<span>시간</span></div>
           <div className="fine">
             의료광고 자가검수 도구는 의료법 제56조·제27조·제57조 및 시행령 제23조를 근거로 AI 기반 참고 결과를 제공합니다.
+            근거 조문은 검수할 때마다 법제처 국가법령정보에서 현행본을 확인합니다.
             법적 효력은 없으며 최종 판단·게시 책임은 게시자에게 있습니다.
           </div>
         </div>

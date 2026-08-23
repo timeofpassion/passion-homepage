@@ -170,7 +170,7 @@
 .adc-cards { display: flex; flex-direction: column; gap: 11px; }
 .adc-vcard { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 15px 16px; }
 .adc-vcard .vtop { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; flex-wrap: wrap; }
-.adc-vcard .art { font-family: var(--mono); font-size: 11px; font-weight: 700; color: #fff; background: var(--crimson); padding: 3px 8px; border-radius: 6px; }
+.adc-vcard .art { text-decoration: none; font-family: var(--mono); font-size: 11px; font-weight: 700; color: #fff; background: var(--crimson); padding: 3px 8px; border-radius: 6px; }
 .adc-vcard.r-medium .art, .adc-vcard.r-gray .art { background: var(--gold-deep); }
 .adc-vcard .lbl { font-size: 12px; font-weight: 750; letter-spacing: 0.03em; color: var(--crimson); text-transform: uppercase; }
 .adc-vcard.r-medium .lbl, .adc-vcard.r-gray .lbl { color: var(--amber-tx); }
@@ -259,6 +259,19 @@
 .adc-media-note b { color: var(--ink); }
 .adc-media-note.req { border-color: #ecd9ac; background: var(--amber-bg); color: var(--amber-tx); }
 .adc-media-note.req b { color: var(--amber-tx); }
+
+/* ---- 근거 조문: 법제처 현행본 출처·시행일 ---- */
+.adc-lawbase { margin-bottom: 18px; border: 1px solid var(--line); background: var(--paper);
+  border-radius: 10px; padding: 11px 14px; }
+.adc-lawbase .lw { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.adc-lawbase .lw.ok::before { content: "¹3"; margin-right: 6px; color: var(--green-tx); font-weight: 700; }
+.adc-lawbase.stale { border-color: #ecd9ac; background: var(--amber-bg); }
+.adc-lawbase.stale .lw { color: var(--amber-tx); font-weight: 600; }
+.adc-lawbase .ls { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.adc-lawbase .ls a { font-size: 12px; color: var(--sub); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 999px; padding: 5px 11px; text-decoration: none; white-space: nowrap; transition: all 0.15s; }
+.adc-lawbase .ls a:hover { border-color: var(--crimson); color: var(--crimson); }
+.adc-lawbase .ls a span { color: var(--muted); font-family: var(--mono); font-size: 11px; margin-left: 4px; }
 
 /* ---- 회색지대: 차단이 아니라 통과조건 안내 ---- */
 .adc-gray { margin-top: 18px; border: 1px solid #cfe6d9; background: var(--green-bg); border-radius: 12px; padding: 15px 17px; }
