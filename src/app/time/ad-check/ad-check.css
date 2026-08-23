@@ -264,7 +264,7 @@
 .adc-lawbase { margin-bottom: 18px; border: 1px solid var(--line); background: var(--paper);
   border-radius: 10px; padding: 11px 14px; }
 .adc-lawbase .lw { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
-.adc-lawbase .lw.ok::before { content: "¹3"; margin-right: 6px; color: var(--green-tx); font-weight: 700; }
+.adc-lawbase .lw.ok { color: var(--green-tx); }
 .adc-lawbase.stale { border-color: #ecd9ac; background: var(--amber-bg); }
 .adc-lawbase.stale .lw { color: var(--amber-tx); font-weight: 600; }
 .adc-lawbase .ls { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
