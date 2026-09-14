@@ -39,8 +39,6 @@ interface ProductDetail {
   options: Option[];
 }
 
-// 대분류 표시 순서(해외 마케팅 우선)
-const TOP_ORDER = ["국내마케팅", "일본마케팅", "대만마케팅", "중국마케팅", "영상·사진·음향", "홈페이지 제작", "디자인", "번역·통역"];
 const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 const RED = "#E63329";
 const LINE = "1px solid rgba(255,255,255,0.1)";
@@ -93,71 +91,6 @@ const inputStyle: React.CSSProperties = {
 };
 const labelStyle: React.CSSProperties = { display: "block", fontSize: "0.82rem", color: "rgba(255,255,255,0.55)", marginBottom: 6 };
 
-// 표지 — 포트폴리오 사진이 있으면 깔고, 없으면 분류명을 큰 워터마크로. 후킹 문구가 주인공.
-function Cover({ p, price, large = false }: { p: Pick<Product, "name" | "topCategory" | "category" | "images">; price?: string; large?: boolean }) {
-  const { hook } = splitTitle(p.name);
-  const img = p.images?.[0];
-  const area = p.topCategory || p.category;
-  return (
-    <div
-      style={{
-        position: "relative",
-        aspectRatio: large ? "16 / 7" : "16 / 10",
-        overflow: "hidden",
-        background: "#140404",
-        borderRadius: large ? "8px 8px 0 0" : 4,
-      }}
-    >
-      {img ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={img} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }} />
-      ) : (
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            right: "-0.05em",
-            bottom: "-0.22em",
-            fontSize: large ? "7rem" : "4.6rem",
-            fontWeight: 900,
-            lineHeight: 1,
-            color: "rgba(255,255,255,0.04)",
-            whiteSpace: "nowrap",
-            letterSpacing: "-0.05em",
-          }}
-        >
-          {area}
-        </div>
-      )}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(10,0,0,0.92) 0%, rgba(10,0,0,0.55) 70%, rgba(10,0,0,0.3) 100%)" }} />
-      <div style={{ position: "absolute", inset: 0, padding: large ? "2rem" : "1.1rem 1.2rem", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{ width: 18, height: 2, background: RED }} />
-          <span style={{ fontSize: large ? "0.8rem" : "0.7rem", fontWeight: 700, color: "rgba(255,255,255,0.75)", letterSpacing: "0.02em" }}>{area}</span>
-        </div>
-        <div
-          style={{
-            fontSize: large ? "clamp(1.6rem, 4.4vw, 2.5rem)" : "clamp(1.15rem, 2.1vw, 1.4rem)",
-            fontWeight: 900,
-            lineHeight: 1.25,
-            letterSpacing: "-0.03em",
-            color: "#fff",
-            wordBreak: "keep-all",
-            maxWidth: "92%",
-          }}
-        >
-          <Hook text={hook} />
-        </div>
-      </div>
-      {price && (
-        <div style={{ position: "absolute", top: large ? "1.6rem" : "0.9rem", right: large ? "4rem" : "1rem", background: "#fff", color: "#0a0000", fontWeight: 900, fontSize: large ? "1rem" : "0.82rem", padding: large ? "6px 12px" : "4px 9px", borderRadius: 3, letterSpacing: "-0.02em" }}>
-          {price}
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function QuotePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -167,8 +100,6 @@ export default function QuotePage() {
   const [success, setSuccess] = useState<{ reviewUrl: string; total: number; emailSent: boolean } | null>(null);
   const [form, setForm] = useState({ customerName: "", phone: "", email: "", hospitalName: "", memo: "" });
 
-  const [search, setSearch] = useState("");
-  const [activeTop, setActiveTop] = useState("");
 
   const [detail, setDetail] = useState<ProductDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
@@ -222,22 +153,18 @@ export default function QuotePage() {
   const vat = Math.round(subtotal * 0.1);
   const total = subtotal + vat;
 
+  // 분야별 묶음 — 국내 월정기는 주력이라 따로 크게
+  const GROUPS: [string, string, string[]][] = [
+    ["overseas", "해외 환자 유치", ["일본마케팅", "대만마케팅", "중국마케팅"]],
+    ["video", "영상", ["영상·사진·음향"]],
+    ["web", "홈페이지", ["홈페이지 제작"]],
+    ["design", "디자인", ["디자인"]],
+  ];
   const topOf = (p: Product) => p.topCategory || p.category || "기타";
-  const topCounts = products.reduce<Record<string, number>>((acc, p) => {
-    acc[topOf(p)] = (acc[topOf(p)] || 0) + 1;
-    return acc;
-  }, {});
-  const rank = (t: string) => (TOP_ORDER.indexOf(t) < 0 ? 99 : TOP_ORDER.indexOf(t));
-  const topList = Object.keys(topCounts).sort((a, b) => rank(a) - rank(b));
-
-  const q = search.trim().toLowerCase();
-  const visible = products
-    .filter(
-      (p) =>
-        (!activeTop || topOf(p) === activeTop) &&
-        (!q || [p.name, p.description, p.category, p.category2].some((s) => (s || "").toLowerCase().includes(q))),
-    )
-    .sort((a, b) => rank(topOf(a)) - rank(topOf(b)));
+  const featured = products.find((p) => topOf(p) === "국내마케팅" && productOptions(p).length > 1);
+  const grouped = GROUPS.map(([key, label, tops]) => ({ key, label, items: products.filter((p) => p !== featured && tops.includes(topOf(p))) }))
+    .concat([{ key: "etc", label: "그 밖의 서비스", items: products.filter((p) => p !== featured && !GROUPS.some(([, , t]) => t.includes(topOf(p)))) }])
+    .filter((g) => g.items.length);
 
   const scrollToForm = () => document.getElementById("quote-contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -294,213 +221,167 @@ export default function QuotePage() {
     );
   }
 
+  const cartPanel = (
+    <div>
+      <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", marginBottom: 10 }}>내 견적</div>
+      {lines.length === 0 ? (
+        <p style={{ margin: 0, color: "rgba(255,255,255,0.45)", fontSize: "0.9rem", lineHeight: 1.6 }}>
+          서비스 옆 <b style={{ color: "#fff" }}>+</b> 를 누르면
+          <br />
+          금액이 여기에 바로 쌓입니다.
+        </p>
+      ) : (
+        <>
+          {lines.map((l) => (
+            <div key={l.id} style={{ display: "flex", gap: 10, alignItems: "baseline", padding: "9px 0", borderBottom: LINE, fontSize: "0.86rem" }}>
+              <span style={{ flex: 1, color: "rgba(255,255,255,0.78)", lineHeight: 1.4 }}>{l.name}</span>
+              <span style={{ whiteSpace: "nowrap", fontWeight: 700 }}>{format(l.price)}</span>
+              <button type="button" onClick={() => removeFromCart(l.id)} aria-label={`${l.name} 빼기`} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.35)", cursor: "pointer", padding: 0 }}>
+                ✕
+              </button>
+            </div>
+          ))}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 14 }}>
+            <span style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.5)" }}>VAT 포함</span>
+            <span style={{ fontSize: "1.7rem", fontWeight: 900, letterSpacing: "-0.03em" }}>{format(total)}원</span>
+          </div>
+        </>
+      )}
+      <button
+        type="button"
+        onClick={scrollToForm}
+        disabled={lines.length === 0}
+        style={{ width: "100%", marginTop: 16, padding: "14px", background: lines.length ? RED : "rgba(255,255,255,0.06)", border: "none", color: lines.length ? "#fff" : "rgba(255,255,255,0.35)", fontWeight: 800, fontSize: "0.95rem", cursor: lines.length ? "pointer" : "default", borderRadius: 4 }}
+      >
+        견적서 받기
+      </button>
+      <p style={{ margin: "10px 0 0", fontSize: "0.72rem", color: "rgba(255,255,255,0.35)", lineHeight: 1.5 }}>광고 집행비·의료광고 심의 수수료 별도</p>
+    </div>
+  );
+
   return (
     <div style={{ minHeight: "100vh", background: "#0a0000", color: "#fff", wordBreak: "keep-all" }}>
-      <style>{`@media (max-width: 640px){.quote-filter{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none}.quote-filter>*{flex-shrink:0}}`}</style>
-      <div style={{ padding: "1.5rem clamp(1rem, 4vw, 2rem)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <style>{`
+        .q-wrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px;align-items:start}
+        .q-side{position:sticky;top:24px}
+        .q-mbar{display:none}
+        .q-row:hover{background:rgba(255,255,255,0.03)}
+        @media (max-width: 900px){.q-wrap{grid-template-columns:1fr}.q-side{display:none}.q-mbar{display:flex}}
+      `}</style>
+      <div style={{ padding: "1.5rem clamp(1rem, 4vw, 2rem)" }}>
         <Link href="/" style={{ fontWeight: 800, fontSize: "1.1rem", color: "#fff", textDecoration: "none" }}>
           열정의시간
         </Link>
       </div>
 
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 clamp(1rem, 4vw, 2rem) 9rem" }}>
-        {/* Hero */}
-        <div style={{ padding: "clamp(2rem, 6vw, 4.5rem) 0 clamp(2rem, 5vw, 3.5rem)" }}>
-          <h1 style={{ fontSize: "clamp(2rem, 5.5vw, 3.8rem)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.04em", margin: 0, maxWidth: 760 }}>
-            필요한 서비스를 고르면,
-            <br />
-            견적서가 <span style={{ color: RED }}>메일로 바로</span> 갑니다
-          </h1>
-          <ol style={{ listStyle: "none", padding: 0, margin: "1.6rem 0 0", display: "flex", flexWrap: "wrap", gap: "8px 24px", color: "rgba(255,255,255,0.6)", fontSize: "0.95rem" }}>
-            <li>1. 서비스 담기</li>
-            <li>2. 옵션 고르기</li>
-            <li>3. 연락처 남기기</li>
-          </ol>
-        </div>
+      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 clamp(1rem, 4vw, 2rem) 8rem" }}>
+        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 900, lineHeight: 1.18, letterSpacing: "-0.04em", margin: "clamp(1.5rem, 5vw, 3.5rem) 0 clamp(2.5rem, 6vw, 4rem)" }}>
+          고르는 대로,
+          <br />
+          견적이 <span style={{ color: RED }}>바로</span> 나옵니다
+        </h1>
 
-        {/* 필터 */}
-        {!loading && products.length > 0 && (
-          <div style={{ position: "sticky", top: 0, zIndex: 20, background: "#0a0000", padding: "12px 0", borderBottom: LINE, marginBottom: 24 }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }} className="quote-filter">
-              {[["", `전체 ${products.length}`] as const, ...topList.map((c) => [c, `${c.replace("마케팅", "")} ${topCounts[c]}`] as const)].map(([val, label]) => {
-                const active = activeTop === val;
-                return (
-                  <button
-                    key={val || "all"}
-                    type="button"
-                    onClick={() => setActiveTop(val)}
-                    style={{
-                      fontSize: "0.85rem",
-                      fontWeight: 700,
-                      padding: "8px 14px",
-                      borderRadius: 4,
-                      cursor: "pointer",
-                      background: active ? "#fff" : "transparent",
-                      color: active ? "#0a0000" : "rgba(255,255,255,0.65)",
-                      border: `1px solid ${active ? "#fff" : "rgba(255,255,255,0.15)"}`,
-                    }}
-                  >
-                    {label}
-                  </button>
-                );
-              })}
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="검색 (예: 영상, 일본, 홈페이지)"
-                aria-label="서비스 검색"
-                style={{ ...inputStyle, width: "auto", flex: "1 1 200px", minWidth: 180, padding: "8px 12px", fontSize: "0.9rem" }}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* 01 서비스 카드 */}
-        {loading ? (
-          <p style={{ padding: "4rem 0", color: "rgba(255,255,255,0.4)" }}>서비스를 불러오는 중…</p>
-        ) : visible.length === 0 ? (
-          <p style={{ padding: "3rem 0", color: "rgba(255,255,255,0.5)" }}>
-            찾는 서비스가 없나요?{" "}
-            <a href={KAKAO_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#FEE500" }}>
-              카카오톡으로 물어보세요
-            </a>
-          </p>
-        ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))", gap: "28px 20px" }}>
-            {visible.map((p) => {
-              const opts = productOptions(p);
-              const prices = opts.map(optionTotal).filter((n) => n > 0);
-              const min = prices.length ? Math.min(...prices) : 0;
-              const inCart = p.id in cart;
-              return (
-                <article key={p.id} style={{ display: "flex", flexDirection: "column" }}>
-                  <button type="button" onClick={() => openDetail(p.id)} aria-label={`${p.name} 상세 보기`} style={{ all: "unset", cursor: "pointer", display: "block", outline: inCart ? `2px solid ${RED}` : "none", outlineOffset: 2, borderRadius: 4 }}>
-                    <Cover p={p} price={min ? `${won(min)}${prices.length > 1 ? "~" : ""}` : undefined} />
-                  </button>
-                  <div style={{ padding: "12px 2px 0", flex: 1, display: "flex", flexDirection: "column" }}>
-                    <div style={{ fontSize: "0.95rem", fontWeight: 700, lineHeight: 1.4 }}>{splitTitle(p.name).name}</div>
-                    <div style={{ marginTop: 4, fontSize: "0.9rem", color: "rgba(255,255,255,0.55)" }}>
-                      {min ? (
-                        <>
-                          <b style={{ color: "#fff", fontWeight: 800 }}>{won(min)}</b>
-                          {prices.length > 1 ? " ~" : ""}
-                        </>
-                      ) : (
-                        "별도 문의"
-                      )}
-                      {opts.length > 1 && <span> · 옵션 {opts.length}개</span>}
-                    </div>
-                    <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-                      <button type="button" onClick={() => openDetail(p.id)} style={{ flex: 1, padding: "10px", background: "transparent", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontWeight: 600, fontSize: "0.85rem", cursor: "pointer", borderRadius: 4 }}>
-                        자세히 보기
-                      </button>
-                      {inCart ? (
-                        <button type="button" onClick={() => removeFromCart(p.id)} style={{ flex: 1, padding: "10px", background: "rgba(230,51,41,0.14)", border: `1px solid ${RED}`, color: "#fff", fontWeight: 700, fontSize: "0.85rem", cursor: "pointer", borderRadius: 4 }}>
-                          담김 ✓ 빼기
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => (opts.length > 1 ? openDetail(p.id) : setCart((prev) => ({ ...prev, [p.id]: 0 })))}
-                          style={{ flex: 1, padding: "10px", background: RED, border: `1px solid ${RED}`, color: "#fff", fontWeight: 700, fontSize: "0.85rem", cursor: "pointer", borderRadius: 4 }}
-                        >
-                          {opts.length > 1 ? "옵션 골라 담기" : "담기"}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        )}
-
-        {/* 02 연락처 */}
-        <section id="quote-contact" style={{ marginTop: "clamp(4rem, 10vw, 7rem)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: "2rem 3rem", alignItems: "start" }}>
-          <div>
-            <h2 style={{ fontSize: "clamp(1.5rem, 3.5vw, 2rem)", fontWeight: 900, letterSpacing: "-0.03em", margin: "0 0 1rem" }}>담은 서비스</h2>
-            {lines.length === 0 ? (
-              <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.7 }}>
-                아직 담은 서비스가 없습니다.
-                <br />
-                위에서 카드를 눌러 담아주세요.
-              </p>
+        <div className="q-wrap">
+          <main>
+            {loading ? (
+              <p style={{ color: "rgba(255,255,255,0.4)" }}>서비스를 불러오는 중…</p>
             ) : (
-              <div>
-                {lines.map((l) => (
-                  <div key={l.id} style={{ display: "flex", gap: 12, alignItems: "baseline", padding: "12px 0", borderBottom: LINE }}>
-                    <span style={{ flex: 1, color: "rgba(255,255,255,0.8)", fontSize: "0.92rem" }}>{l.name}</span>
-                    <span style={{ whiteSpace: "nowrap", fontWeight: 700 }}>{format(l.price)}원</span>
-                    <button type="button" onClick={() => removeFromCart(l.id)} aria-label="빼기" style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: "0.85rem" }}>
-                      ✕
-                    </button>
+              <>
+                {featured && <FeaturedPackage p={featured} picked={cart[featured.id]} onPick={(i) => setCart((prev) => ({ ...prev, [featured.id]: i }))} onRemove={() => removeFromCart(featured.id)} onDetail={() => openDetail(featured.id)} />}
+
+                {grouped.map((g) => (
+                  <section key={g.key} style={{ marginTop: "clamp(3rem, 7vw, 4.5rem)" }}>
+                    <h2 style={{ fontSize: "1.05rem", fontWeight: 800, margin: "0 0 6px", color: "rgba(255,255,255,0.9)" }}>{g.label}</h2>
+                    <div style={{ borderTop: "1px solid rgba(255,255,255,0.18)" }}>
+                      {g.items.map((p) => {
+                        const opts = productOptions(p);
+                        const prices = opts.map(optionTotal).filter((n) => n > 0);
+                        const min = prices.length ? Math.min(...prices) : 0;
+                        const inCart = p.id in cart;
+                        const { name, hook } = splitTitle(p.name);
+                        return (
+                          <div key={p.id} className="q-row" style={{ display: "flex", alignItems: "center", gap: 16, borderBottom: LINE, padding: "16px 4px" }}>
+                            <button type="button" onClick={() => openDetail(p.id)} style={{ all: "unset", cursor: "pointer", flex: 1, minWidth: 0 }}>
+                              <div style={{ fontSize: "1rem", fontWeight: 700, lineHeight: 1.4 }}>{hook}</div>
+                              <div style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", marginTop: 3 }}>
+                                {name}
+                                {opts.length > 1 ? ` · 옵션 ${opts.length}` : ""}
+                              </div>
+                            </button>
+                            <div style={{ textAlign: "right", whiteSpace: "nowrap", fontSize: "0.95rem", fontWeight: 700 }}>
+                              {inCart ? won(optionTotal(opts[cart[p.id]] ?? opts[0])) : min ? `${won(min)}${prices.length > 1 ? "~" : ""}` : "문의"}
+                            </div>
+                            <button
+                              type="button"
+                              aria-label={inCart ? `${name} 빼기` : `${name} 담기`}
+                              onClick={() => (inCart ? removeFromCart(p.id) : opts.length > 1 ? openDetail(p.id) : setCart((prev) => ({ ...prev, [p.id]: 0 })))}
+                              style={{ width: 36, height: 36, flexShrink: 0, borderRadius: 999, cursor: "pointer", fontSize: "1.1rem", fontWeight: 700, lineHeight: 1, border: `1px solid ${inCart ? RED : "rgba(255,255,255,0.3)"}`, background: inCart ? RED : "transparent", color: "#fff" }}
+                            >
+                              {inCart ? "✓" : "+"}
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </section>
+                ))}
+              </>
+            )}
+
+            {/* 연락처 */}
+            <section id="quote-contact" style={{ marginTop: "clamp(4rem, 9vw, 6rem)", maxWidth: 560 }}>
+              <h2 style={{ fontSize: "clamp(1.4rem, 3.4vw, 1.9rem)", fontWeight: 900, letterSpacing: "-0.03em", margin: "0 0 6px" }}>견적서 받을 곳</h2>
+              <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", margin: "0 0 22px" }}>이메일로 견적서가 바로 가고, 담당자가 전화로 한 번 더 설명드립니다.</p>
+              <div style={{ display: "grid", gap: 14 }}>
+                {(
+                  [
+                    ["customerName", "성함 *", "text", "홍길동", "name"],
+                    ["phone", "연락처 *", "tel", "010-0000-0000", "tel"],
+                    ["email", "이메일 *", "email", "example@hospital.com", "email"],
+                    ["hospitalName", "병원·회사명", "text", "OO피부과", "organization"],
+                  ] as const
+                ).map(([key, label, type, ph, ac]) => (
+                  <div key={key}>
+                    <label htmlFor={`f-${key}`} style={labelStyle}>
+                      {label}
+                    </label>
+                    <input id={`f-${key}`} type={type} autoComplete={ac} placeholder={ph} value={form[key]} onChange={(e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))} style={inputStyle} />
                   </div>
                 ))}
-                <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 12, fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>
-                  <span>공급가 {format(subtotal)}원 + 부가세 {format(vat)}원</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingTop: 8 }}>
-                  <span style={{ fontWeight: 700 }}>총 견적</span>
-                  <span style={{ fontSize: "1.6rem", fontWeight: 900, color: RED }}>{format(total)}원</span>
-                </div>
-                <p style={{ marginTop: 12, fontSize: "0.8rem", color: "rgba(255,255,255,0.4)", lineHeight: 1.6 }}>
-                  광고 집행비·의료광고 심의 수수료는 별도입니다. 최종 금액은 상담 후 확정됩니다.
-                </p>
-              </div>
-            )}
-          </div>
-
-          <div style={{ border: LINE, padding: "clamp(1.2rem, 3vw, 2rem)", borderRadius: 6, background: "rgba(255,255,255,0.02)" }}>
-            <h2 style={{ fontSize: "1.25rem", fontWeight: 800, margin: "0 0 4px" }}>연락처 남기기</h2>
-            <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.5)", margin: "0 0 20px" }}>견적서는 이메일로 바로 가고, 담당자가 전화로 한 번 더 설명드립니다.</p>
-            <div style={{ display: "grid", gap: 14 }}>
-              {(
-                [
-                  ["customerName", "성함 *", "text", "홍길동", "name"],
-                  ["phone", "연락처 *", "tel", "010-0000-0000", "tel"],
-                  ["email", "이메일 * (견적서 받을 곳)", "email", "example@hospital.com", "email"],
-                  ["hospitalName", "병원·회사명", "text", "OO피부과", "organization"],
-                ] as const
-              ).map(([key, label, type, ph, ac]) => (
-                <div key={key}>
-                  <label htmlFor={`f-${key}`} style={labelStyle}>
-                    {label}
+                <div>
+                  <label htmlFor="f-memo" style={labelStyle}>
+                    궁금한 점 (선택)
                   </label>
-                  <input id={`f-${key}`} type={type} autoComplete={ac} placeholder={ph} value={form[key]} onChange={(e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))} style={inputStyle} />
+                  <textarea id="f-memo" rows={3} placeholder="예: 다음 달 개원이라 빨리 시작하고 싶어요" value={form.memo} onChange={(e) => setForm((prev) => ({ ...prev, memo: e.target.value }))} style={{ ...inputStyle, resize: "vertical" }} />
                 </div>
-              ))}
-              <div>
-                <label htmlFor="f-memo" style={labelStyle}>
-                  궁금한 점 (선택)
-                </label>
-                <textarea id="f-memo" rows={3} placeholder="예: 다음 달 개원이라 빨리 시작하고 싶어요" value={form.memo} onChange={(e) => setForm((prev) => ({ ...prev, memo: e.target.value }))} style={{ ...inputStyle, resize: "vertical" }} />
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={submitting}
+                  style={{ marginTop: 6, padding: "17px", background: RED, border: "none", color: "#fff", fontSize: "1.05rem", fontWeight: 800, cursor: submitting ? "wait" : "pointer", opacity: lines.length === 0 || submitting ? 0.45 : 1, borderRadius: 4 }}
+                >
+                  {submitting ? "보내는 중…" : lines.length ? `견적서 받기 · ${format(total)}원` : "서비스를 먼저 담아주세요"}
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={submitting}
-                style={{ marginTop: 6, padding: "17px", background: RED, border: "none", color: "#fff", fontSize: "1.05rem", fontWeight: 800, cursor: submitting ? "wait" : "pointer", opacity: lines.length === 0 || submitting ? 0.45 : 1, borderRadius: 4 }}
-              >
-                {submitting ? "보내는 중…" : lines.length ? `견적서 받기 · ${format(total)}원` : "견적서 받기"}
-              </button>
-              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", margin: 0 }}>남겨주신 정보는 견적 안내에만 사용합니다.</p>
-            </div>
-          </div>
-        </section>
+            </section>
+          </main>
+
+          <aside className="q-side" style={{ border: LINE, borderRadius: 6, padding: "20px", background: "rgba(255,255,255,0.02)" }}>
+            {cartPanel}
+          </aside>
+        </div>
       </div>
 
-      {/* 하단 고정 바 — 담은 게 있을 때만 */}
+      {/* 모바일 하단 바 */}
       {lines.length > 0 && !detail && (
-        <div style={{ position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 40, background: "rgba(10,0,0,0.96)", borderTop: `1px solid rgba(230,51,41,0.5)` }}>
-          <div style={{ maxWidth: 1080, margin: "0 auto", padding: "12px clamp(1rem, 4vw, 2rem)", paddingRight: "clamp(5.5rem, 12vw, 9rem)", display: "flex", alignItems: "center", gap: 16 }}>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.55)" }}>{lines.length}개 담음 · VAT 포함</div>
-              <div style={{ fontSize: "1.15rem", fontWeight: 900 }}>{format(total)}원</div>
-            </div>
-            <button type="button" onClick={scrollToForm} style={{ padding: "13px 22px", background: RED, border: "none", color: "#fff", fontWeight: 800, fontSize: "0.95rem", cursor: "pointer", borderRadius: 4, whiteSpace: "nowrap" }}>
-              견적서 받기 →
-            </button>
+        <div className="q-mbar" style={{ position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 40, background: "rgba(10,0,0,0.97)", borderTop: "1px solid rgba(230,51,41,0.5)", padding: "12px 16px", paddingRight: 128, alignItems: "center", gap: 12 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.55)" }}>{lines.length}개 · VAT 포함</div>
+            <div style={{ fontSize: "1.1rem", fontWeight: 900 }}>{format(total)}원</div>
           </div>
+          <button type="button" onClick={scrollToForm} style={{ padding: "12px 16px", background: RED, border: "none", color: "#fff", fontWeight: 800, fontSize: "0.9rem", borderRadius: 4, whiteSpace: "nowrap" }}>
+            견적서 받기
+          </button>
         </div>
       )}
 
@@ -510,24 +391,7 @@ export default function QuotePage() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="카카오톡 채널로 상담하기"
-        style={{
-          position: "fixed",
-          right: "clamp(12px, 3vw, 28px)",
-          bottom: lines.length > 0 && !detail ? 84 : "clamp(16px, 4vw, 32px)",
-          zIndex: 50,
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          padding: "12px 16px",
-          background: "#FEE500",
-          color: "#3C1E1E",
-          textDecoration: "none",
-          fontWeight: 800,
-          fontSize: "0.9rem",
-          borderRadius: 999,
-          boxShadow: "0 6px 18px rgba(0,0,0,0.35)",
-          transition: "bottom 0.2s ease",
-        }}
+        style={{ position: "fixed", right: 16, bottom: 16, zIndex: 50, display: "flex", alignItems: "center", gap: 8, padding: "12px 16px", background: "#FEE500", color: "#3C1E1E", textDecoration: "none", fontWeight: 800, fontSize: "0.9rem", borderRadius: 999, boxShadow: "0 6px 18px rgba(0,0,0,0.35)" }}
       >
         <KakaoIcon />
         <span>카톡 상담</span>
@@ -536,8 +400,8 @@ export default function QuotePage() {
       {/* 상세 모달 */}
       {(detailLoading || detail) && (
         <div role="dialog" aria-modal="true" onClick={closeDetail} style={{ position: "fixed", inset: 0, zIndex: 100, background: "rgba(0,0,0,0.8)", display: "flex", alignItems: "flex-start", justifyContent: "center", overflowY: "auto", padding: "3vh 0.75rem" }}>
-          <div onClick={(e) => e.stopPropagation()} style={{ background: "#120404", border: LINE, borderRadius: 8, maxWidth: 760, width: "100%", marginBottom: "4vh", position: "relative" }}>
-            <button type="button" onClick={closeDetail} aria-label="닫기" style={{ position: "absolute", top: 12, right: 12, zIndex: 2, width: 36, height: 36, borderRadius: 999, background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", cursor: "pointer", fontSize: 15 }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ background: "#120404", border: LINE, borderRadius: 8, maxWidth: 720, width: "100%", marginBottom: "4vh", position: "relative" }}>
+            <button type="button" onClick={closeDetail} aria-label="닫기" style={{ position: "absolute", top: 14, right: 14, zIndex: 2, width: 36, height: 36, borderRadius: 999, background: "transparent", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", cursor: "pointer", fontSize: 15 }}>
               ✕
             </button>
             {!detail ? (
@@ -562,15 +426,65 @@ export default function QuotePage() {
   );
 }
 
+// 주력 상품 — 단계를 누르면 그 자리에서 담기고 금액이 바뀐다
+function FeaturedPackage({ p, picked, onPick, onRemove, onDetail }: { p: Product; picked?: number; onPick: (i: number) => void; onRemove: () => void; onDetail: () => void }) {
+  const opts = productOptions(p);
+  const { name, hook } = splitTitle(p.name);
+  const show = opts[picked ?? 1] ?? opts[0];
+  return (
+    <section style={{ border: "1px solid rgba(255,255,255,0.14)", borderRadius: 8, padding: "clamp(1.4rem, 4vw, 2.2rem)" }}>
+      <div style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.5)" }}>{name} · 가장 많이 찾는 구성</div>
+      <h2 style={{ fontSize: "clamp(1.5rem, 3.6vw, 2.2rem)", fontWeight: 900, lineHeight: 1.28, letterSpacing: "-0.03em", margin: "10px 0 24px" }}>{hook}</h2>
+      <div role="radiogroup" aria-label="단계 선택" style={{ display: "grid", gridTemplateColumns: `repeat(auto-fit, minmax(120px, 1fr))`, gap: 8 }}>
+        {opts.map((o, i) => {
+          const on = picked === i;
+          return (
+            <button
+              key={i}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              onClick={() => (on ? onRemove() : onPick(i))}
+              style={{ cursor: "pointer", textAlign: "left", padding: "14px 14px 12px", borderRadius: 6, border: `1px solid ${on ? RED : "rgba(255,255,255,0.14)"}`, background: on ? "rgba(230,51,41,0.12)" : "transparent", color: "#fff" }}
+            >
+              <div style={{ fontSize: "0.8rem", color: on ? "#fff" : "rgba(255,255,255,0.55)", fontWeight: 600 }}>{o.optionTitle.split(" — ")[0]}</div>
+              <div style={{ fontSize: "1.35rem", fontWeight: 900, letterSpacing: "-0.03em", marginTop: 2 }}>
+                {won(optionTotal(o))}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+      <div style={{ marginTop: 20, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "6px 24px" }}>
+        {show.features.slice(0, 6).map((f, i) => (
+          <div key={i} style={{ fontSize: "0.86rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.5 }}>
+            · {f}
+          </div>
+        ))}
+      </div>
+      <div style={{ marginTop: 18, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+        <span style={{ fontSize: "0.85rem", color: picked === undefined ? "rgba(255,255,255,0.5)" : "#fff" }}>
+          {picked === undefined ? "단계를 누르면 견적에 담깁니다" : `${show.optionTitle.split(" — ")[0]} 담김 — 다시 누르면 빠집니다`}
+        </span>
+        <button type="button" onClick={onDetail} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.7)", textDecoration: "underline", cursor: "pointer", fontSize: "0.85rem", padding: 0 }}>
+          단계별 전체 구성 보기
+        </button>
+      </div>
+    </section>
+  );
+}
+
 function DetailBody({ d, area, picked, onPick, inCart, onAdd }: { d: ProductDetail; area?: string; picked: number; onPick: (i: number) => void; inCart: boolean; onAdd: () => void }) {
   const opts = d.options.length ? d.options : [];
   const chosen = opts[picked] ?? opts[0];
   const { name } = splitTitle(d.name);
   return (
     <div>
-      <Cover p={{ name: d.name, topCategory: area, category: d.category, images: d.detailImages }} large />
-      <div style={{ padding: "clamp(1.2rem, 4vw, 2rem)" }}>
-        <h3 style={{ fontSize: "1.35rem", fontWeight: 800, margin: 0, lineHeight: 1.35 }}>{name}</h3>
+      <div style={{ padding: "clamp(1.4rem, 4vw, 2.2rem)" }}>
+        <div style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.5)", marginBottom: 8, paddingRight: 40 }}>{area || d.category} · {name}</div>
+        <h3 style={{ fontSize: "clamp(1.4rem, 3.6vw, 1.9rem)", fontWeight: 900, margin: 0, lineHeight: 1.3, letterSpacing: "-0.03em", paddingRight: 40 }}>
+          <Hook text={splitTitle(d.name).hook} />
+        </h3>
         {d.features.length > 0 && (
           <ul style={{ listStyle: "none", padding: 0, margin: "16px 0 0", display: "grid", gap: 8 }}>
             {d.features.map((f, i) => (
