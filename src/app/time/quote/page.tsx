@@ -23,6 +23,7 @@ interface Product {
   minQty: number;
   description: string;
   images?: string[];
+  proposalUrl?: string | null;
   options?: Option[];
 }
 
@@ -35,6 +36,7 @@ interface ProductDetail {
   descriptionText: string;
   detailImages: string[];
   videoUrl: string;
+  proposalUrl?: string;
   features: string[];
   options: Option[];
 }
@@ -54,6 +56,13 @@ const productOptions = (p: Product): Option[] =>
     : [{ tier: "SINGLE", optionTitle: "기본", price: p.price, minQuantity: p.minQty, unit: "", description: "", features: [] }];
 
 // 상품명 "이름 — 후킹 문구" → 표지에 후킹을 크게, 이름은 작게
+// 구글 슬라이드 공개 링크 → 목록 썸네일(비공개면 이미지가 안 떠서 숨긴다)
+const slideThumb = (url?: string | null) => {
+  const m = url?.match(/\/d\/([\w-]{20,})/);
+  return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w640` : "";
+};
+const firstSentence = (t: string) => (t.split(/[.。]\s|\n/)[0] || "").slice(0, 60);
+
 function splitTitle(title: string) {
   const i = title.indexOf(" — ");
   return i < 0 ? { name: title, hook: title } : { name: title.slice(0, i), hook: title.slice(i + 3) };
@@ -266,6 +275,7 @@ export default function QuotePage() {
         .q-side{position:sticky;top:24px}
         .q-mbar{display:none}
         .q-row:hover{background:rgba(255,255,255,0.03)}
+        .q-door:hover{border-color:#E63329!important}
         @media (max-width: 900px){.q-wrap{grid-template-columns:1fr}.q-side{display:none}.q-mbar{display:flex}}
       `}</style>
       <div style={{ padding: "1.5rem clamp(1rem, 4vw, 2rem)" }}>
@@ -276,10 +286,30 @@ export default function QuotePage() {
 
       <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 clamp(1rem, 4vw, 2rem) 8rem" }}>
         <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 900, lineHeight: 1.18, letterSpacing: "-0.04em", margin: "clamp(1.5rem, 5vw, 3.5rem) 0 clamp(2.5rem, 6vw, 4rem)" }}>
-          고르는 대로,
+          어떤 병원이세요?
           <br />
-          견적이 <span style={{ color: RED }}>바로</span> 나옵니다
+          맞는 구성과 금액이 <span style={{ color: RED }}>바로</span> 나옵니다
         </h1>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: 12, margin: "0 0 clamp(3rem, 7vw, 5rem)" }}>
+          {(
+            [
+              ["door-domestic", "국내 환자를 늘리고 싶다", "네이버 검색·리뷰·영상까지 한 팀으로, 월 400만 원부터"],
+              ["door-overseas", "해외 환자를 받고 싶다", "일본·중국·대만 — 현지 플랫폼과 인플루언서"],
+              ["door-make", "만들 것만 필요하다", "홈페이지·영상·디자인 단건 제작"],
+            ] as const
+          ).map(([id, t, d]) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              className="q-door"
+              style={{ textAlign: "left", cursor: "pointer", padding: "20px 20px 18px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.16)", background: "rgba(255,255,255,0.02)", color: "#fff" }}
+            >
+              <div style={{ fontSize: "1.15rem", fontWeight: 800, letterSpacing: "-0.02em" }}>{t} →</div>
+              <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.55)", marginTop: 6, lineHeight: 1.5 }}>{d}</div>
+            </button>
+          ))}
+        </div>
 
         <div className="q-wrap">
           <main>
@@ -287,11 +317,28 @@ export default function QuotePage() {
               <p style={{ color: "rgba(255,255,255,0.4)" }}>서비스를 불러오는 중…</p>
             ) : (
               <>
+                <div id="door-domestic" style={{ scrollMarginTop: 24 }} />
                 {featured && <FeaturedPackage p={featured} picked={cart[featured.id]} onPick={(i) => setCart((prev) => ({ ...prev, [featured.id]: i }))} onRemove={() => removeFromCart(featured.id)} onDetail={() => openDetail(featured.id)} />}
 
                 {grouped.map((g) => (
-                  <section key={g.key} style={{ marginTop: "clamp(3rem, 7vw, 4.5rem)" }}>
+                  <section key={g.key} id={g.key === "overseas" ? "door-overseas" : g.key === "video" ? "door-make" : undefined} style={{ marginTop: "clamp(3rem, 7vw, 4.5rem)", scrollMarginTop: 24 }}>
                     <h2 style={{ fontSize: "1.05rem", fontWeight: 800, margin: "0 0 6px", color: "rgba(255,255,255,0.9)" }}>{g.label}</h2>
+                    {g.key === "overseas" && (
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: 10, margin: "10px 0 16px" }}>
+                        {(
+                          [
+                            ["14 → 23건", "한 피부과 · 샤오홍슈 광고 노트 3건(약 7만 원) 뒤 주말 문의"],
+                            ["1 → 77건", "한 성형외과 · 일본 LINE 신규 문의(5개월)"],
+                          ] as const
+                        ).map(([n, t]) => (
+                          <div key={n} style={{ border: LINE, borderRadius: 6, padding: "14px 16px" }}>
+                            <div style={{ fontSize: "1.5rem", fontWeight: 900, color: RED, letterSpacing: "-0.03em" }}>{n}</div>
+                            <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", marginTop: 2 }}>{t}</div>
+                          </div>
+                        ))}
+                        <div style={{ gridColumn: "1 / -1", fontSize: "0.72rem", color: "rgba(255,255,255,0.35)" }}>실제 운영 사례(병원명 비공개)이며 특정 성과를 보장하는 수치가 아닙니다.</div>
+                      </div>
+                    )}
                     <div style={{ borderTop: "1px solid rgba(255,255,255,0.18)" }}>
                       {g.items.map((p) => {
                         const opts = productOptions(p);
@@ -299,12 +346,20 @@ export default function QuotePage() {
                         const min = prices.length ? Math.min(...prices) : 0;
                         const inCart = p.id in cart;
                         const { name, hook } = splitTitle(p.name);
+                        const sub = hook === name ? firstSentence(p.description || "") : name;
+                        const thumb = p.images?.[0] || slideThumb(p.proposalUrl);
                         return (
-                          <div key={p.id} className="q-row" style={{ display: "flex", alignItems: "center", gap: 16, borderBottom: LINE, padding: "16px 4px" }}>
+                          <div key={p.id} className="q-row" style={{ display: "flex", alignItems: "center", gap: 16, borderBottom: LINE, padding: "14px 4px" }}>
+                            {thumb ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={thumb} alt="" onClick={() => openDetail(p.id)} onError={(e) => (e.currentTarget.style.visibility = "hidden")} style={{ width: 88, height: 56, objectFit: "cover", borderRadius: 4, flexShrink: 0, cursor: "pointer", background: "#1a0a0a" }} />
+                            ) : (
+                              <div style={{ width: 88, height: 56, borderRadius: 4, flexShrink: 0, background: "rgba(255,255,255,0.03)" }} />
+                            )}
                             <button type="button" onClick={() => openDetail(p.id)} style={{ all: "unset", cursor: "pointer", flex: 1, minWidth: 0 }}>
                               <div style={{ fontSize: "1rem", fontWeight: 700, lineHeight: 1.4 }}>{hook}</div>
                               <div style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", marginTop: 3 }}>
-                                {name}
+                                {sub}{p.proposalUrl ? " · 제안서 있음" : ""}
                                 {opts.length > 1 ? ` · 옵션 ${opts.length}` : ""}
                               </div>
                             </button>
@@ -561,6 +616,8 @@ function DetailBody({ d, area, picked, onPick, inCart, onAdd }: { d: ProductDeta
           </div>
         )}
 
+        {d.proposalUrl && <ProposalGate d={d} />}
+
         {d.descriptionText && (
           <details style={{ marginTop: 24, borderTop: LINE, paddingTop: 16 }}>
             <summary style={{ cursor: "pointer", fontSize: "0.92rem", fontWeight: 700, color: "rgba(255,255,255,0.8)" }}>상세 설명·계약 조건 펼치기</summary>
@@ -610,5 +667,84 @@ function KakaoIcon() {
     <svg width="20" height="20" viewBox="0 0 24 24" fill="#3C1E1E" style={{ flexShrink: 0 }} aria-hidden>
       <path d="M12 3c-5.523 0-10 3.538-10 7.9 0 2.85 1.848 5.347 4.636 6.74l-1.185 4.316c-.056.205.18.366.353.243l5.06-3.327c.373.048.755.074 1.146.074 5.523 0 10-3.538 10-7.9S17.523 3 12 3z" />
     </svg>
+  );
+}
+
+// 제안서 전체 보기 — 병원명·연락처를 받고 연다. 받은 정보는 견적 접수함에 「문의」로 쌓이고 메일로도 링크가 간다.
+function ProposalGate({ d }: { d: ProductDetail }) {
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState({ hospitalName: "", customerName: "", phone: "", email: "" });
+  const [busy, setBusy] = useState(false);
+  const [done, setDone] = useState(false);
+  const opt = d.options[0];
+  const submit = async () => {
+    if (!f.hospitalName.trim() || !f.customerName.trim() || !f.phone.trim() || !/^\S+@\S+\.\S+$/.test(f.email.trim())) {
+      alert("병원명·성함·연락처·이메일을 확인해 주세요.");
+      return;
+    }
+    // 팝업 차단을 피하려고 클릭 순간에 창을 먼저 연다
+    const win = window.open("", "_blank");
+    setBusy(true);
+    try {
+      const res = await fetch("/api/quote/request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...f,
+          purpose: "proposal",
+          proposalUrl: d.proposalUrl,
+          memo: `[제안서 열람] ${d.name}`,
+          selectedProducts: [{ id: d.id, name: d.name, price: opt ? opt.price * (opt.minQuantity || 1) : 0 }],
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) {
+        win?.close();
+        alert(data.error || "잠시 후 다시 시도해 주세요.");
+        return;
+      }
+      setDone(true);
+      if (win && d.proposalUrl) win.location.href = d.proposalUrl;
+    } catch {
+      win?.close();
+      alert("네트워크 오류가 발생했습니다.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div style={{ marginTop: 24, border: "1px solid rgba(230,51,41,0.45)", borderRadius: 8, padding: "18px 18px 16px", background: "rgba(230,51,41,0.06)" }}>
+      <div style={{ fontWeight: 800, fontSize: "1rem" }}>이 서비스의 제안서 전체 보기</div>
+      <div style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.6)", marginTop: 4 }}>실제 운영 화면·사례·단계별 구성이 담긴 제안서입니다. 이메일로도 링크를 보내드립니다.</div>
+      {done ? (
+        <p style={{ margin: "12px 0 0", fontSize: "0.88rem" }}>
+          새 창에서 열렸습니다. 안 열리면{" "}
+          <a href={d.proposalUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 700 }}>
+            여기
+          </a>
+          를 눌러주세요.
+        </p>
+      ) : !open ? (
+        <button type="button" onClick={() => setOpen(true)} style={{ marginTop: 12, padding: "12px 18px", background: "#fff", color: "#0a0000", border: "none", borderRadius: 4, fontWeight: 800, cursor: "pointer" }}>
+          제안서 받아보기
+        </button>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", gap: 8, marginTop: 12 }}>
+          {(
+            [
+              ["hospitalName", "병원명", "text", "organization"],
+              ["customerName", "성함", "text", "name"],
+              ["phone", "연락처", "tel", "tel"],
+              ["email", "이메일", "email", "email"],
+            ] as const
+          ).map(([k, ph, type, ac]) => (
+            <input key={k} type={type} autoComplete={ac} aria-label={ph} placeholder={ph} value={f[k]} onChange={(e) => setF((p) => ({ ...p, [k]: e.target.value }))} style={{ ...inputStyle, padding: "11px 12px", fontSize: "0.92rem" }} />
+          ))}
+          <button type="button" disabled={busy} onClick={submit} style={{ gridColumn: "1 / -1", padding: "13px", background: RED, color: "#fff", border: "none", borderRadius: 4, fontWeight: 800, cursor: busy ? "wait" : "pointer" }}>
+            {busy ? "여는 중…" : "제안서 열기"}
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
