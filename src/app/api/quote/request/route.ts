@@ -200,6 +200,21 @@ export async function POST(request: Request) {
 
     // Resend 이메일 발송
     let emailSent = false;
+    // 제안서 열람 요청 — 견적서가 아니라 제안서 링크를 보낸다
+    if (resend && body.purpose === "proposal" && typeof body.proposalUrl === "string" && /^https:\/\/docs\.google\.com\//.test(body.proposalUrl)) {
+      try {
+        const { error: e } = await resend.emails.send({
+          from: "열정의시간 <noreply@timeofpassion.com>",
+          to: [email],
+          subject: `요청하신 제안서 링크 – 열정의시간`,
+          html: `<div style="font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:15px;line-height:1.7;color:#0f172a">${String(customerName).replace(/[<>&"]/g, "")}님, 안녕하세요. 열정의시간입니다.<br><br>요청하신 제안서 링크를 보내드립니다.<br><a href="${body.proposalUrl}" style="color:#E63329;font-weight:700">제안서 열기</a><br><br>궁금하신 점은 이 메일에 답장 주시거나 카카오톡 채널 「열정의시간」으로 편하게 물어봐 주세요.<br><a href="https://pf.kakao.com/_RgYcxj/chat">카카오톡 상담하기</a></div>`,
+        });
+        if (!e) emailSent = true;
+      } catch {
+        // 메일 실패해도 접수는 성공 처리
+      }
+      return NextResponse.json({ success: true, quoteId: data.requestId, reviewUrl, total: data.total, emailSent });
+    }
     if (resend) {
       try {
         const { error: emailError } = await resend.emails.send({
