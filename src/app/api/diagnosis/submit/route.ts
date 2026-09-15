@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
-import { QUESTIONS } from "@/lib/diagnosis/engine";
-import { buildReportPdf } from "@/lib/diagnosis/report-pdf";
+import { QUESTIONS, recommend } from "@/lib/diagnosis/engine";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
 const INTRANET_URL = process.env.INTRANET_API_URL ?? "https://intranet.timeofpassion.com";
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 // 남의 병원 이름으로 리포트를 반복해 받아가는 걸 막는다 — 같은 이메일·전화는 하루 3회까지.
 // ponytail: 서버리스 인스턴스마다 따로 세는 메모리 제한. 악용이 보이면 인트라넷 DB(QuoteRequest) 기준으로 센다.
@@ -25,7 +22,6 @@ const pick = (key: string, v: unknown): string[] => {
   const allowed = new Set((QUESTIONS as Record<string, { options: string[][] }>)[key]?.options.map((o) => o[0]) ?? []);
   return Array.isArray(v) ? v.filter((x): x is string => typeof x === "string" && allowed.has(x)) : [];
 };
-const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string);
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
@@ -58,15 +54,7 @@ export async function POST(req: Request) {
   };
   if (!answers.countries.length && !answers.other.countries) return NextResponse.json({ error: "환자 유치를 원하시는 국가를 선택해 주세요." }, { status: 400 });
 
-  // 1) PDF
-  let pdf: Awaited<ReturnType<typeof buildReportPdf>>;
-  try {
-    pdf = await buildReportPdf({ hospital, answers });
-  } catch (e) {
-    console.error("diagnosis pdf failed", e);
-    return NextResponse.json({ error: "리포트를 만들지 못했습니다. 잠시 후 다시 시도해 주세요." }, { status: 500 });
-  }
-  const r = pdf.result;
+  const r = recommend(answers);
 
   // 2) 견적 접수함 — 답변 전체를 메모로, 추천 상품을 담은 상품으로
   const label = (key: string, v: string) => (QUESTIONS as Record<string, { options: string[][] }>)[key]?.options.find((o) => o[0] === v)?.[1] ?? v;
@@ -99,24 +87,22 @@ export async function POST(req: Request) {
     console.error("diagnosis intranet save failed", e);
   }
 
-  // 3) 메일 — PDF 첨부
+  // 3) 메일 — 홈페이지엔 메일 발송 키가 없어(2026-09-15 확인) 인트라넷이 대표 회사 메일함으로 PDF 를 만들어 보낸다.
+  //    인트라넷은 방금 접수된 요청·같은 이메일일 때만 보낸다(아무 주소로나 보내는 창구가 되지 않게).
   let emailSent = false;
-  if (resend) {
-    const { error } = await resend.emails.send({
-      from: "열정의시간 <noreply@timeofpassion.com>",
-      to: [contact.email],
-      subject: `${hospital.name} 마케팅 진단 리포트 – 열정의시간`,
-      html: `<div style="font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:15px;line-height:1.75;color:#0f172a;max-width:560px">
-        <p>안녕하세요. 열정의시간입니다.</p>
-        <p>${esc(hospital.name)}의 마케팅 진단 리포트를 첨부해 드립니다.</p>
-        <p style="padding:14px 16px;background:#fff5f4;border-left:3px solid #E63329">첫 달 <b>${(r.oneTime + r.monthly).toLocaleString()}만 원</b> · 2개월차부터 매달 <b>${r.monthly.toLocaleString()}만 원</b> (VAT 별도)</p>
-        <p>담당자가 병원 상황을 확인한 뒤 맞춤 제안서와 견적서를 이어서 보내드리겠습니다. 궁금하신 점은 이 메일에 답장하시거나 카카오톡 채널로 문의해 주세요.</p>
-        <p><a href="https://pf.kakao.com/_RgYcxj/chat" style="color:#E63329;font-weight:700">카카오톡 채널 「열정의시간」 상담하기</a></p>
-      </div>`,
-      attachments: [{ filename: `${hospital.name}_마케팅진단리포트.pdf`, content: pdf.buffer }],
-    }).catch((e) => ({ error: e }));
-    emailSent = !error;
-    if (error) console.error("diagnosis mail failed", error);
+  if (requestNum) {
+    try {
+      const res = await fetch(`${INTRANET_URL}/api/public/diagnosis/report`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ requestNum, email: contact.email, hospital, answers }),
+      });
+      const d = await res.json().catch(() => ({}));
+      emailSent = d.sent === true;
+      if (!emailSent) console.error("diagnosis mail not sent", res.status, d.reason);
+    } catch (e) {
+      console.error("diagnosis mail request failed", e);
+    }
   }
 
   return NextResponse.json({ success: true, emailSent, requestNum });
