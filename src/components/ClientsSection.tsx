@@ -48,8 +48,8 @@ export default function ClientsSection({
                 alt={client.name}
                 className="grayscale opacity-100 transition duration-300 group-hover:grayscale-0"
                 style={{
-                  maxHeight: 48,
-                  maxWidth: "82%",
+                  height: 64,
+                  maxWidth: "100%",
                   objectFit: "contain",
                 }}
               />
