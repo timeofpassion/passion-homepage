@@ -47,7 +47,7 @@ import LastUpdated from "@/components/LastUpdated";
 import ClientsSection from "@/components/ClientsSection";
 import ArchitectureSection from "@/components/ArchitectureSection";
 import ServicesSection from "@/components/ServicesSection";
-import PortfolioSection from "@/components/PortfolioSection";
+import QuarterWorkSection from "@/components/QuarterWorkSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Link from "next/link";
 import { TimeBlogCarousel } from "@/components/TimeBlogCarousel";
@@ -112,11 +112,14 @@ export default async function Home() {
           <ServicesSection />
         </Reveal>
         <Reveal>
-          <PortfolioSection />
+          <QuarterWorkSection />
         </Reveal>
-        <Reveal>
-          <TestimonialsSection />
-        </Reveal>
+        {/* 후기 섹션 숨김(2026-09-15): 실제 후기가 아닌 예시 문구·수치라 의료광고 위험. 원장님 실제 코멘트 확보 후 복구. */}
+        {false && (
+          <Reveal>
+            <TestimonialsSection />
+          </Reveal>
+        )}
         {posts.length > 0 && (
           <Reveal as="section" style={{ padding: "5rem 0 2rem" }}>
             <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>

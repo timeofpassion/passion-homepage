@@ -3,6 +3,7 @@
 // 클라이언트 추가/수정은 여기 한 곳만 고치면 양쪽에 반영된다(미러링).
 // medical: true = 병원·의원 등 의료기관. 열정의시간(/time)은 의료만 노출, 열정의사람들(/people)은 전체 노출.
 
+// logo 가 빈 문자열이면 로고 파일 확보 전 → 이름 글자로 표시.
 export type ClientLogo = { name: string; logo: string; medical?: boolean };
 
 export const clientLogos: ClientLogo[] = [
@@ -37,8 +38,10 @@ export const clientLogos: ClientLogo[] = [
   { name: "커피스미스", logo: "/clients/logo_coffeesmith.png" },
   { name: "제주본가", logo: "/clients/logo_jejubonga.png" },
   { name: "세민성형외과", logo: "/clients/logo_semin.png", medical: true },
-  { name: "아이니크성형외과", logo: "/clients/logo_inik.png", medical: true },
   { name: "글로비성형외과", logo: "/clients/logo_globi.png", medical: true },
   { name: "르무이헤어룸", logo: "/clients/logo_lemui.png" },
   { name: "팔당불오징어", logo: "/clients/logo_paldang.png" },
+  { name: "VC성형외과", logo: "", medical: true },
+  { name: "메이퓨어의원", logo: "", medical: true },
+  { name: "ELEMENT-TL", logo: "", medical: true },
 ];

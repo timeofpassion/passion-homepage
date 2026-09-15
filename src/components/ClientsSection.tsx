@@ -42,6 +42,7 @@ export default function ClientsSection({
                 minHeight: 80,
               }}
             >
+              {client.logo ? (
               <img
                 src={client.logo}
                 alt={client.name}
@@ -52,6 +53,11 @@ export default function ClientsSection({
                   objectFit: "contain",
                 }}
               />
+              ) : (
+                <span style={{ color: "#0f172a", fontWeight: 800, fontSize: "0.95rem", textAlign: "center", wordBreak: "keep-all" }}>
+                  {client.name}
+                </span>
+              )}
             </div>
           ))}
         </div>
