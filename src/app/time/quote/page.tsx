@@ -290,6 +290,10 @@ export default function QuotePage() {
           <br />
           맞는 구성과 금액이 <span style={{ color: RED }}>바로</span> 나옵니다
         </h1>
+        <Link href="/time/diagnosis" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap", border: "1px solid rgba(230,51,41,0.55)", background: "rgba(230,51,41,0.08)", borderRadius: 10, padding: "18px 20px", margin: "0 0 20px", color: "#fff", textDecoration: "none" }}>
+          <span><b style={{ fontSize: "1.1rem" }}>병원 맞춤 진단 받기</b><span style={{ display: "block", fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", marginTop: 4 }}>병원명과 몇 가지 선택으로 필요한 구성과 예상 금액을 확인하고, 진단 리포트를 PDF로 받아보세요</span></span>
+          <span style={{ background: "#E63329", padding: "10px 16px", borderRadius: 6, fontWeight: 800, whiteSpace: "nowrap" }}>진단 시작 →</span>
+        </Link>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: 12, margin: "0 0 clamp(3rem, 7vw, 5rem)" }}>
           {(
             [
