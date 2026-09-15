@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  // 진단 리포트 PDF — pdfkit 은 기본 글꼴 데이터(.afm)를 파일로 읽어서 번들하면 깨진다
+  serverExternalPackages: ["pdfkit"],
   async redirects() {
     // 기존 주소(북마크·외부 링크) → /time 하위 새 주소로 영구 이동
     return [
