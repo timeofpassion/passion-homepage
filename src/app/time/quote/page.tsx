@@ -42,6 +42,22 @@ interface ProductDetail {
 }
 
 const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
+
+// 견적 입구 6개 — 문장 형식 통일("OO를 늘리고/만들고 싶다"). tops = 상품 DB 대분류
+const DOORS = [
+  { key: "domestic", title: "국내 환자를 늘리고 싶다", desc: "네이버 검색·리뷰·영상까지 한 팀으로", tops: ["국내마케팅"] },
+  { key: "china", title: "중국 환자를 늘리고 싶다", desc: "샤오홍슈·더우인 노출과 위챗 상담", tops: ["중국마케팅"] },
+  { key: "taiwan", title: "대만 환자를 늘리고 싶다", desc: "번체 콘텐츠로 인스타·유튜브·LINE 운영", tops: ["대만마케팅"] },
+  { key: "japan", title: "일본 환자를 늘리고 싶다", desc: "인스타·X 인플루언서와 LINE 상담", tops: ["일본마케팅"] },
+  { key: "web", title: "홈페이지를 만들고 싶다", desc: "신규 제작부터 기존 홈페이지 살리기까지", tops: ["홈페이지 제작"] },
+  { key: "design", title: "디자인을 만들고 싶다", desc: "SNS·랜딩페이지·배너·인쇄물", tops: ["디자인"] },
+] as const;
+
+// 입구별 실제 운영 사례(병원명 비공개)
+const PROOF: Record<string, readonly (readonly [string, string])[]> = {
+  china: [["14 → 23건", "한 피부과 · 샤오홍슈 광고 노트 3건(약 7만 원) 뒤 주말 문의"]],
+  japan: [["1 → 77건", "한 성형외과 · 일본 LINE 신규 문의(5개월)"]],
+};
 const RED = "#E63329";
 const LINE = "1px solid rgba(255,255,255,0.1)";
 
@@ -162,18 +178,22 @@ export default function QuotePage() {
   const vat = Math.round(subtotal * 0.1);
   const total = subtotal + vat;
 
-  // 분야별 묶음 — 국내 월정기는 주력이라 따로 크게
-  const GROUPS: [string, string, string[]][] = [
-    ["overseas", "해외 환자 유치", ["일본마케팅", "대만마케팅", "중국마케팅"]],
-    ["video", "영상", ["영상·사진·음향"]],
-    ["web", "홈페이지", ["홈페이지 제작"]],
-    ["design", "디자인", ["디자인"]],
-  ];
+  // 입구 6개 = 아래 목록 묶음 6개(같은 문장·같은 순서). 영상 등 나머지는 맨 뒤.
   const topOf = (p: Product) => p.topCategory || p.category || "기타";
   const featured = products.find((p) => topOf(p) === "국내마케팅" && productOptions(p).length > 1);
-  const grouped = GROUPS.map(([key, label, tops]) => ({ key, label, items: products.filter((p) => p !== featured && tops.includes(topOf(p))) }))
-    .concat([{ key: "etc", label: "그 밖의 서비스", items: products.filter((p) => p !== featured && !GROUPS.some(([, , t]) => t.includes(topOf(p)))) }])
-    .filter((g) => g.items.length);
+  const minPrice = (items: Product[]) => {
+    const all = items.flatMap((p) => productOptions(p).map(optionTotal)).filter((n) => n > 0);
+    return all.length ? Math.min(...all) : 0;
+  };
+  const inTops = (tops: readonly string[]) => products.filter((p) => tops.includes(topOf(p)));
+  const grouped = [
+    ...DOORS.map((d) => ({ ...d, items: inTops(d.tops).filter((p) => p !== featured), min: minPrice(inTops(d.tops)) })),
+    { key: "video", title: "영상이 필요하다", desc: "", tops: ["영상·사진·음향"], items: inTops(["영상·사진·음향"]), min: 0 },
+    {
+      key: "etc", title: "그 밖의 서비스", desc: "", tops: [], min: 0,
+      items: products.filter((p) => p !== featured && ![...DOORS.flatMap((d) => d.tops), "영상·사진·음향"].includes(topOf(p))),
+    },
+  ].filter((g) => g.items.length || (g.key === "domestic" && featured));
 
   const scrollToForm = () => document.getElementById("quote-contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -294,25 +314,25 @@ export default function QuotePage() {
           <span><b style={{ fontSize: "1.1rem" }}>병원 맞춤 진단 받기</b><span style={{ display: "block", fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", marginTop: 4 }}>병원명과 몇 가지 선택으로 필요한 구성과 예상 금액을 확인하고, 진단 리포트를 PDF로 받아보세요</span></span>
           <span style={{ background: "#E63329", padding: "10px 16px", borderRadius: 6, fontWeight: 800, whiteSpace: "nowrap" }}>진단 시작 →</span>
         </Link>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: 12, margin: "0 0 clamp(3rem, 7vw, 5rem)" }}>
-          {(
-            [
-              ["door-domestic", "국내 환자를 늘리고 싶다", "네이버 검색·리뷰·영상까지 한 팀으로, 월 400만 원부터"],
-              ["door-overseas", "해외 환자를 받고 싶다", "일본·중국·대만 — 현지 플랫폼과 인플루언서"],
-              ["door-make", "만들 것만 필요하다", "홈페이지·영상·디자인 단건 제작"],
-            ] as const
-          ).map(([id, t, d]) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              className="q-door"
-              style={{ textAlign: "left", cursor: "pointer", padding: "20px 20px 18px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.16)", background: "rgba(255,255,255,0.02)", color: "#fff" }}
-            >
-              <div style={{ fontSize: "1.15rem", fontWeight: 800, letterSpacing: "-0.02em" }}>{t} →</div>
-              <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.55)", marginTop: 6, lineHeight: 1.5 }}>{d}</div>
-            </button>
-          ))}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: 12, margin: "0 0 clamp(3rem, 7vw, 5rem)" }}>
+          {DOORS.map((d) => {
+            const g = grouped.find((x) => x.key === d.key);
+            return (
+              <button
+                key={d.key}
+                type="button"
+                onClick={() => document.getElementById(`door-${d.key}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                className="q-door"
+                style={{ textAlign: "left", cursor: "pointer", padding: "20px 20px 18px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.16)", background: "rgba(255,255,255,0.02)", color: "#fff" }}
+              >
+                <div style={{ fontSize: "1.15rem", fontWeight: 800, letterSpacing: "-0.02em" }}>{d.title} →</div>
+                <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.55)", marginTop: 6, lineHeight: 1.5 }}>
+                  {d.desc}
+                  {g?.min ? ` · ${won(g.min)}부터` : ""}
+                </div>
+              </button>
+            );
+          })}
         </div>
 
         <div className="q-wrap">
@@ -321,20 +341,16 @@ export default function QuotePage() {
               <p style={{ color: "rgba(255,255,255,0.4)" }}>서비스를 불러오는 중…</p>
             ) : (
               <>
-                <div id="door-domestic" style={{ scrollMarginTop: 24 }} />
-                {featured && <FeaturedPackage p={featured} picked={cart[featured.id]} onPick={(i) => setCart((prev) => ({ ...prev, [featured.id]: i }))} onRemove={() => removeFromCart(featured.id)} onDetail={() => openDetail(featured.id)} />}
-
                 {grouped.map((g) => (
-                  <section key={g.key} id={g.key === "overseas" ? "door-overseas" : g.key === "video" ? "door-make" : undefined} style={{ marginTop: "clamp(3rem, 7vw, 4.5rem)", scrollMarginTop: 24 }}>
-                    <h2 style={{ fontSize: "1.05rem", fontWeight: 800, margin: "0 0 6px", color: "rgba(255,255,255,0.9)" }}>{g.label}</h2>
-                    {g.key === "overseas" && (
+                  <section key={g.key} id={`door-${g.key}`} style={{ marginTop: g.key === "domestic" ? 0 : "clamp(3rem, 7vw, 4.5rem)", scrollMarginTop: 24 }}>
+                    <h2 style={{ fontSize: "1.25rem", fontWeight: 900, margin: "0 0 4px", letterSpacing: "-0.02em" }}>{g.title}</h2>
+                    {g.desc && <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", margin: "0 0 12px" }}>{g.desc}</p>}
+                    {g.key === "domestic" && featured && (
+                      <FeaturedPackage p={featured} picked={cart[featured.id]} onPick={(i) => setCart((prev) => ({ ...prev, [featured.id]: i }))} onRemove={() => removeFromCart(featured.id)} onDetail={() => openDetail(featured.id)} />
+                    )}
+                    {PROOF[g.key] && (
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: 10, margin: "10px 0 16px" }}>
-                        {(
-                          [
-                            ["14 → 23건", "한 피부과 · 샤오홍슈 광고 노트 3건(약 7만 원) 뒤 주말 문의"],
-                            ["1 → 77건", "한 성형외과 · 일본 LINE 신규 문의(5개월)"],
-                          ] as const
-                        ).map(([n, t]) => (
+                        {PROOF[g.key].map(([n, t]) => (
                           <div key={n} style={{ border: LINE, borderRadius: 6, padding: "14px 16px" }}>
                             <div style={{ fontSize: "1.5rem", fontWeight: 900, color: RED, letterSpacing: "-0.03em" }}>{n}</div>
                             <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", marginTop: 2 }}>{t}</div>
@@ -343,7 +359,7 @@ export default function QuotePage() {
                         <div style={{ gridColumn: "1 / -1", fontSize: "0.72rem", color: "rgba(255,255,255,0.35)" }}>실제 운영 사례(병원명 비공개)이며 특정 성과를 보장하는 수치가 아닙니다.</div>
                       </div>
                     )}
-                    <div style={{ borderTop: "1px solid rgba(255,255,255,0.18)" }}>
+                    {g.items.length > 0 && <div style={{ marginTop: g.key === "domestic" ? 20 : 0, borderTop: "1px solid rgba(255,255,255,0.18)" }}>
                       {g.items.map((p) => {
                         const opts = productOptions(p);
                         const prices = opts.map(optionTotal).filter((n) => n > 0);
@@ -381,7 +397,7 @@ export default function QuotePage() {
                           </div>
                         );
                       })}
-                    </div>
+                    </div>}
                   </section>
                 ))}
               </>
