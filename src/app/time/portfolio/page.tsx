@@ -5,16 +5,16 @@ import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
 import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
-import { portfolioRegions, portfolioCategories, type PortfolioRegion, type PortfolioCategory } from "@/data/portfolio";
+import { portfolioGroups, foldersInGroup, type PortfolioGroupKey } from "@/data/portfolio";
 
 export const metadata: Metadata = {
   title: "포트폴리오",
   description:
-    "열정의시간이 직접 만든 홈페이지 포트폴리오. 병원·브랜드 홈페이지 제작 사례를 확인하세요.",
+    "열정의시간 포트폴리오. 국내·일본·중국·대만 마케팅과 홈페이지·디자인 작업을 분야별로 확인하세요.",
   alternates: { canonical: "https://www.timeofpassion.com/time/portfolio" },
   openGraph: {
     title: "포트폴리오 | 열정의시간",
-    description: "열정의시간이 직접 만든 홈페이지 포트폴리오.",
+    description: "국내·일본·중국·대만 마케팅과 홈페이지·디자인 작업을 분야별로.",
     url: "https://www.timeofpassion.com/time/portfolio",
     siteName: "열정의시간",
     locale: "ko_KR",
@@ -38,10 +38,11 @@ export default async function PortfolioPage({
 }) {
   const sp = await searchParams;
   const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
-  const r = one(sp.region);
-  const c = one(sp.category);
-  const initialRegion = portfolioRegions.some((x) => x.key === r) ? (r as PortfolioRegion) : "domestic";
-  const initialCategory = portfolioCategories.some((x) => x.key === c && x.ready) ? (c as PortfolioCategory) : "homepage";
+  const g = one(sp.group);
+  const t = one(sp.type);
+  const initialGroup = portfolioGroups.some((x) => x.key === g) ? (g as PortfolioGroupKey) : "domestic";
+  // 폴더는 그 분류 안에 실제로 있을 때만 열어준다(빈 화면 방지).
+  const initialType = foldersInGroup(initialGroup).some((x) => x.key === t) ? (t as string) : null;
 
   return (
     <>
@@ -79,13 +80,13 @@ export default async function PortfolioPage({
                 lineHeight: 1.7,
               }}
             >
-              열정의시간이 기획부터 디자인·퍼블리싱까지 직접 만든 홈페이지입니다.
-              카드를 누르면 실제 사이트로 이동합니다.
+              국내·일본·중국·대만 마케팅과 홈페이지·디자인까지, 열정의시간이 직접 한 작업입니다.
+              분야를 고르고 하고 싶은 일을 눌러 들어가 보세요.
             </p>
           </div>
         </header>
 
-        <PortfolioGallery initialRegion={initialRegion} initialCategory={initialCategory} />
+        <PortfolioGallery initialGroup={initialGroup} initialType={initialType} />
         <Footer />
       </main>
 

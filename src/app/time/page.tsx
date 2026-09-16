@@ -195,9 +195,7 @@ const HW_CSS = `
   .pf-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.1rem;flex-wrap:wrap}
   .pf-more{color:#E7C46A;font-size:.85rem;font-weight:700;text-decoration:none;white-space:nowrap}
   .pf-more:hover{text-decoration:underline}
-  .pf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-  @media (max-width:900px){.pf-grid{grid-template-columns:repeat(2,1fr)}}
-  @media (max-width:560px){.pf-grid{grid-template-columns:1fr}}
+  .pf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1rem}
 `;
 
 // 국내·해외 동시 시작 흐름 — 세로로 읽어 내린다
@@ -589,7 +587,7 @@ export default async function Home() {
                     </h3>
                     <p style={{ margin: "6px 0 0", fontSize: ".88rem", color: "rgba(255,255,255,.55)", wordBreak: "keep-all" }}>{g.desc}</p>
                   </div>
-                  <Link href={`/time/portfolio?region=${g.region}&category=${g.category}`} className="pf-more">더 보러 가기 →</Link>
+                  <Link href={`/time/portfolio?group=${g.key}`} className="pf-more">더 보러 가기 →</Link>
                 </div>
                 <div className="pf-grid">
                   {g.items.map((it) => (

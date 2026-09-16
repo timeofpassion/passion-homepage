@@ -41,7 +41,7 @@ export default function PortfolioCard({
           aspectRatio: "16 / 10",
           overflow: "hidden",
           background: showImage
-            ? "#000"
+            ? "#f3f1f0"
             : `linear-gradient(135deg, ${accent}, rgba(0,0,0,0.85))`,
         }}
       >
@@ -53,12 +53,13 @@ export default function PortfolioCard({
             decoding="async"
             onError={() => setImgError(true)}
             style={{
+              // 자르지 않는다 — 캡처 비율이 무엇이든 전체가 보이게(대표 지시 2026-09-16).
               width: "100%",
               height: "100%",
-              objectFit: "cover",
-              objectPosition: "top center",
-              transition: "transform 0.4s ease",
-              transform: hover ? "scale(1.04)" : "scale(1)",
+              objectFit: "contain",
+              objectPosition: "center",
+              transition: "opacity 0.3s ease",
+              opacity: hover ? 0.92 : 1,
             }}
           />
         ) : (

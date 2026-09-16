@@ -2,17 +2,21 @@
 // /time/portfolio 창 + /time 메인 진입 섹션이 함께 사용한다.
 // 작품을 계속 쌓을 때 이 배열에 항목만 추가하면 양쪽에 자동 반영된다.
 //
-// ── 분류 체계 ────────────────────────────────────────────────────
-// 1차 = 마케팅 권역(region): 국내마케팅 / 일본마케팅 / 중국마케팅 / 대만마케팅
-//        한 작업이 여러 권역에 걸치면 regions 배열에 여러 개를 넣는다.
-// 2차 = 작업 유형(category): 홈페이지 제작 / 영상 / SNS·콘텐츠
+// ── 분류 체계 (대표 정의 2026-09-16) ─────────────────────────────
+// 화면의 큰 분류는 여섯 개다 → portfolioGroups (이 파일 아래쪽)
+//   국내 마케팅 / 일본 마케팅 / 중국 마케팅 / 대만 마케팅 / 홈페이지 / 디자인
+//   앞 넷은 regions 로 가르고, 홈페이지와 디자인은 권역에서 빼서 각각 따로 모은다.
+// 항목에 적는 값은 그대로 둘 것:
+//   regions  = 어느 나라 마케팅인가(한 작업이 여러 곳이면 여러 개)
+//   category = 무슨 일인가(블로그·플레이스·체험단·홈페이지·디자인·영상 …)
+//              = 큰 분류 안에서 「폴더」로 묶이는 축이다.
 //   ※ 포트폴리오는 "고객사(클라이언트) 작업"만 노출한다. 자사 사이트는 제외.
 //
 // ── 항목 추가/수정 방법 ──────────────────────────────────────────
 // 1) thumbnail: public/portfolio/<id>.png 에 캡처 이미지를 넣는다(없으면 브랜드색 폴백).
 // 2) liveUrl: 살아있는 주소를 넣으면 카드 클릭 시 새 탭으로 이동.
 //    캡처 이미지만 있고 주소가 없으면 liveUrl 을 비운다 → 클릭 시 이미지 확대.
-// 3) featured: true 인 항목이 /time 메인 진입 섹션 미리보기에 노출된다.
+// 3) featured: true 면 /time 메인 미리보기에서 앞자리에 선다(같은 캡처·같은 제목은 걸러짐).
 // ─────────────────────────────────────────────────────────────────
 
 export type PortfolioRegion = "domestic" | "japan" | "china" | "taiwan";
@@ -4757,101 +4761,155 @@ export const portfolioItems: PortfolioItem[] = [
 ];
 
 // ── 헬퍼 ──────────────────────────────────────────────────────────
-export function itemsByRegion(region: PortfolioRegion): PortfolioItem[] {
-  return portfolioItems.filter((it) => it.regions.includes(region));
+
+// ── 큰 분류(직무별) ──────────────────────────────────────────────
+// 대표 정의(2026-09-16): 포트폴리오의 상단 카테고리는 여섯 개다.
+//   국내 마케팅 / 일본 마케팅 / 중국 마케팅 / 대만 마케팅 / 홈페이지 / 디자인
+// 권역 묶음에서는 홈페이지·디자인 작업을 빼고, 그 둘은 각각 별도 분류로 둔다.
+// /time 메인 미리보기와 /time/portfolio 갤러리가 **이 정의 하나만** 본다.
+export type PortfolioGroupKey = "domestic" | "japan" | "china" | "taiwan" | "homepage" | "design";
+
+const HP_DESIGN: PortfolioCategory[] = ["homepage", "design"];
+
+export const portfolioGroups: {
+  key: PortfolioGroupKey;
+  label: string;
+  desc: string;
+  match: (it: PortfolioItem) => boolean;
+  /** 분류 안을 무엇으로 묶어 「폴더」를 만들지. 기본은 작업 유형(category). */
+  folderBy?: "category" | "tag";
+}[] = [
+  {
+    key: "domestic",
+    label: "국내 마케팅",
+    desc: "블로그·플레이스·체험단·플랫폼까지 매달 돌린 작업",
+    match: (it) => it.regions.includes("domestic") && !HP_DESIGN.includes(it.category),
+  },
+  {
+    key: "japan",
+    label: "일본 마케팅",
+    desc: "인스타·X·LINE 상담까지 현지 사람이 쓰는 콘텐츠",
+    match: (it) => it.regions.includes("japan") && !HP_DESIGN.includes(it.category),
+  },
+  {
+    key: "china",
+    label: "중국 마케팅",
+    desc: "샤오홍슈·더우인·위챗으로 이어지는 중화권 운영",
+    match: (it) => it.regions.includes("china") && !HP_DESIGN.includes(it.category),
+  },
+  {
+    key: "taiwan",
+    label: "대만 마케팅",
+    desc: "번체 콘텐츠와 LINE 상담으로 여는 대만 채널",
+    match: (it) => it.regions.includes("taiwan") && !HP_DESIGN.includes(it.category),
+  },
+  {
+    key: "homepage",
+    label: "홈페이지",
+    desc: "국내·일본·중국·대만 다국어 홈페이지 제작",
+    match: (it) => it.category === "homepage",
+  },
+  {
+    key: "design",
+    label: "디자인",
+    desc: "포스터·카드뉴스·배너·로고까지, 병원에서 실제로 쓰는 인쇄물과 콘텐츠",
+    match: (it) => it.category === "design",
+    // 디자인은 전부 같은 유형이라 유형으로는 못 나눈다 → 무슨 물건인지(태그)로 묶는다.
+    folderBy: "tag",
+  },
+];
+
+export function itemsInGroup(group: PortfolioGroupKey): PortfolioItem[] {
+  const g = portfolioGroups.find((x) => x.key === group);
+  return g ? portfolioItems.filter(g.match) : [];
 }
 
-export function itemsByRegionAndCategory(
-  region: PortfolioRegion,
-  category: PortfolioCategory,
-): PortfolioItem[] {
-  return portfolioItems.filter(
-    (it) => it.regions.includes(region) && it.category === category,
-  );
+/** 태그로 폴더를 만들 때, 폴더 이름이 될 수 없는 태그(권역·너무 뭉뚱그린 말) */
+const NOT_A_FOLDER_TAG = new Set(["국내", "일본", "중국", "대만", "디자인", "의료", "브랜드", "기타"]);
+
+export type PortfolioFolder = { key: string; label: string; count: number; cover?: string };
+
+/** 태그로 묶을 때 이 항목이 들어갈 폴더 이름(하나만) */
+function folderTagOf(it: PortfolioItem): string {
+  return (it.tags ?? []).find((t) => !NOT_A_FOLDER_TAG.has(t)) ?? "그 외";
 }
 
-export function regionCount(region: PortfolioRegion): number {
-  return itemsByRegion(region).length;
+/** 분류 안의 「폴더」 — 실제로 작업이 있는 것만, 많은 순으로 */
+export function foldersInGroup(group: PortfolioGroupKey): PortfolioFolder[] {
+  const g = portfolioGroups.find((x) => x.key === group);
+  if (!g) return [];
+  const items = itemsInGroup(group);
+
+  if (g.folderBy === "tag") {
+    const bag = new Map<string, PortfolioItem[]>();
+    for (const it of items) {
+      const tag = folderTagOf(it);
+      const list = bag.get(tag);
+      if (list) list.push(it);
+      else bag.set(tag, [it]);
+    }
+    return [...bag.entries()]
+      .map(([tag, list]) => ({
+        key: tag,
+        label: tag,
+        count: list.length,
+        cover: list.find((it) => it.thumbnail)?.thumbnail,
+      }))
+      // 「그 외」는 아무리 많아도 맨 뒤로(태그가 안 붙은 것들이라 대표 얼굴이 될 수 없다)
+      .sort((a, b) => (a.key === "그 외" ? 1 : b.key === "그 외" ? -1 : b.count - a.count));
+  }
+
+  return portfolioCategories
+    .map((c) => {
+      const list = items.filter((it) => it.category === c.key);
+      return { key: c.key, label: c.label, count: list.length, cover: list.find((it) => it.thumbnail)?.thumbnail };
+    })
+    .filter((t) => t.count > 0)
+    .sort((a, b) => b.count - a.count);
 }
 
-export function categoryCountInRegion(
-  region: PortfolioRegion,
-  category: PortfolioCategory,
-): number {
-  return itemsByRegionAndCategory(region, category).length;
-}
-
-export function featuredItems(limit = 6): PortfolioItem[] {
-  const featured = portfolioItems.filter((it) => it.featured);
-  const pool = featured.length > 0 ? featured : portfolioItems;
-  return pool.slice(0, limit);
+/** 폴더 안의 작업 */
+export function itemsInFolder(group: PortfolioGroupKey, folder: string): PortfolioItem[] {
+  const g = portfolioGroups.find((x) => x.key === group);
+  if (!g) return [];
+  const items = itemsInGroup(group);
+  if (g.folderBy === "tag") {
+    return items.filter((it) => folderTagOf(it) === folder);
+  }
+  return items.filter((it) => it.category === folder);
 }
 
 // ── /time 메인 미리보기 ───────────────────────────────────────────
-// 대표 메인에 분야별로 6개씩 보여주고 「더 보러 가기」로 갤러리의 같은 탭으로 보낸다.
-// 여기 정의를 바꾸면 메인 미리보기가 따라온다(항목 자체는 위 배열이 단일 소스).
+// 위 다섯 분류를 그대로 쓴다(분류를 고치면 메인이 따라온다).
 export type PreviewGroup = {
-  key: string;
+  key: PortfolioGroupKey;
   label: string;
   desc: string;
-  region: PortfolioRegion;
-  category: PortfolioCategory;      // 「더 보러 가기」가 여는 탭
-  match: (it: PortfolioItem) => boolean;
   items: PortfolioItem[];
   total: number;
 };
 
-const WORK_ONLY: PortfolioCategory[] = ["homepage", "design"]; // 권역 묶음에선 뺀다(따로 묶음이 있음)
-
 function pick(list: PortfolioItem[], limit = 6): PortfolioItem[] {
-  // 같은 캡처·같은 제목이 미리보기에 두 번 뜨면 허술해 보인다 → 먼저 걸러낸다.
-  const score = (it: PortfolioItem) => (it.featured ? 0 : it.thumbnail ? 1 : 2);
   // 캡처 없는 폴백 카드가 줄줄이 서면 미리보기가 허전하다 → 3개 이상 있으면 캡처 있는 것만 쓴다.
+  // 같은 캡처·같은 제목이 두 번 뜨면 허술해 보이므로 먼저 걸러낸다.
+  const score = (it: PortfolioItem) => (it.featured ? 0 : it.thumbnail ? 1 : 2);
   const withThumb = list.filter((it) => it.thumbnail);
   const pool = withThumb.length >= 3 ? withThumb : list;
+  // 같은 캡처·같은 제목은 한 번만. 같은 그림이 파일만 다르게 두 벌 들어있는 경우가 있어
+  // 제목까지 같이 본다. 그래서 묶음에 따라 6개를 못 채우기도 한다(억지로 채우지 않는다).
   const seen = new Set<string>();
   const out: PortfolioItem[] = [];
   for (const it of [...pool].sort((a, b) => score(a) - score(b))) {
-    const key = `${it.thumbnail ?? ""}|${it.title}`;
-    if (seen.has(key) || seen.has(it.thumbnail ?? " ") || seen.has(it.title)) continue;
-    seen.add(key);
-    if (it.thumbnail) seen.add(it.thumbnail);
+    if (seen.has(it.title) || (it.thumbnail && seen.has(it.thumbnail))) continue;
     seen.add(it.title);
+    if (it.thumbnail) seen.add(it.thumbnail);
     out.push(it);
     if (out.length === limit) break;
   }
   return out;
 }
 
-function topCategory(list: PortfolioItem[], fallback: PortfolioCategory): PortfolioCategory {
-  const ready = new Set(portfolioCategories.filter((c) => c.ready).map((c) => c.key));
-  const count = new Map<PortfolioCategory, number>();
-  for (const it of list) {
-    if (!ready.has(it.category)) continue;
-    count.set(it.category, (count.get(it.category) ?? 0) + 1);
-  }
-  const top = [...count.entries()].sort((a, b) => b[1] - a[1])[0];
-  return top ? top[0] : fallback;
-}
-
-const GROUP_DEFS: { key: string; label: string; desc: string; region: PortfolioRegion; match: (it: PortfolioItem) => boolean; category?: PortfolioCategory }[] = [
-  { key: "domestic", label: "국내 마케팅", desc: "블로그·플레이스·체험단·플랫폼까지 매달 돌린 작업", region: "domestic", match: (it) => it.regions.includes("domestic") && !WORK_ONLY.includes(it.category) },
-  { key: "china", label: "중국 마케팅", desc: "샤오홍슈·더우인·위챗으로 이어지는 중화권 운영", region: "china", match: (it) => it.regions.includes("china") && !WORK_ONLY.includes(it.category) },
-  { key: "japan", label: "일본 마케팅", desc: "인스타·X·LINE 상담까지 현지 사람이 쓰는 콘텐츠", region: "japan", match: (it) => it.regions.includes("japan") && !WORK_ONLY.includes(it.category) },
-  { key: "homepage", label: "홈페이지", desc: "국내·일본·중국·대만 다국어 홈페이지 제작", region: "domestic", match: (it) => it.category === "homepage", category: "homepage" },
-  { key: "design", label: "디자인", desc: "상세페이지·배너·카드뉴스·브랜드 디자인", region: "domestic", match: (it) => it.category === "design", category: "design" },
-];
-
-export const previewGroups: PreviewGroup[] = GROUP_DEFS.map((g) => {
+export const previewGroups: PreviewGroup[] = portfolioGroups.map((g) => {
   const all = portfolioItems.filter(g.match);
-  return {
-    key: g.key,
-    label: g.label,
-    desc: g.desc,
-    region: g.region,
-    category: g.category ?? topCategory(all, "blog"),
-    match: g.match,
-    items: pick(all),
-    total: all.length,
-  };
+  return { key: g.key, label: g.label, desc: g.desc, items: pick(all), total: all.length };
 });
