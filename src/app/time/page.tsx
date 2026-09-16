@@ -175,6 +175,9 @@ const HW_CSS = `
   .flow-when{display:inline-block;font-size:12px;font-weight:700;color:#E7C46A;letter-spacing:.02em}
   .flow-title{font-size:clamp(1.15rem,2.2vw,1.45rem);font-weight:900;margin:6px 0 8px;letter-spacing:-.02em}
   .flow-desc{font-size:.95rem;line-height:1.75;color:rgba(255,255,255,.68);word-break:keep-all;max-width:54ch;margin:0}
+  .flow-checks{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+  .flow-checks li{font-size:12px;padding:4px 10px;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.8)}
+  .flow-out{margin:14px 0 0;font-size:.85rem;font-weight:700}
   .flow-end{display:block;margin-top:14px;font-size:.82rem;color:rgba(255,255,255,.4)}
   @supports (animation-timeline: view()){
     @media (prefers-reduced-motion: no-preference){
@@ -198,11 +201,38 @@ const HW_CSS = `
 `;
 
 // 국내·해외 동시 시작 흐름 — 세로로 읽어 내린다
-const FLOW = [
-  { when: "계약 전", t: "사전 진단", d: "국내 검색·플레이스와 해외 검색에서 병원이 어떻게 보이는지 확인" },
-  { when: "첫 달", t: "국내 기반 + 해외 창구", d: "국내 채널 정비와 함께 해외 계정·다국어 페이지를 병원 소유로 개설" },
-  { when: "이후 매달", t: "함께 운영", d: "국내 원본 콘텐츠를 나라별로 옮겨 발행하고, 월간 보고서로 다음 달 결정" },
-  { when: "중간 점검", t: "계속할지 함께 판단", d: "약속한 점검 시점에 기준 대비 결과를 보고 조정하거나 멈출 수 있게" },
+// 국내·해외 동시 진행의 한 바퀴. STEP 1~6(일하는 방식)과 같은 깊이로 적는다 —
+// 제목 한 줄짜리로 두면 "이 섹션만 설명이 없다"가 된다(2026-09-16 대표 지적).
+// 해외를 같이 할 때만 달라지는 것에 집중해 STEP 1~6 과 같은 말을 반복하지 않는다.
+const FLOW: { when: string; t: string; d: string; checks: string[]; out: string }[] = [
+  {
+    when: "계약 전",
+    t: "국내와 해외를 한 번에 진단합니다",
+    d: "국내 검색만 보고 시작하지 않습니다. 중국·대만·일본 현지 플랫폼에서 병원 이름과 주력 시술이 어떻게 검색되는지, 현지 경쟁 병원은 무엇을 올리고 있는지 같이 확인합니다.",
+    checks: ["네이버 검색·플레이스", "샤오홍슈·더우인", "유튜브·인스타(번체·일본어)", "다국어 페이지 유무", "현지 경쟁 병원"],
+    out: "국내·해외를 함께 본 진단표",
+  },
+  {
+    when: "첫 달",
+    t: "해외 계정과 다국어 페이지를 병원 명의로 엽니다",
+    d: "대행사 계정으로 만들면 계약이 끝날 때 팔로워와 후기가 함께 사라집니다. 계정은 처음부터 병원 명의로 열고, 다국어 페이지는 자동 번역 미러링이 아니라 언어별 실제 페이지로 만듭니다.",
+    checks: ["샤오홍슈·인스타 계정 인증", "언어별 물리 페이지", "유입 경로 추적 연결"],
+    out: "병원 소유 해외 계정 · 다국어 페이지",
+  },
+  {
+    when: "이후 매달",
+    t: "국내에서 찍은 원본을 나라별로 옮겨 씁니다",
+    d: "해외용으로 다시 찍지 않습니다. 국내 촬영분을 자막·로고가 없는 클린 원본으로 남겨 두고, 나라별 자막과 표현만 각색해 현지 채널에 올립니다. 촬영은 한 번만 합니다.",
+    checks: ["클린 원본 확보", "나라별 자막·각색", "현지 채널 발행", "월간 보고서"],
+    out: "나라별 발행 콘텐츠 · 월간 보고서",
+  },
+  {
+    when: "중간 점검",
+    t: "약속한 시점에 계속할지 함께 정합니다",
+    d: "시작할 때 정한 점검 시점에 기준 대비 결과를 보고합니다. 성과가 안 나는 나라는 줄이거나 멈추고, 되는 곳으로 옮깁니다.",
+    checks: ["기준 대비 결과", "나라별 계속·조정·중단", "다음 분기 계획"],
+    out: "점검 보고 · 다음 분기 결정",
+  },
 ];
 
 const label = { color: "#E7C46A", fontSize: 12, letterSpacing: ".2em", marginBottom: 16 } as const;
@@ -503,6 +533,12 @@ export default async function Home() {
                   <span className="flow-when">{f.when}</span>
                   <h4 className="flow-title">{f.t}</h4>
                   <p className="flow-desc">{f.d}</p>
+                  <ul className="flow-checks">
+                    {f.checks.map((c) => (
+                      <li key={c}>{c}</li>
+                    ))}
+                  </ul>
+                  <p className="flow-out"><span style={{ color: RED }}>받으시는 것 · </span>{f.out}</p>
                   {i === FLOW.length - 1 && <span className="flow-end">여기까지가 한 바퀴입니다. 다음 달도 같은 순서로 돕니다.</span>}
                 </li>
               ))}
