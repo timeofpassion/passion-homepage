@@ -45,19 +45,14 @@ const KAKAO_URL = "https://pf.kakao.com/_RgYcxj/chat";
 
 // 견적 입구 6개 — 문장 형식 통일("OO를 늘리고/만들고 싶다"). tops = 상품 DB 대분류
 const DOORS = [
-  { key: "domestic", title: "국내 환자를 늘리고 싶다", desc: "네이버 검색·리뷰·영상까지 한 팀으로", tops: ["국내마케팅"] },
-  { key: "china", title: "중국 환자를 늘리고 싶다", desc: "샤오홍슈·더우인 노출과 위챗 상담", tops: ["중국마케팅"] },
-  { key: "taiwan", title: "대만 환자를 늘리고 싶다", desc: "번체 콘텐츠로 인스타·유튜브·LINE 운영", tops: ["대만마케팅"] },
-  { key: "japan", title: "일본 환자를 늘리고 싶다", desc: "인스타·X 인플루언서와 LINE 상담", tops: ["일본마케팅"] },
-  { key: "web", title: "홈페이지를 만들고 싶다", desc: "신규 제작부터 기존 홈페이지 살리기까지", tops: ["홈페이지 제작"] },
-  { key: "design", title: "디자인을 만들고 싶다", desc: "SNS·랜딩페이지·배너·인쇄물", tops: ["디자인"] },
+  { key: "domestic", title: "국내 마케팅", desc: "네이버 검색·리뷰·영상까지 한 팀으로", tops: ["국내마케팅"] },
+  { key: "china", title: "중국 마케팅", desc: "샤오홍슈 계정 운영·콘텐츠·체험단", tops: ["중국마케팅"] },
+  { key: "taiwan", title: "대만 마케팅", desc: "번체 영상·유튜브 SEO·META 광고", tops: ["대만마케팅"] },
+  { key: "japan", title: "일본 마케팅", desc: "인스타·틱톡·X 인플루언서 체험단", tops: ["일본마케팅"] },
+  { key: "web", title: "홈페이지 제작", desc: "신규 제작부터 SEO 점검·다국어 추가까지", tops: ["홈페이지 제작"] },
+  { key: "design", title: "디자인 서비스", desc: "인스타 피드·랜딩페이지·배너·인쇄물", tops: ["디자인"] },
 ] as const;
 
-// 입구별 실제 운영 사례(병원명 비공개)
-const PROOF: Record<string, readonly (readonly [string, string])[]> = {
-  china: [["14 → 23건", "한 피부과 · 샤오홍슈 광고 노트 3건(약 7만 원) 뒤 주말 문의"]],
-  japan: [["1 → 77건", "한 성형외과 · 일본 LINE 신규 문의(5개월)"]],
-};
 const RED = "#E63329";
 const LINE = "1px solid rgba(255,255,255,0.1)";
 
@@ -189,7 +184,7 @@ export default function QuotePage() {
   const inTops = (tops: readonly string[]) => products.filter((p) => tops.includes(topOf(p)));
   const grouped = [
     ...DOORS.map((d) => ({ ...d, items: inTops(d.tops).filter((p) => p !== featured), min: minPrice(inTops(d.tops)) })),
-    { key: "video", title: "영상을 만들고 싶다", desc: "원장님 인터뷰 영상·숏폼", tops: ["영상·사진·음향"], items: inTops(["영상·사진·음향"]), min: minPrice(inTops(["영상·사진·음향"])) },
+    { key: "video", title: "영상 서비스", desc: "원장님 인터뷰 영상·숏폼", tops: ["영상·사진·음향"], items: inTops(["영상·사진·음향"]), min: minPrice(inTops(["영상·사진·음향"])) },
     {
       key: "etc", title: "그 밖의 서비스", desc: "", tops: [] as string[], min: 0,
       items: products.filter((p) => p !== featured && ![...DOORS.flatMap((d) => d.tops), "영상·사진·음향"].includes(topOf(p))),
@@ -299,7 +294,7 @@ export default function QuotePage() {
         .q-side{position:sticky;top:24px}
         .q-mbar{display:none}
         .q-row:hover{background:rgba(255,255,255,0.03)}
-        .q-door:hover{border-color:#E63329!important}
+        .q-door:hover{color:#fff!important}
         @media (max-width: 900px){.q-wrap{grid-template-columns:1fr}.q-side{display:none}.q-mbar{display:flex}}
       `}</style>
       <div style={{ padding: "1.5rem clamp(1rem, 4vw, 2rem)" }}>
@@ -318,27 +313,29 @@ export default function QuotePage() {
           <span><b style={{ fontSize: "1.1rem" }}>병원 맞춤 진단 받기</b><span style={{ display: "block", fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", marginTop: 4 }}>병원명과 몇 가지 선택으로 필요한 구성과 예상 금액을 확인하고, 진단 리포트를 PDF로 받아보세요</span></span>
           <span style={{ background: "#E63329", padding: "10px 16px", borderRadius: 6, fontWeight: 800, whiteSpace: "nowrap" }}>진단 시작 →</span>
         </Link>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: 12, margin: "0 0 clamp(3rem, 7vw, 5rem)" }}>
+        <div role="tablist" aria-label="서비스 분야" style={{ display: "flex", flexWrap: "wrap", gap: "clamp(4px, 2vw, 20px)", borderBottom: LINE, margin: "0 0 clamp(2rem, 5vw, 2.75rem)" }}>
           {grouped.map((g) => {
             const on = current?.key === g.key;
             return (
               <button
                 key={g.key}
                 type="button"
-                aria-pressed={on}
+                role="tab"
+                aria-selected={on}
                 onClick={() => {
                   setDoor(g.key);
-                  // 좁은 화면에선 카드가 세로로 쌓여 목록이 화면 밖에 있다
+                  // 좁은 화면에선 탭이 여러 줄로 쌓여 목록이 화면 밖에 있다
                   if (window.innerWidth < 720) document.getElementById("door-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
                 className="q-door"
-                style={{ textAlign: "left", cursor: "pointer", padding: "20px 20px 18px", borderRadius: 8, border: `1px solid ${on ? RED : "rgba(255,255,255,0.16)"}`, background: on ? "rgba(230,51,41,0.1)" : "rgba(255,255,255,0.02)", color: "#fff" }}
+                style={{
+                  appearance: "none", background: "none", cursor: "pointer",
+                  padding: "12px 2px 14px", border: 0, borderBottom: `2px solid ${on ? RED : "transparent"}`, marginBottom: -1,
+                  fontSize: "clamp(0.95rem, 2.6vw, 1.05rem)", fontWeight: on ? 800 : 500, letterSpacing: "-0.02em",
+                  color: on ? "#fff" : "rgba(255,255,255,0.5)", whiteSpace: "nowrap",
+                }}
               >
-                <div style={{ fontSize: "1.15rem", fontWeight: 800, letterSpacing: "-0.02em" }}>{g.title}</div>
-                <div style={{ fontSize: "0.85rem", color: on ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.55)", marginTop: 6, lineHeight: 1.5 }}>
-                  {g.desc}
-                  {g.min ? `${g.desc ? " · " : ""}${won(g.min)}부터` : ""}
-                </div>
+                {g.title}
               </button>
             );
           })}
@@ -352,21 +349,13 @@ export default function QuotePage() {
               <>
                 {(current ? [current] : []).map((g) => (
                   <section key={g.key} id="door-panel" style={{ marginTop: 0, scrollMarginTop: 16 }}>
-                    <h2 style={{ fontSize: "1.25rem", fontWeight: 900, margin: "0 0 4px", letterSpacing: "-0.02em" }}>{g.title}</h2>
-                    {g.desc && <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", margin: "0 0 12px" }}>{g.desc}</p>}
+                    <h2 style={{ fontSize: "clamp(1.25rem, 3.2vw, 1.5rem)", fontWeight: 900, margin: "0 0 5px", letterSpacing: "-0.03em" }}>{g.title}</h2>
+                    <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.5)", margin: "0 0 16px" }}>
+                      {g.desc}
+                      {g.min ? <>{g.desc ? " · " : ""}<span style={{ color: "rgba(255,255,255,0.75)", fontWeight: 700 }}>{won(g.min)}부터</span></> : null}
+                    </p>
                     {g.key === "domestic" && featured && (
                       <FeaturedPackage p={featured} picked={cart[featured.id]} onPick={(i) => setCart((prev) => ({ ...prev, [featured.id]: i }))} onRemove={() => removeFromCart(featured.id)} onDetail={() => openDetail(featured.id)} />
-                    )}
-                    {PROOF[g.key] && (
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: 10, margin: "10px 0 16px" }}>
-                        {PROOF[g.key].map(([n, t]) => (
-                          <div key={n} style={{ border: LINE, borderRadius: 6, padding: "14px 16px" }}>
-                            <div style={{ fontSize: "1.5rem", fontWeight: 900, color: RED, letterSpacing: "-0.03em" }}>{n}</div>
-                            <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", marginTop: 2 }}>{t}</div>
-                          </div>
-                        ))}
-                        <div style={{ gridColumn: "1 / -1", fontSize: "0.72rem", color: "rgba(255,255,255,0.35)" }}>실제 운영 사례(병원명 비공개)이며 특정 성과를 보장하는 수치가 아닙니다.</div>
-                      </div>
                     )}
                     {g.items.length > 0 && <div style={{ marginTop: g.key === "domestic" ? 20 : 0, borderTop: "1px solid rgba(255,255,255,0.18)" }}>
                       {g.items.map((p) => {
