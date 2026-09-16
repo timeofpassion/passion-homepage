@@ -4,18 +4,18 @@ import { useState } from "react";
 import {
   portfolioGroups,
   itemsInGroup,
-  itemsInGroupType,
-  typesInGroup,
+  itemsInFolder,
+  foldersInGroup,
   type PortfolioGroupKey,
-  type PortfolioCategory,
   type PortfolioItem,
 } from "@/data/portfolio";
 import PortfolioCard from "@/components/portfolio/PortfolioCard";
 import Lightbox from "@/components/portfolio/Lightbox";
 
-// 포트폴리오 갤러리 — 두 단계로 들어간다(대표 정의 2026-09-16).
-//   1단계: 큰 분류 5개 (국내 / 일본 / 중국 / 대만 마케팅 · 홈페이지·디자인)
-//   2단계: 그 분류 안의 작업 유형을 "폴더"로 보여주고, 누르면 그 안의 작업만 본다.
+// 포트폴리오 갤러리 — 눌러서 들어간다(대표 정의 2026-09-16).
+//   1단계: 큰 분류 6개 (국내 / 일본 / 중국 / 대만 마케팅 · 홈페이지 · 디자인)
+//   2단계: 그 분류 안의 「폴더」(작업 유형 또는 디자인 물건 종류)
+//   3단계: 폴더 안의 작업. 폴더가 하나뿐인 분류는 2단계를 건너뛴다.
 // 수백 장을 한 화면에 쭉 깔지 않는다. 분류 정의는 data/portfolio.ts 가 단일 소스.
 const PAGE = 24;
 
@@ -24,23 +24,25 @@ export default function PortfolioGallery({
   initialType = null,
 }: {
   initialGroup?: PortfolioGroupKey;
-  initialType?: PortfolioCategory | null;
+  initialType?: string | null;
 } = {}) {
   const [group, setGroup] = useState<PortfolioGroupKey>(initialGroup);
-  const [type, setType] = useState<PortfolioCategory | null>(initialType);
+  const [type, setType] = useState<string | null>(initialType);
   const [shown, setShown] = useState(PAGE);
   const [lightbox, setLightbox] = useState<PortfolioItem | null>(null);
 
-  const types = typesInGroup(group);
-  const opened = type ? types.find((t) => t.key === type) ?? null : null;
-  const items = opened ? itemsInGroupType(group, opened.key) : [];
+  const folders = foldersInGroup(group);
+  // 폴더가 하나뿐이면 굳이 한 번 더 누르게 하지 않는다(홈페이지처럼).
+  const single = folders.length === 1 ? folders[0] : null;
+  const opened = single ?? (type ? folders.find((t) => t.key === type) ?? null : null);
+  const items = opened ? itemsInFolder(group, opened.key) : [];
 
   const openGroup = (key: PortfolioGroupKey) => {
     setGroup(key);
     setType(null);
     setShown(PAGE);
   };
-  const openType = (key: PortfolioCategory) => {
+  const openType = (key: string) => {
     setType(key);
     setShown(PAGE);
   };
@@ -66,10 +68,10 @@ export default function PortfolioGallery({
           <>
             <p className="pg-lead">{portfolioGroups.find((g) => g.key === group)?.desc}</p>
 
-            {/* 2단계: 작업 유형 폴더 */}
-            {types.length > 0 ? (
+            {/* 2단계: 폴더 */}
+            {folders.length > 0 ? (
               <div className="pg-folders">
-                {types.map((t) => (
+                {folders.map((t) => (
                   <button key={t.key} type="button" className="pg-folder" onClick={() => openType(t.key)}>
                     <span className="pg-folder-thumb">
                       {t.cover ? (
@@ -93,9 +95,11 @@ export default function PortfolioGallery({
           <>
             {/* 3단계: 유형 안의 작업 */}
             <div className="pg-crumb">
-              <button type="button" onClick={() => { setType(null); setShown(PAGE); }} className="pg-back">
-                ← {portfolioGroups.find((g) => g.key === group)?.label}
-              </button>
+              {!single && (
+                <button type="button" onClick={() => { setType(null); setShown(PAGE); }} className="pg-back">
+                  ← {portfolioGroups.find((g) => g.key === group)?.label}
+                </button>
+              )}
               <h2 className="pg-title">
                 {opened.label}
                 <span className="pg-title-n">{opened.count}건</span>
@@ -142,8 +146,8 @@ const CSS = `
   .pg-folder{display:block;width:100%;text-align:left;padding:0;cursor:pointer;background:#0a0a0a;
     border:1px solid rgba(255,255,255,.12);color:#fff;transition:transform .2s,border-color .2s}
   .pg-folder:hover{transform:translateY(-3px);border-color:rgba(230,51,41,.6)}
-  .pg-folder-thumb{display:block;height:170px;overflow:hidden;background:#111;position:relative}
-  .pg-folder-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;opacity:.55;transition:opacity .25s}
+  .pg-folder-thumb{display:block;aspect-ratio:16/10;overflow:hidden;background:#111;position:relative}
+  .pg-folder-thumb img{width:100%;height:100%;object-fit:contain;opacity:.62;transition:opacity .25s}
   .pg-folder:hover .pg-folder-thumb img{opacity:.8}
   .pg-folder-blank{display:block;height:100%;background:linear-gradient(140deg,rgba(230,51,41,.35),#0a0a0a)}
   .pg-folder-body{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:1.1rem 1.2rem 1.2rem}

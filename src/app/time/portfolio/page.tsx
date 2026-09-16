@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
 import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
-import { portfolioGroups, portfolioCategories, typesInGroup, type PortfolioGroupKey, type PortfolioCategory } from "@/data/portfolio";
+import { portfolioGroups, foldersInGroup, type PortfolioGroupKey } from "@/data/portfolio";
 
 export const metadata: Metadata = {
   title: "포트폴리오",
@@ -41,11 +41,8 @@ export default async function PortfolioPage({
   const g = one(sp.group);
   const t = one(sp.type);
   const initialGroup = portfolioGroups.some((x) => x.key === g) ? (g as PortfolioGroupKey) : "domestic";
-  // 유형은 그 분류 안에 실제로 작업이 있을 때만 열어준다(빈 화면 방지).
-  const initialType =
-    portfolioCategories.some((x) => x.key === t) && typesInGroup(initialGroup).some((x) => x.key === t)
-      ? (t as PortfolioCategory)
-      : null;
+  // 폴더는 그 분류 안에 실제로 있을 때만 열어준다(빈 화면 방지).
+  const initialType = foldersInGroup(initialGroup).some((x) => x.key === t) ? (t as string) : null;
 
   return (
     <>
