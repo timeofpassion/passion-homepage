@@ -126,6 +126,7 @@ export default function QuotePage() {
   const [form, setForm] = useState({ customerName: "", phone: "", email: "", hospitalName: "", memo: "" });
 
 
+  const [door, setDoor] = useState<string>("domestic");
   const [detail, setDetail] = useState<ProductDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [pickedOption, setPickedOption] = useState(0);
@@ -188,12 +189,15 @@ export default function QuotePage() {
   const inTops = (tops: readonly string[]) => products.filter((p) => tops.includes(topOf(p)));
   const grouped = [
     ...DOORS.map((d) => ({ ...d, items: inTops(d.tops).filter((p) => p !== featured), min: minPrice(inTops(d.tops)) })),
-    { key: "video", title: "영상이 필요하다", desc: "", tops: ["영상·사진·음향"], items: inTops(["영상·사진·음향"]), min: 0 },
+    { key: "video", title: "영상을 만들고 싶다", desc: "원장님 인터뷰 영상·숏폼", tops: ["영상·사진·음향"], items: inTops(["영상·사진·음향"]), min: minPrice(inTops(["영상·사진·음향"])) },
     {
-      key: "etc", title: "그 밖의 서비스", desc: "", tops: [], min: 0,
+      key: "etc", title: "그 밖의 서비스", desc: "", tops: [] as string[], min: 0,
       items: products.filter((p) => p !== featured && ![...DOORS.flatMap((d) => d.tops), "영상·사진·음향"].includes(topOf(p))),
     },
   ].filter((g) => g.items.length || (g.key === "domestic" && featured));
+
+  // 입구를 고르면 그 묶음만 보여준다 (2026-09-16 대표: "카드를 누르면 그 나라 상품만, 아래로 쭉 내려가지 않게")
+  const current = grouped.find((g) => g.key === door) ?? grouped[0];
 
   const scrollToForm = () => document.getElementById("quote-contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -315,20 +319,25 @@ export default function QuotePage() {
           <span style={{ background: "#E63329", padding: "10px 16px", borderRadius: 6, fontWeight: 800, whiteSpace: "nowrap" }}>진단 시작 →</span>
         </Link>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: 12, margin: "0 0 clamp(3rem, 7vw, 5rem)" }}>
-          {DOORS.map((d) => {
-            const g = grouped.find((x) => x.key === d.key);
+          {grouped.map((g) => {
+            const on = current?.key === g.key;
             return (
               <button
-                key={d.key}
+                key={g.key}
                 type="button"
-                onClick={() => document.getElementById(`door-${d.key}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                aria-pressed={on}
+                onClick={() => {
+                  setDoor(g.key);
+                  // 좁은 화면에선 카드가 세로로 쌓여 목록이 화면 밖에 있다
+                  if (window.innerWidth < 720) document.getElementById("door-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
                 className="q-door"
-                style={{ textAlign: "left", cursor: "pointer", padding: "20px 20px 18px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.16)", background: "rgba(255,255,255,0.02)", color: "#fff" }}
+                style={{ textAlign: "left", cursor: "pointer", padding: "20px 20px 18px", borderRadius: 8, border: `1px solid ${on ? RED : "rgba(255,255,255,0.16)"}`, background: on ? "rgba(230,51,41,0.1)" : "rgba(255,255,255,0.02)", color: "#fff" }}
               >
-                <div style={{ fontSize: "1.15rem", fontWeight: 800, letterSpacing: "-0.02em" }}>{d.title} →</div>
-                <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.55)", marginTop: 6, lineHeight: 1.5 }}>
-                  {d.desc}
-                  {g?.min ? ` · ${won(g.min)}부터` : ""}
+                <div style={{ fontSize: "1.15rem", fontWeight: 800, letterSpacing: "-0.02em" }}>{g.title}</div>
+                <div style={{ fontSize: "0.85rem", color: on ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.55)", marginTop: 6, lineHeight: 1.5 }}>
+                  {g.desc}
+                  {g.min ? `${g.desc ? " · " : ""}${won(g.min)}부터` : ""}
                 </div>
               </button>
             );
@@ -341,8 +350,8 @@ export default function QuotePage() {
               <p style={{ color: "rgba(255,255,255,0.4)" }}>서비스를 불러오는 중…</p>
             ) : (
               <>
-                {grouped.map((g) => (
-                  <section key={g.key} id={`door-${g.key}`} style={{ marginTop: g.key === "domestic" ? 0 : "clamp(3rem, 7vw, 4.5rem)", scrollMarginTop: 24 }}>
+                {(current ? [current] : []).map((g) => (
+                  <section key={g.key} id="door-panel" style={{ marginTop: 0, scrollMarginTop: 16 }}>
                     <h2 style={{ fontSize: "1.25rem", fontWeight: 900, margin: "0 0 4px", letterSpacing: "-0.02em" }}>{g.title}</h2>
                     {g.desc && <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", margin: "0 0 12px" }}>{g.desc}</p>}
                     {g.key === "domestic" && featured && (
