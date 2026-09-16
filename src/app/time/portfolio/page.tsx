@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import FixedCTA from "@/components/FixedCTA";
 import KakaoFloat from "@/components/KakaoFloat";
 import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
+import { portfolioRegions, portfolioCategories, type PortfolioRegion, type PortfolioCategory } from "@/data/portfolio";
 
 export const metadata: Metadata = {
   title: "포트폴리오",
@@ -29,7 +30,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PortfolioPage() {
+// /time 메인의 「더 보러 가기」가 ?region=&category= 로 해당 탭을 바로 연다.
+export default async function PortfolioPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const sp = await searchParams;
+  const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
+  const r = one(sp.region);
+  const c = one(sp.category);
+  const initialRegion = portfolioRegions.some((x) => x.key === r) ? (r as PortfolioRegion) : "domestic";
+  const initialCategory = portfolioCategories.some((x) => x.key === c && x.ready) ? (c as PortfolioCategory) : "homepage";
+
   return (
     <>
       <BackgroundEffects />
@@ -72,7 +85,7 @@ export default function PortfolioPage() {
           </div>
         </header>
 
-        <PortfolioGallery />
+        <PortfolioGallery initialRegion={initialRegion} initialCategory={initialCategory} />
         <Footer />
       </main>
 

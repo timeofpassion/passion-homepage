@@ -16,9 +16,15 @@ import Lightbox from "@/components/portfolio/Lightbox";
 
 // 포트폴리오 갤러리(단일 소스): 1차 권역 탭 + 2차 작업유형 탭 + 카드 그리드 + 라이트박스
 // /time 메인 진입 섹션 + /time/portfolio 전용 페이지가 함께 사용한다(스키마 통일).
-export default function PortfolioGallery() {
-  const [region, setRegion] = useState<PortfolioRegion>("domestic");
-  const [category, setCategory] = useState<PortfolioCategory>("homepage");
+export default function PortfolioGallery({
+  initialRegion = "domestic",
+  initialCategory = "homepage",
+}: {
+  initialRegion?: PortfolioRegion;
+  initialCategory?: PortfolioCategory;
+} = {}) {
+  const [region, setRegion] = useState<PortfolioRegion>(initialRegion);
+  const [category, setCategory] = useState<PortfolioCategory>(initialCategory);
   const [lightbox, setLightbox] = useState<PortfolioItem | null>(null);
   const items = itemsByRegionAndCategory(region, category);
 
