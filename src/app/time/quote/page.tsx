@@ -134,7 +134,20 @@ export default function QuotePage() {
   useEffect(() => {
     fetch("/api/quote/products")
       .then((r) => r.json())
-      .then((data) => setProducts(data.products || []))
+      .then((data: { products?: Product[] }) => {
+        const list = data.products || [];
+        setProducts(list);
+        // 메인(/time)의 단계 카드에서 넘어온 경우: 그 분야를 열고 고른 단계를 담아 둔다
+        const q = new URLSearchParams(window.location.search);
+        const d = q.get("door");
+        if (d) setDoor(d);
+        const pick = Number(q.get("pick"));
+        if (q.has("pick") && Number.isInteger(pick) && pick >= 0) {
+          const top = (p: Product) => p.topCategory || p.category || "";
+          const target = list.find((p) => top(p) === "국내마케팅" && (p.options?.length ?? 0) > 1);
+          if (target && pick < (target.options?.length ?? 0)) setCart((prev) => ({ ...prev, [target.id]: pick }));
+        }
+      })
       .finally(() => setLoading(false));
   }, []);
 

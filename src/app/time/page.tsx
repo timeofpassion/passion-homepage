@@ -155,6 +155,13 @@ const HW_CSS = `
   .hw-paper::after{content:"";position:absolute;inset:auto 0 0 0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))}
   .hw-paper img{width:100%;display:block}
   .hw-doc:hover .hw-paper{transform:translateY(-4px)}
+  .hw-tiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12)}
+  .hw-tier{background:#0a0a0a;padding:1.6rem 1.4rem;text-decoration:none;color:#fff;display:flex;flex-direction:column;transition:background .2s}
+  .hw-tier:hover{background:#121212}
+  .hw-tier[data-both="1"]{background:linear-gradient(170deg,rgba(230,51,41,.14),#0a0a0a 62%)}
+  .hw-tier[data-both="1"]:hover{background:linear-gradient(170deg,rgba(230,51,41,.2),#121212 62%)}
+  @media (max-width:900px){.hw-tiers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:520px){.hw-tiers{grid-template-columns:1fr}}
   @media (max-width:760px){.hw-phase{grid-template-columns:1fr;gap:1.6rem;margin-top:3.5rem}.hw-rail{position:static}}
 `;
 
@@ -194,8 +201,50 @@ const TIME_FAQ = [
   },
 ];
 
+// 국내 패키지 4단계 = 인트라넷 상품 DB 정본. 메인과 견적 페이지가 같은 값을 본다.
+// 하드코딩이면 가격이 바뀔 때마다 두 곳을 손으로 맞춰야 한다(9/14 1,200→1,000 때 실제로 그랬다).
+const INTRANET = process.env.INTRANET_API_URL ?? "https://intranet.timeofpassion.com";
+type Tier = { label: string; price: string; name: string; desc: string; both: boolean; pick: number };
+// 인트라넷이 죽어도 메인은 떠야 한다 → 마지막으로 확인된 값으로 폴백
+const FALLBACK_TIERS: Tier[] = [
+  { label: "국내", price: "400", name: "라이트", desc: "네이버에서 돌릴 수 있는 건 한 바퀴 다 도는 기본 구성", both: false, pick: 0 },
+  { label: "국내", price: "600", name: "스탠다드", desc: "라이트 + 인스타 체험단 + 담당 PM", both: false, pick: 1 },
+  { label: "국내 + 해외", price: "800", name: "디럭스", desc: "스탠다드 + META 광고 + 쇼츠 6건(해외에 그대로 쓰는 클린 원본)", both: true, pick: 2 },
+  { label: "국내 + 해외", price: "1,000", name: "프리미엄", desc: "디럭스 + 풀 영상 4건 + 쇼츠 8건", both: true, pick: 3 },
+];
+
+async function loadDomesticTiers(): Promise<Tier[]> {
+  try {
+    const list = await fetch(`${INTRANET}/api/public/quote/products`, { next: { revalidate: 300 } });
+    if (!list.ok) return FALLBACK_TIERS;
+    const { products = [] } = (await list.json()) as { products: { id: string; topCategory?: string; category?: string }[] };
+    const domestic = products.find((p) => (p.topCategory || p.category) === "국내마케팅");
+    if (!domestic) return FALLBACK_TIERS;
+    const res = await fetch(`${INTRANET}/api/public/quote/products/${domestic.id}`, { next: { revalidate: 300 } });
+    if (!res.ok) return FALLBACK_TIERS;
+    const { options = [] } = (await res.json()) as { options: { optionTitle: string; price: number; description?: string }[] };
+    if (options.length < 2) return FALLBACK_TIERS;
+    return options.map((o, pick) => {
+      const [name, ...rest] = o.optionTitle.split(" — ");
+      // 옵션 제목의 꼬리가 「뼈대」처럼 한 마디뿐이면 카드가 비어 보인다 → 상품 설명 첫 문장으로 채운다
+      const tail = rest.join(" — ");
+      const desc = tail.replace(/[^가-힣a-zA-Z0-9]/g, "").length >= 8 ? tail : (o.description || tail).split(/[.。]\s|\n/)[0];
+      return {
+        label: /해외/.test(o.optionTitle) ? "국내 + 해외" : "국내",
+        price: new Intl.NumberFormat("ko-KR").format(Math.round(o.price / 10000)),
+        name: name.trim(),
+        desc: desc.replace(/\s*\(([^)]*)\)\s*$/, " — $1").trim(),
+        both: /해외/.test(o.optionTitle),
+        pick,
+      };
+    });
+  } catch {
+    return FALLBACK_TIERS;
+  }
+}
+
 export default async function Home() {
-  const posts = (await loadPosts()).slice(0, 8);
+  const [posts, tiers] = await Promise.all([loadPosts().then((p) => p.slice(0, 8)), loadDomesticTiers()]);
   return (
     <>
       <style>{HW_CSS}</style>
@@ -434,18 +483,14 @@ export default async function Home() {
 
             {/* 상품 단계 */}
             <h3 style={{ fontSize: "clamp(1.3rem, 2.6vw, 1.8rem)", fontWeight: 900, margin: "4.5rem 0 1.6rem" }}>병원 상황에 맞춰 고르는 4단계</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
-              {[
-                { price: "400", t: "국내 기본", d: "국내 채널을 매달 운영", both: false },
-                { price: "600", t: "국내 강화", d: "국내 운영 + 원장님 월간 미팅·의료광고 점검", both: false },
-                { price: "800", t: "국내 + 해외 동시", d: "국내에서 만든 원본을 해외팀이 바로 사용", both: true },
-                { price: "1,000", t: "국내 + 해외 확장", d: "국내·해외 콘텐츠를 가장 넓게 운영", both: true },
-              ].map((p) => (
-                <Link key={p.price} href="/time/quote" style={{ display: "block", textDecoration: "none", color: "#fff", padding: "1.6rem 1.4rem", border: `1px solid ${p.both ? "rgba(230,51,41,.6)" : "rgba(255,255,255,.14)"}`, background: p.both ? "rgba(230,51,41,.08)" : "#0a0a0a" }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: p.both ? RED : "rgba(255,255,255,.5)" }}>{p.both ? "국내 + 해외" : "국내"}</span>
+            <div className="hw-tiers">
+              {tiers.map((p) => (
+                <Link key={p.price} href={`/time/quote?door=domestic&pick=${p.pick}`} className="hw-tier" data-both={p.both ? "1" : "0"}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: p.both ? RED : "rgba(255,255,255,.5)" }}>{p.label}</span>
                   <p style={{ margin: "8px 0 4px" }}><strong style={{ fontSize: "2rem", fontWeight: 900 }}>{p.price}</strong><span style={{ fontSize: ".9rem" }}> 만원 / 월</span></p>
-                  <h4 style={{ fontSize: "1.05rem", fontWeight: 800, marginBottom: 6 }}>{p.t}</h4>
-                  <p style={{ fontSize: ".85rem", color: "rgba(255,255,255,.65)", lineHeight: 1.55, wordBreak: "keep-all" }}>{p.d}</p>
+                  <h4 style={{ fontSize: "1.05rem", fontWeight: 800, marginBottom: 6 }}>{p.name}</h4>
+                  <p style={{ fontSize: ".85rem", color: "rgba(255,255,255,.65)", lineHeight: 1.55, wordBreak: "keep-all" }}>{p.desc}</p>
+                  <span style={{ marginTop: "auto", paddingTop: 14, fontSize: ".82rem", fontWeight: 700, color: p.both ? RED : "rgba(255,255,255,.55)" }}>견적에 담기 →</span>
                 </Link>
               ))}
             </div>
