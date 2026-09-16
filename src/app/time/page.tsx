@@ -46,7 +46,7 @@ import KakaoFloat from "@/components/KakaoFloat";
 import { TimeBlogCarousel } from "@/components/TimeBlogCarousel";
 import { loadPosts } from "@/lib/time-blog-source";
 import { previewGroups } from "@/data/portfolio";
-import PortfolioCard from "@/components/portfolio/PortfolioCard";
+import PortfolioPreviewTabs from "@/components/portfolio/PortfolioPreviewTabs";
 
 
 const RED = "#E63329";
@@ -190,12 +190,6 @@ const HW_CSS = `
   .quote-cta{display:inline-flex;align-items:center;gap:10px;background:${"#E63329"};color:#fff;text-decoration:none;font-weight:900;font-size:1.05rem;padding:18px 32px;border:1px solid ${"#E63329"};transition:transform .2s, box-shadow .2s}
   .quote-cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(230,51,41,.3)}
 
-  /* 포트폴리오 미리보기 */
-  .pf-group+.pf-group{margin-top:3.4rem;padding-top:3.4rem;border-top:1px solid rgba(255,255,255,.08)}
-  .pf-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.1rem;flex-wrap:wrap}
-  .pf-more{color:#E7C46A;font-size:.85rem;font-weight:700;text-decoration:none;white-space:nowrap}
-  .pf-more:hover{text-decoration:underline}
-  .pf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1rem}
 `;
 
 // 국내·해외 동시 시작 흐름 — 세로로 읽어 내린다
@@ -570,32 +564,14 @@ export default async function Home() {
         {/* 6. 로고 */}
         <ClientMarquee />
 
-        {/* 7. 포트폴리오 — 카테고리만 먼저 공개(사례 정리 중) */}
+        {/* 7. 포트폴리오 — 분야 탭 + 대표 작업 미리보기 */}
         <section id="portfolio" style={{ position: "relative", zIndex: 20, padding: "4rem 0 5rem", borderTop: "1px solid rgba(255,255,255,.08)" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>
             <p className="font-mono-sys" style={label}>PORTFOLIO</p>
             <h2 style={{ fontSize: "clamp(1.6rem, 3.4vw, 2.4rem)", fontWeight: 900, marginBottom: 10, wordBreak: "keep-all" }}>분야별 포트폴리오</h2>
-            <p style={{ color: "rgba(255,255,255,.55)", fontSize: ".92rem", marginBottom: "2.4rem", wordBreak: "keep-all" }}>분야마다 대표 작업을 먼저 보여드립니다. 더 보고 싶으시면 분야별로 전체를 열어보실 수 있습니다.</p>
+            <p style={{ color: "rgba(255,255,255,.55)", fontSize: ".92rem", marginBottom: "2.4rem", wordBreak: "keep-all" }}>분야를 고르면 대표 작업이 먼저 보입니다. 더 보고 싶으시면 그 분야 전체를 열어보실 수 있습니다.</p>
 
-            {previewGroups.map((g) => (
-              <div key={g.key} className="pf-group">
-                <div className="pf-head">
-                  <div>
-                    <h3 style={{ fontSize: "1.3rem", fontWeight: 900, letterSpacing: "-.02em" }}>
-                      {g.label}
-                      <span style={{ marginLeft: 8, fontSize: ".82rem", fontWeight: 700, color: "rgba(255,255,255,.4)" }}>{g.total}건</span>
-                    </h3>
-                    <p style={{ margin: "6px 0 0", fontSize: ".88rem", color: "rgba(255,255,255,.55)", wordBreak: "keep-all" }}>{g.desc}</p>
-                  </div>
-                  <Link href={`/time/portfolio?group=${g.key}`} className="pf-more">더 보러 가기 →</Link>
-                </div>
-                <div className="pf-grid">
-                  {g.items.map((it) => (
-                    <PortfolioCard key={it.id} item={it} />
-                  ))}
-                </div>
-              </div>
-            ))}
+            <PortfolioPreviewTabs groups={previewGroups} />
           </div>
         </section>
 
