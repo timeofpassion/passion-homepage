@@ -10,11 +10,11 @@ import { portfolioGroups, foldersInGroup, type PortfolioGroupKey } from "@/data/
 export const metadata: Metadata = {
   title: "포트폴리오",
   description:
-    "열정의시간 포트폴리오. 국내·일본·중국·대만 마케팅과 홈페이지·디자인 작업을 분야별로 확인하세요.",
+    "열정의시간 포트폴리오. 국내·중국·대만·일본 마케팅과 홈페이지·디자인·영상 작업을 분야별로 확인하세요.",
   alternates: { canonical: "https://www.timeofpassion.com/time/portfolio" },
   openGraph: {
     title: "포트폴리오 | 열정의시간",
-    description: "국내·일본·중국·대만 마케팅과 홈페이지·디자인 작업을 분야별로.",
+    description: "국내·중국·대만·일본 마케팅과 홈페이지·디자인·영상 작업을 분야별로.",
     url: "https://www.timeofpassion.com/time/portfolio",
     siteName: "열정의시간",
     locale: "ko_KR",
@@ -80,7 +80,7 @@ export default async function PortfolioPage({
                 lineHeight: 1.7,
               }}
             >
-              국내·일본·중국·대만 마케팅과 홈페이지·디자인까지, 열정의시간이 직접 한 작업입니다.
+              국내·중국·대만·일본 마케팅과 홈페이지·디자인·영상까지, 열정의시간이 직접 한 작업입니다.
               분야를 고르고 하고 싶은 일을 눌러 들어가 보세요.
             </p>
           </div>

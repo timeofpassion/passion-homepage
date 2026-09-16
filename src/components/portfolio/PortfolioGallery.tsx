@@ -13,8 +13,8 @@ import PortfolioCard from "@/components/portfolio/PortfolioCard";
 import Lightbox from "@/components/portfolio/Lightbox";
 
 // 포트폴리오 갤러리 — 눌러서 들어간다(대표 정의 2026-09-16).
-//   1단계: 큰 분류 6개 (국내 / 일본 / 중국 / 대만 마케팅 · 홈페이지 · 디자인)
-//   2단계: 그 분류 안의 「폴더」(작업 유형 또는 디자인 물건 종류)
+//   1단계: 큰 분류 7개 = 인트라넷 상품 DB 마케팅 유형 (data/portfolio.ts)
+//   2단계: 그 분류 안의 「폴더」 = 상품 (국내는 패키지 구성 항목)
 //   3단계: 폴더 안의 작업. 폴더가 하나뿐인 분류는 2단계를 건너뛴다.
 // 수백 장을 한 화면에 쭉 깔지 않는다. 분류 정의는 data/portfolio.ts 가 단일 소스.
 const PAGE = 24;

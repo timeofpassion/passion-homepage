@@ -4732,8 +4732,8 @@ export const portfolioItems: PortfolioItem[] = [
     id: "pf-svc-97",
     regions: ["china"],
     category: "experience",
-    title: "중국 왕홍 시딩·체험단",
-    summary: "중국 왕홍 시딩 및 체험단 운영관리",
+    title: "중국 샤오홍슈 체험단",
+    summary: "샤오홍슈 체험단 모집·운영관리",
     thumbnail: "/portfolio/pf-svc-97.png",
     tags: ["실행·성과", "중국"],
     accent: "#dc2626",
@@ -4762,125 +4762,148 @@ export const portfolioItems: PortfolioItem[] = [
 
 // ── 헬퍼 ──────────────────────────────────────────────────────────
 
-// ── 큰 분류(직무별) ──────────────────────────────────────────────
-// 대표 정의(2026-09-16): 포트폴리오의 상단 카테고리는 여섯 개다.
-//   국내 마케팅 / 일본 마케팅 / 중국 마케팅 / 대만 마케팅 / 홈페이지 / 디자인
-// 권역 묶음에서는 홈페이지·디자인 작업을 빼고, 그 둘은 각각 별도 분류로 둔다.
-// /time 메인 미리보기와 /time/portfolio 갤러리가 **이 정의 하나만** 본다.
-export type PortfolioGroupKey = "domestic" | "japan" | "china" | "taiwan" | "homepage" | "design";
+// ── 큰 분류 · 폴더 = 인트라넷 상품 DB와 같은 이름 ─────────────────
+// 대표 정의(2026-09-16): 포트폴리오 분류는 인트라넷 /products 판매 상품과 일치시킨다.
+//   큰 분류 = 상품의 마케팅 유형 7개, 폴더 = 그 안의 상품.
+//   국내는 상품이 패키지 하나라 폴더를 「패키지 구성 항목」으로 나눈다.
+// 어느 폴더에도 안 맞는 작업(더우인·일본 월 운영처럼 지금 안 파는 것)은 노출하지 않는다.
+// 상품이 바뀌면 이 표만 고친다. /time 메인 미리보기와 /time/portfolio 갤러리가 이것만 본다.
+export type PortfolioGroupKey = "domestic" | "china" | "taiwan" | "japan" | "homepage" | "design" | "video";
 
-const HP_DESIGN: PortfolioCategory[] = ["homepage", "design"];
+type Folder = { label: string; match: (it: PortfolioItem) => boolean };
+
+const inRegion = (it: PortfolioItem, r: PortfolioRegion) =>
+  it.regions.includes(r) && !["homepage", "design", "video"].includes(it.category);
+const tagOf = (it: PortfolioItem) =>
+  (it.tags ?? []).find((t) => !["국내", "일본", "중국", "대만", "의료", "브랜드"].includes(t)) ?? "";
+const tagIn = (it: PortfolioItem, list: string[]) => list.includes(tagOf(it));
 
 export const portfolioGroups: {
   key: PortfolioGroupKey;
   label: string;
   desc: string;
-  match: (it: PortfolioItem) => boolean;
-  /** 분류 안을 무엇으로 묶어 「폴더」를 만들지. 기본은 작업 유형(category). */
-  folderBy?: "category" | "tag";
+  folders: Folder[];
 }[] = [
   {
     key: "domestic",
     label: "국내 마케팅",
-    desc: "블로그·플레이스·체험단·플랫폼까지 매달 돌린 작업",
-    match: (it) => it.regions.includes("domestic") && !HP_DESIGN.includes(it.category),
-  },
-  {
-    key: "japan",
-    label: "일본 마케팅",
-    desc: "인스타·X·LINE 상담까지 현지 사람이 쓰는 콘텐츠",
-    match: (it) => it.regions.includes("japan") && !HP_DESIGN.includes(it.category),
+    desc: "국내 병원마케팅 패키지 — 블로그·리뷰·체험단·플랫폼·영상 채널까지 매달 돌린 작업",
+    folders: [
+      { label: "네이버 블로그", match: (it) => inRegion(it, "domestic") && it.category === "blog" },
+      { label: "플레이스·리뷰 관리", match: (it) => inRegion(it, "domestic") && ["place", "review"].includes(it.category) },
+      { label: "체험단", match: (it) => inRegion(it, "domestic") && it.category === "experience" },
+      { label: "카페 바이럴", match: (it) => inRegion(it, "domestic") && it.category === "cafe" },
+      { label: "강남언니·바비톡 세팅", match: (it) => inRegion(it, "domestic") && it.category === "platform" },
+      { label: "영상 채널 운영", match: (it) => inRegion(it, "domestic") && it.category === "multichannel" },
+    ],
   },
   {
     key: "china",
     label: "중국 마케팅",
-    desc: "샤오홍슈·더우인·위챗으로 이어지는 중화권 운영",
-    match: (it) => it.regions.includes("china") && !HP_DESIGN.includes(it.category),
+    desc: "샤오홍슈 계정 운영과 후기 확장",
+    folders: [
+      {
+        label: "중국 통합마케팅 패키지",
+        match: (it) => inRegion(it, "china") && ["review", "multichannel", "platform"].includes(it.category),
+      },
+      { label: "샤오홍슈 체험단", match: (it) => inRegion(it, "china") && it.title.includes("체험단") },
+      { label: "샤오홍슈 기자단", match: (it) => inRegion(it, "china") && it.title.includes("샤오홍슈 기자단") },
+    ],
   },
   {
     key: "taiwan",
     label: "대만 마케팅",
-    desc: "번체 콘텐츠와 LINE 상담으로 여는 대만 채널",
-    match: (it) => it.regions.includes("taiwan") && !HP_DESIGN.includes(it.category),
+    desc: "유튜브·인스타·구글맵으로 이어지는 대만 검색 동선",
+    folders: [{ label: "대만 통합마케팅 패키지", match: (it) => inRegion(it, "taiwan") }],
+  },
+  {
+    key: "japan",
+    label: "일본 마케팅",
+    desc: "일본 인플루언서가 직접 방문해 올린 영상 후기",
+    folders: [{ label: "일본 인플루언서 체험단", match: (it) => inRegion(it, "japan") && it.category === "experience" }],
   },
   {
     key: "homepage",
     label: "홈페이지",
-    desc: "국내·일본·중국·대만 다국어 홈페이지 제작",
-    match: (it) => it.category === "homepage",
+    desc: "검색에 잡히고 문의로 이어지는 홈페이지, 해외 언어까지",
+    folders: [
+      {
+        label: "병원 홈페이지 제작",
+        match: (it) => it.category === "homepage" && it.regions.includes("domestic") && !it.summary.includes("다국어"),
+      },
+      {
+        label: "홈페이지 SEO 점검·다국어 추가",
+        match: (it) => it.category === "homepage" && (!it.regions.includes("domestic") || it.summary.includes("다국어")),
+      },
+    ],
   },
   {
     key: "design",
     label: "디자인",
-    desc: "포스터·카드뉴스·배너·로고까지, 병원에서 실제로 쓰는 인쇄물과 콘텐츠",
-    match: (it) => it.category === "design",
-    // 디자인은 전부 같은 유형이라 유형으로는 못 나눈다 → 무슨 물건인지(태그)로 묶는다.
-    folderBy: "tag",
+    desc: "피드·인쇄물·가격표·배너·랜딩까지, 병원에서 실제로 쓰는 디자인",
+    folders: [
+      {
+        label: "인스타그램 피드 디자인",
+        match: (it) =>
+          it.category === "design" &&
+          tagIn(it, ["카드뉴스", "META콘텐츠", "SNS콘텐츠", "썸네일", "안내 디자인", "진료일정·안내", "프로필"]),
+      },
+      {
+        label: "병원 인쇄물 디자인",
+        match: (it) =>
+          it.category === "design" &&
+          (tagIn(it, ["포스터", "입간판", "명함", "사이니지", "로고", "약력", "기타"]) ||
+            (tagOf(it) === "디자인" && !it.summary.includes("서브페이지"))),
+      },
+      { label: "병원 가격표·메뉴판 디자인", match: (it) => it.category === "design" && tagIn(it, ["메뉴보드"]) },
+      { label: "이벤트 배너·팝업 디자인", match: (it) => it.category === "design" && tagIn(it, ["배너"]) },
+      {
+        label: "상세페이지·랜딩페이지 디자인",
+        match: (it) =>
+          it.category === "design" &&
+          (tagIn(it, ["랜딩페이지"]) || (tagOf(it) === "디자인" && it.summary.includes("서브페이지"))),
+      },
+    ],
+  },
+  {
+    key: "video",
+    label: "영상",
+    desc: "원장님이 검색되는 유튜브 영상과 숏폼",
+    folders: [
+      { label: "유튜브 영상 제작", match: (it) => it.category === "video" },
+      { label: "숏폼 영상 제작", match: () => false }, // 작업이 들어오면 조건을 채운다(0건이면 안 보임)
+    ],
   },
 ];
 
-export function itemsInGroup(group: PortfolioGroupKey): PortfolioItem[] {
-  const g = portfolioGroups.find((x) => x.key === group);
-  return g ? portfolioItems.filter(g.match) : [];
-}
-
-/** 태그로 폴더를 만들 때, 폴더 이름이 될 수 없는 태그(권역·너무 뭉뚱그린 말) */
-const NOT_A_FOLDER_TAG = new Set(["국내", "일본", "중국", "대만", "디자인", "의료", "브랜드", "기타"]);
-
 export type PortfolioFolder = { key: string; label: string; count: number; cover?: string };
 
-/** 태그로 묶을 때 이 항목이 들어갈 폴더 이름(하나만) */
-function folderTagOf(it: PortfolioItem): string {
-  return (it.tags ?? []).find((t) => !NOT_A_FOLDER_TAG.has(t)) ?? "그 외";
-}
-
-/** 분류 안의 「폴더」 — 실제로 작업이 있는 것만, 많은 순으로 */
+/** 분류 안의 「폴더」 — 실제로 작업이 있는 것만, 상품 순서대로 */
 export function foldersInGroup(group: PortfolioGroupKey): PortfolioFolder[] {
   const g = portfolioGroups.find((x) => x.key === group);
   if (!g) return [];
-  const items = itemsInGroup(group);
-
-  if (g.folderBy === "tag") {
-    const bag = new Map<string, PortfolioItem[]>();
-    for (const it of items) {
-      const tag = folderTagOf(it);
-      const list = bag.get(tag);
-      if (list) list.push(it);
-      else bag.set(tag, [it]);
-    }
-    return [...bag.entries()]
-      .map(([tag, list]) => ({
-        key: tag,
-        label: tag,
-        count: list.length,
-        cover: list.find((it) => it.thumbnail)?.thumbnail,
-      }))
-      // 「그 외」는 아무리 많아도 맨 뒤로(태그가 안 붙은 것들이라 대표 얼굴이 될 수 없다)
-      .sort((a, b) => (a.key === "그 외" ? 1 : b.key === "그 외" ? -1 : b.count - a.count));
-  }
-
-  return portfolioCategories
-    .map((c) => {
-      const list = items.filter((it) => it.category === c.key);
-      return { key: c.key, label: c.label, count: list.length, cover: list.find((it) => it.thumbnail)?.thumbnail };
+  return g.folders
+    .map((f) => {
+      const list = portfolioItems.filter(f.match);
+      return { key: f.label, label: f.label, count: list.length, cover: list.find((it) => it.thumbnail)?.thumbnail };
     })
-    .filter((t) => t.count > 0)
-    .sort((a, b) => b.count - a.count);
+    .filter((f) => f.count > 0);
 }
 
 /** 폴더 안의 작업 */
 export function itemsInFolder(group: PortfolioGroupKey, folder: string): PortfolioItem[] {
+  const f = portfolioGroups.find((x) => x.key === group)?.folders.find((x) => x.label === folder);
+  return f ? portfolioItems.filter(f.match) : [];
+}
+
+/** 분류에 노출되는 작업 전체(어느 폴더에든 들어간 것만) */
+export function itemsInGroup(group: PortfolioGroupKey): PortfolioItem[] {
   const g = portfolioGroups.find((x) => x.key === group);
-  if (!g) return [];
-  const items = itemsInGroup(group);
-  if (g.folderBy === "tag") {
-    return items.filter((it) => folderTagOf(it) === folder);
-  }
-  return items.filter((it) => it.category === folder);
+  return g ? portfolioItems.filter((it) => g.folders.some((f) => f.match(it))) : [];
 }
 
 // ── /time 메인 미리보기 ───────────────────────────────────────────
-// 위 다섯 분류를 그대로 쓴다(분류를 고치면 메인이 따라온다).
+// 위 분류를 그대로 쓴다(분류를 고치면 메인이 따라온다).
 export type PreviewGroup = {
   key: PortfolioGroupKey;
   label: string;
@@ -4910,6 +4933,6 @@ function pick(list: PortfolioItem[], limit = 6): PortfolioItem[] {
 }
 
 export const previewGroups: PreviewGroup[] = portfolioGroups.map((g) => {
-  const all = portfolioItems.filter(g.match);
+  const all = itemsInGroup(g.key);
   return { key: g.key, label: g.label, desc: g.desc, items: pick(all), total: all.length };
 });
