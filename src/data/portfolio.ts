@@ -4786,3 +4786,72 @@ export function featuredItems(limit = 6): PortfolioItem[] {
   const pool = featured.length > 0 ? featured : portfolioItems;
   return pool.slice(0, limit);
 }
+
+// ── /time 메인 미리보기 ───────────────────────────────────────────
+// 대표 메인에 분야별로 6개씩 보여주고 「더 보러 가기」로 갤러리의 같은 탭으로 보낸다.
+// 여기 정의를 바꾸면 메인 미리보기가 따라온다(항목 자체는 위 배열이 단일 소스).
+export type PreviewGroup = {
+  key: string;
+  label: string;
+  desc: string;
+  region: PortfolioRegion;
+  category: PortfolioCategory;      // 「더 보러 가기」가 여는 탭
+  match: (it: PortfolioItem) => boolean;
+  items: PortfolioItem[];
+  total: number;
+};
+
+const WORK_ONLY: PortfolioCategory[] = ["homepage", "design"]; // 권역 묶음에선 뺀다(따로 묶음이 있음)
+
+function pick(list: PortfolioItem[], limit = 6): PortfolioItem[] {
+  // 같은 캡처·같은 제목이 미리보기에 두 번 뜨면 허술해 보인다 → 먼저 걸러낸다.
+  const score = (it: PortfolioItem) => (it.featured ? 0 : it.thumbnail ? 1 : 2);
+  // 캡처 없는 폴백 카드가 줄줄이 서면 미리보기가 허전하다 → 3개 이상 있으면 캡처 있는 것만 쓴다.
+  const withThumb = list.filter((it) => it.thumbnail);
+  const pool = withThumb.length >= 3 ? withThumb : list;
+  const seen = new Set<string>();
+  const out: PortfolioItem[] = [];
+  for (const it of [...pool].sort((a, b) => score(a) - score(b))) {
+    const key = `${it.thumbnail ?? ""}|${it.title}`;
+    if (seen.has(key) || seen.has(it.thumbnail ?? " ") || seen.has(it.title)) continue;
+    seen.add(key);
+    if (it.thumbnail) seen.add(it.thumbnail);
+    seen.add(it.title);
+    out.push(it);
+    if (out.length === limit) break;
+  }
+  return out;
+}
+
+function topCategory(list: PortfolioItem[], fallback: PortfolioCategory): PortfolioCategory {
+  const ready = new Set(portfolioCategories.filter((c) => c.ready).map((c) => c.key));
+  const count = new Map<PortfolioCategory, number>();
+  for (const it of list) {
+    if (!ready.has(it.category)) continue;
+    count.set(it.category, (count.get(it.category) ?? 0) + 1);
+  }
+  const top = [...count.entries()].sort((a, b) => b[1] - a[1])[0];
+  return top ? top[0] : fallback;
+}
+
+const GROUP_DEFS: { key: string; label: string; desc: string; region: PortfolioRegion; match: (it: PortfolioItem) => boolean; category?: PortfolioCategory }[] = [
+  { key: "domestic", label: "국내 마케팅", desc: "블로그·플레이스·체험단·플랫폼까지 매달 돌린 작업", region: "domestic", match: (it) => it.regions.includes("domestic") && !WORK_ONLY.includes(it.category) },
+  { key: "china", label: "중국 마케팅", desc: "샤오홍슈·더우인·위챗으로 이어지는 중화권 운영", region: "china", match: (it) => it.regions.includes("china") && !WORK_ONLY.includes(it.category) },
+  { key: "japan", label: "일본 마케팅", desc: "인스타·X·LINE 상담까지 현지 사람이 쓰는 콘텐츠", region: "japan", match: (it) => it.regions.includes("japan") && !WORK_ONLY.includes(it.category) },
+  { key: "homepage", label: "홈페이지", desc: "국내·일본·중국·대만 다국어 홈페이지 제작", region: "domestic", match: (it) => it.category === "homepage", category: "homepage" },
+  { key: "design", label: "디자인", desc: "상세페이지·배너·카드뉴스·브랜드 디자인", region: "domestic", match: (it) => it.category === "design", category: "design" },
+];
+
+export const previewGroups: PreviewGroup[] = GROUP_DEFS.map((g) => {
+  const all = portfolioItems.filter(g.match);
+  return {
+    key: g.key,
+    label: g.label,
+    desc: g.desc,
+    region: g.region,
+    category: g.category ?? topCategory(all, "blog"),
+    match: g.match,
+    items: pick(all),
+    total: all.length,
+  };
+});

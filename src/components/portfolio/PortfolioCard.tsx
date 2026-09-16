@@ -49,6 +49,8 @@ export default function PortfolioCard({
           <img
             src={item.thumbnail}
             alt={item.title}
+            loading="lazy"
+            decoding="async"
             onError={() => setImgError(true)}
             style={{
               width: "100%",

@@ -45,6 +45,8 @@ import Footer from "@/components/Footer";
 import KakaoFloat from "@/components/KakaoFloat";
 import { TimeBlogCarousel } from "@/components/TimeBlogCarousel";
 import { loadPosts } from "@/lib/time-blog-source";
+import { previewGroups } from "@/data/portfolio";
+import PortfolioCard from "@/components/portfolio/PortfolioCard";
 
 
 const RED = "#E63329";
@@ -163,15 +165,44 @@ const HW_CSS = `
   @media (max-width:900px){.hw-tiers{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media (max-width:520px){.hw-tiers{grid-template-columns:1fr}}
   @media (max-width:760px){.hw-phase{grid-template-columns:1fr;gap:1.6rem;margin-top:3.5rem}.hw-rail{position:static}}
+
+  /* 국내·해외 시작 흐름 — 세로 타임라인 */
+  .flow{list-style:none;margin:0;padding:0 0 0 30px;position:relative}
+  .flow::before{content:"";position:absolute;left:4px;top:6px;bottom:6px;width:2px;background:linear-gradient(${"#E63329"},rgba(230,51,41,.35) 55%,rgba(255,255,255,.08))}
+  .flow-step{position:relative;padding:0 0 2.6rem}
+  .flow-step:last-child{padding-bottom:0}
+  .flow-step::before{content:"";position:absolute;left:-30px;top:5px;width:10px;height:10px;background:#E63329;box-shadow:0 0 0 5px rgba(230,51,41,.14)}
+  .flow-when{display:inline-block;font-size:12px;font-weight:700;color:#E7C46A;letter-spacing:.02em}
+  .flow-title{font-size:clamp(1.15rem,2.2vw,1.45rem);font-weight:900;margin:6px 0 8px;letter-spacing:-.02em}
+  .flow-desc{font-size:.95rem;line-height:1.75;color:rgba(255,255,255,.68);word-break:keep-all;max-width:54ch;margin:0}
+  .flow-end{display:block;margin-top:14px;font-size:.82rem;color:rgba(255,255,255,.4)}
+  @supports (animation-timeline: view()){
+    @media (prefers-reduced-motion: no-preference){
+      .flow-step{animation:flowIn linear both;animation-timeline:view();animation-range:entry 8% cover 32%}
+      @keyframes flowIn{from{opacity:.25;transform:translateY(14px)}to{opacity:1;transform:none}}
+    }
+  }
+
+  /* 견적 바로가기 */
+  .quote-cta{display:inline-flex;align-items:center;gap:10px;background:${"#E63329"};color:#fff;text-decoration:none;font-weight:900;font-size:1.05rem;padding:18px 32px;border:1px solid ${"#E63329"};transition:transform .2s, box-shadow .2s}
+  .quote-cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(230,51,41,.3)}
+
+  /* 포트폴리오 미리보기 */
+  .pf-group+.pf-group{margin-top:3.4rem;padding-top:3.4rem;border-top:1px solid rgba(255,255,255,.08)}
+  .pf-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.1rem;flex-wrap:wrap}
+  .pf-more{color:#E7C46A;font-size:.85rem;font-weight:700;text-decoration:none;white-space:nowrap}
+  .pf-more:hover{text-decoration:underline}
+  .pf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  @media (max-width:900px){.pf-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:560px){.pf-grid{grid-template-columns:1fr}}
 `;
 
-// 포트폴리오 분야(사례 정리 전이라 전부 준비중)
-const PORTFOLIO_CATS: { name: string; subs?: string[] }[] = [
-  { name: "국내마케팅" },
-  { name: "중국마케팅" },
-  { name: "일본마케팅" },
-  { name: "홈페이지", subs: ["국내", "중국", "일본", "대만"] },
-  { name: "디자인" },
+// 국내·해외 동시 시작 흐름 — 세로로 읽어 내린다
+const FLOW = [
+  { when: "계약 전", t: "사전 진단", d: "국내 검색·플레이스와 해외 검색에서 병원이 어떻게 보이는지 확인" },
+  { when: "첫 달", t: "국내 기반 + 해외 창구", d: "국내 채널 정비와 함께 해외 계정·다국어 페이지를 병원 소유로 개설" },
+  { when: "이후 매달", t: "함께 운영", d: "국내 원본 콘텐츠를 나라별로 옮겨 발행하고, 월간 보고서로 다음 달 결정" },
+  { when: "중간 점검", t: "계속할지 함께 판단", d: "약속한 점검 시점에 기준 대비 결과를 보고 조정하거나 멈출 수 있게" },
 ];
 
 const label = { color: "#E7C46A", fontSize: 12, letterSpacing: ".2em", marginBottom: 16 } as const;
@@ -464,19 +495,15 @@ export default async function Home() {
               ))}
             </div>
 
-            {/* 첫 흐름 */}
-            <h3 style={{ fontSize: "clamp(1.3rem, 2.6vw, 1.8rem)", fontWeight: 900, margin: "4.5rem 0 1.6rem" }}>국내·해외를 함께 시작하면 이렇게 흘러갑니다</h3>
-            <ol style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.4rem" }}>
-              {[
-                { when: "계약 전", t: "사전 진단", d: "국내 검색·플레이스와 해외 검색에서 병원이 어떻게 보이는지 확인" },
-                { when: "첫 달", t: "국내 기반 + 해외 창구", d: "국내 채널 정비와 함께 해외 계정·다국어 페이지를 병원 소유로 개설" },
-                { when: "이후 매달", t: "함께 운영", d: "국내 원본 콘텐츠를 나라별로 옮겨 발행하고, 월간 보고서로 다음 달 결정" },
-                { when: "중간 점검", t: "계속할지 함께 판단", d: "약속한 점검 시점에 기준 대비 결과를 보고 조정하거나 멈출 수 있게" },
-              ].map((s, i) => (
-                <li key={s.t} style={{ borderTop: `2px solid ${i === 0 ? RED : "rgba(255,255,255,.15)"}`, paddingTop: "1.1rem" }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "#E7C46A" }}>{s.when}</span>
-                  <h4 style={{ fontSize: "1.1rem", fontWeight: 800, margin: "6px 0" }}>{s.t}</h4>
-                  <p style={{ fontSize: ".88rem", color: "rgba(255,255,255,.65)", lineHeight: 1.6, wordBreak: "keep-all" }}>{s.d}</p>
+            {/* 첫 흐름 — 위에서 아래로 읽어 내리는 타임라인 */}
+            <h3 style={{ fontSize: "clamp(1.3rem, 2.6vw, 1.8rem)", fontWeight: 900, margin: "4.5rem 0 2rem" }}>국내·해외를 함께 시작하면 이렇게 흘러갑니다</h3>
+            <ol className="flow">
+              {FLOW.map((f, i) => (
+                <li key={f.t} className="flow-step">
+                  <span className="flow-when">{f.when}</span>
+                  <h4 className="flow-title">{f.t}</h4>
+                  <p className="flow-desc">{f.d}</p>
+                  {i === FLOW.length - 1 && <span className="flow-end">여기까지가 한 바퀴입니다. 다음 달도 같은 순서로 돕니다.</span>}
                 </li>
               ))}
             </ol>
@@ -494,7 +521,15 @@ export default async function Home() {
                 </Link>
               ))}
             </div>
-            <p style={{ marginTop: 12, fontSize: ".8rem", color: "rgba(255,255,255,.45)" }}>광고비·의료광고 심의 수수료는 별도입니다. 구성은 견적 페이지에서 자세히 볼 수 있습니다.</p>
+            <p style={{ marginTop: 12, fontSize: ".8rem", color: "rgba(255,255,255,.45)" }}>광고비·의료광고 심의 수수료는 별도입니다.</p>
+
+            {/* 견적 의뢰로 바로 보내는 자리 */}
+            <div style={{ marginTop: "2.2rem", display: "flex", alignItems: "center", gap: "1.2rem", flexWrap: "wrap" }}>
+              <Link href="/time/quote" className="quote-cta">견적 바로가기 <span aria-hidden>→</span></Link>
+              <p style={{ margin: 0, fontSize: ".9rem", color: "rgba(255,255,255,.6)", lineHeight: 1.6, wordBreak: "keep-all" }}>
+                병원 상황을 고르면 구성과 금액을 바로 보여드리고, 그 자리에서 견적을 받아보실 수 있습니다.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -506,22 +541,27 @@ export default async function Home() {
           <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 6%" }}>
             <p className="font-mono-sys" style={label}>PORTFOLIO</p>
             <h2 style={{ fontSize: "clamp(1.6rem, 3.4vw, 2.4rem)", fontWeight: 900, marginBottom: 10, wordBreak: "keep-all" }}>분야별 포트폴리오</h2>
-            <p style={{ color: "rgba(255,255,255,.55)", fontSize: ".92rem", marginBottom: "2rem", wordBreak: "keep-all" }}>병원 한 곳씩 상황부터 결과물까지 정리하고 있습니다.</p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 1, background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.1)" }}>
-              {PORTFOLIO_CATS.map((c) => (
-                <div key={c.name} aria-disabled="true" style={{ background: "#0a0a0a", padding: "1.6rem 1.4rem", display: "flex", flexDirection: "column", gap: 10, minHeight: 150 }}>
-                  <span style={{ alignSelf: "flex-start", fontSize: 11, fontWeight: 800, padding: "3px 8px", border: "1px solid rgba(231,196,106,.5)", color: "#E7C46A" }}>준비중</span>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 900 }}>{c.name}</h3>
-                  {c.subs && (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                      {c.subs.map((sub) => (
-                        <span key={sub} style={{ fontSize: 12, fontWeight: 700, padding: "3px 9px", border: "1px solid rgba(255,255,255,.18)", color: "rgba(255,255,255,.6)" }}>{sub}</span>
-                      ))}
-                    </div>
-                  )}
+            <p style={{ color: "rgba(255,255,255,.55)", fontSize: ".92rem", marginBottom: "2.4rem", wordBreak: "keep-all" }}>분야마다 대표 작업을 먼저 보여드립니다. 더 보고 싶으시면 분야별로 전체를 열어보실 수 있습니다.</p>
+
+            {previewGroups.map((g) => (
+              <div key={g.key} className="pf-group">
+                <div className="pf-head">
+                  <div>
+                    <h3 style={{ fontSize: "1.3rem", fontWeight: 900, letterSpacing: "-.02em" }}>
+                      {g.label}
+                      <span style={{ marginLeft: 8, fontSize: ".82rem", fontWeight: 700, color: "rgba(255,255,255,.4)" }}>{g.total}건</span>
+                    </h3>
+                    <p style={{ margin: "6px 0 0", fontSize: ".88rem", color: "rgba(255,255,255,.55)", wordBreak: "keep-all" }}>{g.desc}</p>
+                  </div>
+                  <Link href={`/time/portfolio?region=${g.region}&category=${g.category}`} className="pf-more">더 보러 가기 →</Link>
                 </div>
-              ))}
-            </div>
+                <div className="pf-grid">
+                  {g.items.map((it) => (
+                    <PortfolioCard key={it.id} item={it} />
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
