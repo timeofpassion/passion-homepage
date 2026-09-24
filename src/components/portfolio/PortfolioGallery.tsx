@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   portfolioGroups,
   itemsInGroup,
@@ -32,12 +33,11 @@ export default function PortfolioGallery({
   const [lightbox, setLightbox] = useState<PortfolioItem | null>(null);
 
   const folders = foldersInGroup(group);
-  const openable = folders.filter((t) => t.ready);
-  // 열 수 있는 폴더가 하나뿐이면 굳이 한 번 더 누르게 하지 않는다(홈페이지처럼).
-  // 단 옆에 「준비중」 칸이 서 있으면 그것도 보여줘야 하므로 건너뛰지 않는다.
-  const single = openable.length === 1 && folders.length === 1 ? openable[0] : null;
-  const opened = single ?? (type ? openable.find((t) => t.key === type) ?? null : null);
-  const items = opened ? itemsInFolder(group, opened.key) : [];
+  // 폴더가 하나뿐이면 굳이 한 번 더 누르게 하지 않는다(홈페이지처럼).
+  const single = folders.length === 1 && folders[0].ready ? folders[0] : null;
+  const opened = single ?? (type ? folders.find((t) => t.key === type) ?? null : null);
+  // 닫은 칸은 들어가도 작업이 한 건도 안 나간다 — 대신 아래에서 안내를 띄운다.
+  const items = opened?.ready ? itemsInFolder(group, opened.key) : [];
 
   const openGroup = (key: PortfolioGroupKey) => {
     setGroup(key);
@@ -78,20 +78,21 @@ export default function PortfolioGallery({
                     key={t.key}
                     type="button"
                     className={`pg-folder${t.ready ? "" : " soon"}`}
-                    disabled={!t.ready}
-                    aria-disabled={!t.ready}
-                    onClick={t.ready ? () => openType(t.key) : undefined}
+                    onClick={() => openType(t.key)}
                   >
                     <span className="pg-folder-thumb">
                       {t.ready && t.cover ? (
                         <img src={t.cover} alt="" loading="lazy" decoding="async" />
                       ) : (
-                        <span className="pg-folder-blank" />
+                        // 닫은 칸은 작업 그림을 못 쓴다 → 무슨 일인지만 글로 세운다.
+                        <span className="pg-folder-blank">
+                          {t.note && <span className="pg-folder-note">{t.note}</span>}
+                        </span>
                       )}
                     </span>
                     <span className="pg-folder-body">
                       <strong className="pg-folder-name">{t.label}</strong>
-                      <span className="pg-folder-go">{t.ready ? `${t.count}건 보기 →` : "준비중"}</span>
+                      <span className="pg-folder-go">{t.ready ? `${t.count}건 보기 →` : "준비중 →"}</span>
                     </span>
                   </button>
                 ))}
@@ -111,15 +112,30 @@ export default function PortfolioGallery({
               )}
               <h2 className="pg-title">
                 {opened.label}
-                <span className="pg-title-n">{opened.count}건</span>
+                {opened.ready && <span className="pg-title-n">{opened.count}건</span>}
               </h2>
             </div>
 
-            <div className="pg-grid">
-              {items.slice(0, shown).map((it) => (
-                <PortfolioCard key={it.id} item={it} onOpen={setLightbox} />
-              ))}
-            </div>
+            {/* 닫은 칸 — 작업 대신 안내를 띄운다. 「이런 분야를 한다」까지만 알리고 실물은 감춘다. */}
+            {!opened.ready ? (
+              <div className="pg-soon">
+                <strong className="pg-soon-title">준비 중입니다</strong>
+                <p className="pg-soon-text">
+                  이 분야 작업은 병원과 협의를 거쳐 공개하고 있습니다.
+                  <br />
+                  실제 사례와 성과는 상담 때 직접 보여드립니다.
+                </p>
+                <Link href="/time/quote" className="pg-soon-cta">
+                  사례 보며 상담받기 →
+                </Link>
+              </div>
+            ) : (
+              <div className="pg-grid">
+                {items.slice(0, shown).map((it) => (
+                  <PortfolioCard key={it.id} item={it} onOpen={setLightbox} />
+                ))}
+              </div>
+            )}
 
             {items.length > shown && (
               <div className="pg-more-wrap">
@@ -158,16 +174,27 @@ const CSS = `
   .pg-folder-thumb{display:block;aspect-ratio:16/10;overflow:hidden;background:#111;position:relative}
   .pg-folder-thumb img{width:100%;height:100%;object-fit:contain;opacity:.62;transition:opacity .25s}
   .pg-folder:hover .pg-folder-thumb img{opacity:.8}
-  .pg-folder-blank{display:block;height:100%;background:linear-gradient(140deg,rgba(230,51,41,.35),#0a0a0a)}
+  .pg-folder-blank{display:flex;align-items:center;justify-content:center;height:100%;padding:0 1.4rem;
+    text-align:center;background:linear-gradient(140deg,rgba(230,51,41,.35),#0a0a0a)}
   .pg-folder-body{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:1.1rem 1.2rem 1.2rem}
   .pg-folder-name{font-size:1.05rem;font-weight:800;letter-spacing:-.02em;word-break:keep-all}
   .pg-folder-go{font-size:.82rem;font-weight:700;color:#E7C46A;white-space:nowrap}
 
-  /* 준비중 칸 — 이름만 세워두고 누를 수 없게 한다 */
-  .pg-folder.soon{cursor:default;opacity:.5}
-  .pg-folder.soon:hover{transform:none;border-color:rgba(255,255,255,.1)}
-  .pg-folder.soon .pg-folder-blank{background:linear-gradient(140deg,rgba(255,255,255,.08),#0a0a0a)}
-  .pg-folder.soon .pg-folder-go{color:rgba(255,255,255,.45)}
+  /* 준비중 칸 — 눌러서 들어갈 수는 있되, 무엇을 만들었는지는 안 비친다 */
+  .pg-folder.soon{opacity:.72}
+  .pg-folder.soon:hover{opacity:1}
+  .pg-folder.soon .pg-folder-blank{background:linear-gradient(140deg,rgba(230,51,41,.22),#0a0a0a)}
+  .pg-folder-note{font-size:.86rem;font-weight:600;line-height:1.6;color:rgba(255,255,255,.75);word-break:keep-all}
+  .pg-folder.soon .pg-folder-go{color:rgba(255,255,255,.5)}
+
+  /* 준비중 칸을 열었을 때 — 작업 대신 서는 안내 */
+  .pg-soon{border:1px solid rgba(255,255,255,.12);border-radius:16px;background:#0a0a0a;
+    padding:3.5rem 2rem;text-align:center}
+  .pg-soon-title{display:block;font-size:1.25rem;font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+  .pg-soon-text{margin:0 0 1.8rem;font-size:.92rem;line-height:1.75;color:rgba(255,255,255,.55);word-break:keep-all}
+  .pg-soon-cta{display:inline-block;padding:12px 24px;border-radius:999px;background:#E63329;color:#fff;
+    font-size:.88rem;font-weight:700;text-decoration:none;transition:opacity .2s}
+  .pg-soon-cta:hover{opacity:.85}
 
   .pg-crumb{margin-bottom:2rem}
   .pg-back{background:none;border:0;padding:0;cursor:pointer;color:rgba(255,255,255,.55);font-size:.88rem;font-weight:700}

@@ -4339,10 +4339,19 @@ export const portfolioItems: PortfolioItem[] = [
 // 상품이 바뀌면 이 표만 고친다. /time 메인 미리보기와 /time/portfolio 갤러리가 이것만 본다.
 export type PortfolioGroupKey = "domestic" | "china" | "taiwan" | "japan" | "homepage" | "design" | "video";
 
-// ready:false = 화면에 이름만 「준비중」으로 세워두고 안은 열지 않는다.
+// ready:false = 「이런 분야를 한다」는 것까지만 보이고, 열면 실물 대신 안내가 뜬다.
 // 작업이 없어서가 아니라, 밖에 내보이면 곤란한 분야를 닫아두는 칸이다(대표 지시 2026-09-25).
-// 닫은 폴더의 작업은 분야 건수에도 안 들어간다 — 안 보이는 것이 숫자로 새어나가지 않게.
-type Folder = { label: string; match: (it: PortfolioItem) => boolean; ready?: boolean };
+//   · 칸은 눌린다 — 들어가 보고 「아직 준비 중이구나」를 알 수 있어야 한다.
+//   · 안에는 작업이 한 건도 나가지 않는다(itemsInFolder 가 빈 배열).
+//   · 건수도 안 보인다 — 「체험단 47건」은 그 자체가 우리가 뭘 했는지 말해준다.
+//   · 분야 건수에도 안 들어간다.
+type Folder = {
+  label: string;
+  match: (it: PortfolioItem) => boolean;
+  ready?: boolean;
+  /** 닫은 칸에만 쓴다 — 실물 대신 「무슨 일인지」만 알려주는 한 줄. */
+  note?: string;
+};
 
 const inRegion = (it: PortfolioItem, r: PortfolioRegion) =>
   it.regions.includes(r) && !["homepage", "design", "video"].includes(it.category);
@@ -4386,13 +4395,25 @@ export const portfolioGroups: {
       {
         label: "플레이스·리뷰 관리",
         ready: false,
+        note: "네이버 플레이스 · 구글 · 카카오맵",
         match: (it) => inRegion(it, "domestic") && ["place", "review"].includes(it.category),
       },
-      { label: "체험단", ready: false, match: (it) => inRegion(it, "domestic") && it.category === "experience" },
-      { label: "카페 바이럴", ready: false, match: (it) => inRegion(it, "domestic") && it.category === "cafe" },
+      {
+        label: "체험단",
+        ready: false,
+        note: "블로그 · 인스타 체험단 모집·운영",
+        match: (it) => inRegion(it, "domestic") && it.category === "experience",
+      },
+      {
+        label: "카페 바이럴",
+        ready: false,
+        note: "네이버 카페 콘텐츠 기획·운영",
+        match: (it) => inRegion(it, "domestic") && it.category === "cafe",
+      },
       {
         label: "강남언니·바비톡 세팅",
         ready: false,
+        note: "의료 플랫폼 계정 세팅·운영",
         match: (it) => inRegion(it, "domestic") && it.category === "platform",
       },
       { label: "영상 채널 운영", match: (it) => inRegion(it, "domestic") && it.category === "multichannel" },
@@ -4407,10 +4428,16 @@ export const portfolioGroups: {
         label: "중국 SNS 콘텐츠 제작",
         match: (it) => inRegion(it, "china") && ["review", "multichannel", "platform"].includes(it.category),
       },
-      { label: "샤오홍슈 체험단", ready: false, match: (it) => inRegion(it, "china") && it.title.includes("체험단") },
+      {
+        label: "샤오홍슈 체험단",
+        ready: false,
+        note: "중국 현지 인플루언서 섭외·운영",
+        match: (it) => inRegion(it, "china") && it.title.includes("체험단"),
+      },
       {
         label: "샤오홍슈 기자단",
         ready: false,
+        note: "중국 현지 기자단 콘텐츠",
         match: (it) => inRegion(it, "china") && it.title.includes("샤오홍슈 기자단"),
       },
     ],
@@ -4463,7 +4490,12 @@ export const portfolioGroups: {
       },
       { label: "블로그 카드뉴스", match: isBlogCard },
       { label: "블로그 스킨·프로필·배너", match: (it) => it.category === "blog" && !isBlogCard(it) },
-      { label: "이벤트·홍보 포스터", ready: false, match: isPrintPoster },
+      {
+        label: "이벤트·홍보 포스터",
+        ready: false,
+        note: "원내 게시물 · SNS 홍보물 디자인",
+        match: isPrintPoster,
+      },
       { label: "원장·의료진 소개물", match: isPrintDoctor },
       { label: "로고·간판·사이니지", match: isPrintSign },
       {
@@ -4474,12 +4506,14 @@ export const portfolioGroups: {
       {
         label: "병원 가격표·메뉴판 디자인",
         ready: false,
+        note: "원내 안내물 디자인",
         match: (it) => it.category === "design" && tagIn(it, ["메뉴보드"]),
       },
       { label: "원장 소개·채널 안내 배너", match: (it) => it.category === "design" && tagIn(it, ["배너"]) },
       {
         label: "상세페이지·랜딩페이지 디자인",
         ready: false,
+        note: "플랫폼 · 이벤트 랜딩 디자인",
         match: (it) =>
           it.category === "design" &&
           (tagIn(it, ["랜딩페이지"]) || (tagOf(it) === "디자인" && it.summary.includes("서브페이지"))),
@@ -4519,7 +4553,14 @@ export function prettySummary(summary: string): string {
   return `${head} · ${tail}`;
 }
 
-export type PortfolioFolder = { key: string; label: string; count: number; cover?: string; ready: boolean };
+export type PortfolioFolder = {
+  key: string;
+  label: string;
+  count: number;
+  cover?: string;
+  ready: boolean;
+  note?: string;
+};
 
 const isOpen = (f: Folder) => f.ready !== false;
 
@@ -4529,7 +4570,7 @@ export function foldersInGroup(group: PortfolioGroupKey): PortfolioFolder[] {
   if (!g) return [];
   return g.folders
     .map((f) => {
-      if (!isOpen(f)) return { key: f.label, label: f.label, count: 0, ready: false };
+      if (!isOpen(f)) return { key: f.label, label: f.label, count: 0, ready: false, note: f.note };
       const list = portfolioItems.filter(f.match);
       return {
         key: f.label,
