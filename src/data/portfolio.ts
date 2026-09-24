@@ -658,16 +658,6 @@ export const portfolioItems: PortfolioItem[] = [
     accent: "#db2777",
   },
   {
-    id: "pf-mgb-001",
-    regions: ["domestic"],
-    category: "design",
-    title: "멜로우 강북본점",
-    summary: "디자인 · 블라인드",
-    thumbnail: "/portfolio/pf-mgb-001.png",
-    tags: ["디자인", "국내"],
-    accent: "#db2777",
-  },
-  {
     id: "pf-mgb-002",
     regions: ["domestic"],
     category: "blog",
@@ -914,16 +904,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: "멜로우 강북본점",
     summary: "디자인 · 서브페이지_색소",
     thumbnail: "/portfolio/pf-mgb-026.png",
-    tags: ["디자인", "국내"],
-    accent: "#db2777",
-  },
-  {
-    id: "pf-mgb-027",
-    regions: ["domestic"],
-    category: "design",
-    title: "멜로우 강북본점",
-    summary: "디자인 · 서브페이지_색소(1)",
-    thumbnail: "/portfolio/pf-mgb-027.png",
     tags: ["디자인", "국내"],
     accent: "#db2777",
   },
@@ -2878,16 +2858,6 @@ export const portfolioItems: PortfolioItem[] = [
     accent: "#7c2d12",
   },
   {
-    id: "pf-sht-225",
-    regions: ["domestic"],
-    category: "design",
-    title: "신통",
-    summary: "로고 · 메디컬그룹로고",
-    thumbnail: "/portfolio/pf-sht-225.png",
-    tags: ["로고", "국내"],
-    accent: "#7c2d12",
-  },
-  {
     id: "pf-sht-226",
     regions: ["domestic"],
     category: "multichannel",
@@ -4298,16 +4268,6 @@ export const portfolioItems: PortfolioItem[] = [
     accent: "#2563eb",
   },
   {
-    id: "pf-imp-367",
-    regions: ["domestic"],
-    category: "design",
-    title: "임페투스",
-    summary: "디자인 · 레퍼런스",
-    thumbnail: "/portfolio/pf-imp-367.png",
-    tags: ["디자인", "국내"],
-    accent: "#a16207",
-  },
-  {
     id: "pf-imp-368",
     regions: ["domestic"],
     category: "design",
@@ -4318,16 +4278,6 @@ export const portfolioItems: PortfolioItem[] = [
     accent: "#a16207",
   },
   {
-    id: "pf-imp-369",
-    regions: ["domestic"],
-    category: "design",
-    title: "임페투스",
-    summary: "디자인 · 가이드",
-    thumbnail: "/portfolio/pf-imp-369.png",
-    tags: ["디자인", "국내"],
-    accent: "#a16207",
-  },
-  {
     id: "pf-imp-370",
     regions: ["domestic"],
     category: "design",
@@ -4335,16 +4285,6 @@ export const portfolioItems: PortfolioItem[] = [
     summary: "로고 · 로고배리",
     thumbnail: "/portfolio/pf-imp-370.png",
     tags: ["로고", "국내"],
-    accent: "#a16207",
-  },
-  {
-    id: "pf-imp-371",
-    regions: ["domestic"],
-    category: "design",
-    title: "임페투스",
-    summary: "디자인 · 자료",
-    thumbnail: "/portfolio/pf-imp-371.png",
-    tags: ["디자인", "국내"],
     accent: "#a16207",
   },
   {
@@ -4378,16 +4318,6 @@ export const portfolioItems: PortfolioItem[] = [
     accent: "#a16207",
   },
   {
-    id: "pf-imp-375",
-    regions: ["domestic"],
-    category: "design",
-    title: "임페투스",
-    summary: "디자인 · 사진자료_재미나이+클립아트코리아",
-    thumbnail: "/portfolio/pf-imp-375.png",
-    tags: ["디자인", "국내"],
-    accent: "#a16207",
-  },
-  {
     id: "pf-imp-376",
     regions: ["domestic"],
     category: "design",
@@ -4404,16 +4334,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: "임페투스",
     summary: "디자인 · 시향지엽서",
     thumbnail: "/portfolio/pf-imp-377.png",
-    tags: ["디자인", "국내"],
-    accent: "#a16207",
-  },
-  {
-    id: "pf-imp-378",
-    regions: ["domestic"],
-    category: "design",
-    title: "임페투스",
-    summary: "디자인 · 자료취합",
-    thumbnail: "/portfolio/pf-imp-378.png",
     tags: ["디자인", "국내"],
     accent: "#a16207",
   },
@@ -4668,96 +4588,6 @@ export const portfolioItems: PortfolioItem[] = [
   },
 
   // ── [초안] 마케팅 실행·성과 (회사소개서 서비스 케이스: 플레이스·바이럴·블로그·체험단·리뷰·멀티채널) ───────────
-  {
-    id: "pf-svc-18",
-    regions: ["domestic"],
-    category: "place",
-    title: "플레이스 상위노출",
-    summary: "네이버 플레이스 1페이지 1위 상위노출 실사례",
-    thumbnail: "/portfolio/pf-svc-18.png",
-    tags: ["실행·성과", "국내"],
-    accent: "#16a34a",
-  },
-  {
-    id: "pf-svc-21",
-    regions: ["domestic"],
-    category: "review",
-    title: "페르소나 리뷰",
-    summary: "네이버·카카오·구글 리뷰 신뢰도 마케팅",
-    thumbnail: "/portfolio/pf-svc-21.png",
-    tags: ["실행·성과", "국내"],
-    accent: "#f59e0b",
-  },
-  {
-    id: "pf-svc-23",
-    regions: ["domestic"],
-    category: "cafe",
-    title: "카페 바이럴",
-    summary: "네이버 카페 침투 바이럴 마케팅",
-    thumbnail: "/portfolio/pf-svc-23.png",
-    tags: ["실행·성과", "국내"],
-    accent: "#15803d",
-  },
-  {
-    id: "pf-svc-27",
-    regions: ["domestic"],
-    category: "experience",
-    title: "인플루언서 체험단",
-    summary: "준최~셀럽 4단계 체험단 모집·운영",
-    thumbnail: "/portfolio/pf-svc-27.png",
-    tags: ["실행·성과", "국내"],
-    accent: "#8b5cf6",
-  },
-  {
-    id: "pf-svc-35",
-    regions: ["domestic"],
-    category: "blog",
-    title: "브랜드블로그 상위노출",
-    summary: "네이버 블로그 상위노출·운영관리",
-    thumbnail: "/portfolio/pf-svc-35.png",
-    tags: ["실행·성과", "국내"],
-    accent: "#0ea5e9",
-  },
-  {
-    id: "pf-svc-40",
-    regions: ["domestic"],
-    category: "multichannel",
-    title: "멀티채널 운영",
-    summary: "유튜브·인스타·틱톡·페북 통합 운영",
-    thumbnail: "/portfolio/pf-svc-40.png",
-    tags: ["실행·성과", "국내"],
-    accent: "#ef4444",
-  },
-  {
-    id: "pf-svc-97",
-    regions: ["china"],
-    category: "experience",
-    title: "중국 샤오홍슈 체험단",
-    summary: "샤오홍슈 체험단 모집·운영관리",
-    thumbnail: "/portfolio/pf-svc-97.png",
-    tags: ["실행·성과", "중국"],
-    accent: "#dc2626",
-  },
-  {
-    id: "pf-svc-108",
-    regions: ["japan"],
-    category: "experience",
-    title: "일본 인플루언서 시딩",
-    summary: "일본 인플루언서 시딩전략·체험단 운영",
-    thumbnail: "/portfolio/pf-svc-108.png",
-    tags: ["실행·성과", "일본"],
-    accent: "#2563eb",
-  },
-  {
-    id: "pf-svc-102",
-    regions: ["japan"],
-    category: "multichannel",
-    title: "일본 멀티채널 운영",
-    summary: "일본 콘텐츠 제작·멀티채널 운영관리",
-    thumbnail: "/portfolio/pf-svc-102.png",
-    tags: ["실행·성과", "일본"],
-    accent: "#3b82f6",
-  },
 ];
 
 // ── 헬퍼 ──────────────────────────────────────────────────────────
@@ -4777,6 +4607,25 @@ const inRegion = (it: PortfolioItem, r: PortfolioRegion) =>
 const tagOf = (it: PortfolioItem) =>
   (it.tags ?? []).find((t) => !["국내", "일본", "중국", "대만", "의료", "브랜드"].includes(t)) ?? "";
 const tagIn = (it: PortfolioItem, list: string[]) => list.includes(tagOf(it));
+// 설명 글귀에 이 낱말이 들어 있나 — 태그만으로는 갈리지 않는 인쇄물을 쓰임새별로 나눌 때 쓴다.
+const sumIn = (it: PortfolioItem, words: string[]) => words.some((w) => it.summary.includes(w));
+// 인쇄물·제작물 덩어리(예전 「병원 인쇄물 디자인」 한 칸). 아래에서 쓰임새 네 칸으로 갈라 쓴다.
+const isPrint = (it: PortfolioItem) =>
+  it.category === "design" &&
+  !sumIn(it, ["메타이미지", "하이라이트커버"]) &&
+  (tagIn(it, ["포스터", "입간판", "명함", "사이니지", "로고", "약력", "기타"]) ||
+    (tagOf(it) === "디자인" && !it.summary.includes("서브페이지")));
+const isPrintPoster = (it: PortfolioItem) =>
+  isPrint(it) && sumIn(it, ["포스터", "전단지", "버스광고", "리플렛", "보도자료", "채용", "모델모집"]);
+const isPrintDoctor = (it: PortfolioItem) =>
+  isPrint(it) &&
+  sumIn(it, ["약력", "명함", "아크릴판", "의료진소개", "원장 프로필", "원장님사진", "방송출연", "연예인방문"]);
+const isPrintSign = (it: PortfolioItem) =>
+  isPrint(it) && sumIn(it, ["로고", "입간판", "사이니지", "블라인드", "오시는길"]);
+// 블로그에 들어가는 그림 — 예전엔 국내 마케팅의 「네이버 블로그」 칸에 있었으나
+// 실제 내용이 블로그 운영 실적이 아니라 디자인 산출물이라 디자인으로 옮겼다(대표 확정 2026-09-24).
+const isBlogCard = (it: PortfolioItem) =>
+  it.category === "blog" && sumIn(it, ["카드뉴스", "블로그이미지", "블로그 이미지"]);
 
 export const portfolioGroups: {
   key: PortfolioGroupKey;
@@ -4787,9 +4636,8 @@ export const portfolioGroups: {
   {
     key: "domestic",
     label: "국내 마케팅",
-    desc: "국내 병원마케팅 패키지 — 블로그·리뷰·체험단·플랫폼·영상 채널까지 매달 돌린 작업",
+    desc: "국내 병원마케팅 패키지 — 플레이스·리뷰·체험단·플랫폼·영상 채널까지 매달 돌린 작업",
     folders: [
-      { label: "네이버 블로그", match: (it) => inRegion(it, "domestic") && it.category === "blog" },
       { label: "플레이스·리뷰 관리", match: (it) => inRegion(it, "domestic") && ["place", "review"].includes(it.category) },
       { label: "체험단", match: (it) => inRegion(it, "domestic") && it.category === "experience" },
       { label: "카페 바이럴", match: (it) => inRegion(it, "domestic") && it.category === "cafe" },
@@ -4840,20 +4688,24 @@ export const portfolioGroups: {
   {
     key: "design",
     label: "디자인",
-    desc: "피드·인쇄물·가격표·배너·랜딩까지, 병원에서 실제로 쓰는 디자인",
+    desc: "인스타 피드·블로그·포스터·간판·비품까지, 병원에서 실제로 쓰는 디자인",
     folders: [
       {
         label: "인스타그램 피드 디자인",
         match: (it) =>
           it.category === "design" &&
-          tagIn(it, ["카드뉴스", "META콘텐츠", "SNS콘텐츠", "썸네일", "안내 디자인", "진료일정·안내", "프로필"]),
+          (tagIn(it, ["카드뉴스", "META콘텐츠", "SNS콘텐츠", "썸네일", "안내 디자인", "진료일정·안내", "프로필"]) ||
+            sumIn(it, ["메타이미지", "하이라이트커버"])),
       },
+      { label: "블로그 카드뉴스", match: isBlogCard },
+      { label: "블로그 스킨·프로필·배너", match: (it) => it.category === "blog" && !isBlogCard(it) },
+      { label: "이벤트·홍보 포스터", match: isPrintPoster },
+      { label: "원장·의료진 소개물", match: isPrintDoctor },
+      { label: "로고·간판·사이니지", match: isPrintSign },
       {
-        label: "병원 인쇄물 디자인",
-        match: (it) =>
-          it.category === "design" &&
-          (tagIn(it, ["포스터", "입간판", "명함", "사이니지", "로고", "약력", "기타"]) ||
-            (tagOf(it) === "디자인" && !it.summary.includes("서브페이지"))),
+        // 위 세 칸에 안 들어간 제작물이 여기로 모인다(쇼핑백·종이컵·스티커·봉투·설문지 …).
+        label: "원내 비품·안내물",
+        match: (it) => isPrint(it) && !isPrintPoster(it) && !isPrintDoctor(it) && !isPrintSign(it),
       },
       { label: "병원 가격표·메뉴판 디자인", match: (it) => it.category === "design" && tagIn(it, ["메뉴보드"]) },
       { label: "이벤트 배너·팝업 디자인", match: (it) => it.category === "design" && tagIn(it, ["배너"]) },
