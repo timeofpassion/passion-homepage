@@ -32,9 +32,11 @@ export default function PortfolioGallery({
   const [lightbox, setLightbox] = useState<PortfolioItem | null>(null);
 
   const folders = foldersInGroup(group);
-  // 폴더가 하나뿐이면 굳이 한 번 더 누르게 하지 않는다(홈페이지처럼).
-  const single = folders.length === 1 ? folders[0] : null;
-  const opened = single ?? (type ? folders.find((t) => t.key === type) ?? null : null);
+  const openable = folders.filter((t) => t.ready);
+  // 열 수 있는 폴더가 하나뿐이면 굳이 한 번 더 누르게 하지 않는다(홈페이지처럼).
+  // 단 옆에 「준비중」 칸이 서 있으면 그것도 보여줘야 하므로 건너뛰지 않는다.
+  const single = openable.length === 1 && folders.length === 1 ? openable[0] : null;
+  const opened = single ?? (type ? openable.find((t) => t.key === type) ?? null : null);
   const items = opened ? itemsInFolder(group, opened.key) : [];
 
   const openGroup = (key: PortfolioGroupKey) => {
@@ -72,9 +74,16 @@ export default function PortfolioGallery({
             {folders.length > 0 ? (
               <div className="pg-folders">
                 {folders.map((t) => (
-                  <button key={t.key} type="button" className="pg-folder" onClick={() => openType(t.key)}>
+                  <button
+                    key={t.key}
+                    type="button"
+                    className={`pg-folder${t.ready ? "" : " soon"}`}
+                    disabled={!t.ready}
+                    aria-disabled={!t.ready}
+                    onClick={t.ready ? () => openType(t.key) : undefined}
+                  >
                     <span className="pg-folder-thumb">
-                      {t.cover ? (
+                      {t.ready && t.cover ? (
                         <img src={t.cover} alt="" loading="lazy" decoding="async" />
                       ) : (
                         <span className="pg-folder-blank" />
@@ -82,7 +91,7 @@ export default function PortfolioGallery({
                     </span>
                     <span className="pg-folder-body">
                       <strong className="pg-folder-name">{t.label}</strong>
-                      <span className="pg-folder-go">{t.count}건 보기 →</span>
+                      <span className="pg-folder-go">{t.ready ? `${t.count}건 보기 →` : "준비중"}</span>
                     </span>
                   </button>
                 ))}
@@ -153,6 +162,12 @@ const CSS = `
   .pg-folder-body{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:1.1rem 1.2rem 1.2rem}
   .pg-folder-name{font-size:1.05rem;font-weight:800;letter-spacing:-.02em;word-break:keep-all}
   .pg-folder-go{font-size:.82rem;font-weight:700;color:#E7C46A;white-space:nowrap}
+
+  /* 준비중 칸 — 이름만 세워두고 누를 수 없게 한다 */
+  .pg-folder.soon{cursor:default;opacity:.5}
+  .pg-folder.soon:hover{transform:none;border-color:rgba(255,255,255,.1)}
+  .pg-folder.soon .pg-folder-blank{background:linear-gradient(140deg,rgba(255,255,255,.08),#0a0a0a)}
+  .pg-folder.soon .pg-folder-go{color:rgba(255,255,255,.45)}
 
   .pg-crumb{margin-bottom:2rem}
   .pg-back{background:none;border:0;padding:0;cursor:pointer;color:rgba(255,255,255,.55);font-size:.88rem;font-weight:700}

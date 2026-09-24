@@ -4600,7 +4600,10 @@ export const portfolioItems: PortfolioItem[] = [
 // 상품이 바뀌면 이 표만 고친다. /time 메인 미리보기와 /time/portfolio 갤러리가 이것만 본다.
 export type PortfolioGroupKey = "domestic" | "china" | "taiwan" | "japan" | "homepage" | "design" | "video";
 
-type Folder = { label: string; match: (it: PortfolioItem) => boolean };
+// ready:false = 화면에 이름만 「준비중」으로 세워두고 안은 열지 않는다.
+// 작업이 없어서가 아니라, 밖에 내보이면 곤란한 분야를 닫아두는 칸이다(대표 지시 2026-09-25).
+// 닫은 폴더의 작업은 분야 건수에도 안 들어간다 — 안 보이는 것이 숫자로 새어나가지 않게.
+type Folder = { label: string; match: (it: PortfolioItem) => boolean; ready?: boolean };
 
 const inRegion = (it: PortfolioItem, r: PortfolioRegion) =>
   it.regions.includes(r) && !["homepage", "design", "video"].includes(it.category);
@@ -4624,6 +4627,8 @@ const isPrintSign = (it: PortfolioItem) =>
   isPrint(it) && sumIn(it, ["로고", "입간판", "사이니지", "블라인드", "오시는길"]);
 // 블로그에 들어가는 그림 — 예전엔 국내 마케팅의 「네이버 블로그」 칸에 있었으나
 // 실제 내용이 블로그 운영 실적이 아니라 디자인 산출물이라 디자인으로 옮겼다(대표 확정 2026-09-24).
+const isDomesticHomepage = (it: PortfolioItem) =>
+  it.category === "homepage" && it.regions.includes("domestic") && !it.summary.includes("다국어");
 const isBlogCard = (it: PortfolioItem) =>
   it.category === "blog" && sumIn(it, ["카드뉴스", "블로그이미지", "블로그 이미지"]);
 
@@ -4636,11 +4641,16 @@ export const portfolioGroups: {
   {
     key: "domestic",
     label: "국내 마케팅",
-    desc: "국내 병원마케팅 패키지 — 플레이스·리뷰·체험단·플랫폼·영상 채널까지 매달 돌린 작업",
+    desc: "국내 병원마케팅 패키지 — 플랫폼 세팅부터 영상 채널 운영까지 매달 돌린 작업",
     folders: [
-      { label: "플레이스·리뷰 관리", match: (it) => inRegion(it, "domestic") && ["place", "review"].includes(it.category) },
-      { label: "체험단", match: (it) => inRegion(it, "domestic") && it.category === "experience" },
-      { label: "카페 바이럴", match: (it) => inRegion(it, "domestic") && it.category === "cafe" },
+      // 아래 셋은 밖에 사례를 걸어두면 곤란한 분야라 닫아둔다(대표 지시 2026-09-25).
+      {
+        label: "플레이스·리뷰 관리",
+        ready: false,
+        match: (it) => inRegion(it, "domestic") && ["place", "review"].includes(it.category),
+      },
+      { label: "체험단", ready: false, match: (it) => inRegion(it, "domestic") && it.category === "experience" },
+      { label: "카페 바이럴", ready: false, match: (it) => inRegion(it, "domestic") && it.category === "cafe" },
       { label: "강남언니·바비톡 세팅", match: (it) => inRegion(it, "domestic") && it.category === "platform" },
       { label: "영상 채널 운영", match: (it) => inRegion(it, "domestic") && it.category === "multichannel" },
     ],
@@ -4676,8 +4686,13 @@ export const portfolioGroups: {
     desc: "검색에 잡히고 문의로 이어지는 홈페이지, 해외 언어까지",
     folders: [
       {
+        // 한 칸에 병원과 식당이 같이 들어 있어 「병원 홈페이지」라는 이름이 사실과 달랐다 → 갈랐다.
         label: "병원 홈페이지 제작",
-        match: (it) => it.category === "homepage" && it.regions.includes("domestic") && !it.summary.includes("다국어"),
+        match: (it) => isDomesticHomepage(it) && !tagIn(it, ["요식업"]),
+      },
+      {
+        label: "식당·브랜드 홈페이지 제작",
+        match: (it) => isDomesticHomepage(it) && tagIn(it, ["요식업"]),
       },
       {
         label: "홈페이지 SEO 점검·다국어 추가",
@@ -4728,30 +4743,61 @@ export const portfolioGroups: {
   },
 ];
 
-export type PortfolioFolder = { key: string; label: string; count: number; cover?: string };
+/**
+ * 화면에 뿌릴 설명 글귀를 다듬는다.
+ * 항목 대부분이 디자인팀 폴더에서 그대로 넘어와 「랜딩페이지_5세트」처럼 파일명 티가 난다.
+ * 데이터 445건을 일일이 고치는 대신 보여줄 때만 다듬는다(원본은 작업 찾을 때 그대로 쓴다).
+ */
+export function prettySummary(summary: string): string {
+  const parts = summary.split(" · ");
+  if (parts.length < 2) return summary;
+  const head = parts[0];
+  const tail = parts
+    .slice(1)
+    .join(" · ")
+    .replace(/_(\d+)(세트|건|분할)/g, " $1$2")
+    .replace(/_/g, " ")
+    .trim();
+  if (!tail) return head;
+  if (head === "기타") return tail; // 「기타」는 알려주는 게 없다
+  const squash = (s: string) => s.replace(/\s/g, "");
+  if (squash(tail).includes(squash(head))) return tail; // 「카드뉴스 · 블로그카드뉴스」 같은 되풀이
+  return `${head} · ${tail}`;
+}
 
-/** 분류 안의 「폴더」 — 실제로 작업이 있는 것만, 상품 순서대로 */
+export type PortfolioFolder = { key: string; label: string; count: number; cover?: string; ready: boolean };
+
+const isOpen = (f: Folder) => f.ready !== false;
+
+/** 분류 안의 「폴더」 — 열린 칸은 작업이 있는 것만, 닫은 칸은 이름만 「준비중」으로 */
 export function foldersInGroup(group: PortfolioGroupKey): PortfolioFolder[] {
   const g = portfolioGroups.find((x) => x.key === group);
   if (!g) return [];
   return g.folders
     .map((f) => {
+      if (!isOpen(f)) return { key: f.label, label: f.label, count: 0, ready: false };
       const list = portfolioItems.filter(f.match);
-      return { key: f.label, label: f.label, count: list.length, cover: list.find((it) => it.thumbnail)?.thumbnail };
+      return {
+        key: f.label,
+        label: f.label,
+        count: list.length,
+        cover: list.find((it) => it.thumbnail)?.thumbnail,
+        ready: true,
+      };
     })
-    .filter((f) => f.count > 0);
+    .filter((f) => !f.ready || f.count > 0);
 }
 
-/** 폴더 안의 작업 */
+/** 폴더 안의 작업 — 닫은 칸은 주소를 직접 쳐도 열리지 않는다 */
 export function itemsInFolder(group: PortfolioGroupKey, folder: string): PortfolioItem[] {
   const f = portfolioGroups.find((x) => x.key === group)?.folders.find((x) => x.label === folder);
-  return f ? portfolioItems.filter(f.match) : [];
+  return f && isOpen(f) ? portfolioItems.filter(f.match) : [];
 }
 
-/** 분류에 노출되는 작업 전체(어느 폴더에든 들어간 것만) */
+/** 분류에 노출되는 작업 전체(열려 있는 폴더에 들어간 것만) */
 export function itemsInGroup(group: PortfolioGroupKey): PortfolioItem[] {
   const g = portfolioGroups.find((x) => x.key === group);
-  return g ? portfolioItems.filter((it) => g.folders.some((f) => f.match(it))) : [];
+  return g ? portfolioItems.filter((it) => g.folders.some((f) => isOpen(f) && f.match(it))) : [];
 }
 
 // ── /time 메인 미리보기 ───────────────────────────────────────────
@@ -4764,22 +4810,45 @@ export type PreviewGroup = {
   total: number;
 };
 
+// 「멜로우 천호점」·「멜로우 신사점」은 제목이 달라도 한 병원이다.
+// 지점까지 따로 세면 미리보기 여섯 칸이 멜로우로 다 차버린다(대표 지적 2026-09-25).
+const brandOf = (it: PortfolioItem) =>
+  it.title
+    .split(/[ (·]/)[0]
+    .replace(/(피부과의원|피부과|성형외과|한방병원|한의원|한방|의원|클리닉|병원)$/, "");
+
 function pick(list: PortfolioItem[], limit = 6): PortfolioItem[] {
   // 캡처 없는 폴백 카드가 줄줄이 서면 미리보기가 허전하다 → 3개 이상 있으면 캡처 있는 것만 쓴다.
-  // 같은 캡처·같은 제목이 두 번 뜨면 허술해 보이므로 먼저 걸러낸다.
-  const score = (it: PortfolioItem) => (it.featured ? 0 : it.thumbnail ? 1 : 2);
+  // 우리는 병원 마케팅 회사다 — 식당·브랜드 일감도 하지만 첫 화면은 병원이 먼저 서야 한다.
+  const score = (it: PortfolioItem) =>
+    it.featured ? 0 : (it.tags ?? []).includes("의료") ? 1 : it.thumbnail ? 2 : 3;
   const withThumb = list.filter((it) => it.thumbnail);
   const pool = withThumb.length >= 3 ? withThumb : list;
+  const sorted = [...pool].sort((a, b) => score(a) - score(b));
+
+  // 병원별로 줄을 세우고 한 줄에서 하나씩 돌아가며 뽑는다 → 한 곳이 화면을 독차지하지 않는다.
+  const lanes = new Map<string, PortfolioItem[]>();
+  for (const it of sorted) {
+    const b = brandOf(it);
+    if (!lanes.has(b)) lanes.set(b, []);
+    lanes.get(b)!.push(it);
+  }
+
   // 같은 캡처·같은 제목은 한 번만. 같은 그림이 파일만 다르게 두 벌 들어있는 경우가 있어
-  // 제목까지 같이 본다. 그래서 묶음에 따라 6개를 못 채우기도 한다(억지로 채우지 않는다).
+  // 제목까지 같이 본다. 그래서 묶음에 따라 여섯 개를 못 채우기도 한다(억지로 채우지 않는다).
   const seen = new Set<string>();
   const out: PortfolioItem[] = [];
-  for (const it of [...pool].sort((a, b) => score(a) - score(b))) {
-    if (seen.has(it.title) || (it.thumbnail && seen.has(it.thumbnail))) continue;
-    seen.add(it.title);
-    if (it.thumbnail) seen.add(it.thumbnail);
-    out.push(it);
-    if (out.length === limit) break;
+  const queues = [...lanes.values()];
+  while (out.length < limit && queues.some((q) => q.length > 0)) {
+    for (const q of queues) {
+      const it = q.shift();
+      if (!it) continue;
+      if (seen.has(it.title) || (it.thumbnail && seen.has(it.thumbnail))) continue;
+      seen.add(it.title);
+      if (it.thumbnail) seen.add(it.thumbnail);
+      out.push(it);
+      if (out.length === limit) break;
+    }
   }
   return out;
 }
