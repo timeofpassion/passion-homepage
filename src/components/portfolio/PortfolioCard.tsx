@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import type { PortfolioItem } from "@/data/portfolio";
+import { prettySummary, type PortfolioItem } from "@/data/portfolio";
 
 // 포트폴리오 카드 (메인 진입 섹션 + 갤러리 공용)
 // - liveUrl 있고 만료 아님 → 클릭 시 새 탭으로 라이브 사이트
@@ -130,7 +130,7 @@ export default function PortfolioCard({
             overflow: "hidden",
           }}
         >
-          {item.summary}
+          {prettySummary(item.summary)}
         </p>
 
         {item.tags && item.tags.length > 0 && (

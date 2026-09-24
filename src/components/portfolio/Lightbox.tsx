@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { PortfolioItem } from "@/data/portfolio";
+import { prettySummary, type PortfolioItem } from "@/data/portfolio";
 
 // 만료/주소없는 작품을 클릭하면 캡처 이미지를 크게 보여주는 라이트박스.
 // 라이브 주소가 있으면 "사이트 방문" 버튼도 함께 노출.
@@ -132,7 +132,7 @@ export default function Lightbox({
               </span>
             )}
           </h3>
-          <p style={{ fontSize: "0.92rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>{item.summary}</p>
+          <p style={{ fontSize: "0.92rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>{prettySummary(item.summary)}</p>
 
           {item.liveUrl && !item.expired && (
             <a
