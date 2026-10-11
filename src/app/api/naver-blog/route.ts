@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 
 // 네이버 블로그 공개 RSS → 플로팅 버튼용 최신 글.
-// 블로그에 후기·일상 글이 섞여 있어 회사 글 분류만 노출한다(분류 추가 시 CATEGORIES 만 수정).
-const RSS = "https://rss.blog.naver.com/mimichelin.xml";
-const CATEGORIES = ["마케팅 인사이트"];
+// 회사 전용 블로그(passionmarketing)라 분류 거르지 않고 최신 3개.
+const RSS = "https://rss.blog.naver.com/passionmarketing.xml";
 
 export const revalidate = 3600;
 
@@ -22,9 +21,7 @@ export async function GET() {
         title: pick(it, "title"),
         link: pick(it, "link").split("?")[0],
         date: new Date(pick(it, "pubDate")).toISOString().slice(0, 10),
-        category: pick(it, "category"),
       }))
-      .filter((p) => CATEGORIES.includes(p.category))
       .slice(0, 3);
     return NextResponse.json({ posts });
   } catch {
