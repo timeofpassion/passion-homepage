@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-// 오른쪽 플로팅 메뉴(위→아래): 카카오톡 · 회사 소개서(마우스 올리면 권역별 제안서) · 네이버 블로그 · 스레드 · 유튜브
+// 오른쪽 플로팅 메뉴(위→아래): 카카오톡 · 회사 소개서(마우스 올리면 권역별 제안서) · 네이버 블로그 · 인스타그램 · 스레드 · 유튜브
 const KAKAO_URL = "http://pf.kakao.com/_RgYcxj/chat";
-const BLOG_URL = "https://blog.naver.com/mimichelin";
+const BLOG_URL = "https://blog.naver.com/passionmarketing";
+const INSTAGRAM_URL = "https://www.instagram.com/marketing__passion";
 const THREADS_URL = "https://www.threads.com/@marketing__passion";
 const YOUTUBE_URL = "https://www.youtube.com/channel/UCSqL7cb4P5LJ8a28jqAWKlA";
 
@@ -115,10 +116,26 @@ export default function KakaoFloat() {
           aria-expanded={blogOpen}
           aria-controls="blog-list"
           onClick={() => setBlogOpen((v) => !v)}
-          style={{ background: "#03C75A", color: "#fff", fontWeight: 900, fontSize: 21, fontFamily: "Arial, sans-serif" }}
+          style={{ background: "#03C75A" }}
         >
-          N
+          {/* 네이버 블로그 말풍선 로고 */}
+          <svg width="34" height="30" viewBox="0 0 34 30" aria-hidden="true">
+            <path d="M5 2h24a3 3 0 0 1 3 3v15a3 3 0 0 1-3 3H21l-4 5-4-5H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3z" fill="#fff" />
+            <text x="17" y="16.5" textAnchor="middle" fill="#03C75A" fontSize="10.5" fontWeight="900" fontFamily="Arial, sans-serif">blog</text>
+          </svg>
         </button>
+      </div>
+
+      {/* 인스타그램 */}
+      <div className="pf-item">
+        <span className="pf-tip">인스타그램</span>
+        <a className="pf-btn" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="인스타그램" style={{ background: "radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%)" }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4.2" />
+            <circle cx="17.3" cy="6.7" r="1" fill="#fff" stroke="none" />
+          </svg>
+        </a>
       </div>
 
       {/* 5. 스레드 */}
